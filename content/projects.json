@@ -105,7 +105,8 @@
       "ultracite",
       "pnpm",
       "vercel",
-      "python"
+      "python",
+      "turbopack"
     ],
     "links": [
       {
@@ -271,7 +272,8 @@
       "docker",
       "sharp",
       "pnpm",
-      "github-actions"
+      "github-actions",
+      "turbopack"
     ],
     "links": [],
     "media": ["/work/noaspot-admin.webp"],
@@ -460,7 +462,8 @@
       "react-router-dom",
       "gulp",
       "prettier",
-      "core-web-vitals"
+      "core-web-vitals",
+      "turbopack"
     ],
     "links": [
       {
@@ -551,7 +554,8 @@
       "figma",
       "shadcn-ui",
       "pnpm",
-      "python"
+      "python",
+      "turbopack"
     ],
     "links": [
       {
@@ -824,7 +828,8 @@
       "claude-code",
       "playwright",
       "figma",
-      "shadcn-ui"
+      "shadcn-ui",
+      "turbopack"
     ],
     "links": [
       {
@@ -1659,7 +1664,8 @@
       "claude-code",
       "next-safe-action",
       "dotenvx",
-      "figma"
+      "figma",
+      "turbopack"
     ],
     "links": [
       {
@@ -2435,7 +2441,8 @@
       "claude-code",
       "docker",
       "pnpm",
-      "figma"
+      "figma",
+      "turbopack"
     ],
     "links": [
       {
@@ -3336,7 +3343,8 @@
       "shadcn-ui",
       "date-fns",
       "styled-components",
-      "knip"
+      "knip",
+      "turbopack"
     ],
     "links": [],
     "media": ["/work/abh.webp"],
@@ -3410,7 +3418,9 @@
       "claude-code",
       "playwright",
       "lenis",
-      "python"
+      "python",
+      "turbopack",
+      "timeweb-cloud"
     ],
     "links": [
       {
@@ -3531,7 +3541,8 @@
       "ultracite",
       "vercel",
       "python",
-      "cloudflare-workers"
+      "cloudflare-workers",
+      "turbopack"
     ],
     "links": [
       {
@@ -3654,7 +3665,9 @@
       "embla-carousel",
       "knip",
       "oxfmt",
-      "oxlint"
+      "oxlint",
+      "turbopack",
+      "pencil"
     ],
     "links": [],
     "media": ["/work/dnd-toolkit.webp"],
@@ -4192,7 +4205,8 @@
       "biome",
       "ultracite",
       "pnpm",
-      "playwright"
+      "playwright",
+      "turbopack"
     ],
     "caseStudy": "find-job",
     "aiOrchestrated": true

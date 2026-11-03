@@ -739,67 +739,67 @@
   {
     "id": "arcjet",
     "name": "Arcjet",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "aws-cognito",
     "name": "AWS Cognito",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": ["AWS (S3, EC2, Cognito)"]
   },
   {
     "id": "better-auth",
     "name": "Better Auth",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "clerk",
     "name": "Clerk",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "cloudflare-turnstile",
     "name": "Cloudflare Turnstile",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "docusign",
     "name": "DocuSign",
-    "group": "Auth, payments, email",
+    "group": "APIs & back end",
     "aliases": []
   },
   {
     "id": "recaptcha",
     "name": "Google reCAPTCHA",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": ["reCAPTCHA"]
   },
   {
     "id": "jwt",
     "name": "JWT",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": ["JSON Web Tokens"]
   },
   {
     "id": "msal",
     "name": "MSAL",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "nextauth",
     "name": "NextAuth",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "oauth",
     "name": "OAuth",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": [
       "OAuth 2.0 and OpenID Connect",
       "OAuth 2.0",
@@ -810,49 +810,49 @@
   {
     "id": "paypal",
     "name": "PayPal",
-    "group": "Auth, payments, email",
+    "group": "Payments",
     "aliases": ["PayPal JS SDK"]
   },
   {
     "id": "resend",
     "name": "Resend",
-    "group": "Auth, payments, email",
+    "group": "Email & SMS",
     "aliases": []
   },
   {
     "id": "sendgrid",
     "name": "SendGrid",
-    "group": "Auth, payments, email",
+    "group": "Email & SMS",
     "aliases": []
   },
   {
     "id": "nodemailer",
     "name": "Nodemailer",
-    "group": "Auth, payments, email",
+    "group": "Email & SMS",
     "aliases": ["SMTP (Nodemailer)", "SMTP"]
   },
   {
     "id": "square",
     "name": "Square",
-    "group": "Auth, payments, email",
+    "group": "Payments",
     "aliases": []
   },
   {
     "id": "stripe",
     "name": "Stripe",
-    "group": "Auth, payments, email",
+    "group": "Payments",
     "aliases": []
   },
   {
     "id": "supabase-auth",
     "name": "Supabase Auth",
-    "group": "Auth, payments, email",
+    "group": "Auth",
     "aliases": []
   },
   {
     "id": "twilio",
     "name": "Twilio",
-    "group": "Auth, payments, email",
+    "group": "Email & SMS",
     "aliases": []
   },
   {
@@ -950,6 +950,12 @@
     "name": "Linux VPS hosting",
     "group": "Infrastructure & observability",
     "aliases": ["VPS"]
+  },
+  {
+    "id": "timeweb-cloud",
+    "name": "Timeweb Cloud",
+    "group": "Infrastructure & observability",
+    "aliases": ["Timeweb"]
   },
   {
     "id": "meta-pixel",
@@ -1152,6 +1158,12 @@
   {
     "id": "turborepo",
     "name": "Turborepo",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "turbopack",
+    "name": "Turbopack",
     "group": "Build tools",
     "aliases": []
   },
@@ -1425,8 +1437,7 @@
     "id": "pencil",
     "name": "Pencil",
     "group": "Design & collaboration",
-    "aliases": ["pen.dev"],
-    "listedByOwner": true
+    "aliases": ["pen.dev"]
   },
   {
     "id": "photoshop",

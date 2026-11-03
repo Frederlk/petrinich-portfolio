@@ -98,7 +98,7 @@ export function WorkExplorer({ domains, rows, roles, techs, years }: Props) {
           <div className="flex min-w-0 flex-1 items-stretch gap-space-sm">
             <search className="min-w-0 flex-1">
               <label
-                className="flex h-control cursor-text items-center gap-space-sm border border-surface-container-high bg-surface-container-low px-space-md focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-ring"
+                className="flex h-control cursor-text items-center gap-space-sm border border-surface-container-high bg-surface-container-low px-space-md transition-colors duration-200 ease-(--ease-enter) focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-ring hover:bg-surface-container"
                 htmlFor="work-search"
               >
                 <MagnifyingGlassIcon
