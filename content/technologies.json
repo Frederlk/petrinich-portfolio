@@ -44,248 +44,248 @@
   {
     "id": "ag-grid",
     "name": "AG Grid",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "base-ui",
     "name": "Base UI",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "bootstrap",
     "name": "Bootstrap",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "chart-js",
     "name": "Chart.js",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "count-up",
     "name": "count-up",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": []
   },
   {
     "id": "draft-js",
     "name": "Draft.js",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "electron",
     "name": "Electron",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "embla-carousel",
     "name": "Embla Carousel",
-    "group": "Front end",
+    "group": "Carousels & galleries",
     "aliases": []
   },
   {
     "id": "expo",
     "name": "Expo",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "fumadocs",
     "name": "Fumadocs",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "gsap",
     "name": "GSAP",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": []
   },
   {
     "id": "headless-ui",
     "name": "Headless UI",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "jquery",
     "name": "jQuery",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": ["JQuery"]
   },
   {
     "id": "leaflet",
     "name": "Leaflet",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "lightgallery",
     "name": "LightGallery",
-    "group": "Front end",
+    "group": "Carousels & galleries",
     "aliases": []
   },
   {
     "id": "mapbox",
     "name": "Mapbox",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "masonry",
     "name": "Masonry",
-    "group": "Front end",
+    "group": "Carousels & galleries",
     "aliases": []
   },
   {
     "id": "material-ui",
     "name": "Material UI",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "motion",
     "name": "Motion",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": ["Framer Motion"]
   },
   {
     "id": "radix-ui",
     "name": "Radix UI",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": ["Radix"]
   },
   {
     "id": "react-compiler",
     "name": "React Compiler",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "react-native",
     "name": "React Native",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "react-three-fiber",
     "name": "React Three Fiber",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": []
   },
   {
     "id": "react-helmet",
     "name": "react-helmet",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "react-paginate",
     "name": "react-paginate",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "react-parallax",
     "name": "react-parallax",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": []
   },
   {
     "id": "react-router-dom",
     "name": "react-router-dom",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "recharts",
     "name": "Recharts",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "sass",
     "name": "Sass",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": ["SCSS"]
   },
   {
     "id": "shadcn-ui",
     "name": "shadcn/ui",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "slick",
     "name": "Slick",
-    "group": "Front end",
+    "group": "Carousels & galleries",
     "aliases": []
   },
   {
     "id": "storybook",
     "name": "Storybook",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "styled-components",
     "name": "Styled Components",
-    "group": "Front end",
+    "group": "UI kits & styling",
     "aliases": []
   },
   {
     "id": "svg-animation",
     "name": "SVG animation",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": ["SMIL"],
     "listedByOwner": true
   },
   {
     "id": "swiper",
     "name": "Swiper",
-    "group": "Front end",
+    "group": "Carousels & galleries",
     "aliases": []
   },
   {
     "id": "tanstack-router",
     "name": "TanStack Router",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "tanstack-start",
     "name": "TanStack Start",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "tauri",
     "name": "Tauri",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
     "id": "three-js",
     "name": "Three.js",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": []
   },
   {
     "id": "tiptap",
     "name": "Tiptap",
-    "group": "Front end",
+    "group": "Data display & editors",
     "aliases": []
   },
   {
     "id": "wouter",
     "name": "Wouter",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": []
   },
   {
@@ -841,6 +841,18 @@
     "name": "Stripe",
     "group": "Payments",
     "aliases": []
+  },
+  {
+    "id": "lemon-squeezy",
+    "name": "Lemon Squeezy",
+    "group": "Payments",
+    "aliases": ["LemonSqueezy"]
+  },
+  {
+    "id": "polar",
+    "name": "Polar",
+    "group": "Payments",
+    "aliases": ["Polar.sh"]
   },
   {
     "id": "supabase-auth",
@@ -1447,14 +1459,14 @@
   {
     "id": "vue",
     "name": "Vue",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": [],
     "listedByOwner": true
   },
   {
     "id": "nuxt",
     "name": "Nuxt",
-    "group": "Front end",
+    "group": "Frameworks, routing & apps",
     "aliases": [],
     "listedByOwner": true
   },
@@ -1468,7 +1480,7 @@
   {
     "id": "lenis",
     "name": "Lenis",
-    "group": "Front end",
+    "group": "Animation & 3D",
     "aliases": []
   },
   {

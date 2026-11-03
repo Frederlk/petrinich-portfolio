@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import { JsonLd } from "~/components/json-ld";
 import { KeyStats } from "~/components/key-stats";
 import { Portrait } from "~/components/layout/portrait";
+import { PageTransition } from "~/components/motion/page-transition";
+import { ReadProgress } from "~/components/motion/read-progress";
 import { RichText, TechLinks } from "~/components/rich-text";
 
 import { cn } from "~/lib/cn";
@@ -142,162 +144,174 @@ function CvProject({ project }: { project: Project }) {
 export default function CvPage() {
   const [place = profile.location, zone = ""] = profile.location.split(" · ");
   return (
-    <main
-      className={cn("cv-page min-h-screen w-full bg-surface", CV_FONT.variable)}
-    >
-      <JsonLd data={profilePageJsonLd("/cv")} />
-      <article className="mx-auto w-full max-w-275 px-margin-mobile pb-space-lg text-on-surface md:px-margin">
-        <div
-          className="no-print flex w-full items-center justify-between gap-space-sm border-b border-surface-container-high py-space-md print:hidden"
-          data-cv-bar
-        >
-          <p className="type-meta text-secondary">Also available as a PDF.</p>
-          <a
-            className="border border-primary-container px-space-md py-space-xs type-button text-primary-container"
-            download={CV_PDF_NAME}
-            href={CV_PDF_PATH}
+    <>
+      <PageTransition />
+      <main
+        className={cn(
+          "cv-page min-h-screen w-full bg-surface",
+          CV_FONT.variable
+        )}
+      >
+        <ReadProgress />
+        <JsonLd data={profilePageJsonLd("/cv")} />
+        <article className="mx-auto w-full max-w-275 px-margin-mobile pb-space-lg text-on-surface md:px-margin">
+          <div
+            className="no-print flex w-full items-center justify-between gap-space-sm border-b border-surface-container-high py-space-md print:hidden"
+            data-cv-bar
           >
-            Download CV (PDF)
-          </a>
-        </div>
+            <p className="type-meta text-secondary">Also available as a PDF.</p>
+            <a
+              className="border border-primary-container px-space-md py-space-xs type-button text-primary-container"
+              download={CV_PDF_NAME}
+              href={CV_PDF_PATH}
+            >
+              Download CV (PDF)
+            </a>
+          </div>
 
-        <header className="cv-header grid grid-cols-[minmax(0,1fr)_auto] items-start gap-gutter pt-space-xl pb-space-lg">
-          <div className="cv-id flex min-w-0 flex-col gap-space-xs">
-            <h1 className="cv-name m-0 type-display text-on-surface">
-              {profile.name}
-            </h1>
-            <p className="cv-title type-h3 text-on-surface">{profile.title}</p>
-            <p className="cv-meta type-body-sm">
-              {place}
-              {zone === "" ? null : ` · ${zone}`}
+          <header className="cv-header grid grid-cols-[minmax(0,1fr)_auto] items-start gap-gutter pt-space-xl pb-space-lg">
+            <div className="cv-id flex min-w-0 flex-col gap-space-xs">
+              <h1 className="cv-name m-0 type-display text-on-surface">
+                {profile.name}
+              </h1>
+              <p className="cv-title type-h3 text-on-surface">
+                {profile.title}
+              </p>
+              <p className="cv-meta type-body-sm">
+                {place}
+                {zone === "" ? null : ` · ${zone}`}
+              </p>
+              <ul className="cv-contacts mt-space-sm grid grid-cols-2 gap-x-space-lg gap-y-1 type-body-sm">
+                {profile.contacts.map((c) => (
+                  <li key={c.label}>
+                    <span className="cv-meta">{c.label}: </span>
+                    <BareLink url={c.url} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Portrait className="cv-photo size-32" priority sizes="128px" />
+          </header>
+
+          <KeyStats className="py-space-md" links={false} />
+
+          <CvSection title="Summary">
+            <p className="cv-summary type-lead text-on-surface">
+              <RichText origin={siteUrl}>{profile.summary}</RichText>
             </p>
-            <ul className="cv-contacts mt-space-sm grid grid-cols-2 gap-x-space-lg gap-y-1 type-body-sm">
-              {profile.contacts.map((c) => (
-                <li key={c.label}>
-                  <span className="cv-meta">{c.label}: </span>
-                  <BareLink url={c.url} />
+          </CvSection>
+
+          <CvSection title="Skills">
+            <dl className="cv-skills grid grid-cols-[auto_minmax(0,1fr)] gap-x-gutter gap-y-1">
+              {cvSkillGroups.map((g) => (
+                <div className="cv-skill contents" key={g.name}>
+                  <dt className="cv-skill-name type-body-sm text-on-surface">
+                    {g.name}
+                  </dt>
+                  <dd className="type-body-sm text-on-surface-variant">
+                    <TechLinks names={g.items} origin={siteUrl} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="cv-skills-all mt-space-sm type-body-sm">
+              <span className="cv-meta">
+                All {siteNumbers.technologies} technologies:{" "}
+              </span>
+              <BareLink url={`${siteUrl}/stack`} />
+            </p>
+          </CvSection>
+
+          <CvSection title="Experience">
+            <ol className="cv-jobs flex flex-col gap-space-lg">
+              {experience.map((job) => {
+                const site = job.links[0]?.url;
+                return (
+                  <li
+                    className="cv-job flex flex-col gap-space-xs"
+                    key={job.id}
+                  >
+                    <div className="cv-entry-head flex flex-wrap items-baseline justify-between gap-x-space-md">
+                      <h3 className="cv-entry-title type-h3 text-on-surface">
+                        {job.role}
+                        <span className="cv-company"> · {job.company}</span>
+                        {site === undefined ? null : (
+                          <span className="cv-meta">
+                            {" · "}
+                            <BareLink url={site} />
+                          </span>
+                        )}
+                      </h3>
+                      <p className="cv-meta type-body-sm">
+                        <DateRange dates={job.dates} />
+                      </p>
+                    </div>
+                    <p className="cv-desc type-body text-secondary">
+                      <RichText origin={siteUrl}>{job.description}</RichText>
+                    </p>
+                    <ul className="cv-bullets list-square flex flex-col gap-1 type-body-sm text-secondary">
+                      {job.bullets.map((b) => (
+                        <li key={b}>
+                          <RichText origin={siteUrl}>{b}</RichText>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                );
+              })}
+            </ol>
+          </CvSection>
+
+          <CvSection title="Projects">
+            <ul className="cv-projects flex flex-col gap-space-md">
+              {selectedProjects.slice(0, CV_PROJECTS).map((p) => (
+                <li key={p.id}>
+                  <CvProject project={p} />
                 </li>
               ))}
             </ul>
-          </div>
-          <Portrait className="cv-photo size-32" priority sizes="128px" />
-        </header>
+          </CvSection>
 
-        <KeyStats className="py-space-md" links={false} />
-
-        <CvSection title="Summary">
-          <p className="cv-summary type-lead text-on-surface">
-            <RichText origin={siteUrl}>{profile.summary}</RichText>
-          </p>
-        </CvSection>
-
-        <CvSection title="Skills">
-          <dl className="cv-skills grid grid-cols-[auto_minmax(0,1fr)] gap-x-gutter gap-y-1">
-            {cvSkillGroups.map((g) => (
-              <div className="cv-skill contents" key={g.name}>
-                <dt className="cv-skill-name type-body-sm text-on-surface">
-                  {g.name}
-                </dt>
-                <dd className="type-body-sm text-on-surface-variant">
-                  <TechLinks names={g.items} origin={siteUrl} />
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <p className="cv-skills-all mt-space-sm type-body-sm">
-            <span className="cv-meta">
-              All {siteNumbers.technologies} technologies:{" "}
-            </span>
-            <BareLink url={`${siteUrl}/stack`} />
-          </p>
-        </CvSection>
-
-        <CvSection title="Experience">
-          <ol className="cv-jobs flex flex-col gap-space-lg">
-            {experience.map((job) => {
-              const site = job.links[0]?.url;
-              return (
-                <li className="cv-job flex flex-col gap-space-xs" key={job.id}>
-                  <div className="cv-entry-head flex flex-wrap items-baseline justify-between gap-x-space-md">
+          <CvSection title="Education">
+            <ol className="flex flex-col gap-space-sm">
+              {education.education.map((e) => (
+                <li
+                  className="cv-edu cv-entry-head flex flex-wrap items-baseline justify-between gap-x-space-md"
+                  key={e.school}
+                >
+                  <div>
                     <h3 className="cv-entry-title type-h3 text-on-surface">
-                      {job.role}
-                      <span className="cv-company"> · {job.company}</span>
-                      {site === undefined ? null : (
-                        <span className="cv-meta">
-                          {" · "}
-                          <BareLink url={site} />
-                        </span>
-                      )}
+                      {e.school}
                     </h3>
-                    <p className="cv-meta type-body-sm">
-                      <DateRange dates={job.dates} />
-                    </p>
+                    <p className="type-body-sm text-secondary">{e.degree}</p>
                   </div>
-                  <p className="cv-desc type-body text-secondary">
-                    <RichText origin={siteUrl}>{job.description}</RichText>
+                  <p className="cv-meta type-body-sm">
+                    <DateRange dates={e.dates} /> · {e.location}
                   </p>
-                  <ul className="cv-bullets list-square flex flex-col gap-1 type-body-sm text-secondary">
-                    {job.bullets.map((b) => (
-                      <li key={b}>
-                        <RichText origin={siteUrl}>{b}</RichText>
-                      </li>
-                    ))}
-                  </ul>
                 </li>
-              );
-            })}
-          </ol>
-        </CvSection>
+              ))}
+            </ol>
+          </CvSection>
 
-        <CvSection title="Projects">
-          <ul className="cv-projects flex flex-col gap-space-md">
-            {selectedProjects.slice(0, CV_PROJECTS).map((p) => (
-              <li key={p.id}>
-                <CvProject project={p} />
-              </li>
-            ))}
-          </ul>
-        </CvSection>
+          <CvSection title="Languages">
+            <p className="type-body-sm text-secondary">
+              {education.languages.map((l, i) => (
+                <span key={l.name}>
+                  {i > 0 ? " · " : null}
+                  <strong className="text-on-surface">{l.name}</strong> (
+                  {l.level})
+                </span>
+              ))}
+            </p>
+          </CvSection>
 
-        <CvSection title="Education">
-          <ol className="flex flex-col gap-space-sm">
-            {education.education.map((e) => (
-              <li
-                className="cv-edu cv-entry-head flex flex-wrap items-baseline justify-between gap-x-space-md"
-                key={e.school}
-              >
-                <div>
-                  <h3 className="cv-entry-title type-h3 text-on-surface">
-                    {e.school}
-                  </h3>
-                  <p className="type-body-sm text-secondary">{e.degree}</p>
-                </div>
-                <p className="cv-meta type-body-sm">
-                  <DateRange dates={e.dates} /> · {e.location}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </CvSection>
-
-        <CvSection title="Languages">
-          <p className="type-body-sm text-secondary">
-            {education.languages.map((l, i) => (
-              <span key={l.name}>
-                {i > 0 ? " · " : null}
-                <strong className="text-on-surface">{l.name}</strong> ({l.level}
-                )
-              </span>
-            ))}
-          </p>
-        </CvSection>
-
-        <CvSection title="Interests">
-          <p className="type-body-sm text-secondary">
-            <RichText origin={siteUrl}>{education.interests}</RichText>
-          </p>
-        </CvSection>
-      </article>
-    </main>
+          <CvSection title="Interests">
+            <p className="type-body-sm text-secondary">
+              <RichText origin={siteUrl}>{education.interests}</RichText>
+            </p>
+          </CvSection>
+        </article>
+      </main>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./typography.css";
+@import "./motion.css";
 
 @plugin "tailwindcss-animate";
 @plugin "@igorkowalczyk/is-browser";
@@ -576,6 +577,17 @@
 
 @utility surface-glow {
   @apply before:shadow-glow;
+}
+
+/* A ScrollArea viewport that fades toward an edge with more to scroll to. Base UI sets `--scroll-area-overflow-y-start` and `-end` to the distance still hidden at each edge, so a fade grows from nothing as the content starts to overflow, up to 2.5rem, and is absent at an edge already reached. */
+@utility scroll-fade {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 min(2.5rem, var(--scroll-area-overflow-y-start, 0px)),
+    #000 calc(100% - min(2.5rem, var(--scroll-area-overflow-y-end, 0px))),
+    transparent 100%
+  );
 }
 
 @utility focus-ring {

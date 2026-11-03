@@ -42,15 +42,10 @@ function ContactTrigger({
   return (
     <button
       {...props}
-      className={cn(
-        ctaLinkVariants({ size, variant }),
-        "gap-space-xs",
-        extra,
-        className
-      )}
+      className={cn(ctaLinkVariants({ size, variant }), extra, className)}
       type="button"
     >
-      Contact
+      <span>Contact</span>
       <CaretDownIcon aria-hidden className={chevron} />
     </button>
   );

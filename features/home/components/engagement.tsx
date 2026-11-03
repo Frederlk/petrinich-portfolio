@@ -27,7 +27,7 @@ export function Engagement() {
 
   return (
     <section className="container pb-space-3xl">
-      <div className="border border-surface-container-high bg-surface-container-lowest p-space-xl">
+      <div className="reveal border border-surface-container-high bg-surface-container-lowest p-space-xl">
         <div className="grid grid-cols-1 gap-gutter lg:grid-cols-12">
           <div className="flex flex-col justify-between lg:col-span-7">
             <div>

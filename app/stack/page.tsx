@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { JsonLd } from "~/components/json-ld";
+import { PageTransition } from "~/components/motion/page-transition";
 
 import { pageMetadata } from "~/lib/site-pages";
 import { stackJsonLd } from "~/lib/structured-data";
@@ -24,18 +25,21 @@ const stackProps = {
 
 export default function StackPage() {
   return (
-    <main className="min-h-screen w-full bg-surface">
-      <JsonLd data={stackJsonLd()} />
-      <div className="container pt-space-xl pb-space-2xl">
-        <StackHeader />
-        {/* The fallback is the full list, so the first HTML names every technology; the client browser takes over and narrows it from the q param. */}
-        <Suspense fallback={<StackView {...stackProps} query="" />}>
-          <StackBrowser {...stackProps} />
-        </Suspense>
-      </div>
-      <div className="pt-space-2xl md:pt-space-3xl">
-        <Engagement />
-      </div>
-    </main>
+    <>
+      <PageTransition />
+      <main className="min-h-screen w-full bg-surface">
+        <JsonLd data={stackJsonLd()} />
+        <div className="container pt-space-xl pb-space-2xl">
+          <StackHeader />
+          {/* The fallback is the full list, so the first HTML names every technology; the client browser takes over and narrows it from the q param. */}
+          <Suspense fallback={<StackView {...stackProps} query="" />}>
+            <StackBrowser {...stackProps} />
+          </Suspense>
+        </div>
+        <div className="pt-space-2xl md:pt-space-3xl">
+          <Engagement />
+        </div>
+      </main>
+    </>
   );
 }

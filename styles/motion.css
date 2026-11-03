@@ -1,0 +1,182 @@
+/* Motion that is more than a hover: route transitions, section reveals, the reading bar, the tab fill. The values are listed under `motion` in DESIGN.md. */
+
+/* ============ Route transitions ============ */
+
+/* React starts them (the PageTransition marker, ProjectName); the page itself moves as the root snapshot. A link names its direction with `transitionTypes`: forward (into a project, Next, a header link further right) wipes the new page in from the right while the old one slides left and fades; back mirrors it; an untyped link (a tech chip, a call to action) lets the new page rise. The browser's own back and forward run no view transition in Next, so they swap at once. A project's name is one element across pages and morphs between a ledger row, the project title and the previous / next cards. The header has its own name and holds still above everything. Clicks pass through to the live page while the overlay runs. */
+::view-transition {
+  pointer-events: none;
+}
+@utility vt-site-header {
+  view-transition-name: site-header;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* The page moves as the root snapshot, which is viewport-sized whatever the page's height. The two are stacked plainly: the browser's default `plus-lighter` would add the opaque old and new pages into a brighter one. The lightbox (`data-zoom`) keeps the root still. */
+/* React names <html> `none` inline once the old state is captured, so that only its own boundaries animate; here the root is the page animation, so it keeps its name. */
+html {
+  view-transition-name: root !important;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+html:active-view-transition::view-transition-old(root) {
+  animation: 220ms cubic-bezier(0.4, 0, 1, 1) both vt-leave-up;
+}
+html:active-view-transition::view-transition-new(root) {
+  animation: 520ms var(--ease-enter) 100ms both vt-rise;
+}
+html:active-view-transition-type(nav-forward)::view-transition-old(root) {
+  --vt-shift: -64px;
+  animation: 320ms cubic-bezier(0.4, 0, 1, 1) both vt-leave-side;
+}
+html:active-view-transition-type(nav-forward)::view-transition-new(root) {
+  --vt-shift: 64px;
+  --vt-clip: inset(0 0 0 100%);
+  animation: 600ms var(--ease-move) both vt-wipe;
+}
+html:active-view-transition-type(nav-back)::view-transition-old(root) {
+  --vt-shift: 64px;
+  animation: 320ms cubic-bezier(0.4, 0, 1, 1) both vt-leave-side;
+}
+html:active-view-transition-type(nav-back)::view-transition-new(root) {
+  --vt-shift: -64px;
+  --vt-clip: inset(0 100% 0 0);
+  animation: 600ms var(--ease-move) both vt-wipe;
+}
+html[data-zoom]::view-transition-old(root),
+html[data-zoom]::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-old(.vt-marker),
+::view-transition-new(.vt-marker),
+::view-transition-group(.vt-marker) {
+  animation: none;
+}
+::view-transition-group(.morph) {
+  animation-duration: 600ms;
+  animation-timing-function: var(--ease-move);
+  z-index: 50;
+}
+
+@keyframes vt-leave-up {
+  to {
+    opacity: 0;
+    translate: 0 -24px;
+  }
+}
+@keyframes vt-rise {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+  }
+}
+@keyframes vt-leave-side {
+  to {
+    opacity: 0;
+    translate: var(--vt-shift) 0;
+  }
+}
+@keyframes vt-wipe {
+  from {
+    clip-path: var(--vt-clip);
+    translate: var(--vt-shift) 0;
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+/* The screenshot lightbox (ScreenshotZoom): the thumbnail grows into the full view and shrinks back. While it runs, `data-zoom` takes the header's name away, so the header is captured with the page and dims under the backdrop with it. */
+::view-transition-group(shot) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease-move);
+}
+html[data-zoom] .vt-site-header {
+  view-transition-name: none;
+}
+/* A modal <dialog> does not stop the page under it scrolling; the gutter holds the scrollbar's width, so nothing shifts when it goes. */
+html:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ============ Section reveals ============ */
+
+/* RevealObserver plays them with the Web Animations API; this is only the layout they need, the same with or without motion. Each word of a `reveal-words` heading (SplitWords) is its own mask: `overflow: clip` keeps the baseline where it was (`hidden` would move it) and the small padding keeps descenders out of the clip. */
+.reveal-words > span {
+  display: inline-block;
+  margin-bottom: -0.12em;
+  overflow: clip;
+  padding-bottom: 0.12em;
+}
+.reveal-words > span > span {
+  display: inline-block;
+}
+
+/* ============ Details ============ */
+
+/* ReadProgress: a bar under the header that tracks the page's scroll. It renders `hidden` and shows only where scroll timelines exist (not Firefox), never under reduced motion or in print. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .read-progress {
+      animation: read-grow linear both;
+      animation-timeline: scroll(root);
+      display: block;
+    }
+  }
+}
+@keyframes read-grow {
+  from {
+    scale: 0 1;
+  }
+}
+
+/* A digit that just changed (DigitSwap) drops in from above. */
+@keyframes digit-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.6em;
+  }
+}
+
+/* The active tab's fill (TabsList) stretches: the edge in the direction of travel leaves first and fast, the trailing edge follows later and slower, so the fill pulls long and snaps back to the new tab's width. Base UI sets `data-activation-direction` on the indicator. */
+/* Until Base UI has measured the active tab the indicator is `hidden` (on /work the tabs render only after hydration, 1 to 3s in dev), so the active tab paints its own fill and its dark label stays readable. */
+[data-slot="tabs-list"]:has(> .tab-indicator[hidden]) > [data-active] {
+  background: var(--primary-container);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tab-indicator {
+    transition:
+      left 420ms var(--ease-move),
+      right 420ms var(--ease-move);
+  }
+  .tab-indicator[data-activation-direction="right"] {
+    transition:
+      left 480ms var(--ease-move) 80ms,
+      right 300ms var(--ease-move);
+  }
+  .tab-indicator[data-activation-direction="left"] {
+    transition:
+      left 300ms var(--ease-move),
+      right 480ms var(--ease-move) 80ms;
+  }
+}

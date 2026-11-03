@@ -77,14 +77,14 @@ export function earlyToWorkRow(w: EarlyWork): WorkRow {
   };
 }
 
-// A project of someone else the owner contributed to: it has no page here and links to the project's own site.
+// A project of someone else the owner contributed to: its page here (`openSourceAsProject`) links on to the project's own site.
 export function openSourceToWorkRow(o: OpenSource): WorkRow {
   const techNames = o.stack.map((id) => techById.get(id)?.name ?? id);
   return {
     build: "hand",
     domains: [],
     anonymous: false,
-    href: o.url,
+    href: `/work/${o.id}`,
     id: o.id,
     kind: "open-source",
     name: o.name,

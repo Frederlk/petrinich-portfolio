@@ -20,11 +20,11 @@ export function StackGroupsList({ groups }: { groups: readonly StackGroup[] }) {
     <div className="space-y-space-lg">
       {groups.map((group) => (
         <section
-          className="scroll-mt-[calc(4.5rem+var(--search-band))] lg:scroll-mt-[calc(1.5rem+var(--search-band))]"
+          className="reveal scroll-mt-[calc(4.5rem+var(--search-band))] lg:scroll-mt-space-lg"
           id={group.id}
           key={group.id}
         >
-          <h2 className="mb-space-sm flex items-baseline gap-space-sm border-b border-surface-container-high pb-space-xs type-h3 text-on-surface capitalize">
+          <h2 className="mb-space-sm flex items-center gap-space-sm border-b border-surface-container-high pb-space-xs type-h3 text-on-surface capitalize">
             {group.name}
             <span className="type-meta text-secondary">
               {group.items.length}

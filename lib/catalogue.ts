@@ -271,7 +271,7 @@ export const stackBody = () =>
 const evidence = (id: string) => absolute(`/work?tech=${id}`);
 const projectCount = (n: number) => `${n} ${n === 1 ? "project" : "projects"}`;
 
-// The stack part of llms.txt: the core stack one technology a line with its other names, every other area as one line of its most used technologies. Each count links to the matching /work filter, the evidence behind it.
+// The stack part of llms.txt: the core stack one technology a line with its other names, every other area as one line of its technologies, alphabetical. Each count links to the matching /work filter, the evidence behind it.
 export const stackDigest = () => [
   "## Core stack",
   "",
@@ -287,7 +287,7 @@ export const stackDigest = () => [
   "",
   "## Skills by area",
   "",
-  `Every technology I have worked with, ${siteNumbers.technologies} in all, most used first in each area. Each entry gives the project count and years and links to those projects; a name without a count is one I know without a project on this site. The same list with project ids: [stack.md](${absolute("/stack.md")}).`,
+  `Every technology I have worked with, ${siteNumbers.technologies} in all, alphabetical in each area. Each entry gives the project count and years and links to those projects; a name without a count is one I know without a project on this site. The same list with project ids: [stack.md](${absolute("/stack.md")}).`,
   "",
   ...otherGroups.flatMap((g) => [
     `### ${g.name} (${g.items.length})`,

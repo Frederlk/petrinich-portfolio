@@ -7,12 +7,15 @@ import { cn } from "~/lib/cn";
 import type { ReactElement } from "react";
 
 // The one scrollbar for popups and sheets: a square thumb in `--scrollbar-thumb` that turns vermilion on hover and drag, colour eased in 200 ms. Native overflow areas get the same look from the base layer in globals.css. Put the height cap on `className` (for example `max-h-[min(var(--available-height),320px)]`); the viewport inherits it, so the area scrolls instead of the surface around it.
+// `fade` dims the content toward an edge that has more to scroll to (`scroll-fade` in globals.css).
 export function ScrollArea({
   children,
   className,
+  fade = false,
   viewportClassName,
   ...props
 }: ScrollAreaPrimitive.Root.Props & {
+  fade?: boolean;
   viewportClassName?: string;
 }): ReactElement {
   return (
@@ -25,6 +28,7 @@ export function ScrollArea({
         className={cn(
           // oxlint-disable-next-line shadcn/no-arbitrary-values -- the viewport takes the height cap of the root, and no scale value says "inherit"
           "max-h-[inherit] overscroll-contain outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+          fade && "scroll-fade",
           viewportClassName
         )}
         data-slot="scroll-area-viewport"

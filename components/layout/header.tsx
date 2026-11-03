@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import { ContactMenu } from "~/components/layout/contact-menu";
 import { MobileNav } from "~/components/layout/mobile-nav";
 import { NavLinkList, NavLinks } from "~/components/layout/nav-links";
+import { NAV_BACK } from "~/components/motion/page-transition";
+import { TextScramble } from "~/components/motion/text-scramble";
 
 import { ctaLinkVariants } from "~/ui/cta-link";
 
@@ -18,7 +20,7 @@ import { ROUTES } from "~/constants/routes";
 export function Header() {
   return (
     <header
-      className="fixed top-0 left-0 z-50 w-full border-b border-surface-container-high bg-surface"
+      className="fixed top-0 left-0 z-50 w-full border-b border-surface-container-high bg-surface vt-site-header"
       data-chrome
     >
       <div className="container flex h-16 items-center justify-between">
@@ -26,12 +28,14 @@ export function Header() {
           <Link
             className="link-draw type-h3 text-on-surface uppercase hover:text-primary"
             href={ROUTES.HOME}
+            transitionTypes={NAV_BACK}
           >
             {profile.name}
           </Link>
-          <span className="hidden border-l border-surface-container-high pl-space-md type-meta text-secondary lg:inline-block">
-            {profile.title}
-          </span>
+          <TextScramble
+            className="hidden border-l border-surface-container-high pl-space-md type-meta text-secondary lg:inline-block"
+            text={profile.title}
+          />
         </div>
         <div className="flex items-center gap-space-lg">
           <nav
@@ -47,15 +51,15 @@ export function Header() {
               aria-label="Download CV (PDF)"
               className={cn(
                 ctaLinkVariants({ size: "md", variant: "outline" }),
-                "gap-space-xs px-space-sm max-md:hidden"
+                "max-md:hidden"
               )}
               download={CV_PDF_NAME}
               href={CV_PDF_PATH}
             >
               <DownloadSimpleIcon aria-hidden className="size-4" />
-              CV
+              <span>CV</span>
             </a>
-            <ContactMenu className="px-space-sm md:px-space-md" />
+            <ContactMenu />
             <MobileNav />
           </div>
         </div>

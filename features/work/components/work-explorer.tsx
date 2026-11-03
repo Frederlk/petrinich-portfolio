@@ -3,6 +3,8 @@
 import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import { useQueryStates } from "nuqs";
 
+import { DigitSwap } from "~/components/motion/digit-swap";
+
 import { Input } from "~/ui/input";
 import { Tabs, TabsList, TabsTab } from "~/ui/tabs";
 import { Tip } from "~/ui/tooltip";
@@ -87,8 +89,8 @@ export function WorkExplorer({ domains, rows, roles, techs, years }: Props) {
                 {TYPE_TABS.map((tab) => (
                   <TabsTab className="shrink-0" key={tab} value={tab}>
                     {TYPE_TAB_LABELS[tab]}
-                    <span className="text-on-surface-variant tabular-nums group-data-active:text-on-primary-container">
-                      {countOf(tab)}
+                    <span className="tabular-nums">
+                      <DigitSwap value={countOf(tab)} />
                     </span>
                   </TabsTab>
                 ))}
@@ -123,7 +125,7 @@ export function WorkExplorer({ domains, rows, roles, techs, years }: Props) {
                   aria-live="polite"
                   className="hidden shrink-0 type-label text-secondary tabular-nums sm:block"
                 >
-                  {visible.length} of {rows.length}
+                  <DigitSwap value={visible.length} /> of {rows.length}
                 </span>
                 {filters.q === "" ? null : (
                   <Tip label="Clear search">

@@ -1,6 +1,7 @@
 import { techById } from "~/lib/content";
 import type { Technology } from "~/lib/content";
 import { withoutImplied } from "~/lib/stack-display";
+import { byName } from "~/lib/tech-groups";
 
 // One technology per layer of the app, the first listed that the project uses: framework, API, data, services, AI, infrastructure. React counts only as the app layer of a plain React app (`withoutImplied` drops it under Next.js).
 const LAYERS: readonly (readonly string[])[] = [
@@ -52,7 +53,11 @@ const GROUP_ORDER = [
   "Email & SMS",
   "CMS & commerce",
   "AI engineering",
-  "Front end",
+  "Frameworks, routing & apps",
+  "UI kits & styling",
+  "Animation & 3D",
+  "Data display & editors",
+  "Carousels & galleries",
   "Media & real time",
   "Infrastructure & observability",
   "Web3",
@@ -100,5 +105,9 @@ export function coreTechs(stack: readonly string[]): Technology[] {
     .toSorted((a, b) => rank(a) - rank(b));
   const picked = [...layered, ...rest].slice(0, MAX_CORE);
   const filler = techs.filter((t) => !picked.includes(t) && t.id !== "git");
-  return [...picked, ...filler.slice(0, Math.max(0, MIN_CORE - picked.length))];
+  // The layers decide which technologies are shown; the list a reader sees is alphabetical.
+  return [
+    ...picked,
+    ...filler.slice(0, Math.max(0, MIN_CORE - picked.length)),
+  ].toSorted(byName);
 }

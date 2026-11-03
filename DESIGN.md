@@ -36,10 +36,13 @@ rounded:
 motion:
   colour: "hover and state colour changes on links and controls fade over 150 to 200ms"
   interaction: "hover and focus effects in globals.css: link underline draws in (link-draw), button fill sweeps from the left (fill-sweep), ledger row shows a vermilion edge and slides 8px right (row-accent, row-shift), arrows nudge 4px (arrow-slide), pressed controls scale to 0.97 (press); 260 to 360ms on --ease-enter"
-  indicator: "the active fill of tabs and the table of contents slides to the new item; tabs use 300ms --ease-move, the table of contents a Motion spring of about the same length"
+  indicator: "the active fill of tabs stretches to the new tab: the edge in the direction of travel moves first (300ms), the trailing edge follows (480ms after 80ms), both on --ease-move, and the label darkens as the fill arrives; the table of contents uses a Motion spring"
+  route: "a page change is a view transition (React <ViewTransition>, styles/motion.css): forward (into a project, Next, a header link further right) wipes the new page in from the right over 600ms on --ease-move while the old one slides left and fades; back mirrors it; a link with no direction (a tech chip, a call to action) lets the new page rise 40px, and the browser's own back and forward swap at once; a project's name morphs between its ledger row, the project title and the previous / next cards; the header holds still"
+  scroll: "sections reveal once as they enter the viewport (RevealObserver): ledger rows, experience entries, stack cells and content blocks fade in and rise 28px over 800ms on --ease-enter, staggered 70ms within a batch; section headings rise word by word from behind a mask; an experience marker pops in after its entry; only what starts below the viewport is hidden, so the server HTML is the final page; a 2px vermilion bar under the header tracks reading progress on a project page and /cv (CSS scroll timeline)"
+  details: "changed digits of the /work counter and tab counts drop in (180ms); a project screenshot morphs into a full-screen view and back (320ms --ease-move); the header's job title scrambles and settles once after load and on hover (360ms)"
   ease-enter: "cubic-bezier(0.23, 1, 0.32, 1), for things appearing"
   ease-move: "cubic-bezier(0.77, 0, 0.175, 1), for things moving between positions"
-  duration-cap: "UI motion stays within 360ms; the stat count-up is the one long animation"
+  duration-cap: "UI motion stays within 360ms; route transitions, section reveals, the tab fill and the stat count-up are the long ones"
   reduced-motion: "every animation and transition collapses to 0.01ms"
 ---
 
@@ -56,7 +59,7 @@ This file supersedes the old "Never" list of `docs/design/stitch-brief.md`: uppe
 The Stitch tailwind config is ported one to one into `@theme` in `styles/globals.css`, so the class names of the references work unchanged.
 
 - Colours: the full Stitch palette (`surface`, `surface-container-*`, `on-surface`, `secondary`, `tertiary`, `primary-container`, `outline`, and the rest). The template roles are bound to it: `background` = `surface`, `foreground` = `on-surface`, `primary` = Stitch `primary` (`#ffb5a1`, hover colour of the logo and links), `ring` = `primary-container`, `border` = `surface-container-high`. All of them are CSS variables in `:root`, so the print sheet repaints them.
-- The vermilion `primary-container` (`#ff5626`) is the accent: key numbers, `//` markers, the active filter, the primary button fill. Text on it is `on-primary-container` (`#541000`, 4.56:1).
+- The vermilion `primary-container` (`#ff5626`) is the accent: key numbers, `//` markers, the active filter, the primary button fill. Text on it is `on-primary-container` (`#541000`, 4.56:1). On hover the primary button sweeps to a near-white `on-surface` fill with `surface` text, the same as the outline button, never to the pale `primary`. A button with an icon keeps 8px between icon and label and pads the icon side 4px less than the text side; a tab's count takes its label's colour and changes with it.
 - Spacing keys: `space-xs` 4, `space-sm` 8, `space-md` 16, `space-lg` 24, `space-xl` 40, `space-2xl` 64, `space-3xl` 96, `gutter` 24, `margin-mobile` 20, `margin` 48 (px). The `container` utility is the frame: 1440px wide, 20px side margins, 48px from `md` up.
 - Type: twelve semantic roles, each one `type-*` utility in `styles/typography.css` (section 8). The Stitch names (`text-headline-sm`, `font-code-md`, …) are gone; a component names a role and never a size.
 - Fonts: Archivo Narrow for text and display, JetBrains Mono for labels and data, both through `next/font/google` in `styles/fonts.ts` and bound to `--font-sans` and `--font-mono`.

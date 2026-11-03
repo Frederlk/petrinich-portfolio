@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ArrowSlide } from "~/components/motion/arrow-slide";
+import { SplitWords } from "~/components/motion/split-words";
 import { CtaLink } from "~/components/ui/cta-link";
 
 type Action = { href: string; label: string };
@@ -15,7 +16,9 @@ export function SectionHeader({
 }) {
   return (
     <div className="mb-space-lg flex items-baseline justify-between gap-gutter border-b border-surface-container-high pb-space-sm">
-      <h2 className="type-h2 text-on-surface uppercase">{title}</h2>
+      <h2 className="reveal-words type-h2 text-on-surface uppercase">
+        <SplitWords text={title} />
+      </h2>
       {action ? (
         <Link
           className="group hidden type-button text-on-surface hover:text-primary-container md:inline"

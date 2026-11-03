@@ -5,7 +5,15 @@
     "url": "https://5e.tools",
     "year": 2026,
     "summary": "Improved the parser and fixed five bugs that broke the app in edge cases.",
-    "stack": ["javascript", "node-js", "sass", "jest"]
+    "stack": [
+      "javascript",
+      "node-js",
+      "sass",
+      "jest",
+      "prettier",
+      "sharp",
+      "pwa"
+    ]
   },
   {
     "id": "homebrewery",
@@ -13,7 +21,20 @@
     "url": "https://homebrewery.naturalcrit.com",
     "year": 2026,
     "summary": "Sped up rendering of 500+ page brews by about 320% with smart memoization and virtualization, and improved URL parsing and page navigation.",
-    "stack": ["react", "javascript", "node-js", "express", "mongodb", "jest"]
+    "stack": [
+      "react",
+      "javascript",
+      "node-js",
+      "express",
+      "mongodb",
+      "mongoose",
+      "react-router-dom",
+      "vite",
+      "jwt",
+      "jest",
+      "eslint",
+      "prettier"
+    ]
   },
   {
     "id": "ttg-club",
@@ -21,6 +42,17 @@
     "url": "https://ttg.club",
     "year": 2026,
     "summary": "Worked on parsing and Markdown output, improved the table and grid views for lists, and added better filters.",
-    "stack": ["typescript", "vue", "nuxt", "pinia", "zod"]
+    "stack": [
+      "typescript",
+      "vue",
+      "nuxt",
+      "pinia",
+      "zod",
+      "tailwind-css",
+      "sass",
+      "vitest",
+      "eslint",
+      "prettier"
+    ]
   }
 ]

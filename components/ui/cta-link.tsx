@@ -6,17 +6,18 @@ import { cn } from "~/lib/cn";
 import type { ComponentProps } from "react";
 
 // The call-to-action rectangles of the Stitch screens. Square, mono at 13px. Filled and boxed variants sweep their fill in on hover, the text-only ones draw an underline; both press in slightly.
+// A button with an icon keeps 8px between icon and label and pads the icon side 4px less than the text side (Material's icon-button rule), so the label, not the box, looks centred. The `has-[>svg…]` selectors need the label in its own element: a bare text node is invisible to `:first-child`, so the icon would count as `:only-child`.
 export const ctaLinkVariants = cva(
-  "group press flex items-center justify-center",
+  "group press flex items-center justify-center gap-space-sm",
   {
     defaultVariants: { size: "md", variant: "primary" },
     variants: {
       size: {
         none: "",
-        lg: "px-space-lg py-space-sm",
-        md: "px-space-md py-space-sm",
-        tall: "px-space-xl py-space-md",
-        xl: "px-space-xl py-space-sm",
+        lg: "px-space-lg py-space-sm has-[>svg:first-child:not(:only-child)]:pl-5 has-[>svg:last-child:not(:only-child)]:pr-5",
+        md: "px-space-md py-space-sm has-[>svg:first-child:not(:only-child)]:pl-3 has-[>svg:last-child:not(:only-child)]:pr-3",
+        tall: "px-space-xl py-space-md has-[>svg:first-child:not(:only-child)]:pl-9 has-[>svg:last-child:not(:only-child)]:pr-9",
+        xl: "px-space-xl py-space-sm has-[>svg:first-child:not(:only-child)]:pl-9 has-[>svg:last-child:not(:only-child)]:pr-9",
       },
       variant: {
         accent:
@@ -31,7 +32,7 @@ export const ctaLinkVariants = cva(
         // A plain text link in a footer list: no box, no caps.
         text: "justify-start link-draw type-code text-on-surface-variant hover:text-primary",
         primary:
-          "fill-sweep bg-primary-container type-button text-on-primary-container sweep-primary hover:text-on-primary",
+          "fill-sweep bg-primary-container type-button text-on-primary-container sweep-on-surface hover:text-surface",
       },
     },
   }

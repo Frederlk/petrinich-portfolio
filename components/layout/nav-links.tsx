@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { NAV_ITEMS } from "~/components/layout/nav-items";
+import { NAV_ITEMS, navTransition } from "~/components/layout/nav-items";
 
 import { cn } from "~/lib/cn";
 
@@ -27,6 +27,7 @@ export function NavLinkList({ pathname }: { pathname: string | null }) {
             )}
             href={item.href}
             key={item.href}
+            transitionTypes={navTransition(pathname, item.href)}
           >
             {item.label}
           </Link>

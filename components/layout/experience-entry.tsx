@@ -33,7 +33,7 @@ export function ExperienceEntry({ job }: { job: Job }) {
   const current = parseDateRange(job.dates).end?.text === "Present";
   const href = jobHref(job);
   return (
-    <article className="grid grid-cols-1 gap-x-space-xl gap-y-space-sm border-t border-l border-surface-container-high py-space-lg pl-space-md first:border-t-0 md:grid-cols-[16rem_minmax(0,1fr)] md:pl-space-lg lg:grid-cols-[20rem_minmax(0,1fr)]">
+    <article className="reveal grid grid-cols-1 gap-x-space-xl gap-y-space-sm border-t border-l border-surface-container-high py-space-lg pl-space-md first:border-t-0 md:grid-cols-[16rem_minmax(0,1fr)] md:pl-space-lg lg:grid-cols-[20rem_minmax(0,1fr)]">
       <header className="relative self-start">
         <h3 className="relative type-h3 text-on-surface">
           <span

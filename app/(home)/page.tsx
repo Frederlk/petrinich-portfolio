@@ -1,4 +1,5 @@
 import { JsonLd } from "~/components/json-ld";
+import { PageTransition } from "~/components/motion/page-transition";
 
 import { profilePageJsonLd } from "~/lib/structured-data";
 
@@ -12,14 +13,17 @@ import { StackTeaser } from "~/features/home/components/stack-teaser";
 // Screening order: a recruiter checks fit (hero facts), then keywords (stack), then history (experience), then a hiring manager looks for proof (work); About details and contact close the page.
 export default function Home() {
   return (
-    <main className="min-h-screen w-full bg-surface text-on-surface">
-      <JsonLd data={profilePageJsonLd("")} />
-      <Hero />
-      <StackTeaser />
-      <Experience />
-      <SelectedWork />
-      <About />
-      <Engagement />
-    </main>
+    <>
+      <PageTransition />
+      <main className="min-h-screen w-full bg-surface text-on-surface">
+        <JsonLd data={profilePageJsonLd("")} />
+        <Hero />
+        <StackTeaser />
+        <Experience />
+        <SelectedWork />
+        <About />
+        <Engagement />
+      </main>
+    </>
   );
 }

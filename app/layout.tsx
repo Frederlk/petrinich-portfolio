@@ -6,6 +6,7 @@ import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { NavigationProgress } from "~/components/layout/navigation-progress";
 import { MotionProvider } from "~/components/motion/motion-provider";
+import { RevealObserver } from "~/components/motion/reveal-observer";
 
 import { ToastProvider } from "~/ui/toast";
 import { TooltipProvider } from "~/ui/tooltip";
@@ -71,6 +72,7 @@ export default async function RootLayout({
                   <div className="flex-1 pt-16 print:pt-0">{children}</div>
                   <Footer />
                 </div>
+                <RevealObserver />
                 {FpsMeter === null ? null : <FpsMeter />}
               </ToastProvider>
             </TooltipProvider>

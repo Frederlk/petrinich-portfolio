@@ -1,5 +1,5 @@
 import { buildDate } from "~/lib/build-date";
-import { earlyWork, projects } from "~/lib/content";
+import { earlyWork, openSource, projects } from "~/lib/content";
 import { SITE_FILES, SITE_PAGES } from "~/lib/site-pages";
 import { siteUrl } from "~/lib/site-url";
 
@@ -11,5 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...SITE_FILES.filter((f) => f.sitemap).map((f) => f.path),
     ...projects.map((p) => `/work/${p.id}`),
     ...earlyWork.map((w) => `/work/${w.id}`),
+    ...openSource.map((o) => `/work/${o.id}`),
   ].map((route) => ({ lastModified: buildDate, url: `${siteUrl}${route}` }));
 }

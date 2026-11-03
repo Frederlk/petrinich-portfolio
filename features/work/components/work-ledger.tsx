@@ -7,6 +7,7 @@ import {
   type LedgerSort,
 } from "~/components/layout/ledger-header";
 import { LinkPending } from "~/components/layout/link-pending";
+import { NAV_FORWARD, ProjectName } from "~/components/motion/page-transition";
 import { StackBadges } from "~/components/stack-badges";
 
 import { Tip } from "~/ui/tooltip";
@@ -19,25 +20,34 @@ import {
 
 import { BUILD_LABELS, type WorkRow } from "~/features/work/work-types";
 
-const rowClass =
-  "group row-accent block w-full border-b border-surface-container-high hover:bg-surface-container";
+// Every row reveals as it scrolls in (RevealObserver); a row that links also lights up on hover.
+const rowBase = "reveal block w-full border-b border-surface-container-high";
+const rowClass = `${rowBase} group row-accent hover:bg-surface-container`;
 
+// A row with a page of its own shares the project's name with that page's title (ProjectName).
 function RowBody({ row }: { row: WorkRow }) {
+  const name = (
+    <h3 className="type-h3 text-on-surface uppercase group-hover:text-primary-container">
+      {row.name}
+      {row.href !== null && !row.href.startsWith("/") ? (
+        <ArrowUpRightIcon
+          aria-hidden
+          className="ml-space-xs inline size-4 align-baseline"
+        />
+      ) : null}
+    </h3>
+  );
   return (
     <div className="row-shift grid grid-cols-1 items-start gap-y-2 px-space-md py-space-md lg:grid-cols-12 lg:items-center lg:gap-gutter">
       <div className="type-meta text-tertiary group-hover:text-on-surface lg:col-span-1">
         {row.year ?? "–"}
       </div>
       <div className="flex flex-col lg:col-span-3">
-        <h3 className="type-h3 text-on-surface uppercase group-hover:text-primary-container">
-          {row.name}
-          {row.href !== null && !row.href.startsWith("/") ? (
-            <ArrowUpRightIcon
-              aria-hidden
-              className="ml-space-xs inline size-4 align-baseline"
-            />
-          ) : null}
-        </h3>
+        {row.href?.startsWith("/") === true ? (
+          <ProjectName id={row.id}>{name}</ProjectName>
+        ) : (
+          name
+        )}
         {/* The kind as a short label, then each domain as its own tag, in the stack tags' style. */}
         <div className="mt-1 flex flex-wrap items-center gap-space-xs">
           <span className="type-label text-tertiary">
@@ -74,14 +84,14 @@ function RowBody({ row }: { row: WorkRow }) {
 function Row({ row }: { row: WorkRow }) {
   if (row.href === null) {
     return (
-      <div className="block w-full border-b border-surface-container-high">
+      <div className={rowBase}>
         <RowBody row={row} />
       </div>
     );
   }
   if (row.href.startsWith("/")) {
     return (
-      <Link className={rowClass} href={row.href}>
+      <Link className={rowClass} href={row.href} transitionTypes={NAV_FORWARD}>
         <RowBody row={row} />
         <LinkPending />
       </Link>

@@ -2,12 +2,11 @@
 import { technologies } from "~/lib/content";
 import type { Technology } from "~/lib/content";
 import { isOnStack } from "~/lib/derive-stats";
-import { byUse, groupRank } from "~/lib/tech-groups";
+import { byName, groupRank, homeGroup } from "~/lib/tech-groups";
 
 import type { StackGroup, StackItem } from "~/features/stack/stack-types";
 
 const CORE_GROUP = "Core stack";
-const AI_GROUP = "AI engineering";
 
 function toItem({ aliases, facts, id, name }: Technology): StackItem {
   const span =
@@ -32,23 +31,27 @@ const slug = (text: string) =>
     .replaceAll(/[^a-z0-9]+/g, "-")
     .replaceAll(/^-|-$/g, "");
 
-// Groups in the site's reading order (`GROUP_ORDER`). The core stack and AI tools keep the order technologies.json gives them, which is curated; in every other group the most used come first.
-const CURATED = new Set([CORE_GROUP, AI_GROUP]);
+// Groups in `GROUP_ORDER` (Core stack first, then alphabetical), each alphabetical inside (`byName`). A core technology is listed twice: in the Core stack block and in its usual group (`homeGroup`).
+const onStack = technologies.filter((t) => isOnStack(t));
 
-export const stackGroups: StackGroup[] = Map.groupBy(
-  technologies.filter((t) => isOnStack(t)),
-  (t) => t.group
-)
-  .entries()
-  .toArray()
+const toGroup = ([name, items]: [string, Technology[]]): StackGroup => ({
+  id: slug(name),
+  items: items.toSorted(byName).map(toItem),
+  name,
+});
+
+// Each technology once, under the group technologies.json gives it: the machine-readable catalogue (`lib/catalogue.ts`) lists these.
+export const stackGroups: StackGroup[] = [
+  ...Map.groupBy(onStack, (t) => t.group),
+]
   .toSorted(([a], [b]) => groupRank(a) - groupRank(b))
-  .map(([name, items]) => ({
-    id: slug(name),
-    items: (CURATED.has(name) ? items : items.toSorted(byUse)).map(toItem),
-    name,
-  }));
+  .map(toGroup);
 
 export const coreStack = stackGroups.find((g) => g.name === CORE_GROUP);
 
 // Every group except the core stack, which the page shows on its own.
-export const otherGroups = stackGroups.filter((g) => g.name !== CORE_GROUP);
+export const otherGroups: StackGroup[] = Map.groupBy(onStack, homeGroup)
+  .entries()
+  .toArray()
+  .toSorted(([a], [b]) => groupRank(a) - groupRank(b))
+  .map(toGroup);

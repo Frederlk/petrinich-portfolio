@@ -545,6 +545,8 @@
     "employer": "ux-mind",
     "scope": ["fullstack"],
     "stack": [
+      "lemon-squeezy",
+      "polar",
       "next-js",
       "react",
       "typescript",
@@ -3688,7 +3690,7 @@
       "pencil",
       "pgvector"
     ],
-    "links": [],
+    "links": [{ "type": "live", "url": "https://tes-mundus.vercel.app" }],
     "media": ["/work/dnd-toolkit.webp"],
     "featured": false,
     "caseStudy": "dnd-toolkit"
