@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- I designed the architecture. The app is a Next.js App Router project with Cache Components and React Compiler on. Client components that read uncached data, such as auth state, sit inside Suspense.
+- The API is an oRPC router with two kinds of procedure. A public one attaches an optional session and the client IP. An authenticated one rejects the call when there is no session. The client calls the API through TanStack Query, with server prefetch and hydration.
+- Data lives in PostgreSQL on Neon, through Prisma and its Neon driver adapter. The app connects through a pooled connection, and the Prisma CLI uses a direct one.
+- Auth is Better Auth with email and password, magic link, Google, Apple and Facebook. A social provider turns on only when its credentials are set. The fields that carry the tier and the Stripe ids cannot be set from the client.
+- Env variables go through T3 Env with Zod. The Stripe, Resend, Vercel Blob and OAuth variables are optional, so the app starts without them.
+- A Vercel Cron job runs at UTC midnight. It resets the daily counters and deletes old anonymous sessions. A secret guards it.
+
+## Cases
+
+**Page access decided on the server.** Free readers get a few pages. Buyers get the whole book. The full-size images must not be reachable by a direct link. One server function decides per tier and page number, and the reader asks the API before it shows a page. The proxy layer answers 403 for the full-size image paths unless the referer is the same origin. It also redirects the profile and tools pages to the login dialog when there is no session cookie.
+
+**A webhook that skips repeated events.** Three Stripe products feed one webhook: two one-time purchases and a monthly subscription. Stripe retries events, so the handler first checks for a payment with the same Stripe id and skips the repeat. The Checkout Session carries the user id and the purchase type in its metadata, and the handler sets the tier from the type. The first 10 members get a perk. They are counted with a single counter row that is incremented inside a transaction.
+
+**From a PDF to 228 WebP pages.** The book came as a PDF of two-page spreads. The product needed single pages, thumbnails, chapters and a CDN. A script renders each PDF page at 2x with mupdf, which runs as WASM and has no native dependencies. sharp cuts every spread into a left and a right half and writes a full image and a thumbnail as WebP. The script warns when the page count differs from the expected one. A seed script creates 12 chapters and 228 page rows with upserts, so it can run again safely. An upload script maps the local files to Vercel Blob URLs.

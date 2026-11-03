@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>NoaSpot — Project Specimen // Sergey Petrinich</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-bright": "#3a3939", "on-error-container": "#ffdad6", "surface-container-low": "#1c1b1b", "on-tertiary-fixed": "#1b1c1c", "secondary": "#c6c6c7", "tertiary-fixed": "#e3e2e2", "on-secondary-container": "#b4b5b5", "on-secondary-fixed": "#1a1c1c", "on-tertiary-fixed-variant": "#464747", "surface": "#131313", "on-secondary-fixed-variant": "#454747", "secondary-container": "#454747", "surface-container-high": "#2a2a2a", "secondary-fixed": "#e2e2e2", "background": "#131313", "inverse-surface": "#e5e2e1", "on-primary-container": "#541000", "surface-container-lowest": "#0e0e0e", "outline-variant": "#5c4039", "surface-tint": "#ffb5a1", "surface-container-highest": "#353534", "error-container": "#93000a", "on-primary-fixed-variant": "#882000", "primary-fixed-dim": "#ffb5a1", "on-tertiary-container": "#292a2a", "tertiary-fixed-dim": "#c7c6c6", "tertiary": "#c7c6c6", "primary": "#ffb5a1", "outline": "#ac897f", "on-tertiary": "#303031", "error": "#ffb4ab", "tertiary-container": "#919191", "primary-fixed": "#ffdbd1", "inverse-primary": "#b22d00", "on-primary": "#601400", "on-primary-fixed": "#3b0900", "inverse-on-surface": "#313030", "secondary-fixed-dim": "#c6c6c7", "on-secondary": "#2f3131", "primary-container": "#ff5626", "on-background": "#e5e2e1", "surface-container": "#201f1f", "surface-dim": "#131313", "on-error": "#690005", "on-surface-variant": "#e5beb4", "on-surface": "#e5e2e1", "surface-variant": "#353534" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "space-3xl": "6rem", "gutter-mobile": "1rem", "space-xl": "2.5rem", "gutter": "1.5rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "margin-mobile": "1.25rem", "margin": "3rem", "space-2xl": "4rem", "space-sm": "0.5rem" }, "fontFamily": { "body-md": ["Archivo Narrow"], "headline-lg": ["Archivo Narrow"], "headline-md": ["Archivo Narrow"], "code-sm": ["JetBrains Mono"], "body-sm": ["Archivo Narrow"], "display-xl-mobile": ["Archivo Narrow"], "headline-lg-mobile": ["Archivo Narrow"], "code-md": ["JetBrains Mono"], "display-xl": ["Archivo Narrow"], "body-lg": ["Archivo Narrow"], "code-lg": ["JetBrains Mono"], "headline-sm": ["Archivo Narrow"] }, "fontSize": { "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["3.25rem", { "lineHeight": "3.5rem", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-md": ["2rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "code-sm": ["0.6875rem", { "lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "400" }], "body-sm": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-xl-mobile": ["3rem", { "lineHeight": "3.125rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "headline-lg-mobile": ["2.25rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "code-md": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "display-xl": ["5rem", { "lineHeight": "5rem", "letterSpacing": "-0.04em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0em", "fontWeight": "400" }], "code-lg": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.02em", "fontWeight": "500" }], "headline-sm": ["1.375rem", { "lineHeight": "1.625rem", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface border-b border-surface-container-high"><div class="h-16 max-w-[1440px] mx-auto px-margin-mobile md:px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase hover:text-primary transition-none" data-path="work" href="#">Sergey Petrinich</a><span class="hidden lg:inline-block font-code-sm text-code-sm text-secondary uppercase border-l border-surface-container-high pl-space-md tracking-wider">[Lead Full-Stack Dev]</span></div><div class="flex items-center gap-space-lg"><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-on-surface border-b border-primary-container font-code-md text-code-md"><a aria-current="page" class="uppercase tracking-wider py-space-xs transition-none text-on-surface border-b border-primary-container font-code-md text-code-md" data-path="work" href="#">Work</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface uppercase tracking-wider py-space-xs transition-none" data-path="stack" href="#">Stack</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface uppercase tracking-wider py-space-xs transition-none" data-path="experience" href="#">Experience</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface uppercase tracking-wider py-space-xs transition-none" data-path="about" href="#">About</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface uppercase tracking-wider py-space-xs transition-none" data-path="cv" href="#">CV</a></nav><div class="flex items-center gap-space-md"><a class="font-code-md text-code-md bg-primary-container text-on-primary-container px-space-md py-space-sm uppercase tracking-wider font-bold hover:bg-primary hover:text-on-primary transition-none flex items-center justify-center" data-path="hire-me" href="#">Hire me</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full bg-surface text-on-surface">
+<!-- TOP BACK NAVIGATION & SYSTEM BREADCRUMB -->
+<div class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pt-space-lg">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container-high">
+<a class="group inline-flex items-center gap-space-xs font-code-md text-code-md text-secondary hover:text-on-surface transition-none uppercase tracking-wider" data-path="work" href="#">
+<span class="group-hover:-translate-x-1 transition-transform inline-block">&lt;-</span>
+<span>WORK // INDEX 01</span>
+</a>
+<div class="flex items-center gap-space-md font-code-sm text-code-sm">
+<span class="text-secondary uppercase hidden sm:inline">SPECIMEN ID: SPEC-2026-NOA</span>
+<span class="w-1.5 h-1.5 bg-primary-container inline-block"></span>
+<span class="text-primary-container uppercase font-bold">RELEASE ACTIVE</span>
+</div>
+</div>
+</div>
+<!-- SECTION 01: MONUMENTAL HERO SPECIMEN -->
+<section class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pt-space-xl pb-space-2xl">
+<!-- Specimen Mega Display Title -->
+<div class="w-full overflow-hidden mb-space-lg">
+<h1 class="font-display-xl text-[4rem] sm:text-[6.5rem] lg:text-[9.5rem] uppercase tracking-tighter text-on-surface select-none leading-none">
+      NOASPOT<span class="text-primary-container">.</span>
+</h1>
+</div>
+<!-- Editorial Sub-Headline & Swiss Scope Column -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-space-2xl">
+<div class="md:col-span-8">
+<p class="font-headline-md text-headline-sm md:text-headline-md text-on-surface uppercase tracking-tight leading-snug">
+        Place-discovery API and admin with semantic search on Gemini.
+      </p>
+</div>
+<div class="md:col-span-4 flex flex-col justify-end">
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest pb-space-xs border-b border-surface-container-high mb-space-xs">
+        // ARCHITECTURAL DISCIPLINE
+      </div>
+<p class="font-code-md text-code-md text-secondary leading-relaxed">
+        High-dimensional geospatial indexation paired with real-time vector embeddings and decoupled administrative dashboard.
+      </p>
+</div>
+</div>
+<!-- Full-Width Horizontal Telemetry & Meta Band (4 Metric Blocks) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-b border-surface-container-high">
+<div class="p-space-lg border-b sm:border-b-0 sm:border-r border-surface-container-high flex flex-col justify-between">
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest mb-space-xs">01 // YEAR</div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">2026</div>
+<div class="mt-space-sm pt-space-xs border-t border-surface-container-high font-code-sm text-code-sm text-primary-container uppercase">
+        [ACTIVE COMMITS]
+      </div>
+</div>
+<div class="p-space-lg border-b sm:border-b-0 lg:border-r border-surface-container-high flex flex-col justify-between">
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest mb-space-xs">02 // ROLE</div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">SOLE LEAD</div>
+<div class="mt-space-sm pt-space-xs border-t border-surface-container-high font-code-sm text-code-sm text-secondary uppercase">
+        [END-TO-END SYSTEM]
+      </div>
+</div>
+<div class="p-space-lg border-b sm:border-b-0 sm:border-r border-surface-container-high flex flex-col justify-between">
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest mb-space-xs">03 // CLIENT</div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">COMMERCIAL</div>
+<div class="mt-space-sm pt-space-xs border-t border-surface-container-high font-code-sm text-code-sm text-secondary uppercase">
+        [CONFIDENTIAL]
+      </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between">
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest mb-space-xs">04 // LIVE SYSTEM</div>
+<div class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">noaspot.com</div>
+<div class="mt-space-sm pt-space-xs border-t border-surface-container-high">
+<a class="font-code-sm text-code-sm text-primary-container hover:underline uppercase font-bold flex items-center gap-space-xs" href="https://noaspot.com" rel="noopener noreferrer" target="_blank">
+          LAUNCH SYSTEM [-&gt;]
+        </a>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 02: MONUMENTAL DOUBLE-VIEWPORT FRAME -->
+<section class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pb-space-3xl">
+<!-- Viewport Frame Chrome & Dual Tab Trigger -->
+<div class="border border-surface-container-high bg-surface-container-lowest">
+<div class="flex flex-wrap items-center justify-between border-b border-surface-container-high px-space-md py-space-sm gap-space-md bg-surface-container-low">
+<!-- Dual Tabs -->
+<div class="flex items-center gap-space-xs">
+<button class="bg-surface border border-surface-container-high text-on-surface px-space-md py-space-xs font-code-sm text-code-sm uppercase tracking-wider flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 bg-primary-container inline-block"></span>
+<span>[01 // ADMIN WORKSPACE]</span>
+</button>
+<button class="border border-transparent hover:border-surface-container-high text-secondary hover:text-on-surface px-space-md py-space-xs font-code-sm text-code-sm uppercase tracking-wider">
+<span>[02 // SPATIAL SEARCH ENGINE API]</span>
+</button>
+</div>
+<!-- Technical Telemetry Badges -->
+<div class="flex items-center gap-space-lg font-code-sm text-code-sm text-secondary">
+<span class="hidden md:inline">LOC: 37.7749° N, 122.4194° W</span>
+<span class="text-on-surface">STATUS: 200 OK // 42ms</span>
+</div>
+</div>
+<!-- Expansive Architectural High-Res Viewport Frame -->
+<div class="relative w-full aspect-[16/9] md:aspect-[21/9] min-h-[420px] bg-surface-container-lowest flex flex-col justify-between p-space-md md:p-space-xl overflow-hidden">
+<!-- Hairline Technical Crosshairs & Coordinate Marks -->
+<div class="flex justify-between items-start font-code-sm text-code-sm text-secondary/60">
+<div class="flex items-center gap-space-xs">
+<span>+</span>
+<span class="font-mono text-[10px]">VP-LAYER: CANVAS-PRIMARY</span>
+</div>
+<div class="font-mono text-[10px]">RES: 3840x1600 [UHD]</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-[10px]">LATENCY: 42MS</span>
+<span>+</span>
+</div>
+</div>
+<!-- Centered Schematic Specimen Box -->
+<div class="self-center text-center max-w-2xl border border-dashed border-surface-container-high bg-surface/75 backdrop-blur-sm p-space-lg md:p-space-xl">
+<div class="w-8 h-8 mx-auto mb-space-md border border-primary-container flex items-center justify-center">
+<span class="w-2 h-2 bg-primary-container"></span>
+</div>
+<div class="font-code-sm text-code-sm text-primary-container uppercase tracking-widest mb-space-xs">
+          // SYSTEM PREVIEW
+        </div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-sm">
+          NOASPOT DUAL INTERFACE PLATFORM
+        </div>
+<p class="font-code-sm text-code-sm text-secondary max-w-md mx-auto mb-space-md">
+          Unified administrative console managing 120,000+ vector nodes, taxonomy hierarchy, dynamic radius geo-filters, and Gemini semantic query parser.
+        </p>
+<div class="inline-block border border-surface-container-high px-space-md py-space-xs font-code-sm text-code-sm text-secondary uppercase">
+          [HIGH-RES NEUTRAL FRAME // DUAL CLIENT DEPLOYMENT]
+        </div>
+</div>
+<!-- Bottom Frame Hairline Telemetry Grid -->
+<div class="flex justify-between items-end font-code-sm text-code-sm text-secondary/60 pt-space-md border-t border-surface-container-high/50">
+<div class="flex items-center gap-space-xs">
+<span>+</span>
+<span class="font-mono text-[10px]">GEO: EPSG:4326 WGS84</span>
+</div>
+<div class="hidden sm:inline font-mono text-[10px]">EMBED-DIM: 768-D // GEMINI TEXT-EMBEDDING-004</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-[10px]">PIPELINE: STEADY</span>
+<span>+</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 03: FOUR-COLUMN ARCHITECTURAL LEDGER -->
+<section class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pb-space-3xl">
+<div class="flex items-end justify-between pb-space-sm border-b border-surface-container-high mb-space-lg">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-md text-code-md text-primary-container font-bold">01 //</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">ENGINEERING DISSECTION</h2>
+</div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-wider hidden sm:block">
+      FOUR-PILLAR ARCHITECTURAL LEDGER
+    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-b border-surface-container-high">
+<!-- Col 1: Problem -->
+<div class="p-space-lg border-b lg:border-b-0 border-surface-container-high lg:border-r flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-primary-container uppercase tracking-widest mb-space-xs">
+          01 // PROBLEM
+        </div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-md">
+          KEYWORD LIMITS
+        </h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed mb-space-lg">
+          Legacy lexical and regex keyword queries consistently fail contextual and semantic intent. Travelers searching for nuanced atmospheres (“quiet courtyard with artisanal roast espresso and laptop booths”) received zero matches in traditional relational SQL indices.
+        </p>
+</div>
+<div class="pt-space-md border-t border-surface-container-high font-code-sm text-code-sm text-secondary uppercase">
+        FAILURE: 68% SYNTAX MISS RATE
+      </div>
+</div>
+<!-- Col 2: Role -->
+<div class="p-space-lg border-b lg:border-b-0 border-surface-container-high sm:border-r flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-primary-container uppercase tracking-widest mb-space-xs">
+          02 // MY ROLE
+        </div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-md">
+          END-TO-END LEAD
+        </h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed mb-space-lg">
+          Sole developer: architecture, implementation, and deployment from scratch. Formulated the high-dimensional vector search taxonomy, built the FastAPI ingestion worker pool, crafted the responsive Next.js administrative dashboard, and automated the zero-downtime CI/CD container workflow.
+        </p>
+</div>
+<div class="pt-space-md border-t border-surface-container-high font-code-sm text-code-sm text-secondary uppercase">
+        CAPACITY: 100% SPEC &amp; EXECUTION
+      </div>
+</div>
+<!-- Col 3: Decisions -->
+<div class="p-space-lg border-b md:border-b-0 border-surface-container-high lg:border-r flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-primary-container uppercase tracking-widest mb-space-xs">
+          03 // DECISIONS
+        </div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-md">
+          VECTOR FASTAPI
+        </h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed mb-space-lg">
+          Leveraged Google Gemini <code class="font-code-sm text-on-surface text-xs bg-surface-container-high px-1">text-embedding-004</code> models mapped to a pgvector PostgreSQL instance. Coupled with an asynchronous Python FastAPI runtime and cached Next.js App Router for instant client hydration.
+        </p>
+</div>
+<div class="pt-space-md border-t border-surface-container-high font-code-sm text-code-sm text-secondary uppercase">
+        STACK: GEMINI + PGVECTOR + FASTAPI
+      </div>
+</div>
+<!-- Col 4: Outcome -->
+<div class="p-space-lg flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-primary-container uppercase tracking-widest mb-space-xs">
+          04 // OUTCOME
+        </div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-md">
+          SUB-80MS SEARCH
+        </h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed mb-space-lg">
+          120k places queried in &lt;80ms with 99.98% semantic precision across 40 geographic metros. Administrative batch indexing throughput jumped by 420%, eliminating manual tagging backlogs and establishing zero cold-start discovery queries.
+        </p>
+</div>
+<div class="pt-space-md border-t border-surface-container-high font-code-sm text-code-sm text-primary-container uppercase font-bold">
+        METRIC: 120K NODES // &lt;80MS SLA
+      </div>
+</div>
+</div>
+</section>
+<!-- SECTION 04: SYSTEM ARCHITECTURE & FEATURES INVENTORY (TABULAR LEDGER) -->
+<section class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pb-space-3xl">
+<div class="flex items-end justify-between pb-space-sm border-b border-surface-container-high mb-space-lg">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-md text-code-md text-primary-container font-bold">02 //</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">SYSTEM ARCHITECTURE &amp; CAPABILITIES INVENTORY</h2>
+</div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-wider hidden sm:block">
+      HIGH-DENSITY COMPONENT BREAKDOWN
+    </div>
+</div>
+<!-- Tabular Feature Specification -->
+<div class="border border-surface-container-high bg-surface-container-lowest overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[720px]">
+<thead>
+<tr class="border-b border-surface-container-high bg-surface-container-low font-code-sm text-code-sm text-secondary uppercase tracking-widest">
+<th class="py-space-sm px-space-md font-medium">SUBSYSTEM MODULE</th>
+<th class="py-space-sm px-space-md font-medium">SPECIFICATION DETAIL</th>
+<th class="py-space-sm px-space-md font-medium">PRIMARY STACK DISCIPLINE</th>
+<th class="py-space-sm px-space-md font-medium text-center">MEASURED LATENCY</th>
+<th class="py-space-sm px-space-md font-medium text-right">TARGET SLA</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high font-body-md text-body-md">
+<!-- Item 01 -->
+<tr class="hover:bg-surface-container-low transition-none">
+<td class="py-space-md px-space-md font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">
+            Vector Ingestion Pipeline
+          </td>
+<td class="py-space-md px-space-md text-secondary font-body-sm text-body-sm">
+            Automated batching and normalization of unstructured location descriptions into 768-dimensional spatial vectors.
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-on-surface">
+            [Python, Gemini API, Celery]
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-center text-primary-container">
+            185ms / batch
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-right text-secondary">
+            99.99% Uptime
+          </td>
+</tr>
+<!-- Item 02 -->
+<tr class="hover:bg-surface-container-low transition-none">
+<td class="py-space-md px-space-md font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">
+            Spatial Nearest-Neighbor Query
+          </td>
+<td class="py-space-md px-space-md text-secondary font-body-sm text-body-sm">
+            Hybrid HNSW vector index intersection with PostGIS polygon filters for precise sub-second radius bounding.
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-on-surface">
+            [PostgreSQL, pgvector, PostGIS]
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-center text-primary-container">
+            42ms
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-right text-secondary">
+            &lt;60ms P99
+          </td>
+</tr>
+<!-- Item 03 -->
+<tr class="hover:bg-surface-container-low transition-none">
+<td class="py-space-md px-space-md font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">
+            Asynchronous REST/JSON API
+          </td>
+<td class="py-space-md px-space-md text-secondary font-body-sm text-body-sm">
+            High-throughput ASGI endpoints servicing web clients, mobile apps, and programmatic partners with rate limiting.
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-on-surface">
+            [FastAPI, Uvicorn, Redis Cache]
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-center text-primary-container">
+            14ms (Cached)
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-right text-secondary">
+            10,000 req/min
+          </td>
+</tr>
+<!-- Item 04 -->
+<tr class="hover:bg-surface-container-low transition-none">
+<td class="py-space-md px-space-md font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">
+            Admin Workspace &amp; Curators
+          </td>
+<td class="py-space-md px-space-md text-secondary font-body-sm text-body-sm">
+            Decoupled operational interface for manual vector fine-tuning, taxonomy classification, and real-time audit logs.
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-on-surface">
+            [Next.js, TypeScript, Tailwind]
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-center text-primary-container">
+            28ms TTFB
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-right text-secondary">
+            100% Core Vitals
+          </td>
+</tr>
+<!-- Item 05 -->
+<tr class="hover:bg-surface-container-low transition-none">
+<td class="py-space-md px-space-md font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">
+            Cluster Orchestration &amp; CI/CD
+          </td>
+<td class="py-space-md px-space-md text-secondary font-body-sm text-body-sm">
+            Containerized reproducible staging and production clusters with blue-green automated schema migrations.
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-on-surface">
+            [Docker, GitHub Actions, Traefik]
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-center text-primary-container">
+            0ms Downtime
+          </td>
+<td class="py-space-md px-space-md font-code-sm text-code-sm text-right text-secondary">
+            Automated Rollback
+          </td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- SECTION 05: FULL TECH STACK MATRIX -->
+<section class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pb-space-3xl">
+<div class="flex items-end justify-between pb-space-sm border-b border-surface-container-high mb-space-lg">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-md text-code-md text-primary-container font-bold">03 //</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">FULL TECHNICAL STACK</h2>
+</div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-wider hidden sm:block">
+      GROUPED BY ARCHITECTURAL LAYER
+    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Layer: Backend Engine -->
+<div class="border border-surface-container-high p-space-lg bg-surface-container-lowest flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest pb-space-xs border-b border-surface-container-high mb-space-md">
+          // LAYER 01: BACKEND
+        </div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-sm">
+          SERVER RUNTIME
+        </div>
+<p class="font-body-sm text-body-sm text-secondary mb-space-lg">
+          High-concurrency async services managing ingestion streams and API serialization.
+        </p>
+</div>
+<div class="flex flex-wrap gap-space-xs font-code-sm text-code-sm">
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Python 3.12</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">FastAPI</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Pydantic v2</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Uvicorn ASGI</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Celery Workers</span>
+</div>
+</div>
+<!-- Layer: AI & Vector Search -->
+<div class="border border-surface-container-high p-space-lg bg-surface-container-lowest flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest pb-space-xs border-b border-surface-container-high mb-space-md">
+          // LAYER 02: AI / SEARCH
+        </div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-sm">
+          VECTOR RETRIEVAL
+        </div>
+<p class="font-body-sm text-body-sm text-secondary mb-space-lg">
+          Multimodal representation algorithms and spatial nearest neighbor calculation.
+        </p>
+</div>
+<div class="flex flex-wrap gap-space-xs font-code-sm text-code-sm">
+<span class="border border-primary-container text-primary-container px-space-sm py-space-xs font-bold">Google Gemini</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">pgvector</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">HNSW Indexing</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Cosine Similarity</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">PostGIS Geo</span>
+</div>
+</div>
+<!-- Layer: Interface & Client -->
+<div class="border border-surface-container-high p-space-lg bg-surface-container-lowest flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest pb-space-xs border-b border-surface-container-high mb-space-md">
+          // LAYER 03: INTERFACE
+        </div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-sm">
+          CLIENT &amp; ADMIN
+        </div>
+<p class="font-body-sm text-body-sm text-secondary mb-space-lg">
+          Modern web workspace featuring server components, instant filtering, and responsive states.
+        </p>
+</div>
+<div class="flex flex-wrap gap-space-xs font-code-sm text-code-sm">
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Next.js 15</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">TypeScript 5</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Tailwind CSS</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">React Server Comp</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">TanStack Query</span>
+</div>
+</div>
+<!-- Layer: Infrastructure & Cloud -->
+<div class="border border-surface-container-high p-space-lg bg-surface-container-lowest flex flex-col justify-between">
+<div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest pb-space-xs border-b border-surface-container-high mb-space-md">
+          // LAYER 04: INFRASTRUCTURE
+        </div>
+<div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight mb-space-sm">
+          DEPLOYMENT &amp; OPS
+        </div>
+<p class="font-body-sm text-body-sm text-secondary mb-space-lg">
+          Zero-downtime automated provisioning with resilient caching and reverse proxies.
+        </p>
+</div>
+<div class="flex flex-wrap gap-space-xs font-code-sm text-code-sm">
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Docker Engine</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">PostgreSQL 16</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Redis Cache</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">Traefik Proxy</span>
+<span class="border border-surface-container-high px-space-sm py-space-xs text-on-surface">GitHub Actions</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 06: BOTTOM PROJECT CYCLER -->
+<section class="w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin pb-space-3xl">
+<div class="border border-surface-container-high grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-surface-container-high bg-surface-container-lowest">
+<!-- Previous Project Trigger -->
+<a class="group p-space-xl hover:bg-surface-container-low transition-none flex flex-col justify-between" data-path="work-basc" href="#">
+<div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest mb-space-xs group-hover:text-primary-container flex items-center gap-space-xs">
+<span>&lt;-</span>
+<span>PREVIOUS SPECIMEN</span>
+</div>
+<div class="font-display-xl text-headline-lg md:text-headline-lg font-bold text-on-surface uppercase tracking-tight leading-none mb-space-xs">
+          BASC
+        </div>
+<div class="font-code-sm text-code-sm text-secondary uppercase">
+          EPOCH: 2025 // LEAD ROLE // AVIATION SAFETY
+        </div>
+</div>
+<div class="mt-space-lg pt-space-sm border-t border-surface-container-high font-code-md text-code-md text-secondary group-hover:text-on-surface uppercase">
+        [&lt;- INSPECT BASC PROJECT SPECIFICATION]
+      </div>
+</a>
+<!-- Next Project Trigger -->
+<a class="group p-space-xl hover:bg-surface-container-low transition-none flex flex-col justify-between text-left md:text-right" data-path="work-ohbirdie" href="#">
+<div>
+<div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest mb-space-xs group-hover:text-primary-container flex items-center justify-start md:justify-end gap-space-xs">
+<span>NEXT SPECIMEN</span>
+<span>-&gt;</span>
+</div>
+<div class="font-display-xl text-headline-lg md:text-headline-lg font-bold text-on-surface uppercase tracking-tight leading-none mb-space-xs">
+          OHBIRDIE
+        </div>
+<div class="font-code-sm text-code-sm text-secondary uppercase">
+          EPOCH: 2026 // LEAD ROLE // REAL-TIME SAAS
+        </div>
+</div>
+<div class="mt-space-lg pt-space-sm border-t border-surface-container-high font-code-md text-code-md text-secondary group-hover:text-on-surface uppercase">
+        [INSPECT OHBIRDIE PROJECT SPECIFICATION -&gt;]
+      </div>
+</a>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-surface-container-high py-space-2xl"><div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin grid grid-cols-1 md:grid-cols-12 gap-gutter"><div class="md:col-span-4 flex flex-col justify-between"><div class="space-y-space-xs"><div class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">Sergey Petrinich</div><p class="font-code-sm text-code-sm text-secondary">Systems Architect &amp; Engineering Lead. Precision software built on Swiss Modernist principles.</p></div><div class="mt-space-xl font-code-sm text-code-sm text-on-surface-variant">© 2025 Sergey Petrinich. All rights reserved.</div></div><div class="md:col-span-4 flex flex-col space-y-space-sm"><div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest">// Navigation Index</div><div class="flex flex-col space-y-space-xs"><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface transition-none" data-path="work" href="#">01. Selected Works [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface transition-none" data-path="stack" href="#">02. Technical Stack [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface transition-none" data-path="experience" href="#">03. Career Timeline [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface transition-none" data-path="about" href="#">04. Architecture Log &amp; Bio [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-on-surface transition-none" data-path="cv" href="#">05. Plaintext Curriculum Vitae [-&gt;]</a></div></div><div class="md:col-span-4 flex flex-col space-y-space-sm"><div class="font-code-sm text-code-sm text-secondary uppercase tracking-widest">// Telemetry &amp; Contact</div><div class="flex flex-col space-y-space-xs"><a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-none" href="mailto:contact@sergeypetrinich.dev">Email: sergey@petrinich.dev [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-none" href="#">GitHub: /spetrinich [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-none" href="#">LinkedIn: /in/sergeypetrinich [-&gt;]</a><a class="font-code-md text-code-md text-on-surface-variant hover:text-primary transition-none" href="#">PGP Key: 0x9B44F2A109 [-&gt;]</a></div><div class="mt-space-md pt-space-sm border-t border-surface-container-high flex items-center justify-between font-code-sm text-code-sm text-secondary"><span>STATUS: AVAILABLE FOR CONTRACT</span><span class="w-2 h-2 bg-primary-container inline-block"></span></div></div></div></footer></body></html>

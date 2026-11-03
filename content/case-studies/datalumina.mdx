@@ -1,0 +1,20 @@
+## Patterns and decisions
+
+- Sanity Studio is mounted inside the site, with 14 schema types, a custom desk structure and a theme.
+- Every read goes through one fetch helper. It has three modes: ISR with a 60 second revalidate, an indefinite cache when tags are given, and no cache with the draft perspective in draft mode.
+- Reads use the CDN client. Stega encoding is on only for Vercel preview deployments.
+- Route groups split the layouts. The main group holds the header and footer, and the YouTube group has its own layout and header.
+- List and detail routes are generated statically. Metadata and canonical URLs are set per page, and the title template lives in the root layout.
+- The legal document picks its route from a fixed list of the two legal pages, so editors cannot create a stray legal page.
+- Case types and categories show in a filter only when a document references them, so an empty filter never appears.
+- Portable Text images get a blur placeholder built from a 24 pixel Sanity image URL, and tables come from the Sanity table plugin.
+- Forms use a shared hook that binds a Zod schema to React Hook Form. The newsletter form posts straight from the browser to Kit, so it needs no server code.
+- Booking is a Calendly inline widget, not a custom scheduler. Interviews play in Wistia.
+
+## Cases
+
+**A preview editors can trust.** The content team had to see cases, insights and legal text before publishing. I wired the Presentation tool to draft mode routes that turn it on and off. The enable route validates the preview URL, and the visual editing layer renders only when draft mode is on. In draft mode the fetch helper switches to the draft perspective and skips the cache.
+
+**Pagination that stays static.** Cases and insights grow, and they have filters and a "Load more" button. I used an optional catch-all route. The page count comes from a GROQ count at build time. "Load more" is a link to the next page number, and the query returns the first page number times 6 items. Every page is plain HTML, and back and forward work. The type filter lives in the query string. A non-numeric or out-of-range page returns not found. The reviews page uses nuqs query state with server re-rendering instead, because it has several lists with their own page keys.
+
+**One YouTube funnel without copies.** Traffic from the client's YouTube channel needed a lean flow with no site navigation. I built a separate route group with its own layout. Its booking, booked and Data Freelancer pages re-export the main pages, so the content and the Calendly flow exist once.

@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2023",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "verbatimModuleSyntax": true,
+    "checkJs": false,
+    "lib": ["dom", "dom.iterable", "ESNext"],
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "incremental": true,
+    "paths": {
+      "~/ui/*": ["./components/ui/*"],
+      "~/*": ["./*"]
+    },
+    "strictNullChecks": true,
+    "erasableSyntaxOnly": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": ["node"],
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/.well-known/**/*.ts",
+    "postcss.config.js",
+    "next.config.ts",
+    ".next/dev/types/**/*.ts",
+    ".next/types/**/*.ts",
+    "scripts/**/*.ts",
+    ".claude/hooks/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".scratch",
+    "docs/research/**/artifacts",
+    ".claude/_projects"
+  ]
+}

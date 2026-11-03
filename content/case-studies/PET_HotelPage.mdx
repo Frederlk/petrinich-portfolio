@@ -1,0 +1,18 @@
+I built HotelPage in 2021 as a hotel offer page, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, the slider setup and the small page script, not with the template's accordion, form and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Six sections in the markup: a main slider, a package block, a products block, testimonials, a newsletter block and a popular block, plus a breadcrumb row at the top.
+- Four page partials of Sass, about 2,080 lines in total with BEM class names and 124 media queries across the page stylesheets.
+- The header partial is 430 lines and the footer partial 370 lines with 31 media queries, because both are rebuilt for tablet and phone.
+- Colors, fonts and four breakpoints are variables at the top of the main stylesheet, the design width is 1920 pixels, and 36 spacing and size values use a fluid mixin.
+- Two Swiper sliders with loop and arrow navigation drive the main block and the testimonials.
+- Compared with the Woodies and CloudBudget landings, this one adds accordions that exist only below a breakpoint and a header and footer with far more breakpoint logic.
+
+## Cases
+
+**Accordion only on small screens.** The package block has several columns of details that sit open on desktop. On phones they had to collapse. I used the template's accordion attributes with a 767.87 pixel max-width setting, so the sections work as accordions only below that width, and I wrote the state styles in Sass: the plus and minus icon, built from two pseudo elements, changes color and height when the section is active.
+
+**Two sliders from one setup.** The main block and the testimonials both needed looping slides with their own arrows. I wrote one setup function that checks for each slider in the page, creates it with the Navigation module and takes the arrow selectors from the block's own class, so the two arrows cannot control each other. It runs after the window load event.
+
+**Search that opens on touch.** The header has a search form that shows as a field on wide screens. On narrow touch screens I toggled an active class on the form by clicking its icon and removed it on any click outside, and limited the handler to a viewport under 992 pixels with a touch-device check.

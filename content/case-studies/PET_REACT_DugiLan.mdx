@@ -1,0 +1,18 @@
+I built DugiLan in 2022 as a React and TypeScript shop for WordPress themes, the largest project in this group. A visitor browses themes, adds them to favourites and the cart, applies a coupon, checks out and reads an account area, with Firebase Firestore behind the data.
+
+## Patterns and decisions
+
+- Seven lazy-loaded pages: home, a product page, account, cart, checkout, a thank-you page and a not-found page, with a typed list of 29 route names.
+- Redux Toolkit has five slices (menu, scroll lock, product, user and account), and RTK Query covers the two Firestore calls for users and coupons.
+- The cart and favourites are saved to the browser's local storage from the reducers, so they survive a reload.
+- Ten typed interfaces describe products, orders, users, addresses and coupons.
+- Fifteen Sass partials, about 3,600 lines in total, with BEM class names and 263 media queries, one partial per page plus the form controls.
+- Compared with Lopper, this exercise added a real data source, a sign-in flow, cart logic and RTK Query, and the page count and forms grew with it.
+
+## Cases
+
+**Firestore through RTK Query.** There is no REST API, so I wrote the endpoints with a fake base query and a function that reads Firestore directly: find a user by username or email, get a user by id, save changed account details, and read a coupon by its code. Components call lazy queries and read the loading and success flags, so a button can show "Checking" while the request runs.
+
+**Coupons and prices.** On the cart page the coupon form looks the code up and moves through three states: the hint text, an error that resets after five seconds, and a success message with the discount percent. The coupon is saved so checkout shows the same total. A small hook adds ten percent tax to a price and then subtracts the discount, and the slice keeps the subtotal, discount and total.
+
+**Account with sign-in and saved details.** The login form checks a username or email and a password rule in Yup, fetches the user, checks the entered details in an action creator and keeps the session in local storage. On start the app restores the user from storage and refreshes it from Firestore. The account area switches between dashboard, orders, address and details by a value in the store, and the details fields write through a debounce hook so each keystroke does not save.

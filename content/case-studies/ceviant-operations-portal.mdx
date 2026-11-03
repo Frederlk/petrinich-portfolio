@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- The portal is a Next.js app on the pages router, with React and TypeScript. It has 70+ pages. Each page is thin: it sets the title, usually wraps the screen in a route guard and renders one component from the matching area.
+- Staff sign in with Google through NextAuth, using the Ceviant email. The layout loads the staff user and the permission list from the back end before it renders the shell.
+- The idle countdown to automatic log-out starts from a time kept in a cookie, so a reload continues it instead of resetting it.
+- Almost all data goes through one Redux Toolkit Query client on Axios, split into 10+ API modules with 160+ endpoints.
+- The UI is organised by domain: stored value accounts, forex, KYC, banks and providers, escrow, cards, onboarding, charges, payments, user management and audit trails. There are 500+ component files under them.
+- Server-driven tables share one hook for filters, page and page size. Each area has helpers that turn the filter state into the search payload and the response into table rows.
+- Forms use Formik and Yup, in 45+ forms, on an internal form kit with nine input types.
+- Styling is Styled Components. Recharts draws the analytics chart on the stored value accounts screen.
+- ESLint, Prettier and Husky with lint-staged check the code.
+
+## Cases
+
+**A typed data layer for 11 back-end domains.** The back office makes 160+ calls across banks, cards, escrow, forex, KYC and stored value accounts. The screens need caching, loading flags and refetching, without hand-written reducers, so the data layer is Redux Toolkit Query with a custom Axios base query that returns either the data or an error with status and body. Each domain is one module with its own tag types, so a mutation invalidates the right lists. After status changes I invalidate with a short fixed delay, so the list refetches once the back end has settled.
+
+**One permission table for the menu, the routes and the buttons.** Staff roles differ by area, and by read versus manage within an area. The front end keeps one list of 35+ permission codes and holds the read and edit codes next to each menu entry and each page. One hook answers four questions: can read, can edit, has partial access, has full access. The menu hides what the user cannot open. The route guard redirects to the dashboard with a message that names the page. A button shows a permission message when the user can read but not edit. A page can also require full access.
+
+**A KYC review workspace.** Approving a customer means checking dozens of fields across the company, its documents, its directors and its individual and company shareholders, and keeping notes as the check goes on. Each group has a status per field. Staff add a remark to any field and select or deselect the screening provider's match for the company and for each person. Staff can trigger compliance checks, enable or deny the corporate, and fill a risk summary that exports to PDF. A shared context records which tab, from summary to shareholders, still has pending fields. The same screens serve a subsidiary through a flag.

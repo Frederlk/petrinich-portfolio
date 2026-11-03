@@ -1,0 +1,20 @@
+I built Mozy in 2022 as a five-page services website in React, from a given Figma design. It moved the work from single-page Gulp and Webpack landings to a multi-page React app. The project is a Create React App setup hosted on Vercel, and the Sass mixins, the menu script and the dynamic-adapt script were carried over from the earlier starter template. The components, pages, data and Sass partials are mine.
+
+The site has home, products, about, career and contact pages plus a not-found page. I counted 8 shared components, 16 containers, 6 pages and 18 Sass files of about 57 KB.
+
+## Patterns and decisions
+
+- Routing with react-router-dom: six routes, each page loaded lazily with a spinner as the fallback.
+- A small scroll helper on every route change: it scrolls to the top, closes the menu and re-runs the dynamic-adapt script for the new page.
+- Content lives in a constants module (brands, products, jobs, slides, images) and the containers map over it, so the markup holds no copy.
+- Pages are thin: each one composes containers, and each container owns one block of the design.
+- Sass stays BEM and page-based, with one stylesheet per page next to common, header and footer.
+- Compared with the landing pages, this exercise moved from one HTML file to routing, lazy loading and data-driven blocks.
+
+## Cases
+
+**Animated progress ring.** The career page shows a 95% employee score as a ring that fills up. I wrote a component that draws two SVG circles and uses the stroke dash length as the value, with a timer that raises the number step by step. Color, width and speed are props, so the ring is reusable.
+
+**Slider in React.** The home page has an in-the-news slider that shows one, two, three or four slides depending on the width. I used Swiper's React components with navigation buttons, and put the breakpoints in the Swiper settings next to the Sass breakpoints.
+
+**Validated contact form.** The contact page needed required name, email and message fields with error messages. I built two small field components on Formik's field hook that show the label, the input and the error from the same markup, and put the rules in a Yup schema.

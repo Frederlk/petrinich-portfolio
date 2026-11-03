@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The app runs on the Next.js pages router and uses Styled Components for styling. It has 90+ pages and 1,000+ component files.
+- Under the dashboard the app builds a deep provider tree: SWR, auth, user, dashboard and dialog contexts. Outside it, a light reducer holds the login and onboarding state.
+- Every API path lives in one typed endpoints object. Data hooks sit on one shared Axios client, and there are 100+ of them.
+- Most forms use Formik with Yup, in 48 validation modules. The KYC form uses React Hook Form. The bank-connection dialog is an XState machine.
+- Hooks export their SWR keys, so another component can refresh the same cache entry after a write.
+- All amounts travel as minor units, and one set of helpers converts and formats them.
+- One build serves production and sandbox. The environment comes from a setting and the hostname.
+- Shared pieces cover inputs, tables with filters, dialogs, a stepper, toasts and PDF pages.
+
+## Cases
+
+**Device fingerprint on every API call.** The back end wanted device, location and confidence data with each request. That data comes late, from a third-party script. A hook reads the FingerprintJS Pro visitor result and turns it into a device fingerprint header, a confidence header and client location headers. It installs them on the shared Axios client. The app layout renders nothing until the script answers. If the script fails, it shows an ad-blocker screen. After login the user's email becomes the visitor tag.
+
+**Forex orders in three modes.** Spot, market and over-the-counter orders need different inputs, rates and limits. The new order page has a tab for each, picked by a query parameter. Spot recalculates the other amount when the rate or the last edited side changes, and shows toasts for a missing rate, unavailable funding and a minimum size. Market derives the total or the volume from the price. Over the counter asks for a quote and shows a timed quote card that the user can accept, reject or let expire. Cut-off limits are checked on the quote. Debit accounts are limited to active accounts of active banks.
+
+**Approval rules builder.** Customers set who must approve which payments, by amount, payment type, account and creator. The form is a Formik field array of conditions. The Yup schema changes per condition type and operator with a lazy schema: one value for "is equal", at least two for "in". Approvers must be unique. The rule name is checked against the API with a debounced async test that remembers its last answer. The role form reuses the same style, with permission groups as checkboxes and read-only system roles.

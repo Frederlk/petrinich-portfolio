@@ -1,0 +1,168 @@
+[
+  {
+    "id": "ux-mind",
+    "company": "UX MIND",
+    "role": "Lead Full-Stack Developer",
+    "dates": "February 2024 – Present",
+    "stack": [
+      "TypeScript",
+      "Next.js",
+      "Prisma",
+      "React Hook Form",
+      "Zod",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Better Auth",
+      "oRPC",
+      "Biome",
+      "Husky",
+      "Stripe",
+      "Shopify",
+      "Sanity",
+      "Twilio",
+      "Resend",
+      "Mux",
+      "Leaflet",
+      "Upstash Redis",
+      "Arcjet",
+      "Sentry",
+      "PostHog",
+      "Vercel AI SDK",
+      "Gemini API",
+      "Claude Code",
+      "React Compiler"
+    ],
+    "description": "UX MIND is a digital design agency. It builds SaaS products, admin dashboards and marketing sites for clients in Europe and the US.",
+    "bullets": [
+      "Led {led.ux-mind} developers on client projects, up to {peak.ux-mind} at a time: estimate every project, decide who takes which task, review code, coach, and act as the clients' technical contact.",
+      "Run hiring and recruiting, because the agency has no HR: screen candidates, set the test tasks, interview and onboard. Hired {hired.ux-mind} developers.",
+      "Led or built {ledOrBuilt.ux-mind} client projects, from marketing sites to SaaS platforms and admin dashboards.",
+      "Set the team's default stack (Next.js App Router, TypeScript, Prisma on PostgreSQL, Better Auth, oRPC, React Hook Form with Zod, Tailwind CSS) and the quality gates new projects start with (Biome, Husky, GitHub Actions, Vitest).",
+      "Built client integrations with Stripe, Shopify, Sanity, Twilio, Resend, Mux, Leaflet, Upstash, Arcjet, Sentry, PostHog and the Vercel AI SDK with Gemini.",
+      "Designed the studio's technical interview: a 90-minute simulated workday where candidates work real tasks with Claude Code and AI-played teammates, and are graded on judgement instead of recall.",
+      "Wrote `ux-mind-helpers`, a zero-dependency toolbox of 8 codemods and lint guards for the agency's projects (import aliases, Tailwind values, React Compiler checks, `.env` sync).",
+      "Adopted Claude Code in 08.2025 and wrote the team's conventions for using it."
+    ],
+    "links": [
+      {
+        "label": "ux-mind.pro",
+        "url": "https://ux-mind.pro"
+      }
+    ],
+    "team": {
+      "hired": 6,
+      "led": 10,
+      "peak": 4
+    }
+  },
+  {
+    "id": "freelance",
+    "company": "Freelance",
+    "role": "Freelance Full-Stack Developer",
+    "dates": "April 2025 – Present",
+    "stack": [
+      "TypeScript",
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "Sanity",
+      "Docker",
+      "HLS",
+      "next-intl",
+      "Nginx",
+      "Umami"
+    ],
+    "description": "Self-employed client work next to UX MIND: marketing sites and a streaming platform built end to end, plus fixes and hosting for existing sites.",
+    "bullets": [
+      "Built alba.swiss end to end: the first version in 04.2025 and the 09.2026 rebuild, a marketing site with 16 animated sections and a request-an-introduction form.",
+      "Built and deployed the Department of Human Dynamics site, a marketing site for an AI research group with structured data for SEO (62 commits).",
+      "Built a live-video streaming platform alone: adaptive HLS video, creator profiles with media feeds, English and Dutch with next-intl, a Sanity CMS, and Docker with Nginx on a VPS.",
+      "Took over gdd.education: UI polish and bug fixes, a move from Vercel to a VPS, Docker builds, DNS and self-hosted Umami analytics."
+    ],
+    "links": []
+  },
+  {
+    "id": "ceviant",
+    "company": "Ceviant",
+    "role": "Front-End Developer",
+    "dates": "December 2022 – November 2023",
+    "stack": [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Formik",
+      "Yup",
+      "Styled-Components"
+    ],
+    "description": "Cloud treasury management product that helps companies aggregate their cash management tools on one platform.",
+    "bullets": [
+      "Introduced a new folder structure and one shared way of building features, which made onboarding new people easier.",
+      "Led {led.ceviant} developers on the app's front end, one of them an intern I mentored.",
+      "Led development and maintenance of the app's key features, its refactoring and regular code reviews."
+    ],
+    "links": [
+      {
+        "label": "app.ceviant.co",
+        "url": "https://app.ceviant.co"
+      }
+    ],
+    "team": {
+      "led": 4
+    }
+  },
+  {
+    "id": "tapston",
+    "company": "Tapston",
+    "role": "Front-End Developer",
+    "dates": "Autumn 2022 – December 2023",
+    "stack": [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Redux",
+      "Formik",
+      "Yup",
+      "Styled-Components",
+      "Storybook"
+    ],
+    "description": "Software outstaffing company. I joined in autumn 2022, worked on an internal project first, then was placed full-time on Ceviant.",
+    "bullets": [
+      "Led {led.tapston} developers on the internal project before the Ceviant placement.",
+      "Designed the project's architecture, built the landing page and a UI kit shared across the product, and developed product features."
+    ],
+    "links": [
+      {
+        "label": "tapston.com",
+        "url": "https://tapston.com"
+      }
+    ],
+    "team": {
+      "led": 2
+    }
+  },
+  {
+    "id": "portfolio",
+    "company": "Portfolio",
+    "role": "Self-taught Front-End Developer",
+    "dates": "September 2020 – November 2022",
+    "stack": [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Redux",
+      "Formik",
+      "Yup",
+      "SASS"
+    ],
+    "description": "{earlyWork} responsive personal projects, from landing pages to full-stack sites, built while studying marketing.",
+    "bullets": [
+      "Taught myself HTML, CSS, JavaScript, React, TypeScript and Next.js, and shipped every project with one new technology or animation technique."
+    ],
+    "links": [
+      {
+        "label": "petrinich-sergey.web.app",
+        "url": "https://petrinich-sergey.web.app"
+      }
+    ]
+  }
+]

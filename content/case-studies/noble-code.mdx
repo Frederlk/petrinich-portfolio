@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- The site is a static Next.js export with no database, so content is JSON files and images in the repo. A static export ignores the headers setting, so security and cache headers live in a headers file in the public folder.
+- Vercel Hobby does not allow commercial use, so the site runs on Cloudflare Workers with static assets. Only the API routes run the Worker.
+- An invalid draft is skipped with a warning. An invalid published design fails the build, and the error goes into the GitHub Actions run summary so the client can read it without a Cloudflare login.
+- Layout was checked against the Figma numbers at 375 and 1440 pixels with an ad hoc Playwright script, not a committed suite.
+
+## Cases
+
+**Re-binding the license button.** The Lemon Squeezy script binds checkout links only on the window load event. After a client-side navigation the license button of the next product page would open as a plain page. I load the script with next/script and re-run its setup on every mount. Without a checkout reference the button is disabled and the script is not loaded.
+
+**Typos stop at the type.** The client edits the checkout reference in JSON, and a typo must never become a live buy link or a price in the structured data. The reference is a branded Zod type, so only a parsed value can reach the button or the offer. A production build fails on a published design that still has the placeholder. Other builds use a test reference.
+
+**Filters from one table.** The filter options come from the designs the client publishes, and they have to stay consistent in the URL, the option lists and the empty state. I made the filters a single table, and one function builds the options, the URL state and the empty selection from it. Adding a filter is one entry. URL values are looked up as own properties only, so a made-up value in the address bar cannot match anything but a real option.
+
+**Replaced images, cached for a year.** Images are cached as immutable for a year, but the client replaces images under the same name. I put a content hash in every output file name and delete the outputs of replaced masters.

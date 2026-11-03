@@ -1,0 +1,18 @@
+I built Traffico in 2021 as a landing page for a traffic consultant, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials, the slider setup and the FAQ script, not with the template's menu, accordion, scroll and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Five sections in the markup: a home hero, about, an application block, an FAQ and a slider block.
+- Four page partials of Sass, about 1,140 lines in total, with BEM class names and 91 media queries between them; the footer is the second largest after the home partial, with 263 lines and 27 queries.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 52 calls of the template's fluid size mixin instead of fixed values per breakpoint.
+- A Swiper slider with navigation arrows and breakpoint-based slide counts.
+- This added an accordion extended with content created in JavaScript, a step beyond the earlier pages that had no generated markup.
+
+## Cases
+
+**Slider that follows the screen.** The bottom slider shows two slides per view on tablet and desktop and one on a phone. I set the counts and the slide group size in the Swiper breakpoints, 320 and 768 px, so the arrows always move by a full view.
+
+**FAQ that grows on request.** The FAQ opens with 10 accordion items in the markup and a load-more title. I kept ten more questions in an array in the script; a click builds an item for each with the same markup as the static ones, appends them and slides the container open, so the template's accordion treats both kinds the same way.
+
+**Footer as a layout of its own.** The footer carries several columns and needed more rules than any other part except the home page. I wrote it as its own partial with queries at each breakpoint.

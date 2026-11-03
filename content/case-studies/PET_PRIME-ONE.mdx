@@ -1,0 +1,18 @@
+I built Prime One in 2021 as a one-page site for a catering service, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the page setup, not with the template's menu, form and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Four sections in the markup: a private catering hero, a four-card product row, a "why choose us" block and a contacts block with a map and a message form.
+- Three page partials of Sass, about 660 lines in total, with BEM class names and 54 media queries between them.
+- Colors, fonts and four breakpoints (desktop, tablet, phone and small phone) are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- Hover styles sit inside a hover-capability media query, so touch screens do not get stuck states.
+- Spacing and sizes are fixed rem values per breakpoint. Fluid scaling came in the later projects.
+- This was the baseline for the next projects: plain Sass and one page.
+
+## Cases
+
+**Header that rearranges itself.** The design has two language links, a centered logo and two menu halves on desktop, but one burger panel on a phone. I used the template's move-on-breakpoint attribute to relocate the logo and the language switch between containers, and wrote the panel styles in the header partial: hidden by default, faded in with the menu-open class, with a custom scrollbar for long content.
+
+**Card grid without a framework.** The product row had to be four columns on desktop, two on tablet and one on a small phone. I used a CSS grid with a repeat of four equal columns and changed the column count on the tablet breakpoint and on a custom 380 px query, with square image boxes made through bottom padding.
+
+**Contact form with checks in markup.** The message form needed a name, an email or phone and a text. I marked the required fields with data attributes and the error text beside each, so the template's validation could read the rules from the page, and left the visual states to the input partial.

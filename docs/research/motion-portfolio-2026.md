@@ -1,0 +1,69 @@
+# Motion on a developer portfolio, 2026 (research brief)
+
+Run 2026-10-24 with WebSearch and WebFetch only (Tavily was down), plus a read of the alba-swiss-web motion code. Primary sources where a fetch worked (web.dev, Next.js docs, Lenis and Motion READMEs, Bugzilla); several W3C fetches failed, so WCAG levels are marked as from memory. Claims are tagged measured, documented or opinion. Hiring-manager evidence is thin: advice sites and blogs only, no first-hand hiring data.
+
+## What reads as premium versus gimmicky
+
+- Opinion (advice sites, 2025 to 2026): hiring write-ups say portfolios overloaded with animation, glitch effects and giant decorative headings bury the case study and slow load. A full-screen intro that takes 4 seconds is listed as a mistake ([muz.li, 2026](https://muz.li/blog/how-to-build-a-ux-portfolio-that-actually-gets-you-hired-2026/), [Medium product-design hiring piece, 2025](https://medium.com/@siropinas/how-to-create-a-strong-product-design-portfolio-in-2025-and-get-hired-part-1-16889999c255)). The same sources claim 78% of recruiters use AI screening before a human opens the site; that figure is unsourced there, so treat it as unreliable.
+- Opinion: for frontend and creative roles an animated site is a legitimate skill signal, but it must enhance content and not replace it. A themed site is fine if the target company's own brand is animated ([myseera developer portfolio guide, 2026](https://myseera.com/blog/best-developer-portfolio-templates-2026)). Reviewers decide in roughly 20 to 30 seconds ([Animployment, 2025](https://animployment.com/animation-portfolio-reel-what-studios-want-2025/), about animation reels, so only indirect for developers).
+- Awwwards Developer-award Sites of the Day, read 2026-10-24 from [the Developer listing](https://www.awwwards.com/websites/developer/): [Brandon Yasin, 24 Oct 2026](https://www.awwwards.com/sites/brandon-yasin), [Ascension by Jesper Landberg, 21 Oct 2026](https://www.awwwards.com/sites/ascension-pegassi-r), [Signal-A Studio, 18 Oct 2026](https://www.awwwards.com/sites/signal-a-studio), [FORMAT by Obys, 19 Oct 2026](https://www.awwwards.com/sites/format). Earlier portfolio winners from search: Bruno Simon (Portfolio Honors Dec 2025, Site of the Month Jan 2026), Artiom Yakushev (27 Dec 2025), Elliott Mangham (2 Dec 2025), Phantom.Land (2 Jun 2025). These sites were not opened, so their stacks are unknown. Calling them premium is an inference from the award only. Awwwards optimises for jury delight, not for recruiter readability.
+- Low-risk patterns that read as polish (opinion, consistent with the Next.js guide below and the alba tempo notes): one entrance curve and one tempo site-wide; short opacity plus small translate reveals once per block; shared-element image morphs between list and detail; hover states that answer a pointer in under 200 ms; text-line reveals on headings only.
+- Patterns that read as gimmick or cost trust (opinion): a blocking intro film or loader; scroll-jacking and long pins that trap a small screen; custom cursors; WebGL backgrounds carrying the content; every block animating differently; animation that gates reading the CV text.
+
+## Cost in LCP, INP, CLS and how to avoid it
+
+- LCP, documented: [web.dev optimize LCP](https://web.dev/articles/optimize-lcp) lists an LCP element hidden by other code, and a page "hidden until the JavaScript code finishes loading, and then everything is revealed at once", as render-delay causes. It also says never lazy-load the LCP image. An `opacity: 0` hero revealed by JS therefore moves LCP to the hydration moment (inference from that text, not measured).
+- CLS, documented: [web.dev CLS](https://web.dev/articles/cls) says to animate `transform` (translate, scale) and not `top`, `height` or `width`, because transforms do not cause layout shifts.
+- INP, documented: [web.dev INP](https://web.dev/articles/inp) sets good at 200 ms or less and poor above 500 ms, at the 75th percentile. Long main-thread tasks delay input handling. Scroll libraries that run a rAF loop and read layout on load add main-thread work (inference). Lenis handles wheel input on the main thread through a non-passive listener (community write-ups, see below).
+- Rules that follow:
+  - Render all content visible in server HTML and let JS hide only what is below the fold (alba does exactly this, see below).
+  - Never put an entrance state on the hero or the LCP element.
+  - Animate only transform and opacity.
+  - Create ScrollTriggers after first paint, and refresh after fonts and images change layout.
+  - Load the animation bundle after the hero is interactive.
+- Nothing was profiled for this site. alba-swiss-web recorded one real number: a client-side intro overlay delayed the Hero from 282 ms to 6 s+ visible at 500 kbps until a server-rendered cover was added (DESIGN.md §Motion, `film`). That was measured on that project, not in general.
+
+## prefers-reduced-motion, WCAG 2.2, smooth scroll
+
+- Reduce does not mean no animation. [web.dev prefers-reduced-motion](https://web.dev/articles/prefers-reduced-motion) (updated 2019, support table dated) says to remove non-essential movement. It says to shorten durations rather than use `animation: none !important` where code depends on `animationend`. Crossfades and opacity are lower risk than positional slides ([Next.js view-transitions guide, updated 2026-10-15](https://nextjs.org/docs/app/guides/view-transitions)).
+- WCAG 2.3.3 Animation from Interactions is Level AAA, from memory and not re-read this run because the W3C fetch failed. Motion animation triggered by interaction can be disabled unless essential. It is not required for AA conformance, but reduced-motion handling is the standard way to meet it. Verify at [Understanding 2.3.3](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html).
+- WCAG 2.2.2 Pause, Stop, Hide is Level A, from memory and not re-read. Moving, blinking or scrolling content that starts automatically, lasts more than 5 seconds and sits beside other content needs a mechanism to pause, stop or hide it. This hits ambient loops, particle backgrounds and autoplay video, not one-shot reveals. Verify at [Understanding 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html).
+- Lenis, documented ([README, v1.3.27](https://github.com/darkroomengineering/lenis)): it wraps native scroll, so sticky, anchors and assistive tech keep working; `respectReducedMotion` defaults to true (smoothing off, programmatic scroll instant); it has no CSS scroll-snap support; it is MIT.
+- Community reports ([search results, 2026](https://github.com/davidsneighbour/kollitsch.dev/issues/1998)): anchors are opt-in; a CSS `scroll-behavior: smooth` fights Lenis; nested scrollers need `data-lenis-prevent`; Safari desktop is capped at 60 fps. No source tested find-in-page or keyboard paging directly, so that is unconfirmed.
+- Opinion: smooth scroll is optional polish with a real cost (non-native feel, main-thread wheel handling, keyboard and find edge cases). For a CV site whose audience is recruiters, the safe default is no smooth scroll.
+
+## Tool comparison
+
+- GSAP: free since 3.13, including SplitText, DrawSVG, MorphSVG and the former Club plugins (secondary sources date that to 30 Apr 2025; Webflow bought GreenSock in Oct 2024). It is not MIT: the [Standard License](https://gsap.com/community/standard-license/) allows commercial use but bars building a competing visual animation tool. Size, from one measurement (esbuild, gzip -9, gsap 3.15.0): core 27 KB, core plus ScrollTrigger 44 KB; tree shaking does not shrink core ([GSAP forum](https://gsap.com/community/forums/topic/33319-gsap-size-too-large/)). Client-only: it mutates the DOM, so every user is a `"use client"` leaf with `@gsap/react` `useGSAP`.
+- Motion (motion.dev), documented ([bundle guide](https://motion.dev/docs/react-reduce-bundle-size)): the `motion` component is about 43 KB; the `m` component with `LazyMotion` starts just over 5 KB and `domAnimation` adds 24 KB; `useAnimate` is 3.3 KB in the mini version (WAAPI only) and 23 KB hybrid. MIT ([repo](https://github.com/motiondivision/motion)). For RSC, import from `motion/react-client` ([docs](https://motion.dev/docs/react-motion-component)). Better than GSAP for layout animation, exit animation and gestures; weaker for long scrubbed timelines and text splitting.
+- CSS scroll-driven animations: `animation-timeline: scroll()` and `view()` run off the main thread with zero JS ([Chrome docs, 2023, stale](https://developer.chrome.com/docs/css-ui/scroll-driven-animations)). Support is Chrome and Edge 115+ and Safari 26. Firefox shipped it in 159 per [Bugzilla 1324602](https://bugzilla.mozilla.org/show_bug.cgi?id=1324602) (resolved, updated 2026-10-22), while sources from June to September 2026 still had it behind a flag; MDN lists it as not Baseline. Use it inside `@supports (animation-timeline: scroll())` as progressive enhancement, with content visible by default.
+- View Transitions in Next 16, documented ([Next.js guide, updated 2026-10-15](https://nextjs.org/docs/app/guides/view-transitions)): React's `<ViewTransition>` works in the App Router with no configuration, route navigations count as transitions, `Link` takes `transitionTypes`, and it needs the React release that ships `<ViewTransition>` (the guide says 19.3). Conflict: other sites describe an `experimental.viewTransition` flag and an `unstable_ViewTransition` import, while the official guide says neither is needed; check the installed versions. Browsers without support get a normal swap. The wrapper goes in `page.tsx`, not the layout. RSC friendly, no client JS beyond React.
+- Fit for this site (inference): CSS and View Transitions cover reveals, image morphs and page changes for 0 KB. GSAP is justified only for SplitText-style text reveals or DrawSVG line drawing, and then as a lazily loaded client leaf.
+
+## alba-swiss-web: what transfers
+
+Read: `lib/gsap.ts`, `motion.ts`, `smooth-scroll.tsx`, `reveal-controller.tsx`, `use-reveal-timeline.ts`, `.claude/rules/motion.md`, DESIGN.md §7.
+
+- Transfers directly: server HTML renders everything visible and JS hides only below-the-fold blocks (the `below()` check, then `autoAlpha: 0`), so no-JS and reduced-motion users get the end state with no `reduce` branch; `gsap.matchMedia()` with `(prefers-reduced-motion: no-preference)`, so a live OS toggle reverts; a single `lib/gsap.ts` registering plugins; `useGSAP` with scope; one `motion.ts` with named ease, duration, stagger and travel constants and `gsap.defaults` set once; the named-family table with a per-family reduced-motion degrade; the `data-revealed` claim flag instead of `once: true`; reveal triggers created in `requestAnimationFrame` after first paint; `ScrollTrigger.refresh()` on `load`.
+- Transfers with a change: the `EASE_ENTRANCE` custom curve (`M0,0 C0.22,0 0.1,1 1,1`) and the 0.9 s, 32 px, 0.14 s stagger tempo are alba's taste, tuned on a dark cinematic page; start from them and retune. If CSS-only reveals are enough, `animation-timeline: view()` replaces the whole controller and these constants become CSS variables.
+- Drop: the Lenis plus `gsap.ticker` bridge (`smooth-scroll.tsx`, `lagSmoothing(0)`) unless smooth scroll is a deliberate choice; pinned scrub with `anticipatePin` and ScrollTrigger sort (a long hold, and ancestors with a transform break fixed pinning); the `film` intro overlay and load shield (the costliest thing on that site and a pattern recruiters flag); the backdrop-filter `data-reveal-opaque` workaround (only needed with glass cards); DrawSVG and CustomEase unless a specific graphic needs them; the `fade-group` machinery.
+- Gap to avoid: alba's reveal hides below-the-fold blocks only after hydration (layout effect). A mid-page reload with JS can show content, then hide it, then reveal it. A CSS-first reveal avoids that flash. Inference from the code, not measured.
+
+## Applied to this site
+
+- Default motion stack is CSS (`animation-timeline: view()` inside `@supports`, hover and focus transitions) plus React `<ViewTransition>` for page and list-to-detail morphs. Content is visible in the server HTML with no hidden initial state, and the hero and LCP element are never animated in.
+- Add GSAP only for a specific effect CSS cannot do (text-line reveal, SVG line drawing), as a lazily imported `"use client"` leaf. Reuse the alba `lib/gsap.ts` and `motion.ts` shape with constants retuned here.
+- No Lenis, no pinned scrub, no intro film, and no ambient loop longer than 5 s without a pause control (2.2.2).
+- Every motion family gets a documented reduced-motion degrade (final state immediately, or instant swap), as in alba DESIGN.md §7. Add a global `@media (prefers-reduced-motion: reduce)` rule for view transitions, as in the Next.js guide.
+- Verify with measured LCP, INP and CLS on a production build before calling the motion done. This brief has no such measurements for this site.
+
+## Could not confirm
+
+- The WCAG 2.3.3 and 2.2.2 text and levels, read first-hand: the W3C fetches failed, so the levels are from memory.
+- Any first-hand hiring-manager statement on animated developer portfolios (Reddit, HN, Blind, LinkedIn). Only advice sites and blogs surfaced, and the 78% AI-screening figure is unsourced.
+- Which Awwwards winners use GSAP, Lenis or CSS scroll timelines, and whether their Core Web Vitals pass.
+- Whether Next 16 needs `experimental.viewTransition` or only React 19.3.
+- Firefox scroll-driven animations: Bugzilla says fixed in 159, older sources say flagged; no Baseline status change found.
+- Lenis find-in-page and keyboard behaviour tested directly, and the GSAP 3.15 SplitText size.
+- The GSAP 3.13 free-license date from a first-party GreenSock or Webflow post.
+- Any measured LCP, INP or CLS cost of GSAP or Lenis on a real portfolio.

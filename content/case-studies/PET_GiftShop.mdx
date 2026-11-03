@@ -1,0 +1,18 @@
+I built GiftShop in 2021 as a landing page for a gift shop, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup and the Sass partials, not with the template's menu, header scroll and adaptive-markup scripts. The project has no page script of its own, so everything custom is in the markup and the styles.
+
+## Patterns and decisions
+
+- Four sections in the markup: a find-a-gift block with two alternating image and text rows, a gifts block of category cards, a sign-up block and a blog block.
+- Three page partials of Sass (home, header and footer), about 790 lines in total, with BEM class names and 63 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 50 calls of the template's fluid size mixin, 36 mixin calls in the home partial alone.
+- 19 hover-capability media queries keep hover styles away from touch screens.
+- This was a pure markup and styles exercise, with no slider and no script, so all the practice went into layout.
+
+## Cases
+
+**Alternating rows.** The find block repeats an image and a text column, with the order flipped in the second row. I used one row structure with a modifier on the text side and set the order in the styles, so the markup stays in reading order.
+
+**Category cards in a grid.** The gifts block shows cards in four columns on desktop, two on tablet and one on a small phone. I used a grid with equal columns and changed the count on the tablet and small phone breakpoints, with a fluid gap between the cards.
+
+**Menu that moves.** On a phone the menu leaves its place in the header and goes to the end of the header container. I used the template's move-on-breakpoint attribute with the tablet-to-phone width instead of writing a second menu.

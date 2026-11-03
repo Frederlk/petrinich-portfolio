@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+The toolkit is plain Bash with no build step and no dependencies. Every script shares one detection library. The Git hooks repeat its patterns on purpose, so they run in any repository without loading anything. They are installed as the global Git hook path and read from the toolkit folder each time, so a new pattern reaches every repository with a plain pull of the toolkit.
+
+Infection is decided on the current tree of every branch and tag. A search through history also matches the commit that cleans a repository, so it serves forensics only. Remote content goes from the network straight into a pattern match through pipes and never touches the disk.
+
+No destructive command runs without a lease: every forced push checks that the remote branch is still where the scan saw it. A batch run prints a plan first and acts only on an explicit flag. The guards have three escape hatches, each meant to be typed for one command and never exported. The bundled Claude Code skill forbids setting them unless the conversation asks for it. More than 30 self-test checks replay clean and infected fetches, pulls, clones and the overrides.
+
+## Cases
+
+**Deciding what counts as infected.** Obfuscator-style names also appear in honest minified libraries, so a naive scanner either cried wolf or never reported clean. I split the signatures into three tiers. Markers that exist only in the attack are flagged anywhere. Patterns that real libraries share count only inside sensitive files such as build configs and editor settings. Structural tells cover payloads with no marker: a font file that Git reads as text, an editor task that runs on folder open and executes an asset, and an ignore file that stops excluding the editor folder. A scan of a whole code root is fast enough to run daily.
+
+**Rescuing real work from a poisoned branch.** The forged commit on the remote often mixed my own changes with the payload, so a reset lost work and trusting the branch kept the payload. The surgical recovery keeps the remote version of each changed file unless it sits in a sensitive path, was deleted, or carries a signature. One bad file drops its whole folder. A final scan of the staged diff aborts on any hit, and the result is committed forward and pushed with a lease. When nothing legitimate remains, the script falls back to a plain push of the clean local branch.
+
+**Refusing a bad pull before it reaches the working tree.** A hook on commit and push does nothing when the poisoned commit arrives from the remote. I added a hook that runs inside every reference update and aborts it on a hit. The objects are already downloaded, so the scan is local, and the remote branch never advances on this machine. Nothing can merge, rebase or reset onto it. Clones are refused too. A hook manager can override the hook path per repository and switch the global hooks off without a sound, so an audit lists such repositories and chains the guard back in.
+
+**Cleaning without a clone.** A clone of a live payload puts it on disk in front of the antivirus. The remote scan goes through the GitHub API: it lists each branch tip as paths and blob hashes, downloads only the blobs at the known payload locations, and caches verdicts by hash. The reset route reads the push activity log to find the overwritten commit and the latest recorded push, which serves as the lease. It prints a dry-run plan, checks every branch before writing any, and writes only with an apply flag.

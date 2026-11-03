@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The repo is a pnpm workspace with Turborepo. It holds the Next.js web app, a Hono worker and a Prisma package shared by both. I worked in the web app.
+- The web app uses the App Router. Server components read the database directly. Server actions handle mutations, and TanStack Query runs the calls in the browser.
+- The upload screen and the Help page are static. The transcript page is dynamic.
+- Clerk guards the routes through middleware. Upload stays open to anonymous visitors, and only the My videos page needs a sign-in.
+- A file goes from the browser straight to AWS S3 through a presigned URL. Links go to the worker, which runs in Docker with FFmpeg and yt-dlp.
+- Memberships use Stripe Checkout in subscription mode. A Webhooks route verifies the signature, then updates the membership and adds credit rows. The balance in the header is the sum of those rows.
+- Forms go through one shared hook on React Hook Form and Zod.
+- The UI uses shadcn/ui on Radix UI and Tailwind CSS. SEO comes from a sitemap, a robots file and metadata on each page.
+
+## Cases
+
+**A long job on a plain server page.** Transcription takes minutes and the user may leave. The form creates the video record first and sends the user to a stable address for that video. The page opens at once. A small hook refreshes the server page every 7 seconds until the player URL and the transcript exist. There is no websocket. The waiting text depends on the video length: under 5 minutes, under 10, under 30, and longer. The user can save the link and come back later.
+
+**Thumbnails and jump-to-time with no media service.** Each hit in the list needs a picture, and the product has no image service. A hidden video element in the browser seeks every 5 seconds. A canvas draws a 120 px frame at each stop, and the frames are added one at a time, so the list fills as they arrive. Plain search is a case-insensitive filter over the parsed captions in memory. It updates on every keystroke. A click on a hit moves the player to the caption start.
+
+**One upload form for a file or a link, with a free tier that crops to 60 seconds.** Visitors upload a file or paste a link, and both end in the same pipeline. The link is checked with the worker before use. The form creates the record, then either sends the file to S3 or hands the link to the worker. The free tier costs real transcription money, so the worker cuts the first 60 seconds with FFmpeg and indexes only that part. Paid users without enough credits get the same crop. On the front end, the transcript page shows a Partial transcript alert with a Pro button. My videos marks each entry as Cropped or Full.

@@ -1,0 +1,25 @@
+# oxfmt stays whole-tree: it has no `--staged`, is fast, and honours `ignorePatterns` for a path named on the command line. oxlint below is staged-only instead, because its `--fix` runs ahead of severity and would otherwise rewrite code of someone else's commit. The re-stage step further down adds back what either tool rewrote, but only among the files that were fully staged before they ran.
+# A partly staged file (its working copy differs from its staged copy) is left as staged: re-adding it would take the whole working copy and sweep unstaged lines into the commit. Listed before the tools run, because their rewrites make every touched file look partly staged.
+partly_staged=$(mktemp)
+trap 'rm -f "$partly_staged"' EXIT
+git diff --name-only >"$partly_staged"
+bun oxfmt .
+# oxlint on the staged files, 40 per invocation: Windows caps a command line at 32767 characters, so one command over a large commit fails with "The command line is too long". `scripts/check/oxlint-batch.sh` judges each batch ("No files found to lint" is success for a batch of only `.md`/`.json` files); `xargs` reports 123 when any batch fails, and `-e` (husky's wrapper runs `sh -e`) fails the hook on it.
+lint_staged() {
+  git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 -n 40 --no-run-if-empty sh scripts/check/oxlint-batch.sh "$@"
+}
+lint_staged --fix
+# Type-aware rules gate here too, check-only: the `--fix` above runs without type information so type-aware `warn` rules never rewrite a staged file (`oxlint.config.ts` argues it), and `--quiet` leaves only errors to fail the commit.
+lint_staged --type-aware --quiet --report-unused-disable-directives-severity=error
+git diff --cached --name-only --diff-filter=ACMR | grep -v -x -F -f "$partly_staged" | xargs -d '\n' -r git add --
+bun scripts/check/markdown-links.ts
+# Staged paths only. Guards the citation form this repo writes — a path in backticks from the repository root — which `markdown-links.ts` above cannot see.
+git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 --no-run-if-empty bun scripts/check/dead-paths.ts
+# Staged paths only. The full-tree run is CI's job: a pre-existing hit in a file this commit does not touch is not this commit's to fix, and blocking on one would teach the author to route around the hook.
+git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 --no-run-if-empty bun scripts/check/code-rules.ts
+# Staged articles only, plus the whole-record caps (feature lines, article links), which the script reads from `content/*.json` on every run.
+git diff --cached --name-only --diff-filter=ACMR -z -- content/case-studies content/projects.json content/early-work.json | xargs -0 --no-run-if-empty bun scripts/check/case-studies.ts
+# Skipped when only documentation is staged; typechecks a snapshot of the index, so an unstaged edit cannot fail (or pass) this commit.
+bun scripts/check/typecheck-staged.ts
+# Last, and conditional: it reprints the CV PDF when a staged file feeds `/cv`, otherwise builds only when a staged file is a route or build config, because a build costs far more than typecheck. The script argues which paths qualify and what that trade gives up.
+sh scripts/check/build-when-needed.sh

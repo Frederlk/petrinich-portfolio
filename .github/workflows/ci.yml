@@ -1,0 +1,112 @@
+name: CI
+
+# A pull request into `main` and a push to `main` run this. `workflow_dispatch` runs the same checks on demand against any branch, from the Actions tab or `gh workflow run CI --ref <branch>`.
+#
+# Every action is pinned to a commit SHA, with its version in a trailing comment, and `.github/dependabot.yml` keeps the pins current: a tag can be moved by whoever controls the action's repository, which is how tj-actions/changed-files leaked the secrets of every run inside the compromise window in March 2025.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The bun version comes from `packageManager` in package.json. Node stays for `next build`; bun installs and runs the scripts and tests.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+      # The action caches the bun executable, not the packages; this restores bun's download cache so the install copies instead of fetching.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
+      # Turbopack keeps its `next build` cache in `.next/cache`, and a build only starts warm when that directory is restored first. Keyed before the install on purpose: `hashFiles` over source globs must not walk `node_modules`. The lockfile-only prefix restores the nearest earlier build when the sources changed.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.css', '**/*.mjs', 'tsconfig.json') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
+      - id: install
+        run: bun install --frozen-lockfile
+      # Every check below runs even after an earlier one fails — one run should report every failure, the way `bun gates` does — but none runs after a failed install, where each would only fail again for the same reason.
+      #
+      # Static analysis of the workflows (zizmor, pinned in `check:workflows`): unpinned actions, template injection into `run:`, broad permissions, risky triggers. `GH_TOKEN` turns on the audits that ask GitHub (impostor commits, known-vulnerable actions); locally, with no token, the same script runs them offline.
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        with:
+          # Pinned, and at least as old as Dependabot's cooldown: an unaged release is the supply-chain path this repo guards against.
+          version: 0.12.17
+          enable-cache: false
+      - id: workflows
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun check:workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+      # Oxlint, type-aware, with unused disable directives as errors, plus the `ux-mind-helpers` checks.
+      - id: lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun lint
+      # Oxfmt check over the whole tree; `bun lint` does not cover formatting.
+      - id: format
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun format:check
+      - id: typecheck
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun typecheck
+      - id: test
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun run test
+      - id: markdown-links
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun scripts/check/markdown-links.ts
+      # A citation written from the repository root is a checkable claim; this fails when one does not hold.
+      - id: dead-paths
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun check:paths
+      # Full tree, where pre-commit sees only staged paths and the PreToolUse hook sees only what an agent is about to write. Neither reaches a file changed by hand, by another tool, or before the guard existed.
+      - id: code-rules
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun check:rules
+      # The article rules a regex can decide: word limit, no code in the prose, list shape, feature-line cap, words the owner has not agreed to publish.
+      - id: case-studies
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun check:articles
+      - id: knip
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun knip
+      # Route-segment config and prerender errors are validated by the BUILD and are invisible to `tsc`. Pre-commit runs this only when a route file is staged; CI runs it always, because a `next.config.ts` or dependency change can break a route nobody touched.
+      #
+      # No secrets, but not no variables: `env.ts` requires these two, so the build refuses to load `next.config.ts` with them unset. The values are placeholders that satisfy the schema and reach nothing. The localhost `NEXT_PUBLIC_BASE_URL` is inlined into the client bundle, which is harmless only because nothing deploys this artifact — a job that ships it must set the real origin. `SKIP_ENV_VALIDATION` is NOT the mechanism and must not be added — `next build` sets `NODE_ENV=production`, where `env.ts` deliberately throws if that flag is set.
+      - id: build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: bun run build
+        env:
+          NEXT_PUBLIC_BASE_URL: http://localhost:4221
+          NEXT_PUBLIC_ENV: DEV
+      # One table of every step with an `id`, on the run's summary page, so a red run reads in one place rather than across step logs.
+      - if: ${{ !cancelled() }}
+        env:
+          STEPS: ${{ toJSON(steps) }}
+        run: bun scripts/check/ci-summary.ts check

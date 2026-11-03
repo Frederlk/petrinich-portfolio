@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- The site has no database, no CMS and no login. Content lives in code and constants, and pages are static server components with client islands for the dialog, the gallery and the loader. The only backend is two server actions that send mail through Resend.
+- One Zod schema serves the client and the server. The browser uses it to gate each form step, and the server action validates everything again and never trusts the client.
+- Resend returns the result and the error as values and does not throw. The actions check both the thrown error and the returned one, so a bad key or an unverified sender cannot show "sent".
+- Security headers (CSP, HSTS, frame and permissions policies) and cache rules live in the Next.js config. Env variables go through T3 Env.
+- The blur placeholders for the images are generated at build time.
+- I wrote a domain and email setup guide for the client, so the client could point the domain at Railway and verify Resend alone.
+
+## Cases
+
+**A photo that fits a 1 MB limit.** The registration form takes a dog photo. A phone photo is 2 to 5 MB, but a server action body is capped at 1 MB. iOS Safari makes it worse: asked for WebP from a canvas, it silently returns PNG. I shrink the image in the browser in up to three passes, with smaller edges and lower quality each time, until it is under 900 KB. When the canvas returns PNG, the code falls back to JPEG. The server checks type and size, then runs sharp to rotate the image, fit it inside 2000 px and save it as WebP. I found the limit in use and fixed both sides in one change.
+
+**A registration wizard with no backend.** The client wanted new-client registration, but keeps clients in a third-party service. I built a three-step dialog: policy, dog, contact. "Next" stays disabled until the fields of the current step pass the schema, and going back never blocks. The dialog opens from any button through a URL parameter handled by nuqs, so a link can open it directly. On submit the server action re-validates the form and emails the full data with the photo attached. Staff onboard the client by hand in a separate system.
+
+**Cache headers that actually matched.** My first rule for immutable static assets never applied. Next.js applies every matching header entry and the last match wins. Files in the public folder are not content-hashed either, so an immutable rule there would strand visitors on old photos. I now use three ordered entries: must-revalidate by default, one hour with stale-while-revalidate for public images, and one year immutable for the build's hashed static files, kept last. A comment in the config records the order rule.

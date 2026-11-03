@@ -1,0 +1,18 @@
+I built GoSurf in 2021 as a one-page landing about surfing, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer, common blocks and home sections, the jQuery page script and the slider setup, not with the template's menu, scroll watcher and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Five sections in the markup: a main block with a map, a surf block, a travel block, a sleep block and a shop block, about 1,740 lines of markup.
+- Four page partials of Sass, about 2,430 lines in total, with BEM class names and 134 media queries across the page stylesheets. The home partial alone is close to 1,950 lines.
+- Colors, fonts and four breakpoints are variables at the top of the main stylesheet, and 94 spacing and size values use a fluid mixin.
+- jQuery with Slick runs seven sliders, and a small set of shared Sass placeholders handles the hidden and visible states for appear animations.
+- Six keyframe animations draw SVG lines on the map.
+- Compared with the Woodies, CloudBudget and HotelPage landings, this one moves from Swiper to jQuery and Slick and adds linked sliders, SVG animation and scroll-based parallax.
+
+## Cases
+
+**Sliders that drive each other.** The main block shows a text slider next to a map, and the surf block pairs a main slider with a second one that selects slides on click. I linked each pair with the Slick option that makes one slider follow the other, put the arrows and dots into containers outside the slider, and set the number of visible slides per breakpoint, from one on a small phone up to five.
+
+**Map lines that draw themselves.** Each map slide marks shores with SVG paths. I set the dash length and offset of every path in Sass, then animated the offset to zero with keyframes only on the active slide, so a line is drawn each time its slide comes into view and the name label fades in with it.
+
+**Price that follows the guests.** The sleep and travel slides have plus and minus buttons for nights and guests. I stored the price per night and per extra guest in data attributes, wrote a jQuery handler that sets the total in the slide when a button is clicked, and ran the same calculation once on load so the first price already matches the default values.

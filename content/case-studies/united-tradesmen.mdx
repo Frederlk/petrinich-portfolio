@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- The repository is one Turborepo with pnpm workspaces. It holds 3 apps and 3 packages: the main workforce app, a Jira plugin used as the admin UI, and the marketing site.
+- The marketing site has no CMS. The FAQ, benefits, testimonials and hero slides are static data in the code.
+- Every lead form uses React Hook Form with Zod. Submit stays disabled until the form is dirty and valid. Consent is a literal-true checkbox.
+- The main app reads data in server components and writes through server actions. The tRPC router is small and holds only the user procedures.
+- Onboarding is one catch-all route. The step is a validated URL segment, so each step is a deep link and the server component loads its own data.
+- Sign-in is by phone code or Google. The NextAuth credentials provider has no password. It accepts a number only after Twilio reports the verification as approved.
+
+## Cases
+
+**Five modals, one lead path.** The client needed several lead forms. The general question, hire us, cooperation as contractor or vendor, contractor registration and project submission all differ. A contractor form asks for license, EIN and legal address. The cooperation form takes a file. The project form takes dates and service types. I did not want five copies of validation, phone input and feedback. One shared type covers the union of all fields. One hook wraps the Axios call and shows the toast. Each modal builds FormData instead of JSON, so the forms with a file use the same call as the rest. Checkbox groups are flattened into comma-joined keys. The phone input sends the country code and the dial code separately.
+
+**Uploading files straight to S3.** Workers upload photos and PDFs of diplomas and certificates in the specialization step. Sending files through the Next.js server would add size limits and cost. So the browser sends the file to AWS S3 itself. A server action checks the session and signs an upload URL for 24 hours. The browser then sends a PUT to S3. A second action stores the title, key, content type and user in the File table. For reading, each file gets a signed GET URL, cached for the same 24 hours. The uploader is one generic component. Props set the accepted types, the maximum size, the maximum count, the layout and the React Query key. The list refetches after an upload or a delete. The bucket host is allowed in the Next.js config, so the Next.js image component can show the files.
+
+**Two apps, two shared packages.** The worker app and the admin plugin must read and write the same data. Both also talk to the same Jira instance. This is how the monorepo is built. One package exports the Prisma client and the generated types. Another holds the Jira client and its Zod schemas. The client signs a JWT and exchanges it for a short-lived OAuth token. Both apps list the packages in their Next.js config for compilation, so Next.js compiles the workspace TypeScript directly, with no build step per package. Types like Issue reach the worker app from the Jira package.

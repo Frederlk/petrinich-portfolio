@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- The marketing site sells a crypto token sniping platform. It is a Next.js App Router site with its own content, separate from the app.
+- Blog, help center and team content lives in Sanity: posts, categories, authors, three help center types and the team block. Editors change any of it without a deploy.
+- Sanity Studio is mounted inside the site.
+- One fetch function decides the cache policy for every read. Pages cannot forget it.
+- Rich text is a shared block type. It allows headings from H2 to H6, quotes, lists, links, tables and images that require alt text.
+- Forms use React Hook Form with Zod through a small shared hook. Query-string state, such as the blog "load more" count, uses nuqs.
+- The newsletter has three entry points, the footer block, an exit-intent modal and the post pages. They share one subscribe function and one route that writes contacts to SendGrid.
+- TypeScript runs with strict mode and checked indexed access.
+- On the marketing site I led 1 other developer: I did the estimate, the refactoring and cleanup, all the landing pages, the blog and the help center, the release and the support. In the app I worked with 3 other developers and built several front-end and back-end features.
+
+## Cases
+
+**One fetch layer for live preview and fast pages.** Editors needed to preview drafts. Readers needed static pages. I wrote one fetch function that takes the cache policy from three inputs. By default a page revalidates every 60 seconds. A tagged read caches until the tag is invalidated. In draft mode the cache is off and the read switches to the draft perspective with stega. Draft mode has its own enable and disable routes, and the enable route checks the preview secret. The read token is marked with the React experimental taint API, so it cannot reach the client. The presentation tool in the Studio resolves a post to its article URL, so an editor clicks through from the Studio to the page.
+
+**A blog that stays indexable.** The blog has pages, a category filter and a sort. Those combinations make near-duplicate URLs. I used an optional catch-all route for the page number and kept category and sort in the query string. Static params are built from a GROQ count, at 8 posts per page. The canonical URL points to the category or the plain list. Any sorted view is marked noindex. A page number that is not numeric or too high returns 404. The title is built from the category and the page, so each list page has its own. The article page reads its table of contents from a headings projection in the GROQ query, so the page does not walk the body twice.
+
+**A help center from a three-level tree.** Help content has a section, a category and an article. Non-developers edit it, and each level needs its own page for search. I made three Sanity document types that reference each other. One GROQ query returns the whole tree with dereferenced slugs. Each of the three route depths builds its static params from that tree. The sidebar reads the same tree, so it always knows the current section. Each level sets its own metadata, with an article Open Graph type on the article pages. Adding a section or an article is an edit in the Studio, with no code change.

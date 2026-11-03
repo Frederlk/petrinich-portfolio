@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- The only API handler is the Stripe webhook. Everything else is a Server Action, in 17 action files. A next-safe-action chain does the work: a base tier, then one that needs a session, then one for admins or designers.
+- Sign-in goes through Clerk. The role sits in the user public metadata and defaults to user when missing. The middleware protects the dashboard.
+- The database has 3 Prisma models and 2 enums. Designer results are a separate table with one row per delivery. A second row means a revision, and approving it picks the "revisions delivered" notification.
+- Images go from the browser straight to Supabase Storage, all in parallel. A 500 px preview of the first image is compressed in a web worker and stored as the card thumbnail.
+- Search, filter, sort and page of the orders list live in the URL through nuqs. The data call is wrapped in React's cache function, so the stats and the list share one query.
+- Notifications are a typed constant of 29 templates with placeholders. A notice for admins is written to every admin in one batch insert. Emails go out through Resend and can be delayed by a number of hours.
+- Prices live in one table, and discounts in a second, declarative one. A photography total is the base price plus extra photos, extra apartments and a fee for the outer zone, which comes from a ZIP table.
+
+## Cases
+
+**One order flow for five services.** Virtual staging, item removal, floor plans, renderings and photography need different inputs, prices and results. They still share one list, one status flow and one payment path. I kept a single order row with a service type and one JSONB details column. Each service has its own Zod schema, and they are merged into one details object keyed by service. A refinement checks that the key matching the service type exists. Every service has its own step components and price utilities, and one Zustand store drives the wizard. Photography and renderings start at awaiting scheduling, and the other three at awaiting payment.
+
+**Status changes guarded across three roles.** Each of the three roles sees only the orders that belong to the role, and only the actions valid at that moment. There are 10 statuses. Every transition is a Prisma update whose where clause carries the status the order must have now, plus the designer for a designer. A stale click finds no row and moves nothing. A typed permission matrix by role, resource and action, with a predicate per row, answers the permission check. Tag and label tables per role and status replace conditionals in the UI.
+
+**Money tied to the order.** A checkout session carries the order id and the service type in its metadata. The webhook verifies the signature and handles only the completed checkout event. It hands the work to a background task and answers at once. Renderings start without a price. After the consultation an admin sets it, and the checkout request accepts only a scheduled rendering with no checkout yet. Cancelling with a refund runs in a database transaction. It finds the Stripe charge by the order id in the metadata and refunds it inside the transaction.

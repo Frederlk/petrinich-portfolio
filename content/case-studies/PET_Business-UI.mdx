@@ -1,0 +1,20 @@
+I built Business-UI in 2021 as a one-page layout for a business services company, from a given design. It was an early exercise in turning a full-width design into a page that scales from a 1920 px canvas down to a 320 px phone. The page was hosted on Firebase and sits on a ready Gulp and Webpack starter template. The build setup, the mixins, the menu script and the tabs script come from that template. The page markup, the Sass partials and the page's script entry are mine.
+
+The page has four sections: a main block with an image and a headline, an investor block with a row of statistics, a news and media block with tabs, and a country block.
+
+## Patterns and decisions
+
+- About 26 KB of Sass in nine files, split into base, common, header, footer and home partials, with BEM class names.
+- Colors, the container width, four breakpoints and the 320 px minimum width live as Sass variables in the main stylesheet.
+- The layout is desktop-first: 40 media queries, most of them max-width on the four breakpoints.
+- Sizes scale between two widths through the template's adaptive-value mixin, which I called 32 times for margins, font sizes and heights.
+- Hover styles sit behind a hover-capability media query, so touch screens do not get stuck hover states.
+- Business-UI, AOD and Binary share one Sass structure of base, common, header, footer and home partials.
+
+## Cases
+
+**Statistics row that survives narrow screens.** A row of large numbers had to sit in one line on a desktop and still read well on a phone. I made the row a flex container and changed the column basis at the tablet breakpoint: a third of the row on a phone, half of it on the smallest screens. The number size scales with the adaptive mixin.
+
+**Text over an image.** The headline sits on top of a large image and had to stay readable at every width. I positioned it with a fluid bottom offset and a text shadow, centered it on phones, and gave the image block a fluid minimum height so the crop stayed predictable.
+
+**Tabs for news and media.** Several groups of articles had to share one area. I marked up the tab titles and bodies with the data attributes the template's tabs script reads, then styled the active state in the page stylesheet.

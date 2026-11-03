@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- All routes sit under a locale segment in Next.js with the App Router. There are 25+ pages in three layout shells. The sign-in pages have no header or footer. The main pages have both. The dealer pages sit outside the main shell on purpose, so a screen on a dealer device carries no site navigation.
+- Marketing pages live in Builder.io. A catch-all route fetches the content by URL and builds the metadata. 25 React components are registered for the editor.
+- Data is PostgreSQL on Supabase, reached through Prisma with 19 models.
+- Server actions use next-safe-action with three tiers: a plain one, one that needs a session and one that needs the Admin role. There are 70+ actions in all. The session tier also needs a Salesforce contact.
+- Auth is NextAuth with credentials, LinkedIn and Facebook. The session carries the role and the Salesforce user id. The proxy joins next-intl routing with route classes for private, auth and management paths. The site is German only, with localized paths.
+- Admin tables use TanStack Table with filters and sorting in the URL through nuqs, and Zustand holds the state of the spreadsheet upload.
+- One Vercel Cron job runs at 02:00 each day behind a bearer secret. It switches discounts off after their end date, deletes those expired for more than 7 days, and switches on the ones whose start date is today and that have a picture. Dates are stored as year-month-day strings, so the job compares strings and reads an empty end date as open-ended.
+- A GitHub Actions job backs up the database daily.
+
+## Cases
+
+**Moving the production database off a failing server.** The production MariaDB ran on a server flagged as a hardware risk. It held member data, 19 models and 54 migrations. I wrote a baseline migration for PostgreSQL and used JSON as the neutral format. A backup script exported the data. A seed script loaded it into the new schema, where nanoid ids became cuid ids. I ran the move on local PostgreSQL, then on a Supabase test project, then on production. On the local PostgreSQL run I verified 33,300 records. The discount job moved from raw SQL on the old server to Vercel Cron.
+
+**Admin spreadsheet import that shows a diff first.** Admins edit hundreds of discount rows in a spreadsheet. The import parses the file and sorts every row into add, update, same or errors. Each group is a tab. The admin reads the tabs, confirms, and only then does the write run, inside one transaction. The car dealer import follows the same pattern, with address validation.
+
+**Salesforce as co-owner of user data.** Contact data and memberships belong to Salesforce. Credentials and email confirmation belong to the website. A sign-up must also work when the Salesforce user already exists. I split the model. One read merges both sides into a single user. On register, an HTTP 409 from Salesforce counts as success, and the returned id is saved as the Salesforce user id. Membership evidence files go to SharePoint through Microsoft Graph, and a token route keeps the credentials out of the browser.

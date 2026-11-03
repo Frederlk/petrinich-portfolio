@@ -1,0 +1,18 @@
+I built OFDR in 2022 as a four-page React site for a center of remote professional retraining, with Russian-language copy. The layout is built from a given design, and the pages are routed, paginated and validated.
+
+## Patterns and decisions
+
+- Four pages (home, attestation, news and contacts) plus a not-found page, all loaded lazily behind a spinner, with 7 shared components and 9 page containers.
+- Seven Sass partials, about 1,860 lines in total, with BEM class names and 113 media queries; breakpoints and colors are variables, and the layout goes desktop-first.
+- Three Formik forms (an order form, a callback popup and a contacts form) validated with Yup, with a phone mask and a short rule per field.
+- The news list is sorted by date once and shown eight items per page through a pagination component, while the home page takes only the two latest.
+- Each page sets its own title through react-helmet, and a breadcrumbs component reads the route list.
+- Compared with the Gulp pages, this exercise practised routing, component splitting, form validation and pagination, and kept the same Sass structure.
+
+## Cases
+
+**Forms with shared field components.** The order form has nine fields, from a full name to an address. I wrote small field components on top of Formik's field hook that show the label, the input or a masked phone input, and the error text, and add an error class once the field is touched. The same pattern is reused in the popup and the contacts page, with rules such as a minimum of two characters, a group number between two and five and a reason that must match one of two words. On submit the phone is cleaned to digits and the form resets.
+
+**News with pagination.** The news data is a list with dates. I sort it from newest to oldest, slice it by the current offset and let the pagination component report the clicked page, from which I compute the new offset. The component is styled through class names passed in as props, so it matches the rest of the site.
+
+**Navigation that survives route changes.** The template's menu, spoilers and scroll helpers attach to elements in the page, and React replaces those elements on navigation. I put one component inside the router that, on every path change, scrolls to the top, closes the menu and runs the helpers again, so the header and the accordions work on every page.

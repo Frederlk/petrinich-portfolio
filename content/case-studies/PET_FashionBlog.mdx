@@ -1,0 +1,18 @@
+I built FashionBlog in 2021 as a fashion blog page, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials, the blog script and the gallery setup, not with the template's menu, accordion and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- A main block with a two-column list of 11 articles, an aside and a gallery block.
+- Four page partials of Sass and a pagination partial, about 900 lines in the page partials, with BEM class names and 52 media queries.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 27 hover-capability queries, the most of these pages.
+- A LightGallery lightbox for the gallery, the only one of these pages that uses it.
+- This was the first page here where the main content comes from a data array in JavaScript instead of fixed markup.
+
+## Cases
+
+**Articles built from an array.** The list of 11 posts is described as an array of objects with link, title, category, date, author and image, and a loop creates an article for each. The seventh one gets a full-width modifier, and its image box changes ratio in the Sass.
+
+**Pagination from scratch.** The pager needed previous and next links, first and last numbers and dots over gaps. I wrote a function from the total and current page that builds the list: it adds the neighbors of the current page, the first and last numbers when they are far away, and dots only when pages are skipped.
+
+**Gallery grid that shrinks.** The gallery tiles are square boxes made through bottom padding, in six columns on desktop and five, four and three as the screen narrows. Each tile links to the full image and opens in the lightbox.

@@ -1,0 +1,20 @@
+## Patterns and decisions
+
+- I worked on the renderer of an Electron desktop client and led 2 developers on it, inside the client's team. It is React with TypeScript, bundled by Webpack in the electron-react-boilerplate layout. The main process, the API, the update feed and CI are the product's other parts.
+- The app runs 3 windows: the main one, a splash and a settings window that the main process opens over IPC. The renderer has 2 routes in a hash router.
+- State sits in 3 React contexts for filter, audio and selection, plus TanStack Query for fetched data.
+- Zod checks the catalogue of 13 fields and each API response at the boundary. The catalogue arrives from the main process over IPC, and the schema renames the backend fields to camelCase.
+- The UI uses Tailwind CSS and Headless UI. The category sidebar is an animated accordion. Tracks and Albums are tab panels, and the album grid is sorted by release date.
+- The home screen has a carousel of 4 new-release slides that advances every 5 seconds. A click on a slide selects its vendor and album.
+- Local files load into images and the waveform player through a custom protocol that the main process registers.
+- The renderer is 27 TypeScript files: 13 components, 3 contexts, 1 hook and 4 icons beside the app shell.
+
+## Cases
+
+**A search that ranks results.** A flat substring search returns an unordered list, and the box has to feel instant while typing. The input is debounced by 500 ms and the query is split into terms. A sound matches when any term hits its title, description or album. Each hit adds a score: 3 for the title, 2 for the description, 1 for the album. Higher scores come first and ties sort by title. The search sits on top of the vendor, category and album filters, and the placeholder shows the live count and scope.
+
+**One data layer over two storage modes.** The same screens had to work against a cloud API and against a folder on a local network share, and the components could not know which. Every call reads the stored mode from the main process first, with a 5 second timeout, so a lost reply rejects and does not hang. In Cloud Mode it calls the REST endpoints and validates each answer with Zod. In Network Mode it sends a request over IPC and waits on a reply channel that carries a request id, so parallel requests do not mix. The catalogue follows the same split at startup.
+
+**Many waveform players kept light.** A page shows 50 cards, and each has a waveform player and a cover. The list pages at 50. A card fetches its audio URL and peaks together, and only after its cover query has succeeded. The cover query key is shared by the grid, the carousel and the cards, so a cover loads once. Refetch on mount and on window focus is off. The peaks are precomputed and passed to wavesurfer.js, so the file is not decoded just to draw the wave. A shared context stores the playing file name, so every other card stops.
+
+**The IPC contract between renderer and main process.** The sandboxed renderer needs settings, folder access, downloads and drag-out, and each answer must reach the right caller. The context bridge exposes only three generic calls from the IPC renderer, plus a start-drag function. The subscribe call returns an unsubscribe function. The renderer sends on 10 channels, answered by 10 handlers in the main process. Fire-and-forget channels carry commands. Per-request channels carry data. Drag-out works the same way: the card asks for a presigned URL, saves the audio, starts the drag, and the download start, complete and error messages come back.

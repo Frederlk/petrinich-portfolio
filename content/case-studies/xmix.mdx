@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- I set the architecture and wrote the estimate. The platform is one Next.js app on the App Router with React and TypeScript. Route groups split the landing, sign-in, the company app, public pages and status pages. Middleware sends each visitor to the right group.
+- The app has 20+ pages, and its server actions are built on next-safe-action. One action type masks errors, one checks the session and resolves the user's company, and one limits an action to owner and admin.
+- Data lives in PostgreSQL through Drizzle, with 30+ tables and 200+ migrations. Each test method keeps its own table definitions, and they merge into one schema.
+- The database has two connections. The main one serves almost everything and runs under a login role that does not bypass row-level security. The admin one is used only where a read or a membership write has to cross companies, such as the Stripe webhook, the layout guards and sign-up.
+- Auth is Supabase Auth with three roles: owner, admin and user. Sign-up has email verification, phone verification with an SMS consent version, and company creation.
+- Forms use React Hook Form with Zod. Tables use TanStack Table with the filters kept in the URL through nuqs. Charts use Recharts. The UI kit is shadcn/ui on Radix UI and Tailwind CSS.
+- Mail goes through Nodemailer: the contact form, team invites and status changes. PDF reports are built from React components.
+- Jest tests cover the pure maths and run in GitHub Actions on every push.
+- I built the landing page alone: home, pricing and contact. It has a FAQ with structured data for search, demo videos hosted on Vercel Blob, and a contact form with a honeypot field.
+
+## Cases
+
+**One list of test methods drives the platform.** The platform supports 9 lab test methods, 7 for aggregates and 2 for asphalt. Each method needs its own settings, measurements, calculation, tables and screens in three places. The list will grow, so adding a method has to be mechanical. One list holds the metadata of every method, and one typed object plugs in its settings schema, forms, save function, calculation, pass check, CSV converter and result views. The other maps are typed the same way, so a new name in the list breaks the build until every map has an entry. The server loops over the list instead of naming each method. A written runbook gives the page order and the table naming.
+
+**Company isolation is enforced in the database.** Many companies share the same tables, so the app alone is not the boundary. Every tenant table has row-level security, with 16 policy sets of four policies each, written with Drizzle next to the tables. A policy compares the row's company with a setting. Each query runs in a transaction that sets the signed-in user's company first. Delete is forbidden on most tables, so samples, laboratories and customers carry a deleted-at date instead. The membership table is read-only for the client role, and only the Stripe webhook writes it. The policies were refactored in their own run of 22 migrations.
+
+**A subscription per seat that follows the team.** Access depends on an active subscription, and every active user and every pending invite takes a seat. Stripe holds the prices. The base plan covers 3 seats and an extra-seats item carries the rest. Creating an invite raises the seat count, and deleting an invite or deactivating a user lowers it, without proration. Activating a user raises it again. The company layout chains four guards: profile, phone verification, company and membership. The last one sends the user to Stripe Checkout, with tax id collection, until a subscription exists. The webhook verifies the signature and handles three events. The billing page, for the owner only, links to the customer portal and shows an invoice preview.

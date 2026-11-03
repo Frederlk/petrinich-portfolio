@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- English and Dutch run on next-intl, with the locale prefix always shown.
+- Filters are path segments, not query strings. Every combination is a crawlable URL with its own title, description and canonical. Combination slugs are stored alphabetically sorted in Sanity, so the same two filters in either order share one canonical.
+- The main page revalidates every hour and generates its static params up front, so filter pages are static and regenerate hourly.
+- The live carousel is a client component on TanStack Query with infinite loading, in pages of 40. The next page loads when 5 streams remain. The selected stream sits in the URL through nuqs, so a deep link fetches that creator first and pins it at the front.
+- Sanity Studio is mounted inside the same app, with 7 document types. Editors manage the blog, legal pages, SEO text of filter pages and popular tags. A signed webhook maps the document type to a cache tag and revalidates it.
+- A request proxy blocks aggressive crawlers with a 403, returns 404 for paths longer than 4 segments and guards the age-verification callback against open redirects.
+- The app ships as a multi-stage Docker image behind Nginx on a VPS. Production deploys from the main branch and a preview from the dev branch, both over SSH.
+
+## Cases
+
+**One optional route for every filter URL.** Filters such as female and asian, or a country, had to be clean paths, and a single segment could also be a creator name. I used one optional catch-all route for the home page, every filter combination and every creator profile. A slug is checked against registries in a fixed order: country, gender, ethnicity, body type, language, and tag as the fallback. A hyphenated slug is expanded when at least one part is a known filter. A single unknown segment counts as a creator only if it appears in a local sitemap file that a prebuild script refreshes, otherwise it is a tag. Static params are generated in tiers.
+
+**Live video that recovers instead of showing a black box.** Live HLS streams drop and return errors that look like CORS failures, and they had to play on Safari, iOS and desktop inside a swipe carousel. Safari and iOS play HLS natively. Other browsers use hls.js with low-latency settings. A fatal error retries 3 times with a 5 second cooldown. A CORS-like failure (status 0, 403, 451 or empty headers) gets its own budget of 10 retries, 8 seconds apart. Only the active slide and its neighbour play, and every other slide is muted. Slides further than 3 from the active one are unmounted, so 7 stay mounted at most. The distance is circular, so the carousel wraps.
+
+**A site that stays up when the CMS or the upstream API fails.** A quota error from the CMS or a bad answer from the streaming API must not take the site down or show blocked streams. A circuit breaker opens on Sanity quota errors and resets after 5 minutes. Static params and sitemap queries fall back to hard-coded lists when the CMS is unreachable. The user-status call has a safe fallback, so the page still loads. The stream list drops duplicates, streams with no preview, blocked creators and streams blocked in the viewer's country. The tag filter runs again on the client, on top of the upstream one.

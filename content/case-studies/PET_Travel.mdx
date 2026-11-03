@@ -1,0 +1,18 @@
+I built Travel in 2021 as a one-page landing for a travel agency, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer, common blocks and home sections, the slider setup and the datepicker call, not with the template's select, mouse-parallax, scroll watcher and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Six sections in the markup: a main block with a search form, an explore block, a destinations block, a sunny-days block, testimonials and a trends block, about 360 lines of markup.
+- Four page partials of Sass, about 1,300 lines in total, with BEM class names and 116 media queries across the page stylesheets.
+- Colors, fonts and four breakpoints are variables at the top of the main stylesheet, with ten color variables and three web fonts, one of them a serif for headings. 44 spacing and size values use a fluid mixin.
+- Three blocks move an image between containers on the tablet breakpoint through the template's attribute, and the header profile block moves into the menu on a phone.
+- Decorative circles and crosses in the main block carry mouse-parallax attributes, 15 in total, so they shift with the cursor.
+- Compared with the Woodies and CloudBudget landings, this one adds a datepicker, several selects in one search form and mouse parallax.
+
+## Cases
+
+**Search form in the hero.** The main block has three selects (location, activity, grade) and a date field. I wrote the select markup with a placeholder option, styled the form in Sass, and initialised a datepicker library on the date field with a day, month and year format. The select look comes from the template's custom select script.
+
+**Image that changes place.** In the main block and in two holder blocks, the image has to sit in a different container on phones than on desktop. I did not duplicate the markup: each image carries an attribute with the target container, the breakpoint and the position, and the template script moves it when the width drops below 767.98 pixels.
+
+**Cards that arrive one by one.** The trends block shows four cards in a grid, and the cards had to appear in sequence when scrolled into view. I used a CSS grid with four equal columns, two below 850 pixels and one on a small phone, and set a different delay for each of the four positions with the nth-child selector and the reveal mixin, from 0.2 to 0.8 seconds. On a small phone every card gets the same short delay, because they are stacked in one column.

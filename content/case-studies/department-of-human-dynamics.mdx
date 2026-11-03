@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The site is one route. The page is a server component made of full-screen slides, and each interactive piece is a small client island.
+- There is no data layer, no auth and no API routes. The copy lives in components and in a few constants for the site, its sources and its projects.
+- One constants module is the single source for the name, tagline, description, keywords and images. The metadata, the JSON-LD, the manifest text and the mail link all read it.
+- Next.js runs with Cache Components, React Compiler and Turbopack. Security headers and a Content-Security-Policy are set in the Next.js config.
+- Biome with Ultracite does the linting.
+- The site was built from supplied artwork: SVG headline images, project cards and a pixel font.
+
+## Cases
+
+**Slide snapping with an escape hatch.** Full-screen slides that snap feel broken when a slide is taller than the screen, as on a phone. A plain snap also fights smooth scrolling. I listened to the Lenis scroll event. The page snaps to the next or previous slide only when the reader reaches the bottom or top edge of the current one. A lock holds while the snap animates. A virtual-scroll event from the wheel or a touch releases the lock, so the reader can always interrupt. The full-screen wrapper uses the large viewport height with a dynamic height variant for Safari, so the mobile browser bar does not cut a slide.
+
+**A citation drawer driven by the text.** The text carries 19 numbered references to scholarly sources, and a full-screen layout has no room for a bibliography. I put the active source id in a small context. Each reference link in the copy writes that id. The footer drawer reads it, opens by itself, highlights the cited entries and closes after 4 seconds.
+
+**An animation and font budget.** The page has four interactive words that open animated mock screens, an emoji section and a slider. It also uses eight font files. All of that could delay the first paint. I split the fonts in two. Inter and Source Serif 4 load at once. The six decorative fonts attach 100 ms after the first render. Counters, particles and slides start only when an intersection observer says they are visible. The follower counters in the social capital mock tick every 500 ms only while their overlay is open. Timers are cleaned up on unmount.
+
+**Structured data from the same constants.** The page needs Organization, WebSite and Breadcrumb data for search. I built the JSON-LD with typed schema helpers. It reads the same constants as the metadata, the manifest text and the mail link, so the name and description cannot drift apart.

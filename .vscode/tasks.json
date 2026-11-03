@@ -1,0 +1,59 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "AI Orange",
+      "type": "shell",
+      "command": "claude",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "ai-terminals"
+      },
+      "icon": { "id": "terminal", "color": "terminal.ansiYellow" },
+      "problemMatcher": []
+    },
+    {
+      "label": "AI Red",
+      "type": "shell",
+      "command": "claude",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "ai-terminals"
+      },
+      "icon": { "id": "terminal", "color": "terminal.ansiRed" },
+      "problemMatcher": []
+    },
+    {
+      "label": "AI Blue",
+      "type": "shell",
+      "command": "claude",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "ai-terminals"
+      },
+      "icon": { "id": "terminal", "color": "terminal.ansiBlue" },
+      "problemMatcher": []
+    },
+    {
+      "label": "AI Magenta",
+      "type": "shell",
+      "command": "claude",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "ai-terminals"
+      },
+      "icon": { "id": "terminal", "color": "terminal.ansiMagenta" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start 4 AI Terminals",
+      "dependsOn": ["AI Orange", "AI Red", "AI Blue", "AI Magenta"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+I built Tesla in 2021 as a one-page landing for a car model, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the page scripts for the video and the counters, not with the template's menu, scroll, watcher and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Four sections in the markup: a hero with a slider, an info block with three numbers and a video, a content block with feature rows and a characteristics block.
+- Three page partials of Sass, about 650 lines in total, with BEM class names and 35 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and 24 spacing and size values scale fluidly between a desktop and a smaller value.
+- Nine elements carry the template's watch attribute, and the home partial turns the class it adds into slide-in and fade-in animations.
+- The page has two small scripts of its own, one for the video and one for the counters, both driven by that same class.
+- Next to the other landings, this one is animation-heavy: 25 transforms and 15 transitions in the home partial and header, with one Swiper slider.
+
+## Cases
+
+**Reveal on scroll with a class.** Titles, texts and buttons start moved aside and transparent, and a view class from the template's watcher switches them to their place. I wrote the start state in the home partial, a sideways shift on desktop and a vertical one on a phone, and the transition of 0.8 seconds, so the animation is a pure CSS state change.
+
+**Video that follows the viewport.** The video has two source formats. A script watches the class on its wrapper: the video plays when the wrapper is in view and pauses when it leaves. On a screen of 480 px or less it switches to lighter mobile files, and it also switches on resize.
+
+**Numbers that count up.** The info block shows acceleration, range and top speed. I used CountUp and started the three counters when the block gets its view class, with a decimal comma for the acceleration and no thousands separator for the range.

@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- The API is oRPC with TanStack Query on the client. Every procedure has its own folder with the procedure and its schemas. A thin router collects them, and shared logic sits in a use-case layer. There are 70+ procedures. I wrote the rule down in a doc, because I expected 30 to 50 routers.
+- Access is checked twice. The proxy gates the routes by session and role. The oRPC middlewares check the role again, and a separate one checks the section permission of a member.
+- The data model has 30 Prisma models on PostgreSQL. Better Auth handles sign-up, e-mail verification, password reset and member invitations.
+- Search uses Upstash Vector over casino text, and Vercel AI SDK with Gemini API for drafting and query expansion. The vector index mirrors publishing: a casino that is unpublished or deleted leaves the index.
+- One Vercel cron job runs the weekly GGI recalculation. The endpoint compares its bearer secret in constant time.
+- Arcjet runs in the proxy and again as an oRPC middleware. Costly procedures add their own sliding-window limit. Every denial becomes a typed error the UI can show.
+- The app has 30+ pages. The UI kit has 80 component files, built from the client's design. Vitest covers the scoring and the GGI engine in 10 test files, and nine manual test guides cover the screens.
+
+## Cases
+
+**Picks that never show a casino the user cannot use.** A list of casinos is worthless if it shows operators that do not take the user's country or payment method. I made those two hard filters. The rest is a weighted score: games 30, payment 25, GGI 20, semantic match 15, budget 10. GGI is raised to the power 1.5, so a high score counts more than a medium one. Budget only ranks and never filters, and it falls back to a neutral value when a casino has no deposit data. Casinos below a GGI gate stay out of the main list. Verified users get 12 picks and unverified users get 6. Tests cover the scoring.
+
+**A trust score that says how much data stands behind it.** Casinos have uneven data, so one number can mislead. The GGI engine has 7 modules, and their names and weights are rows an admin can edit. The engine normalises the weights of the active modules and returns a confidence value. Confidence is the share of module weight that had input. Results are stored as one row per casino, ISO week and year, with an upsert. A manual recalculation overwrites the current week instead of adding a duplicate. Traffic comes from PostHog, queried live at recalculation, and slugs are checked against a strict pattern before they enter the query.
+
+**AI drafting an editor can trust.** Editors need generated casino copy, but model output can carry scripts or personal data, and user text can try to hijack a prompt. Input is length-limited and scrubbed for injection phrases. Output is checked for script and PII patterns, which are redacted. Generation is limited to 20 calls per hour and to the sections the editor's role allows. A separate check compares a draft with the other casinos for uniqueness.
+
+**Guest preferences that survive sign-up.** A visitor describes the wishes before an account exists. That input must not be lost, and it must not be tied to an unverified identity. The answers are stored in a token that expires in 24 hours. The sign-up page loads it to prefill the form and shows states for loading, expired and invalid links. After sign-up, an auth hook copies the data into the member's preferences and deletes the token. Each step except the mail logs and degrades instead of failing the sign-up. If the verification mail fails, the hook deletes the new user, so no account is left that cannot be verified.

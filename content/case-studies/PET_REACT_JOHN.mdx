@@ -1,0 +1,18 @@
+I built John in 2022 as a small personal portfolio site in React, from a given Figma design. The copy is placeholder text. It has a home page, a works list, a work page, a blog and a not-found page, and it was hosted on Vercel. The Sass mixins, the menu script and the dynamic-adapt script come from the earlier starter template. The components, pages, data and Sass partials are mine. I counted 3 shared components, 5 containers, 5 pages and 11 Sass files of about 26 KB.
+
+## Patterns and decisions
+
+- Four routes plus a catch-all with react-router-dom, all pages lazy-loaded with a spinner as the fallback; the work page takes a name in the path.
+- Works and posts live in one constants module with titles, dates, tags and body text, and the pages map over it.
+- Lists are sorted by date in the page, newest first, and the home page takes only the two latest posts.
+- date-fns formats the year and the date, and a small parser turns stored HTML into the body of a work.
+- Page titles come from react-helmet on each page.
+- Compared with LOGO, this exercise kept the routing and the data-driven pages but trimmed the scope to a handful of components, which made the structure easy to read at a glance.
+
+## Cases
+
+**One page for every work.** Each work needed its own page without writing a component per work. I used a route with a parameter, found the matching record by the end of the path, and rendered its title, year, categories and body. The body is stored as HTML and passed through html-react-parser.
+
+**Previews of a fixed length.** The list shows a short text for each work, while the stored text can be any length. I cut the preview at 182 characters and added an ellipsis, so the cards keep a similar size.
+
+**Menu state tied to navigation.** The mobile menu has to close when the route changes. I added a small component inside the router that watches the path, scrolls to the top and closes the menu through the template's menu function.

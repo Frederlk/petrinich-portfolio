@@ -1,0 +1,56 @@
+name: Profile sync
+
+# Keeps the GitHub profile (the Frederlk/Frederlk README and the account's name, bio, blog, location, company) equal to the site's content: `scripts/sync-github.ts --apply` after every push to `main` that changes what it renders from. `workflow_dispatch` reruns it by hand, from the Actions tab or `gh workflow run "Profile sync"`.
+#
+# `PROFILE_SYNC_TOKEN` is the owner's fine-grained token: account permission "Profile" read and write (PATCH /user), and repository access to Frederlk/Frederlk only with "Contents" read and write. `github.token` cannot do either — it is scoped to this repository and has no user permissions.
+on:
+  # Everything the README is rendered through: the content, the schemas and libs that parse it and derive its numbers, and the script with its loader.
+  push:
+    branches: [main]
+    paths:
+      - content/**
+      - schemas/**
+      - lib/**
+      - env.ts
+      - scripts/sync-github.ts
+      - package.json
+      - bun.lock
+      - .github/workflows/profile-sync.yml
+  # Monthly, because "6+ years" is derived from today's date and moves without a commit.
+  schedule:
+    - cron: "17 6 1 * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+# `github.token` only checks out this private repository; everything the sync writes goes through `PROFILE_SYNC_TOKEN`.
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The bun version comes from `packageManager` in package.json; the script runs on bun alone, no Node needed.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      # Without the secret `gh` fails with a generic auth error; say what is missing instead.
+      - name: Require PROFILE_SYNC_TOKEN
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The PROFILE_SYNC_TOKEN repository secret is not set. Create the token described at the top of this workflow and run: gh secret set PROFILE_SYNC_TOKEN"
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_SYNC_TOKEN }}
+      - run: bun install --frozen-lockfile
+      - run: bun sync:github --apply
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_SYNC_TOKEN }}

@@ -1,0 +1,20 @@
+## Patterns and decisions
+
+- I built the whole app alone: a single-screen character sheet for a Russian tabletop RPG, installable as a PWA and kept entirely on the device. There is no backend, no account and no router.
+- It is React with TypeScript and Vite. React Compiler handles memoization, and the rich text editor opts out because Tiptap keeps mutable editor state.
+- One Zustand store holds the character and three session counters. Derived values are never stored. They are computed from the primary and modifier values in one memoized hook over pure functions.
+- Each skill row subscribes only to its own two values, so typing in one cell re-renders one row.
+- The UI is built on Base UI components with typed style variants, styled with Tailwind CSS. The number field is wrapped so a tap changes the value once and does not repeat while held.
+- Every rule explanation, 83 in all, lives in one data table. Tapping a name opens a bottom drawer with the description in Markdown, and the derived parameters show their formula there.
+- The sheet has four card lists (modifications, injuries, enlightenments, pathologies), a combat reference drawer, and notes in a Markdown editor that loads lazily. A reset dialog starts a new character.
+- The avatar photo is compressed in the browser to 512 px before it is stored, which keeps local storage small.
+
+## Cases
+
+**A calculation engine for a chain of rules.** The rulebook defines derived values: an aspect from its skills, a characteristic from its aspects, a final skill, then five secondary parameters and a daily recovery. Several formulas look odd on purpose. I put every rule into one pure module with named constants. An aspect is the rounded mean of its three skills. A characteristic divides by a count stored as data on each characteristic, because the five of them do not share a divisor. One secondary parameter counts a single skill twice, exactly as the rulebook says, and a short comment records that this is intended. Edit one number and every dependent value, total and gauge limit updates at once. There are 51 skills under 17 aspects and 5 characteristics.
+
+**A sheet that opens instantly and keeps its data without a server.** A character is the player's only copy, so it has to survive reloads, offline sessions and app updates. A persisted store usually flashes an empty default sheet before it loads. I persisted only the data fields under one key and delayed hydration to an effect, and the sheet renders nothing until that finishes. A themed splash fades out over that moment, so the wait reads as intentional. Workbox precaches the app and caches the web fonts, and the service worker updates itself. The player installs the sheet from the browser and new versions arrive without a prompt.
+
+**A point budget driven by age.** The number of free points depends on the character's age bracket, and the player spends them across 51 skills. I put 8 brackets into a table, each with a free-point range and a health value. The age picks the bracket, and the bracket limits the budget input. The totals row compares spent primary points with the budget. It turns red over budget and green when the sum is exact. Primary values stay locked behind an edit toggle, so a stray tap during play cannot change a build. In edit mode the totals row sticks to the bottom of the screen.
+
+**Gauges for play time.** During a session the player tracks action points, platons and willpower against maxima that come from the build. I took the limits from the calculation hook, so they move when the build changes. A round button refills action points in one tap. A rest dialog takes a number of days, adds the computed daily recovery for each and caps the result at the maximum. An empty gauge gets a fill-to-maximum shortcut on first use. The sheet works as a tool at the table and not only as a build calculator.

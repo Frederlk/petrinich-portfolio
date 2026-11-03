@@ -1,0 +1,106 @@
+{
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "prisma.schemaPath": "prisma/schema.prisma",
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+    },
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "colorize.languages": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "css",
+    "scss",
+    "json"
+  ],
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/page.**": "${dirname} | page",
+    "**/app/**/layout.**": "${dirname} | layout",
+    "**/app/**/not-found.**": "${dirname} | not-found",
+    "**/app/**/error.**": "${dirname} | error",
+    "**/app/**/loading.**": "${dirname} | loading",
+    "**/components/**/index.**": "${dirname} | index",
+    "**/actions.**": "${dirname} | actions",
+    "**/schema.**": "${dirname} | schema",
+    "**/schemas.**": "${dirname} | schemas",
+    "**/dialog.**": "${dirname} | dialog",
+    "**/dal.**": "${dirname} | dal",
+    "**/utils.**": "${dirname} | utils",
+    "**/types.**": "${dirname} | types",
+    "**/constants.**": "${dirname} | constants"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\(([^;]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["clsx\\(.*?\\)(?!\\])", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"],
+    ["(?:twMerge|twJoin)\\(([^;]*)[\\);]", "[`'\"`]([^'\"`;]*)[`'\"`]"]
+  ],
+  "i18n-ally.localesPaths": ["i18n/lang"],
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.enabledFrameworks": ["next-intl"],
+  "i18n-ally.keystyle": "nested",
+  "[javascript][typescript][javascriptreact][typescriptreact][json][jsonc][css][graphql]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "git.ignoreLimitWarning": true,
+  "files.eol": "\n",
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "terminal.integrated.profiles.windows": {
+    "AI Orange": {
+      "source": "PowerShell",
+      "color": "terminal.ansiYellow",
+      "icon": "terminal",
+      "overrideName": true
+    },
+    "AI Red": {
+      "source": "PowerShell",
+      "color": "terminal.ansiRed",
+      "icon": "terminal",
+      "overrideName": true
+    },
+    "AI Blue": {
+      "source": "PowerShell",
+      "color": "terminal.ansiBlue",
+      "icon": "terminal",
+      "overrideName": true
+    },
+    "AI Magenta": {
+      "source": "PowerShell",
+      "color": "terminal.ansiMagenta",
+      "icon": "terminal",
+      "overrideName": true
+    }
+  }
+}

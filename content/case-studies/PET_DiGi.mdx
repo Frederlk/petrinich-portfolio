@@ -1,0 +1,18 @@
+I built DiGi in 2021 as a one-page landing for a digital agency, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the slider and masonry setup, not with the template's menu, scroll and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Six sections in the markup: a hero slider, services, a portfolio grid, a team block, a news block and testimonials.
+- Three page partials of Sass, about 1,200 lines in total, with BEM class names and 69 media queries between them; the home partial alone is about 860 lines, the largest among the 2021 landings.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and 46 spacing and size values scale fluidly between a desktop and a smaller value.
+- CSS grid carries the services and portfolio blocks as four equal columns that drop to two and then one.
+- Two Swiper sliders, a hero one with autoplay, arrows, bullets and keyboard control, and a testimonials one with bullets.
+- Hover styles sit inside ten hover-capability media queries. A Masonry block sits next to the CSS grids, the only one of the 2021 landings with one.
+
+## Cases
+
+**Hero slider with every control.** The top slide area needs autoplay, arrows, bullets and keyboard steps. I set Swiper to loop with a 5 second delay that does not stop after a swipe, bound the arrows and bullets to elements in the markup, and kept the slide text styles in the home partial.
+
+**Four-column grids that fold.** The services and the portfolio both show four items in a row. I wrote each as a grid of four equal columns, then two columns on the tablet breakpoint and one on the phone, so the two blocks follow one pattern and the card styles stay the same at every width.
+
+**News tiles with Masonry.** The news block is a set of eight image tiles. I used Masonry with a fixed gutter and centered fitting, so the tiles stack tight from the top and the block stays centered when the column count changes, and I wrote the tile hover in Sass: a tinted overlay and an info icon that fade in over 0.3 seconds.

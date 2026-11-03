@@ -1,0 +1,20 @@
+I built AOD in 2021 as a landing page for a bike company, from a given design. The copy on the page is placeholder text. The page was hosted on Firebase and sits on the same ready Gulp and Webpack starter template as Business-UI. The build setup, the mixins, the form helpers and the scroll scripts come from that template. The page markup, the Sass partials and the slider setup are mine.
+
+The page has five sections: an intro block, a brands block with image columns, a slider, a shop block and a subscribe block with an email form. It has 36 images.
+
+## Patterns and decisions
+
+- About 26 KB of Sass in twelve files, split into base, common, header, footer and home partials plus separate button, input and fullscreen partials, with BEM class names.
+- Colors, the container width and four breakpoints live as Sass variables in the main stylesheet.
+- The layout is desktop-first: 26 media queries, mostly max-width, plus hover styles behind a hover-capability query.
+- The template's adaptive-value mixin handles fluid spacing, 14 uses in the page styles.
+- The slider is Swiper with bullet pagination, and the bullets are restyled in the page stylesheet instead of using the library's default look.
+- Compared with Business-UI, this exercise added a JavaScript library and a form with a required email field, so the page has real behavior beyond tabs.
+
+## Cases
+
+**Alternating image rows.** The brands block repeats a row of a two-thirds image column and a one-third text column, and every second row has to mirror the first. I used a flex row with column bases of 66.667% and 33.333%, flipped the even rows by reversing the row direction, and switched all rows to a stacked column at the laptop breakpoint. Images fill their boxes through a padding-ratio wrapper.
+
+**A slider with its own pagination.** Three centered slides had to switch with bullets and swipe on touch screens. I set up Swiper with a speed of 800 ms, grab cursor and clickable bullets, then drew the bullets as 12 px outlined circles with a hover fill that only applies on devices that can hover.
+
+**Subscribe form.** The page needed a single email field that refuses empty input. I marked the field with the template's required attribute and error state and used the template's form module for submit, then styled the field and the GO button in the page partials.

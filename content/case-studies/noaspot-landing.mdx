@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- The site is a Next.js app with four pages: a coming-soon home page, Privacy, Terms and a 404. The home page is static server components. Only the tabs in the about block run on the client.
+- The about block has three tabs that show how a visitor discovers places, builds a route and opens a place, so the page explains the app before it launches.
+- One server-only helper fetches the legal text from the API. The token it sends never reaches the browser.
+- The environment is validated with T3 Env and Zod. The Apple team id, bundle id and App Store URL all come from env vars, so staging and production need no code changes.
+- Security headers, a content security policy and HSTS outside development are set in the Next.js config. The site is marked noindex in three places.
+- UI primitives are built on Base UI. React Compiler handles memoization.
+- It ships as a Docker image on Railway with a health check on the home page. The runner image is distroless and runs as a non-root user.
+
+## Cases
+
+**Legal pages that follow the product.** App Store review needs public Privacy and Terms pages. The text already lived in the API, and the app uses it too. I did not copy it into the landing. The pages fetch the HTML on the server and sanitize it with DOMPurify against an explicit allow-list of tags and attributes. Then they render it in a Tailwind Typography container. There is one source of truth for the app and the web.
+
+**Universal Links with a fallback.** A share link from the app has to open the app when it is installed and the App Store when it is not. I built the Apple App Site Association file from env vars, with the paths the backend uses for share links. The same paths are used for place and route links, so one file covers both. The share routes redirect to the App Store with a 302, and iOS opens the app instead when it is installed. The file answers as JSON, which iOS requires.
+
+**A build without secrets.** The env validation would fail a build that has no secrets. The legal pages render per request, so the build does not need the API. The Docker build skips env validation. So the image builds with no secrets and without the API running.

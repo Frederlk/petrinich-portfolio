@@ -1,0 +1,18 @@
+I built Lopper in 2022 as a six-page React and TypeScript site for a business services company, with placeholder copy. It was the first project in this group written in TypeScript, with Redux Toolkit for the shared interface state.
+
+## Patterns and decisions
+
+- Six pages (home, services, work, about, gallery and contacts) plus a not-found page, all lazy loaded and described by one typed route list that also feeds the menu.
+- Typed data: nine interfaces describe the content, such as services, team members, steps and gallery items, so the pages map over data instead of repeating markup.
+- Redux Toolkit holds two small slices, the open state of the menu and the scroll lock, wrapped in custom hooks that also handle the Escape key and clicks outside the header.
+- Nine small hooks cover events, window size, debounce, page scroll and redux access.
+- Eleven Sass partials, about 3,050 lines in total, with BEM class names and 208 media queries, one partial per page.
+- Compared with the earlier React sites, this exercise added TypeScript, a global store and a typed route config, and the page count went from four to six.
+
+## Cases
+
+**Menu and scroll lock in a store.** Opening the burger menu has to lock page scroll without the layout jumping. The lock hook measures the scrollbar width, adds it as right padding to the body and to the elements marked for it, and flips a class on the root. The menu hook calls it, closes on Escape or an outside click, and closes again on every route change, so the state lives in Redux and the logic lives in one place.
+
+**Forms with Formik and Yup.** The contacts form has name, email and message with a schema and typed values. After a valid submit the form resets and a success state shows for five seconds before clearing itself, which the effect handles through a timer.
+
+**Slider and gallery in React.** The home page slider uses Swiper with a fraction counter I render myself, autoplay that pauses on hover and lazy loading of neighbouring slides. The gallery page wraps LightGallery in its React component and builds the items from the typed data. Images use picture elements with a WebP source and a fallback.

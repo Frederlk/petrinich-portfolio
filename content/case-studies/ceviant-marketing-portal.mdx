@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The site is a Next.js pages-router app with React and TypeScript, styled with Styled Components. It has 25+ pages and 8 API routes.
+- Content lives in Prismic: 10 content types and 8 slices. Editors change pages without a release.
+- Content pages are static. The four detail pages (events, open positions, products, resources) generate paths with a fallback, so a new document opens without a rebuild.
+- Each page type renders slices with its own switch on the slice type. There is no generic slice zone.
+- The contact and newsletter forms each have a DTO type and a Yup schema, and a shared validation pipe checks the body. The CV upload is a plain multipart handler. One mailer sends all the mail.
+- Formik with Yup drives the LEI, events, contact and application forms. A small reducer holds the open-positions filters. There is no global store.
+- The kit has 31 component folders. Plop generators kept each new component in the same three files: component, styles and interfaces.
+- Google Analytics loads lazily. Dates use date-fns, and the contacts page has a Google Maps view of the offices.
+
+## Cases
+
+**Marketing pages edited by non-developers.** Product, article, event and job pages change often and had to ship without a release. The client's team edits them in Prismic. I rendered the slices on the front end. Each page type picks its own slices, so the product page renders only product slices and the article page only article slices. Some slices get context from their neighbours: the product page tells a text block whether an accordion follows. Editors also see an unpublished page on the real route, and a slice simulator page previews a single slice from the Prismic editor from the Prismic editor.
+
+**Typed contact forms with validated mail routes.** Five forms (general, sales, support, LEI and event meeting request) had to reach different inboxes with validated input. Each form has one DTO type and one Yup schema. The handlers use next-api-decorators with a shared validation pipe that turns schema errors into a bad-request response. Sales requests and general enquiries go to different addresses. All of them send through one mail helper on Nodemailer.
+
+**Resources hub with tabs, search and deep links.** Articles and use cases needed category browsing, full-text search and links that open a given tab. Tabs are data: Prismic documents tagged as resource tabs, ordered by first publication date, plus fixed "View all" and "Use Cases" tabs. The "Use Cases" tab queries two categories with a Prismic predicate. Items load on demand and stay cached in state. Search runs a full-text query on titles. A query parameter scrolls to the tabs and selects one.

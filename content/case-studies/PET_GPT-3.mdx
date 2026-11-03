@@ -1,0 +1,18 @@
+I built the GPT-3 page in 2022 as a one-page dark-theme landing page on the GPT-3 theme, from a given design and hosted on Firebase. It runs on the ready Gulp and Webpack starter template. The page markup, four Sass partials and the page styling are mine; the sticky-header, scroll navigation, form and accordion scripts are the template's, which I switched on and styled.
+
+## Patterns and decisions
+
+- Seven sections: a start screen with a sign-up field, a what-is block, possibilities, a future block with an accordion, a register block, a request block and a blog.
+- About 1,270 lines of Sass in four page partials, with BEM names and 99 media queries, 58 of them in the home partial.
+- Eight color variables on a blue and orange palette, and a gradient text effect repeated in several headings.
+- Large blurred shapes behind the start block and other sections, made from pseudo-elements with a blur filter that gets smaller on phones.
+- The adaptive-value mixin appears 42 times in the home partial, and a header that picks up a scroll class once the page is moved.
+- Compared with the earlier pages, this one leaned on visual effects such as blur and gradient text, while the layout stayed close to the plain grid and flex of the first projects.
+
+## Cases
+
+**Glow without images.** The design had soft colored glows behind the hero and the sign-up block. Rather than export pictures, I made each from a pseudo-element with a set size in percent of the 1440 px layout, a flat color and a blur filter. On the phone breakpoint the blur radius is cut to keep the shape visible.
+
+**Gradient headings.** Several headings use a violet-to-orange gradient. I applied the gradient as a background on the text and clipped it to the glyphs, with the same gradient values in each heading so the effect stays the same across the page.
+
+**Accordion only where needed.** The "future" block shows four items side by side on desktop but has to collapse on phones. I marked the container with the template's accordion attribute and a 480 px breakpoint, so the same markup is a plain list on wide screens and a tap-to-open list on small ones.

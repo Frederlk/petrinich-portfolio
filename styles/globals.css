@@ -1,0 +1,886 @@
+@import "tailwindcss";
+@import "./typography.css";
+
+@plugin "tailwindcss-animate";
+@plugin "@igorkowalczyk/is-browser";
+
+/* Dark only. `<html class="dark">` is static, so the template's `dark:` / `not-dark:` variants keep resolving; there is no light palette and no switch. */
+@custom-variant dark (&:is(.dark *));
+@custom-variant skeleton-pulse (&:is([data-skeleton="pulse"] *));
+
+/* Values from the Google Stitch export (design/stitch/A, tailwind config), see DESIGN.md. Template roles are bound to the Stitch palette: `primary` is Stitch's #ffb5a1, the vermilion CTA fill is `primary-container`, `secondary` is the light grey used for body text. */
+:root {
+  color-scheme: dark;
+
+  /* Semantic colors */
+  --background: #131313;
+  --foreground: #e5e2e1;
+
+  --primary: #ffb5a1;
+  --primary-foreground: #601400;
+
+  --secondary: #c6c6c7;
+  --secondary-foreground: #2f3131;
+
+  --muted: #1c1b1b;
+  --muted-foreground: #c6c6c7;
+
+  --accent: #201f1f;
+  --accent-foreground: #e5e2e1;
+
+  --destructive: #ffb4ab;
+  --destructive-foreground: #ffb4ab;
+  --destructive-on-fill: #690005;
+
+  --info: #c6c6c7;
+  --info-foreground: #e5e2e1;
+
+  --success: #c6c6c7;
+  --success-foreground: #e5e2e1;
+
+  --warning: #c6c6c7;
+  --warning-foreground: #e5e2e1;
+
+  /* Surfaces */
+  --card: #1c1b1b;
+  --card-foreground: #e5e2e1;
+
+  --popover: #201f1f;
+  --popover-foreground: #e5e2e1;
+
+  --code: #1c1b1b;
+  --code-foreground: #e5e2e1;
+  --code-highlight: #2a2a2a;
+
+  /* Borders & focus */
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #ff5626;
+
+  /* Stitch tokens that have no template role. Variables, not literals, so the /cv print sheet can repaint them for paper. */
+  --surface: #131313;
+  --surface-dim: #131313;
+  --surface-bright: #3a3939;
+  --surface-variant: #353534;
+  --surface-container-lowest: #0e0e0e;
+  --surface-container-low: #1c1b1b;
+  --surface-container: #201f1f;
+  --surface-container-high: #2a2a2a;
+  --surface-container-highest: #353534;
+  --on-surface: #e5e2e1;
+  --on-surface-variant: #e5beb4;
+  --inverse-surface: #e5e2e1;
+  --inverse-on-surface: #313030;
+  --inverse-primary: #b22d00;
+  --primary-container: #ff5626;
+  --on-primary-container: #541000;
+  --primary-fixed: #ffdbd1;
+  --primary-fixed-dim: #ffb5a1;
+  --on-primary-fixed: #3b0900;
+  --on-primary-fixed-variant: #882000;
+  --secondary-container: #454747;
+  --on-secondary-container: #b4b5b5;
+  --secondary-fixed: #e2e2e2;
+  --secondary-fixed-dim: #c6c6c7;
+  --on-secondary-fixed: #1a1c1c;
+  --on-secondary-fixed-variant: #454747;
+  --tertiary: #c7c6c6;
+  --on-tertiary: #303031;
+  --tertiary-container: #919191;
+  --on-tertiary-container: #292a2a;
+  --tertiary-fixed: #e3e2e2;
+  --tertiary-fixed-dim: #c7c6c6;
+  --on-tertiary-fixed: #1b1c1c;
+  --on-tertiary-fixed-variant: #464747;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --outline: #ac897f;
+  --outline-variant: #5c4039;
+
+  /* Charts: unused, bound to the palette so nothing off-palette can render. */
+  --chart-1: #ff5626;
+  --chart-2: #e5e2e1;
+  --chart-3: #c6c6c7;
+  --chart-4: #2a2a2a;
+  --chart-5: #201f1f;
+
+  /* Sidebar: unused. */
+  --sidebar: #1c1b1b;
+  --sidebar-foreground: #e5e2e1;
+  --sidebar-primary: #ff5626;
+  --sidebar-primary-foreground: #541000;
+  --sidebar-accent: #201f1f;
+  --sidebar-accent-foreground: #e5e2e1;
+  --sidebar-border: #2a2a2a;
+  --sidebar-ring: #ff5626;
+
+  /* Modal scrim — single source for dialog/drawer/sheet/command/tour backdrops. */
+  --overlay: --alpha(var(--color-black) / 60%);
+
+  /* Subtle surface tints for outline chrome and toggle press. */
+  --surface-tint: --alpha(var(--color-white) / 5%);
+  --surface-tint-strong: --alpha(var(--color-white) / 10%);
+
+  /* Scrollbar — single source for the native scrollbars in the base layer and the Base UI bar in `~/ui/scroll-area`. */
+  --scrollbar-size: 0.375rem; /* 6px */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: #3a3939;
+  --scrollbar-thumb-hover: var(--primary-container);
+
+  /* Shadow primitives: the references paint none, so every consumer paints nothing. */
+  --inset-shadow-rim: 0 0 0 0 transparent;
+  --inset-shadow-press: 0 0 0 0 transparent;
+  --drop-shadow-cursor: 0 0 0 transparent;
+  --shadow-mask: 0 0 0 9999em --alpha(var(--color-black) / 50%);
+}
+
+@theme inline {
+  /* Breakpoints */
+  --breakpoint-xs: 479.98px;
+  --breakpoint-xxs: 374.98px;
+
+  /* Layout */
+  --radius: 0; /* square corners; the only round shape is the header avatar, which uses rounded-full */
+  --radius-input: 2px;
+  --radius-xxs: calc(var(--radius) * 0.2);
+  --radius-xs: calc(var(--radius) * 0.4); /* 4px */
+  --radius-sm: calc(var(--radius) * 0.6); /* 6px */
+  --radius-md: calc(var(--radius) * 0.8); /* 8px */
+  --radius-lg: var(--radius); /* 10px */
+  --radius-xl: calc(var(--radius) * 1.4); /* 14px */
+  --radius-2xl: calc(var(--radius) * 1.8); /* 18px */
+  --radius-3xl: calc(var(--radius) * 2.2); /* 22px */
+  --radius-4xl: calc(var(--radius) * 2.6); /* 26px */
+  /* Inner-radius helpers — one pixel inset from the parent border. Apply on
+   * `::before` highlight pseudos so the inner glow follows the parent corner
+   * minus the 1px border. Generates `rounded-inset-md/lg/xl/2xl`. */
+
+  --radius-inset-xxs: calc(var(--radius-xxs) - 1px);
+  --radius-inset-xs: calc(var(--radius-xs) - 1px);
+  --radius-inset-sm: calc(var(--radius-sm) - 1px);
+  --radius-inset-md: calc(var(--radius-md) - 1px);
+  --radius-inset-lg: calc(var(--radius-lg) - 1px);
+  --radius-inset-xl: calc(var(--radius-xl) - 1px);
+  --radius-inset-2xl: calc(var(--radius-2xl) - 1px);
+
+  /* 1px-inset spacing helpers live as functional utilities below
+   * (`@utility p-inset-*` etc.) so callers can write `p-inset-1.5` with dot
+   * notation matching Tailwind's spacing scale. Paired with --radius-inset-*
+   * for paddings on elements inside a 1px-bordered shell. */
+
+  /* Form-control sizing — single source of truth for text-input height &
+     line-height across Input, NumberField, TagsInput inner field, Mention
+     editor, etc. Selection rectangle height equals line-height, so using
+     `h-field-* leading-field-*` gives every control a consistent full-height
+     selection. Four-step scale; each `size` variant drops one tier at the
+     `sm:` viewport. Spacing namespace generates h-/min-h-/w-/p-/etc.;
+     leading namespace generates leading-*. The leading-field-* values are
+     aliased to spacing-field-* so a single edit to --spacing-field-md
+     propagates everywhere. */
+  --spacing-field-xs: calc(var(--spacing) * 6.5); /* 26px */
+  --spacing-field-sm: calc(var(--spacing) * 7.5); /* 30px */
+  --spacing-field-md: calc(var(--spacing) * 8.5); /* 34px — default */
+  --spacing-field-lg: calc(var(--spacing) * 9.5); /* 38px */
+  --leading-field-xs: var(--spacing-field-xs);
+  --leading-field-sm: var(--spacing-field-sm);
+  --leading-field-md: var(--spacing-field-md);
+  --leading-field-lg: var(--spacing-field-lg);
+
+  /* Typography: Archivo Narrow and JetBrains Mono, as in the Stitch config. */
+  --font-weight-inherit: inherit;
+  --font-sans: var(--font-archivo-narrow), ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    var(--font-archivo-narrow), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* The text roles (`type-*` utilities) live in styles/typography.css. */
+
+  /* Stitch spacing keys. */
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-space-2xl: 4rem;
+  --spacing-space-3xl: 6rem;
+  --spacing-gutter-mobile: 1rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-margin-mobile: 1.25rem;
+  --spacing-margin: 3rem;
+  /* One height for the work toolbar controls and the filter fields: `h-control`. */
+  --spacing-control: 2.5rem;
+
+  /* Semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* Form-control placeholder / empty-value text. Single source of truth so
+     every input, select, combobox, picker trigger and editable preview
+     paints empty state with the exact same color. */
+  --color-placeholder: --alpha(var(--color-muted-foreground) / 70%);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-on-fill: var(--destructive-on-fill);
+
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  /* Surfaces */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-code: var(--code);
+  --color-code-foreground: var(--code-foreground);
+  --color-code-highlight: var(--code-highlight);
+
+  /* Borders & focus */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Slider / gauge / timeline family — single source of truth for track and
+   * range colors. Change these two vars to retheme all control visuals at once.
+   * Track = inactive portion; range = active/filled portion. */
+  --color-field-track: --alpha(var(--input) / 15%);
+  --color-field-range: var(--primary);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Stitch palette */
+  --color-on-primary: var(--primary-foreground);
+  --color-on-secondary: var(--secondary-foreground);
+  --color-on-background: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-variant: var(--surface-variant);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+  --color-inverse-primary: var(--inverse-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-primary-fixed: var(--primary-fixed);
+  --color-primary-fixed-dim: var(--primary-fixed-dim);
+  --color-on-primary-fixed: var(--on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--on-primary-fixed-variant);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-secondary-fixed: var(--secondary-fixed);
+  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--on-secondary-fixed-variant);
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+  --color-tertiary-fixed: var(--tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+
+  /* Surface tints — register as bg-* utilities. */
+  --color-overlay: var(--overlay);
+  --color-surface-tint: var(--surface-tint);
+  --color-surface-tint-strong: var(--surface-tint-strong);
+
+  /* opacity */
+  --opacity-disabled: 0.6;
+
+  /* --- Shadows: none anywhere (DESIGN.md §2). The utilities stay so template components compile; every size paints nothing. --- */
+  --shadow-glow: 0 0 0 0 transparent;
+  --shadow-2xs: 0 0 0 0 transparent;
+  --shadow-xs: 0 0 0 0 transparent;
+  --shadow-sm: 0 0 0 0 transparent;
+  --shadow-md: 0 0 0 0 transparent;
+  --shadow-lg: 0 0 0 0 transparent;
+  --shadow-xl: 0 0 0 0 transparent;
+  --shadow-2xl: 0 0 0 0 transparent;
+
+  /* --- Motion (DESIGN.md frontmatter) --- */
+  --ease-enter: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* --- Easings --- */
+  --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* --- Animations --- */
+  --animate-skeleton: skeleton 2s -1s infinite linear;
+  --animate-progress-sweep: progress-sweep 1.1s var(--ease-move) infinite;
+  --animate-skeleton-sweep: skeleton-sweep 2.6s linear infinite;
+  --animate-caret-blink: 1s ease-out infinite caret-blink;
+
+  --animate-spin-around: spin-around 0.8s linear infinite;
+  --animate-marquee-left: marquee-left var(--marquee-duration) linear
+    var(--marquee-loop-count);
+  --animate-marquee-right: marquee-right var(--marquee-duration) linear
+    var(--marquee-loop-count);
+  --animate-marquee-up: marquee-up var(--marquee-duration) linear
+    var(--marquee-loop-count);
+  --animate-marquee-down: marquee-down var(--marquee-duration) linear
+    var(--marquee-loop-count);
+
+  @keyframes skeleton {
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  /* The highlight of a skeleton block travels left to right over a background twice the block wide. */
+  @keyframes skeleton-sweep {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  /* A bar a third of its track wide crossing the track; the track clips it. */
+  @keyframes progress-sweep {
+    from {
+      translate: -100% 0;
+    }
+    to {
+      translate: 300% 0;
+    }
+  }
+
+  @keyframes caret-blink {
+    0%,
+    70%,
+    to {
+      opacity: 1;
+    }
+    20%,
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes spin-around {
+    0% {
+      transform: rotate(-90deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+  @keyframes marquee-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(calc(-100% - var(--marquee-gap)));
+    }
+  }
+  @keyframes marquee-right {
+    0% {
+      transform: translateX(calc(-100% - var(--marquee-gap)));
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  @keyframes marquee-up {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(calc(-100% - var(--marquee-gap)));
+    }
+  }
+  @keyframes marquee-down {
+    0% {
+      transform: translateY(calc(-100% - var(--marquee-gap)));
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+}
+
+@utility fixed-padding {
+  padding-right: var(--removed-body-scroll-bar-size);
+}
+
+/* The Stitch page frame: 1440px wide, 20px side margins on mobile, 48px from md up. */
+@utility container {
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: var(--spacing-margin-mobile);
+  width: 100%;
+  @media (width >= 48rem) {
+    padding-inline: var(--spacing-margin);
+  }
+}
+
+@utility italic-inherit {
+  font-style: inherit;
+}
+
+@utility rounded-inherit {
+  border-radius: inherit;
+}
+
+/* 1px-inset padding scale — `p-inset-1.5` ≡ `calc(--spacing(1.5) - 1px)`.
+ * Functional utilities so consumers get the full Tailwind spacing scale
+ * (1, 1.5, 2, 2.5, …) without registering one token per step. Pair with
+ * `rounded-inset-*` for chrome inside a 1px-bordered shell. */
+@utility p-inset-* {
+  padding: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility px-inset-* {
+  padding-inline: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility py-inset-* {
+  padding-block: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility pt-inset-* {
+  padding-top: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility pr-inset-* {
+  padding-right: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility pb-inset-* {
+  padding-bottom: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility pl-inset-* {
+  padding-left: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility ps-inset-* {
+  padding-inline-start: calc(var(--spacing) * --value(number) - 1px);
+}
+@utility pe-inset-* {
+  padding-inline-end: calc(var(--spacing) * --value(number) - 1px);
+}
+
+/* Full width minus a 48px (12-spacing) gutter — drawer/sheet bodies that
+ * need to leave breathing room against the viewport edge. */
+@utility w-fill-safe {
+  width: calc(100% - --spacing(12));
+}
+
+@utility h-fill-safe {
+  height: calc(100svh - --spacing(12));
+}
+
+/* Safe-area bottom padding combined with a fixed spacing step. Used by
+ * drawer footer / handle to clear the device home-indicator while keeping
+ * a consistent visual rhythm. */
+@utility pb-safe-4 {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(4));
+}
+
+@utility pb-safe-6 {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(6));
+}
+
+@utility hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility show-scrollbar {
+  -ms-overflow-style: auto; /* IE and Edge */
+  scrollbar-width: auto; /* Firefox */
+  &::-webkit-scrollbar {
+    display: block;
+  }
+}
+
+@utility visually-hidden {
+  clip: rect(0, 0, 0, 0);
+  @apply absolute -m-px h-px w-px overflow-hidden border-0 p-0 whitespace-nowrap;
+}
+
+/* A loading placeholder block: the surface colour with a slow highlight sweeping across. Reduced motion keeps the plain block. */
+@utility skeleton {
+  animation: var(--animate-skeleton-sweep);
+  background-color: var(--surface-container-low);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--surface-container-highest) 70%, transparent),
+    transparent
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Suppresses the WebKit autofill yellow flash on text inputs by extending the
+ * background-color transition far beyond any realistic interaction window.
+ * Pair with the global `:-webkit-autofill` rule in @layer base. */
+@utility autofill-no-flash {
+  transition: background-color 5000000s ease-in-out 0s;
+}
+
+@utility surface-glow {
+  @apply before:shadow-glow;
+}
+
+@utility focus-ring {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@utility error-state {
+  @apply border-destructive ring-destructive/60;
+}
+
+@utility disabled-state {
+  @apply pointer-events-none opacity-disabled;
+}
+
+/* Interaction motion. Paint-only (clip-path, background-size, opacity) or inside `no-preference`, so reduced motion keeps the hover state without moving anything. */
+
+/* A text link whose underline draws in from the left on hover or focus, also when a `.group` ancestor is hovered. */
+@utility link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition:
+    background-size 320ms var(--ease-enter),
+    color 180ms ease;
+  &:hover,
+  :where(.group:hover) & {
+    background-size: 100% 1px;
+  }
+}
+
+/* `link-draw` with a faint rule at rest, for links inside running text (`RichText`). */
+@utility rich-link {
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(
+      var(--surface-container-highest),
+      var(--surface-container-highest)
+    );
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size:
+    0% 1px,
+    100% 1px;
+  transition:
+    background-size 320ms var(--ease-enter),
+    color 180ms ease;
+  &:hover {
+    background-size:
+      100% 1px,
+      100% 1px;
+    color: var(--primary);
+  }
+}
+
+/* A number or metric inside running text: the same quiet emphasis as `<strong>`, a heavier weight and no rule. */
+@utility rich-num {
+  font-weight: 600;
+}
+
+/* The square marker of a timeline row, inside the row's left column: centred on the 1px rail one padding step to its left and on the middle of the first text line. The padding steps match ExperienceEntry. */
+@utility rail-marker {
+  left: calc(-1 * var(--spacing-space-md) - 5.5px);
+  position: absolute;
+  top: calc(0.5lh - 5px);
+  @media (width >= 48rem) {
+    left: calc(-1 * var(--spacing-space-lg) - 5.5px);
+  }
+}
+
+/* A bulleted list with a small square vermilion marker instead of a round dot. Put it on the `ul`; the items get the marker. */
+@utility list-square {
+  list-style: none;
+  padding-left: 0;
+  & > li {
+    padding-left: 1.125rem;
+    position: relative;
+  }
+  & > li::before {
+    background: var(--primary);
+    content: "";
+    height: 0.375rem;
+    left: 0;
+    position: absolute;
+    top: calc(0.5lh - 0.1875rem);
+    width: 0.375rem;
+  }
+}
+
+/* A button fill that sweeps in from the left; `sweep-<color>` picks the fill. The text colour changes with it in the same duration. */
+@utility fill-sweep {
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  transition:
+    color 320ms var(--ease-enter),
+    scale 160ms var(--ease-enter);
+  &::before {
+    background: var(--sweep);
+    clip-path: inset(0 100% 0 0);
+    content: "";
+    inset: 0;
+    position: absolute;
+    transition: clip-path 360ms var(--ease-enter);
+    z-index: -1;
+  }
+  &:hover::before,
+  &[data-highlighted]::before {
+    clip-path: inset(0);
+  }
+}
+
+@utility sweep-* {
+  --sweep: --value(--color-*);
+}
+
+/* A ledger row: a vermilion bar fades in on its left edge, and `.row-shift` content slides right. The row's background and every colour inside it fade with the bar; `:where` keeps that at zero specificity, so a child with its own transition (`.row-shift`, a utility) keeps it. */
+@utility row-accent {
+  position: relative;
+  transition: background-color 200ms var(--ease-enter);
+  & :where(*) {
+    transition:
+      color 200ms var(--ease-enter),
+      border-color 200ms var(--ease-enter);
+  }
+  &::before {
+    background: var(--primary-container);
+    content: "";
+    inset-block: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 200ms ease;
+    width: 2px;
+  }
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .row-shift {
+    transition: translate 320ms var(--ease-enter);
+  }
+  .group:hover .row-shift {
+    translate: 0.5rem 0;
+  }
+  .arrow-slide,
+  .arrow-slide-back {
+    transition: translate 260ms var(--ease-enter);
+  }
+  .group:hover .arrow-slide,
+  .group[data-highlighted] .arrow-slide {
+    translate: 0.25rem 0;
+  }
+  .group:hover .arrow-slide-back {
+    translate: -0.25rem 0;
+  }
+  .press:active {
+    scale: 0.97;
+  }
+}
+
+@layer base {
+  /* One scrollbar everywhere. Chromium and Safari take the pseudo-elements: a thin square thumb, muted at rest, vermilion on hover and drag with the colour eased. Firefox and any engine without them take the standard properties; those would switch the pseudo-elements off in Chromium, so they sit behind a feature query. */
+  ::-webkit-scrollbar {
+    width: calc(var(--scrollbar-size) + 4px);
+    height: calc(var(--scrollbar-size) + 4px);
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: var(--scrollbar-thumb);
+    border: 2px solid transparent;
+    transition: background-color 200ms ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background-color: var(--scrollbar-thumb-hover);
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+      scrollbar-width: thin;
+      transition: scrollbar-color 200ms ease;
+    }
+
+    *:hover {
+      scrollbar-color: var(--scrollbar-thumb-hover) var(--scrollbar-track);
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    transition:
+      background-color 0s 600000s,
+      color 0s 600000s;
+  }
+
+  * {
+    @apply border-border outline-ring;
+  }
+
+  /* Unify text-selection across <input>/<textarea>/[contenteditable].
+     Browsers draw different defaults for each; a soft translucent fill reads
+     well on both light and dark backgrounds. White text ensures contrast
+     even when the underlying text is muted/gray. */
+  ::selection {
+    color: var(--foreground);
+    background-color: color-mix(in srgb, var(--primary) 20%, transparent);
+  }
+
+  /* The fixed header is 64px tall: a hash jump or scrollIntoView lands the target below it, with 24px of air from the margin on every element that carries an id. */
+  html {
+    scroll-padding-top: 4rem;
+  }
+
+  [id] {
+    scroll-margin-top: 1.5rem;
+  }
+
+  body {
+    @apply bg-surface type-body text-on-surface;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  a,
+  button {
+    @apply duration-180 ease-[ease];
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  a,
+  button,
+  *[role="button"],
+  :not(input)[role="checkbox"],
+  :not(input)[role="radio"],
+  *[role="menuitem"],
+  *[role="menuitemcheckbox"],
+  *[role="menuitemradio"],
+  *[role="option"],
+  *[role="tab"],
+  :not(input)[role="switch"],
+  :not(input)[role="combobox"],
+  :not(input)[role="slider"],
+  *[role="treeitem"] {
+    @apply cursor-pointer active:not-aria-[haspopup]:brightness-80 disabled:cursor-default;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  *[role="button"]:focus-visible,
+  :not(input)[role="checkbox"]:focus-visible,
+  :not(input)[role="radio"]:focus-visible,
+  *[role="menuitem"]:focus-visible,
+  *[role="menuitemcheckbox"]:focus-visible,
+  *[role="menuitemradio"]:focus-visible,
+  *[role="option"]:focus-visible,
+  *[role="tab"]:focus-visible,
+  :not(input)[role="switch"]:focus-visible,
+  :not(input)[role="combobox"]:focus-visible,
+  :not(input)[role="slider"]:focus-visible,
+  *[role="treeitem"]:focus-visible {
+    @apply focus-ring;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    @apply font-mono;
+  }
+}
+
+/* Reduced motion: nothing moves. This collapses transitions and any template animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

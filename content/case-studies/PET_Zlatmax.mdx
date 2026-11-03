@@ -1,0 +1,18 @@
+I built Zlatmax in 2022 as a three-page online shop front for a web-commerce company: a home page, a catalog and a product page, from a given design and hosted on Firebase. It sits on the ready Gulp and Webpack starter template. I wrote the page markup, six page partials of Sass and the page scripts; the popup, select and form-field modules are the template's.
+
+## Patterns and decisions
+
+- Three pages sharing one header, footer and popup, included at build time, with the product slider block reused on the home and product pages.
+- About 2,700 lines of Sass in six page partials plus the template's form-control partials for the select, range, quantity, rating and checkbox, with 132 media queries and BEM names throughout.
+- Ten Swiper setups, each with its own breakpoints for how many slides to show, plus a thumbnail slider linked to a main image slider on the product page.
+- Filters use a double-handle price range, selects, accordion groups and checkboxes; the product page uses tabs, a quantity field, a rating and tooltips.
+- Sizes use the template's adaptive-value mixin, 26 times in the home and header partials.
+- Compared with my first one-page sites, this one added three pages, sliders, tabs, filters and a full mega menu.
+
+## Cases
+
+**Catalog menu in two shapes.** The header has a catalog button that opens a mega menu of categories on desktop and a drill-down panel on phones. I wrote one click handler that reads data attributes on the parent links, opens the matching submenu and closes the previous one. On narrow screens it also switches a page-level class so the submenu slides in over the menu, with Back buttons stepping out one level at a time.
+
+**Menu columns that count themselves.** Submenu blocks hold a different number of categories. A short script counts them and adds the number to the block's class, so the stylesheet picks the column count with one Sass loop instead of a class per block.
+
+**Sliders that fit every screen.** The home page carries a hero slider with parallax and a slide counter that pads numbers to two digits, and several product rows. I gave each row its own breakpoint map, from one slide on a phone to four on a wide screen, and tied the product page's thumbnail strip to its main image slider.

@@ -1,0 +1,18 @@
+I built Woodies in 2021 as a one-page landing for a wooden furniture shop, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer, common blocks and home sections, and the slider setup, not with the template's menu, scroll and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Five sections in the markup: a main block, an about block, a "how it works" block, a three-column category grid and a testimonials slider.
+- Four page partials of Sass, about 1,240 lines in total, with BEM class names and 85 media queries across the page stylesheets.
+- Colors, fonts and four breakpoints (container, tablet, phone and small phone) are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 46 spacing, size and radius values use a fluid mixin that scales a value between the design width and a minimum width, so sizes follow the viewport between breakpoints.
+- Hover styles sit inside a hover-capability media query, so touch screens do not get stuck states.
+- Compared with a first one-page exercise, this one uses fluid scaling for spacing and corner radii, and adds a Swiper slider with fade and pagination.
+
+## Cases
+
+**Category cards with big corner radii.** The design has tall category cards with two large rounded corners. I made the body a CSS grid with three equal columns, then two columns on the phone breakpoint and one on the small phone, and scaled the gap between 56 and 20 pixels with the fluid mixin. The two rounded corners shrink from 120 to 80 pixels over the same range, so the shape keeps its proportion.
+
+**Testimonials with fade.** The testimonials needed arrows, dots and a soft change between slides. I set up Swiper with the Navigation, Pagination and Fade modules, a cross-fade, clickable bullets and its own navigation block, and initialised it after the window load event.
+
+**Decorative background block.** The main section has a colored panel on the right with a rounded corner. I drew it with a pseudo element positioned from the top right, and sized its width as a percent of the design width with a helper function, so it scales with the page and changes on the phone breakpoint.

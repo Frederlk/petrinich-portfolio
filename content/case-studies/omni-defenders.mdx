@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- I built the front end of a one-screen teaser page for a crypto meme brand. It is plain HTML, Sass and JavaScript, with no framework and no runtime dependency.
+- The page has two stacked layers with the same title. The dark one is the page, and the white one is clipped to a circle that follows the pointer. The system cursor is hidden, so the circle is the cursor.
+- Pointer movement only writes two position values into the stylesheet. The browser does the drawing, and the script does no layout work on each move.
+- One handler serves the mouse and the first touch point, so desktop and phone share the same code path.
+- The page is exactly one screen high and never scrolls. Sizes are interpolated between a 1440 pixel layout and a 375 pixel layout, with a separate rule for windows that are wide but short.
+- The page fades in after the load event, so the visitor never sees unstyled content.
+- The page builds with Gulp and Webpack. They compile Sass, include HTML partials, convert fonts and minify the bundle into a folder ready for any static host.
+
+## Cases
+
+**A cursor that reveals the brand.** A pre-launch page needs something to play with, and a static logo gives nothing. It also has to work on a phone, where there is no cursor. I stacked two copies of the title and clipped the white copy to a circle that follows the pointer. The 8 slogan lines sit in the white layer, tilted in perspective, so they read as a receding crawl inside the circle. On narrow screens the circle starts at a fixed spot with a smaller radius, so a phone shows the effect before the first touch.
+
+**A trigger that works without hover.** The joke animation on the X icon had to start when the visitor gets close. Hover does not exist on touch screens, and the icon is small. I measure the distance from the pointer or finger to the icon center on every move and start the scene under 150 pixels, with a smaller radius on narrow screens. The link area is enlarged with padding, so a tap still lands. The scene itself is built from separate inline SVG shapes: a bird flies in, lands on a pillar, and two drops fall. Each shape has its own keyframes on one shared 4 second timeline, started by a single class. The Discord icon has eyes that turn toward the pointer by shifting a fixed share of their size, eased by a CSS transition. None of this needed an animation library.
+
+**One composition from a small phone to a wide desktop.** The hero holds a huge title, a slogan block and two corner icons, and it must fit in one screen at every size without scrolling. I used fluid values from a Sass mixin between the large and small layouts, a fixed small-viewport height, and a dedicated rule for short landscape windows. The icons step their scale at four breakpoints. The result is the same composition everywhere, with no vertical scroll and no jumps between sizes.

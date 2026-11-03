@@ -1,0 +1,10 @@
+# Bun loads `.env`, `.env.local` and `.env.<NODE_ENV>` into every process it starts by itself; off, so a script sees only what `dotenvx run` passes it, the one way env reaches a script here (`.claude/rules/env.md`).
+env = false
+
+# The install-time supply-chain policy, stated here so Vercel and CI apply what the owner's user-level config applies locally: a release younger than two days is not installed (seconds, as the pnpm setting this replaces was two days). `bunx` does not apply it, so a one-off tool run through `bunx` pins a version that has been out a few days.
+[install]
+minimumReleaseAge = 172800
+
+# Reasons for the keys of `package.json` that cannot hold comments:
+#
+# - `trustedDependencies` (`esbuild`, `sharp`): the packages whose install scripts run. Defining the list replaces bun's default list. `unrs-resolver` (allowed under pnpm) is left out: it loads a prebuilt binary from a per-platform optional package, so its install script is not needed.

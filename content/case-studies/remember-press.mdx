@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The app is Next.js with the App Router. Server Components read the data and Server Actions write it.
+- Data lives in PostgreSQL through Prisma, with 7 models. Page order is a column that is unique per chapter.
+- Sign-in runs on AWS Cognito through AWS Amplify. Images sit on AWS S3. Uploads use a presigned URL, and read URLs are cached for 12 hours.
+- The PDF is built on the server side of the app. It turns the book tree into LaTeX on a route of the app, and an external build service compiles it with xelatex.
+- One enum of 7 page block types drives both the editor and the LaTeX output. A new layout is one enum value, one thumbnail and one LaTeX template.
+- Page text is stored as Draft.js raw JSON. The server flattens overlapping Draft.js style ranges into nested LaTeX braces and escapes special characters.
+- On the client, TanStack Query wraps the Server Actions. Forms use React Hook Form with Zod, and modals use Headless UI.
+- Styling is Tailwind CSS with a custom palette. The app deploys on AWS Amplify Hosting.
+
+## Cases
+
+**Typing never blocks, and the preview never opens on stale text.** Each page block is its own Draft.js editor. Saving on every keystroke would flood the server, and a late save would put old text into the PDF. I added a debounced save per block, with a delay of 1 second. It sets a saving flag in a shared editor context. The Preview button reads the flag and stays disabled while a save is running. The editor loads on demand and shows a placeholder on the server.
+
+**A PDF viewer on a canvas.** The compiled PDF had to show page by page and be downloadable, with no file store behind it. The browser sends the build request and gets the PDF bytes back. I convert them to base64 and load them with pdf.js. The library and its worker load on demand. Page 1 renders alone and the other pages go into a two-column grid. Each page draws on a canvas scaled by the device pixel ratio, so text stays sharp on dense screens.
+
+**Reordering pages without breaking the page order.** Users drag page thumbnails in the sidebar to reorder them. The order column is unique per chapter, so a plain swap of two numbers fails. I wrapped each thumbnail with react-dnd. A dashed outline shows the drop target, and the dragged thumbnail goes half transparent. A drop renumbers the pages inside one transaction and uses a temporary offset of 10,000, so the unique constraint holds at every step.

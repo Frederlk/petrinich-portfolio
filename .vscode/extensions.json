@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "Atishay-Jain.All-Autocomplete",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-complete-tag",
+    "formulahendry.auto-rename-tag",
+    "aaron-bond.better-comments",
+    "kamikillerto.vscode-colorize",
+    "slevesque.vscode-multiclip",
+    "prisma.prisma",
+    "tanftw.vsutils",
+    "lokalise.i18n-ally",
+    "yzhang.markdown-all-in-one",
+    "unifiedjs.vscode-mdx",
+    "oxc.oxc-vscode"
+  ]
+}

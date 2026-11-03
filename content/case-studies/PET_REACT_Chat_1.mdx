@@ -1,0 +1,20 @@
+I built this chat in 2022 as a small React app on Firebase: sign in with a Google account, then read and send messages that every signed-in user sees live. It moved me from static pages to state, routing and a real-time data source.
+
+## Patterns and decisions
+
+- Two pages, a login page and the chat, and three components: a header, a message bubble and a loader. Both pages load lazily behind a suspense fallback.
+- One React context created at the entry point holds the Firestore database, the auth object and the Google provider, so any component reads them without props.
+- A signed-in user lands on the chat page and a signed-out user on the login page.
+- The auth state comes from a Firebase hook, and the whole app shows a loader until it is known, so the page never flashes the wrong screen.
+- Styles are three Sass partials of about 300 lines with BEM names, three media queries and variables for colors and fonts.
+- Compared with the earlier Gulp pages, this exercise practised components, hooks, routing and live data, and kept the same Sass structure.
+
+## Cases
+
+**Live messages.** The chat subscribes to the messages collection with a query ordered by creation time, and every snapshot replaces the list in state. A message is stored with the user id, display name, avatar address, trimmed text and a timestamp. The subscription means a message sent from another browser appears without a reload.
+
+**Keeping the view at the newest message.** The message list is a scrollable block with a ref. After each update an effect sets its scroll position to its full height, so the latest message is always visible. The bubbles are a memoized component and the rendered list is memoized on the sorted messages, so typing in the field does not rebuild the whole history. Own messages get a modifier class by comparing the author id with the current user, which flips the bubble to the other side.
+
+**Sending with the keyboard.** The input is a textarea. Enter sends, Shift with Enter inserts a new line, and empty or whitespace-only text is not sent, both from the key handler and from the Send button. After sending, the field clears.
+
+**Sign-in state and the header.** The header changes by auth state: a log out button when signed in, a login link when not. The app is deployed on Firebase hosting with a rewrite to the entry page so deep links work.

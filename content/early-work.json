@@ -1,0 +1,1257 @@
+[
+  {
+    "id": "PET_PRIME-ONE",
+    "title": "Prime One",
+    "year": 2021,
+    "summary": "One-page catering service site with a hero, product cards, a why-choose-us block and a contact form, built from a given design.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "lightgallery",
+      "swiper",
+      "photoshop"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "http://prime-one.infinityfreeapp.com"
+      }
+    ],
+    "caseStudy": "PET_PRIME-ONE"
+  },
+  {
+    "id": "PET_GoCorona",
+    "title": "GoCorona",
+    "year": 2022,
+    "summary": "Responsive page for healthcare services.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "lightgallery",
+      "swiper",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-gocorona.web.app/"
+      },
+      {
+        "label": "Home Page",
+        "url": "https://pet-gocorona.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_GoCorona",
+    "media": ["/work/early/PET_GoCorona.webp"]
+  },
+  {
+    "id": "PET_Relvise",
+    "title": "Relvise",
+    "year": 2022,
+    "summary": "One-page site for a finance and consultancy company with scroll-triggered animation, a mobile footer accordion and an embedded video.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "swiper",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-relvise.web.app/"
+      },
+      {
+        "label": "Home Page",
+        "url": "https://pet-relvise.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Relvise",
+    "media": ["/work/early/PET_Relvise.webp"]
+  },
+  {
+    "id": "PET_REACT_GAO",
+    "title": "GAO",
+    "year": 2022,
+    "summary": "React and TypeScript five-step registration form with Formik and Yup validation, Redux Toolkit state, routing and Firebase data and photo upload.",
+    "stack": [
+      "react",
+      "typescript",
+      "redux",
+      "redux-toolkit",
+      "firebase",
+      "formik",
+      "yup",
+      "react-router-dom",
+      "react-helmet",
+      "sass",
+      "eslint",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Create Account Page",
+        "url": "https://react-pet-gao.web.app/"
+      },
+      {
+        "label": "Registration Page",
+        "url": "https://react-pet-gao.web.app/registration"
+      }
+    ],
+    "caseStudy": "PET_REACT_GAO",
+    "media": ["/work/early/PET_REACT_GAO.webp"]
+  },
+  {
+    "id": "PET_Zlatmax",
+    "title": "Zlatmax",
+    "year": 2022,
+    "summary": "Three-page online shop front (home, catalog, product) with Swiper sliders, a mega menu, tabs, a price range filter and form controls.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-zlatmax.web.app/"
+      },
+      {
+        "label": "Catalog Page",
+        "url": "https://pet-zlatmax.web.app/catalog.html"
+      },
+      {
+        "label": "Product Page",
+        "url": "https://pet-zlatmax.web.app/product.html"
+      }
+    ],
+    "caseStudy": "PET_Zlatmax",
+    "media": ["/work/early/PET_Zlatmax.webp"]
+  },
+  {
+    "id": "PET_EDELBURG",
+    "title": "Edelburg",
+    "year": 2022,
+    "summary": "One-page site for a development company with Ukrainian copy, a hero slider and fluid sizing through the adaptive-value mixin.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-edelburg.web.app/"
+      }
+    ],
+    "caseStudy": "PET_EDELBURG",
+    "media": ["/work/early/PET_EDELBURG.webp"]
+  },
+  {
+    "id": "PET_GPT-3",
+    "title": "GPT-3",
+    "year": 2022,
+    "summary": "One-page dark-theme landing page on the GPT-3 theme with blurred glow shapes, gradient headings, a header scroll state and a mobile accordion.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "swiper",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-gpt-3.web.app/"
+      }
+    ],
+    "caseStudy": "PET_GPT-3",
+    "media": ["/work/early/PET_GPT-3.webp"]
+  },
+  {
+    "id": "PET_REACT_GERICHT",
+    "title": "Gericht",
+    "year": 2022,
+    "summary": "One-page restaurant landing page in React, built from a given Figma design with Swiper sliders, data-driven menus and a Formik newsletter field.",
+    "stack": [
+      "react",
+      "sass",
+      "swiper",
+      "formik",
+      "yup",
+      "date-fns",
+      "vercel",
+      "figma",
+      "eslint",
+      "lightgallery",
+      "core-web-vitals"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-gericht-frederlk.vercel.app/"
+      }
+    ],
+    "caseStudy": "PET_REACT_GERICHT",
+    "media": ["/work/early/PET_REACT_GERICHT.webp"]
+  },
+  {
+    "id": "PET_REACT_MOZY",
+    "title": "Mozy",
+    "year": 2022,
+    "summary": "Five-page React services website with lazy routing, a Swiper slider, an animated SVG progress ring and a validated contact form.",
+    "stack": [
+      "react",
+      "sass",
+      "vercel",
+      "figma",
+      "react-helmet",
+      "react-router-dom",
+      "swiper",
+      "formik",
+      "yup",
+      "date-fns",
+      "eslint",
+      "lightgallery",
+      "core-web-vitals"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-mozy.vercel.app/"
+      },
+      {
+        "label": "About Page",
+        "url": "https://pet-react-mozy.vercel.app/about"
+      },
+      {
+        "label": "Products Page",
+        "url": "https://pet-react-mozy.vercel.app/products"
+      },
+      {
+        "label": "Contacts Page",
+        "url": "https://pet-react-mozy.vercel.app/contact"
+      },
+      {
+        "label": "Career Page",
+        "url": "https://pet-react-mozy.vercel.app/career"
+      }
+    ],
+    "caseStudy": "PET_REACT_MOZY",
+    "media": ["/work/early/PET_REACT_MOZY.webp"]
+  },
+  {
+    "id": "PET_Business-UI",
+    "title": "Business-UI",
+    "year": 2021,
+    "summary": "One-page business services layout built from a given design with Sass, fluid sizing, a statistics row and tabs on a Gulp and Webpack template.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "swiper",
+      "photoshop"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-business-ui.web.app/"
+      }
+    ],
+    "caseStudy": "PET_Business-UI",
+    "media": ["/work/early/PET_Business-UI.webp"]
+  },
+  {
+    "id": "PET_AOD",
+    "title": "AOD",
+    "year": 2021,
+    "summary": "One-page bike company landing with alternating image rows, a Swiper slider and a subscribe form on a Gulp and Webpack template.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "photoshop"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-aod.web.app/"
+      }
+    ],
+    "caseStudy": "PET_AOD",
+    "media": ["/work/early/PET_AOD.webp"]
+  },
+  {
+    "id": "PET_BINARY",
+    "title": "Binary",
+    "year": 2021,
+    "summary": "One-page design services landing with a filterable LightGallery portfolio and a contact form on a Gulp and Webpack template.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "lightgallery",
+      "gulp",
+      "webpack",
+      "firebase",
+      "swiper",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-binary.web.app/"
+      }
+    ],
+    "caseStudy": "PET_BINARY",
+    "media": ["/work/early/PET_BINARY.webp"]
+  },
+  {
+    "id": "PET_REACT_LUXTRADER",
+    "title": "Luxtrader",
+    "year": 2022,
+    "summary": "One-page React landing for a luxury auction with two Swiper sliders, lot countdown timers, a click-outside hook and a validated subscribe form.",
+    "stack": [
+      "react",
+      "sass",
+      "swiper",
+      "vercel",
+      "date-fns",
+      "formik",
+      "yup",
+      "eslint",
+      "lightgallery",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-luxtrader.vercel.app/"
+      }
+    ],
+    "caseStudy": "PET_REACT_LUXTRADER",
+    "media": ["/work/early/PET_REACT_LUXTRADER.webp"]
+  },
+  {
+    "id": "PET_REACT_LOGO",
+    "title": "LOGO",
+    "year": 2022,
+    "summary": "React sports web shop with a catalog, product page and cart: sorting, pagination, price filter, cart context saved to local storage and Formik forms.",
+    "stack": [
+      "react",
+      "sass",
+      "formik",
+      "date-fns",
+      "react-paginate",
+      "react-router-dom",
+      "swiper",
+      "react-helmet",
+      "vercel",
+      "yup",
+      "eslint",
+      "lightgallery",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-logo.vercel.app/"
+      },
+      {
+        "label": "Catalog Page",
+        "url": "https://pet-react-logo.vercel.app/catalog"
+      },
+      {
+        "label": "Product Page",
+        "url": "https://pet-react-logo.vercel.app/catalog/aab5d2d6-51769-4f79-9baa-2469d676321f"
+      },
+      {
+        "label": "Cart Page",
+        "url": "https://pet-react-logo.vercel.app/cart"
+      }
+    ],
+    "caseStudy": "PET_REACT_LOGO",
+    "media": ["/work/early/PET_REACT_LOGO.webp"]
+  },
+  {
+    "id": "PET_REACT_JOHN",
+    "title": "John",
+    "year": 2022,
+    "summary": "Small React personal portfolio with lazy routing, a works list, work pages from a parameter route and a blog, all data-driven.",
+    "stack": [
+      "react",
+      "sass",
+      "react-router-dom",
+      "vercel",
+      "figma",
+      "react-helmet",
+      "date-fns",
+      "eslint",
+      "lightgallery",
+      "swiper",
+      "core-web-vitals"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-john.vercel.app/"
+      },
+      {
+        "label": "Works Page",
+        "url": "https://pet-react-john.vercel.app/works"
+      },
+      {
+        "label": "Work Item Page",
+        "url": "https://pet-react-john.vercel.app/works/Designing-Dashboards"
+      },
+      {
+        "label": "Blog Page",
+        "url": "https://pet-react-john.vercel.app/blog"
+      }
+    ],
+    "caseStudy": "PET_REACT_JOHN",
+    "media": ["/work/early/PET_REACT_JOHN.webp"]
+  },
+  {
+    "id": "PET_LaslesVPN",
+    "title": "LaslesVPN",
+    "year": 2021,
+    "summary": "One-page VPN landing from a given design: eight Sass-built blocks with fluid spacing and a Swiper testimonials slider.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-lasles.web.app/"
+      }
+    ],
+    "caseStudy": "PET_LaslesVPN",
+    "media": ["/work/early/PET_LaslesVPN.webp"]
+  },
+  {
+    "id": "PET_RealEstate",
+    "title": "RealEstate",
+    "year": 2021,
+    "summary": "Two-page real estate site from a given design, with a home page, a listing page, two Swiper sliders and a request form.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-realestate.web.app/"
+      },
+      {
+        "label": "Product Page",
+        "url": "https://pet-realestate.web.app/product.html"
+      }
+    ],
+    "caseStudy": "PET_RealEstate",
+    "media": ["/work/early/PET_RealEstate.webp"]
+  },
+  {
+    "id": "PET_Cappadocia",
+    "title": "Cappadocia",
+    "year": 2021,
+    "summary": "One-page travel tour landing from a given design, with two Swiper sliders, a LightGallery photo gallery and a registration form.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "lightgallery",
+      "gulp",
+      "webpack",
+      "firebase",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-cappadochia.web.app/"
+      }
+    ],
+    "caseStudy": "PET_Cappadocia",
+    "media": ["/work/early/PET_Cappadocia.webp"]
+  },
+  {
+    "id": "PET_MartaUp",
+    "title": "MartaUp",
+    "year": 2021,
+    "summary": "One-page web studio landing from a given design, with a fading Swiper hero and a card grid that turns into a swipe row on tablets.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-marta.web.app/"
+      }
+    ],
+    "caseStudy": "PET_MartaUp",
+    "media": ["/work/early/PET_MartaUp.webp"]
+  },
+  {
+    "id": "PET_Tesla",
+    "title": "Tesla",
+    "year": 2021,
+    "summary": "One-page car landing from a given design, with scroll-reveal animations, a viewport-driven video and CountUp counters.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "count-up",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-tesla.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Tesla",
+    "media": ["/work/early/PET_Tesla.webp"]
+  },
+  {
+    "id": "PET_DiGi",
+    "title": "DiGi",
+    "year": 2021,
+    "summary": "One-page digital agency landing from a given design, with two Swiper sliders, four-column CSS grids and a Masonry news block.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "masonry",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-digi.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_DiGi",
+    "media": ["/work/early/PET_DiGi.webp"]
+  },
+  {
+    "id": "PET_REACT_Desire",
+    "title": "Desire",
+    "year": 2022,
+    "summary": "Multi-page furniture store site in React from a given design, with routing, lazy pages, a filtered and paginated blog, comments, a gallery and Formik forms.",
+    "stack": [
+      "react",
+      "sass",
+      "react-router-dom",
+      "react-paginate",
+      "react-helmet",
+      "formik",
+      "yup",
+      "lightgallery",
+      "swiper",
+      "count-up",
+      "date-fns",
+      "vercel",
+      "eslint",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-desire.vercel.app/"
+      },
+      {
+        "label": "About Page",
+        "url": "https://pet-react-desire.vercel.app/about"
+      },
+      {
+        "label": "Gallery Page",
+        "url": "https://pet-react-desire.vercel.app/gallery"
+      },
+      {
+        "label": "Blog Page",
+        "url": "https://pet-react-desire.vercel.app/blog"
+      },
+      {
+        "label": "Contacts Page",
+        "url": "https://pet-react-desire.vercel.app/contact"
+      }
+    ],
+    "caseStudy": "PET_REACT_Desire",
+    "media": ["/work/early/PET_REACT_Desire.webp"]
+  },
+  {
+    "id": "PET_Alivio",
+    "title": "Alivio",
+    "year": 2021,
+    "summary": "One-page landing site about stress management with a video block, scroll-reveal animations and fluid spacing.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "swiper",
+      "photoshop"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-alivio.firebaseapp.com"
+      }
+    ],
+    "caseStudy": "PET_Alivio",
+    "media": ["/work/early/PET_Alivio.webp"]
+  },
+  {
+    "id": "PET_Gravity",
+    "title": "Gravity",
+    "year": 2021,
+    "summary": "Landing page for design services with three Swiper sliders, a works filter and a header search, plus a blog page.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-gravity.web.app/"
+      },
+      {
+        "label": "Blog Page",
+        "url": "https://pet-gravity.web.app/blog.html"
+      }
+    ],
+    "caseStudy": "PET_Gravity",
+    "media": ["/work/early/PET_Gravity.webp"]
+  },
+  {
+    "id": "PET_Traffico",
+    "title": "Traffico",
+    "year": 2021,
+    "summary": "Landing page for a traffic consultant with a Swiper slider and an FAQ accordion that loads extra questions from JavaScript.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-traffico.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Traffico",
+    "media": ["/work/early/PET_Traffico.webp"]
+  },
+  {
+    "id": "PET_Kuba",
+    "title": "Kuba",
+    "year": 2021,
+    "summary": "Landing page about Cuba with count-up numbers started on scroll, image hotspots and a looping Swiper slider.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "count-up",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-cuba.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Kuba",
+    "media": ["/work/early/PET_Kuba.webp"]
+  },
+  {
+    "id": "PET_To2rent",
+    "title": "To2rent",
+    "year": 2021,
+    "summary": "Rental landing page with an autoplay Swiper main slider, a multi-column footer and form rules in markup.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-to2rent.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_To2rent",
+    "media": ["/work/early/PET_To2rent.webp"]
+  },
+  {
+    "id": "PET_GiftShop",
+    "title": "GiftShop",
+    "year": 2021,
+    "summary": "Landing page for a gift shop built only with markup and Sass, with no slider and no page script.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "swiper",
+      "photoshop"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-giftstore.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_GiftShop",
+    "media": ["/work/early/PET_GiftShop.webp"]
+  },
+  {
+    "id": "PET_FashionBlog",
+    "title": "FashionBlog",
+    "year": 2021,
+    "summary": "Fashion blog page with articles rendered from a data array, hand-written pagination and a lightGallery gallery.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "lightgallery",
+      "gulp",
+      "webpack",
+      "firebase",
+      "swiper",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-fashionblog.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_FashionBlog",
+    "media": ["/work/early/PET_FashionBlog.webp"]
+  },
+  {
+    "id": "PET_Woodies",
+    "title": "Woodies",
+    "year": 2021,
+    "summary": "Responsive one-page landing for a wooden furniture shop with a fade testimonials slider, built on a Gulp and Webpack starter.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-woodies.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Woodies",
+    "media": ["/work/early/PET_Woodies.webp"]
+  },
+  {
+    "id": "PET_CloudBudget",
+    "title": "CloudBudget",
+    "year": 2021,
+    "summary": "Responsive one-page landing for a budget management service with a video popup, a breakpoint-aware Swiper slider and a contact form.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-cloudbudget.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_CloudBudget",
+    "media": ["/work/early/PET_CloudBudget.webp"]
+  },
+  {
+    "id": "PET_HotelPage",
+    "title": "HotelPage",
+    "year": 2021,
+    "summary": "Responsive hotel offer page with two looping Swiper sliders, accordions below a breakpoint and a large header and footer.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-hotelpage.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_HotelPage",
+    "media": ["/work/early/PET_HotelPage.webp"]
+  },
+  {
+    "id": "PET_GoSurf",
+    "title": "GoSurf",
+    "year": 2021,
+    "summary": "Responsive surfing landing built with jQuery and seven Slick sliders, animated SVG map lines, parallax and a price calculator.",
+    "stack": [
+      "jquery",
+      "sass",
+      "html",
+      "slick",
+      "gulp",
+      "webpack",
+      "svg-animation",
+      "firebase",
+      "lightgallery",
+      "swiper",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-gosurf.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_GoSurf",
+    "media": ["/work/early/PET_GoSurf.webp"]
+  },
+  {
+    "id": "PET_Travel",
+    "title": "Travel",
+    "year": 2021,
+    "summary": "Responsive travel landing with a search form (selects and datepicker), mouse parallax, staggered reveal animations and a testimonials slider.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-travel-frederlk.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Travel",
+    "media": ["/work/early/PET_Travel.webp"]
+  },
+  {
+    "id": "PET_Mavic",
+    "title": "Mavic",
+    "year": 2021,
+    "summary": "Responsive landing for the Mavic 2 Pro drone with full-screen sections, parallax, animated SVG lines, an accordion and a fade slider.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "svg-animation",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-mavic.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Mavic",
+    "media": ["/work/early/PET_Mavic.webp"]
+  },
+  {
+    "id": "PET_Horizon",
+    "title": "Horizon",
+    "year": 2021,
+    "summary": "Responsive landing for Horizon: Forbidden West with a background video, three Swiper sliders (two synchronised) and a content filter.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-horizon-frderlk.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Horizon",
+    "media": ["/work/early/PET_Horizon.webp"]
+  },
+  {
+    "id": "PET_WooCommerce",
+    "title": "WooCommerce",
+    "year": 2021,
+    "summary": "Animated one-page landing for the WooCommerce eCommerce platform, built on a Gulp and Webpack starter with mouse parallax, a vertical Swiper slider and fluid Sass scaling.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "gulp",
+      "webpack",
+      "firebase",
+      "lightgallery",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-woocommerce.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_WooCommerce",
+    "media": ["/work/early/PET_WooCommerce.webp"]
+  },
+  {
+    "id": "PET_Funiro",
+    "title": "Funiro",
+    "year": 2021,
+    "summary": "One-page furniture shop landing with three Swiper sliders, a lightGallery lightbox, a fly-to-cart animation, load-more from a JSON file and a mouse-driven gallery.",
+    "stack": [
+      "javascript",
+      "sass",
+      "html",
+      "swiper",
+      "lightgallery",
+      "gulp",
+      "webpack",
+      "firebase",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-funiro.firebaseapp.com/"
+      }
+    ],
+    "caseStudy": "PET_Funiro",
+    "media": ["/work/early/PET_Funiro.webp"]
+  },
+  {
+    "id": "PET_REACT_Chat_1",
+    "title": "Chat APP",
+    "year": 2022,
+    "summary": "Small real-time chat in React: Google sign-in, a login page and a chat page chosen by sign-in state, and live messages stored in Firestore.",
+    "stack": [
+      "react",
+      "firebase",
+      "sass",
+      "react-router-dom",
+      "eslint",
+      "core-web-vitals",
+      "lightgallery",
+      "photoshop"
+    ],
+    "links": [
+      {
+        "label": "Login Page",
+        "url": "https://pet-react-chat-1.web.app/"
+      }
+    ],
+    "caseStudy": "PET_REACT_Chat_1"
+  },
+  {
+    "id": "PET_REACT_OFDR",
+    "title": "OFDR",
+    "year": 2022,
+    "summary": "Four routed React pages for a remote retraining center: Formik and Yup forms with phone masks, paginated news, a Swiper slider and breadcrumbs.",
+    "stack": [
+      "react",
+      "sass",
+      "swiper",
+      "formik",
+      "yup",
+      "react-router-dom",
+      "react-paginate",
+      "react-helmet",
+      "eslint",
+      "date-fns",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-ofdr.vercel.app/"
+      },
+      {
+        "label": "Attestation Page",
+        "url": "https://pet-react-ofdr.vercel.app/attestations/electric"
+      },
+      {
+        "label": "News Page",
+        "url": "https://pet-react-ofdr.vercel.app/news"
+      },
+      {
+        "label": "Contacts Page",
+        "url": "https://pet-react-ofdr.vercel.app/contacts"
+      }
+    ],
+    "caseStudy": "PET_REACT_OFDR",
+    "media": ["/work/early/PET_REACT_OFDR.webp"]
+  },
+  {
+    "id": "PET_REACT_CoffeeHouse",
+    "title": "Coffee House",
+    "year": 2022,
+    "summary": "Small routed React coffee shop site with a country filter and title search over six products, a product page by id and parallax backgrounds.",
+    "stack": [
+      "react",
+      "sass",
+      "react-parallax",
+      "react-router-dom",
+      "react-helmet",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-coffeeshop.vercel.app/"
+      },
+      {
+        "label": "Our Page",
+        "url": "https://pet-react-coffeeshop.vercel.app/our"
+      },
+      {
+        "label": "Pleasure Page",
+        "url": "https://pet-react-coffeeshop.vercel.app/pleasure"
+      },
+      {
+        "label": "Product Page",
+        "url": "https://pet-react-coffeeshop.vercel.app/coffee/4"
+      }
+    ],
+    "caseStudy": "PET_REACT_CoffeeHouse",
+    "media": ["/work/early/PET_REACT_CoffeeHouse.webp"]
+  },
+  {
+    "id": "PET_REACT_Lopper",
+    "title": "Lopper",
+    "year": 2022,
+    "summary": "Six-page React and TypeScript business services site with typed route config, Redux Toolkit for menu and scroll lock, Formik and Yup form, Swiper slider and lightGallery.",
+    "stack": [
+      "react",
+      "typescript",
+      "sass",
+      "redux",
+      "redux-toolkit",
+      "formik",
+      "yup",
+      "swiper",
+      "lightgallery",
+      "react-router-dom",
+      "react-helmet",
+      "eslint",
+      "date-fns",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://pet-react-lopper.vercel.app/"
+      },
+      {
+        "label": "Services Page",
+        "url": "https://pet-react-lopper.vercel.app/services"
+      },
+      {
+        "label": "Work Page",
+        "url": "https://pet-react-lopper.vercel.app/work"
+      },
+      {
+        "label": "About Page",
+        "url": "https://pet-react-lopper.vercel.app/about"
+      },
+      {
+        "label": "Gallery Page",
+        "url": "https://pet-react-lopper.vercel.app/gallery"
+      },
+      {
+        "label": "Contacts Page",
+        "url": "https://pet-react-lopper.vercel.app/contacts"
+      }
+    ],
+    "caseStudy": "PET_REACT_Lopper",
+    "media": ["/work/early/PET_REACT_Lopper.webp"]
+  },
+  {
+    "id": "PET_REACT_DugiLan",
+    "title": "DugiLan",
+    "year": 2022,
+    "summary": "React and TypeScript shop for WordPress themes with Redux Toolkit and RTK Query over Firestore, cart and favourites in local storage, coupons, checkout and an account area.",
+    "stack": [
+      "react",
+      "typescript",
+      "sass",
+      "redux",
+      "redux-toolkit",
+      "formik",
+      "yup",
+      "firebase",
+      "swiper",
+      "react-router-dom",
+      "react-helmet",
+      "eslint",
+      "github-actions",
+      "date-fns",
+      "core-web-vitals",
+      "figma"
+    ],
+    "links": [
+      {
+        "label": "Home Page",
+        "url": "https://react-pet-dugilan.web.app/"
+      },
+      {
+        "label": "Product Page",
+        "url": "https://react-pet-dugilan.web.app/browse/product/DugiLan"
+      },
+      {
+        "label": "Account Page",
+        "url": "https://react-pet-dugilan.web.app/account"
+      },
+      {
+        "label": "Shopping Card Page",
+        "url": "https://react-pet-dugilan.web.app/card"
+      }
+    ],
+    "caseStudy": "PET_REACT_DugiLan",
+    "media": ["/work/early/PET_REACT_DugiLan.webp"]
+  }
+]

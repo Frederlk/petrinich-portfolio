@@ -1,0 +1,18 @@
+I built To2rent in 2021 as a rental landing page, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials and the slider setup, not with the template's menu, form and adaptive-markup scripts. The project has no page script of its own.
+
+## Patterns and decisions
+
+- Four sections in the markup: a main slider with a request form, a popular block, about and a full-screen block.
+- Three page partials of Sass (home, header and footer), about 620 lines in total, with BEM class names and 44 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 30 calls of the template's fluid size mixin.
+- A looping Swiper slider with arrows, automatic height and autoplay every three seconds.
+- The footer partial is about 230 lines with 19 queries, close to the home partial's 22 queries, so the footer was a layout of its own.
+
+## Cases
+
+**Main slider.** The first screen is a slider. I set it to loop and autoplay without stopping after the visitor touches it, with its own arrows, and let the height follow the active slide.
+
+**Footer with several columns.** The footer has a manager column with two avatar cards, a list of blog links and a question form. I wrote it with flex layouts that collapse by breakpoints, and put avatars in the template's cover box so they keep their ratio.
+
+**Form rules in markup.** The question form has a required field and an error text next to it. I set them as data attributes, so the template's validation reads the rules from the page and the partials only style the states.

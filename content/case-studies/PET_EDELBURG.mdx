@@ -1,0 +1,18 @@
+I built Edelburg in 2022 as a one-page site for a development company, from a given design, with Ukrainian copy and hosting on Firebase. It uses the ready Gulp and Webpack starter template. The page markup, four Sass partials and the one slider setup are mine; the menu, smooth-scroll navigation and adaptive-markup scripts come with the template.
+
+## Patterns and decisions
+
+- Seven sections: a main screen with a slider, two "about" blocks, values, innovations, a catalog and a news block.
+- About 1,330 lines of Sass in four page partials, with BEM names and 109 media queries, 68 of them in the home partial.
+- Fluid sizing carries the page: the template's adaptive-value mixin appears 51 times in the home partial, scaling padding, gaps and font sizes between a desktop and a smaller width, mostly 1440 px down to 768 px.
+- Card grids use auto-fit with a minimum column width, so the column count follows the space instead of a breakpoint.
+- A logo placed as inline SVG in the header, and the template's 100vh fix switched on for mobile browser bars.
+- Compared with the first catering page, which used fixed values per breakpoint, this one scales spacing continuously between two widths.
+
+## Cases
+
+**Spacing that follows the screen.** The design had large gaps and paddings on desktop that had to shrink on tablets. Instead of writing an override for each size, I called the adaptive-value mixin with the desktop value, the phone value and the two widths between which to scale, which left the breakpoints to change layout rather than spacing.
+
+**Grid that decides its columns.** The value and innovation blocks hold cards of equal weight. I set the grid to auto-fit with a minimum width of 290 px (240 px for smaller cards) and a flexible maximum, so the count of columns changed on its own, and I only added a media query where the narrowest layout needed a lower minimum.
+
+**News block with named areas.** The news row is three columns on desktop, with a center image of 480 px. On tablets it turns into two columns with named grid areas, so the image can take its own cell. On narrow phones the whole block falls back to plain block flow, with the image pulled to the screen edges by a negative margin.

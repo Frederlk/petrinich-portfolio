@@ -1,0 +1,14 @@
+## Patterns and decisions
+
+- Card data ships as static JSON, so the browser and the offline mode need no round trip. Only user data lives in PostgreSQL on Neon, through Drizzle.
+- The API is oRPC with a contract, procedure and use-case split per feature. A check script fails if a contract imports the database client, so contracts stay safe to share with the browser.
+- A private or hidden deck shows the same not-found page as a missing one, but under HTTP 200, while an id that never existed gets a real 404. I accepted the trade-off and recorded it in the docs.
+- Agents wrote much of the code, so the rules are mechanical. Code rules, JS weight limits per route and a check on cache headers guard it, and an agent that wrote code does not review it.
+
+## Cases
+
+**Steam is OpenID.** Steam sign-in is OpenID 2.0, not OAuth, so no built-in Better Auth provider fits. I had a Better Auth plugin built with login, callback and link endpoints. Steam gives no token, so the server checks the assertion in the callback URL itself (endpoint, exact return address, a 17-digit claimed id, signed fields, nonce age) and then confirms it with Steam. The nonce is claimed once through an atomic insert, so a replayed assertion fails. Steam gives no email, so the user gets an unverified placeholder address and is never merged by address. Linking to an existing account is an explicit step from a signed-in session.
+
+**Card data from a game client.** The official card API was dead, so the data comes from the client. It keeps cards in Unity bundles as a .NET BinaryFormatter stream that the standard reader rejects. The card reader is a schema-guided Python reader that takes member types from the game's assembly. A step turns the client's dynamic rules-text markup into the text a card shows, a leftover bracket fails the run for that card, and a test compares every card with the client's own fields.
+
+**Names and alt arts in the deck code.** The game's code has no name field, and its import reads alt-art codes but writes only base codes. The deck code codec keeps alt-art codes, adds an optional name and art suffix read at the last colon, and still reads the older form. A C# plugin restores name and banner in the Reborn client, the community revival of the game. Copy limits are applied copy by copy in the game's order.

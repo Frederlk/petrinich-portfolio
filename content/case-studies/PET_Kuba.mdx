@@ -1,0 +1,18 @@
+I built Kuba in 2021 as a landing page about Cuba, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials, the slider setup and the page script, not with the template's menu, scroll observer and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Five sections in the markup: a home hero, a why block, about, a block with a classic car and a slider.
+- Four page partials of Sass, about 880 lines in total, with BEM class names and 41 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 31 calls of the template's fluid size mixin.
+- A looping Swiper slider with automatic height and arrows.
+- This was the only one of these early pages to use the count-up library, driven by the scroll observer.
+
+## Cases
+
+**Numbers that count when seen.** The why block has four figures. I started the counters only when the section comes into view: a mutation observer waits for the class that the template's scroll observer adds to a visible block, then starts the four counters, with a comma as decimal sign and three decimal places for some, and a plain number with no separator for the venue count.
+
+**Hotspots on an image.** The car image has four dots, each with a line and a label. A click on a dot toggles an active state on its parent, and the styles react to that state.
+
+**One slider with automatic height.** The slider block uses the Swiper automatic height option and looping, with arrows placed through the page styles, so the block follows the active slide.

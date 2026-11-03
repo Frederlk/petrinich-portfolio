@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+# Intentionally empty. Husky only sources ~/.config/husky/init.sh for hooks that exist here, and the shared Shai-Hulud guard (the malware scan that runs before every push) lives in that file. Deleting this file silently disables that check for everyone who has the guard installed.

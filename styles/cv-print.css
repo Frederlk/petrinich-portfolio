@@ -1,0 +1,596 @@
+/* The /cv page: highlights on screen, and the paper sheet. Printing gives a plain, ATS-friendly résumé: white paper, tight A4 margins (nobody prints it, so the sheet is screen-first), a running footer with the owner and "Page N of M", every external link's URL visible. Imported by app/cv/page.tsx only, so no other route carries it. The sheet is unlayered, so it wins over Tailwind's utilities without !important; it hooks onto the cv-* classes of the page rather than on element order. The A4 text width (190mm) sits below the md and lg breakpoints, so the screen's multi-column grids are set again here. The footer text of @page comes from the page itself (app/cv/page.tsx, footerRule); only its look is here. */
+
+/* Semantic palette of the page: one style per role, so a technology, a figure and a date read the same everywhere. Screen values come from the site tokens; the print sheet sets its own below. The vermilion is rationed: the current job's dates, the stat numerals and the hover and focus of a link. */
+.cv-page {
+  --cv-meta: var(--outline);
+  --cv-num: var(--on-surface);
+  --cv-tech: var(--primary);
+}
+
+.cv-page .rich-link {
+  color: var(--cv-tech);
+}
+
+.cv-page .rich-num {
+  color: var(--cv-num);
+}
+
+.cv-page
+  :is(.cv-dates, .cv-p-meta, .cv-stack-label, .cv-contact-label):not(
+    .cv-dates-now
+  ) {
+  color: var(--cv-meta);
+}
+
+.cv-page .rich-link:hover,
+.cv-page .rich-link:focus-visible {
+  color: var(--primary-container);
+}
+
+.cv-page .cv-h2-icon {
+  color: var(--primary-container);
+}
+
+.cv-page .list-square > li::before {
+  background: var(--secondary);
+}
+
+@media print {
+  /* Margins of 9, 10 and 11mm: the footer sits inside the bottom margin, 3mm under the content box. */
+  @page {
+    size: A4;
+    margin: 9mm 10mm 11mm;
+
+    @bottom-left {
+      color: #333;
+      font-family: var(--font-mono), monospace;
+      font-size: 7.5pt;
+      padding-top: 3mm;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+
+    @bottom-right {
+      color: #333;
+      font-family: var(--font-mono), monospace;
+      font-size: 7.5pt;
+      padding-top: 3mm;
+      text-align: right;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+  }
+
+  /* Paper palette. The accent is the vermilion darkened to 5.4:1 on white (the screen value is 3.3:1 there), and it colours text, links and markers only. The Stitch utilities read these variables, so the screen markup repaints itself. color-scheme resets the dark canvas, which would otherwise print black margins around the sheet. */
+  :root {
+    color-scheme: light;
+    --background: #fff;
+    --foreground: #000;
+    --border: #bbb;
+    --primary: #c2370a;
+    --primary-foreground: #fff;
+    --surface: #fff;
+    --surface-container-lowest: #fff;
+    --surface-container-low: #fff;
+    --surface-container: #ccc;
+    --surface-container-high: #bbb;
+    --surface-container-highest: #999;
+    --on-surface: #000;
+    --on-surface-variant: #222;
+    --secondary: #333;
+    --tertiary: #333;
+    --primary-container: #c2370a;
+    --on-primary-container: #fff;
+  }
+
+  /* Spacing scale in points: 2, 4, 6, 10, 16, 24. Space inside a group is at most half the space between groups: title to meta 2, meta to description 4, description to bullets 4, project to project 10, job to job 16, heading to its first entry 10, section to section 24. Inks darkened for AA on white: brick for technologies, a deeper vermilion for figures, a warm brown for dates and labels. */
+  .cv-page {
+    --cv-meta: #5c4039;
+    --cv-num: #a32a00;
+    --cv-tech: #7a2a12;
+    --s-1: 2pt;
+    --s-2: 4pt;
+    --s-3: 6pt;
+    --s-4: 10pt;
+    --s-5: 16pt;
+    --s-6: 24pt;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  [data-chrome],
+  .no-print {
+    display: none;
+  }
+
+  .cv-page {
+    min-height: 0;
+  }
+
+  .cv-page > article {
+    max-width: none;
+    padding: 0;
+  }
+
+  .cv-page * {
+    animation: none;
+    transform: none;
+  }
+
+  /* Type scale for paper: the screen roles of styles/typography.css in points. Body 9.5pt, bullets 9.5pt, entry titles 11pt bold, mono only for labels and dates at 8.5pt. */
+  .cv-page .type-display {
+    font-size: 27pt;
+    line-height: 1;
+  }
+
+  .cv-page :is(.type-h1, .type-h2, .type-h3) {
+    font-size: 11pt;
+    line-height: 1.3;
+  }
+
+  .cv-page .type-lead {
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+
+  .cv-page .type-body {
+    font-size: 9.5pt;
+    line-height: 1.45;
+  }
+
+  .cv-page .type-body-sm {
+    font-size: 9.5pt;
+    line-height: 1.42;
+  }
+
+  .cv-page :is(.type-label, .type-meta, .type-code, .type-button) {
+    font-size: 8.5pt;
+    line-height: 1.35;
+  }
+
+  :where(.cv-page [class*="space-y"]) > * {
+    margin-block: 0;
+  }
+
+  /* Names and titles keep their case on paper: the text layer then reads as written. */
+  .cv-page h3,
+  .cv-page .cv-title {
+    text-transform: none;
+  }
+
+  .cv-page .cv-dates {
+    text-transform: none;
+  }
+
+  .cv-page a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Header: name, role and the three facts on the left, the square photo on the right, the contacts in two columns under a hairline. */
+  .cv-header {
+    border-bottom: 0;
+    padding: 0 0 var(--s-3);
+  }
+
+  .cv-header-top {
+    align-items: start;
+    display: grid;
+    gap: 8mm;
+    grid-template-columns: minmax(0, 1fr) 28mm;
+  }
+
+  .cv-page .cv-photo {
+    border: 0.5pt solid #999;
+    height: 28mm;
+    order: 0;
+    width: 28mm;
+  }
+
+  .cv-page .cv-title {
+    color: #222;
+    font-size: 12pt;
+    font-weight: 600;
+    margin-top: var(--s-2);
+  }
+
+  .cv-facts {
+    gap: var(--s-1);
+    margin-top: var(--s-3);
+    max-width: none;
+  }
+
+  .cv-facts > div {
+    border: 0;
+    gap: 3mm;
+    padding: 0;
+  }
+
+  .cv-facts dt {
+    width: 22mm;
+  }
+
+  .cv-contacts {
+    border-top: 0.5pt solid #bbb;
+    display: grid;
+    gap: var(--s-1) 8mm;
+    grid-template-columns: 1fr 1fr;
+    margin-top: var(--s-3);
+    padding-top: var(--s-3);
+  }
+
+  .cv-contacts a {
+    gap: 2mm;
+    white-space: nowrap;
+  }
+
+  .cv-contacts svg {
+    height: 3.4mm;
+    width: 3.4mm;
+  }
+
+  .cv-page .cv-contact-label {
+    min-width: 22mm;
+    text-transform: none;
+  }
+
+  /* The stat band: four large numerals under the header, a hairline between the cells. The numerals are the page's loudest type. */
+  .key-stats {
+    align-items: end;
+    border-bottom: 0;
+    border-top: 0.5pt solid #bbb;
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: var(--s-3);
+    padding: var(--s-3) 0 var(--s-2);
+  }
+
+  .key-stat {
+    border-left: 0.5pt solid #bbb;
+    padding-left: var(--s-4);
+  }
+
+  .key-stat:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .cv-page .key-stat-value {
+    color: var(--cv-num);
+    font-size: 28pt;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .cv-page .key-stat-value::before {
+    margin-bottom: var(--s-2);
+  }
+
+  .cv-page .key-stat-label {
+    color: var(--cv-meta);
+    font-size: 8pt;
+    margin-top: var(--s-1);
+    text-transform: none;
+  }
+
+  /* One column: each heading stacks directly above its section, so the text layer reads in the same order as the page. Every section opens with a heavy rule under its title; the title sits closer to its content (10pt) than to the section before it (24pt). */
+  .cv-section {
+    border: 0;
+    display: block;
+    margin-top: var(--s-5);
+    padding: 0;
+  }
+
+  .key-stats + .cv-section {
+    margin-top: var(--s-4);
+  }
+
+  .cv-page .cv-h2 {
+    align-items: center;
+    border-bottom: 0.9pt solid #000;
+    break-after: avoid;
+    color: #000;
+    font-size: 10.5pt;
+    font-weight: 700;
+    gap: var(--s-2);
+    letter-spacing: 0;
+    margin-bottom: var(--s-4);
+    padding-bottom: var(--s-2);
+  }
+
+  .cv-page .cv-h2-icon {
+    color: var(--primary);
+    height: 10pt;
+    width: 10pt;
+  }
+
+  .cv-summary {
+    margin: 0;
+  }
+
+  /* Experience: role and company left, dates right inside the margin, then the description, the bullets and the stack. */
+  .cv-jobs,
+  .cv-job {
+    display: block;
+  }
+
+  .cv-job {
+    border: 0;
+    padding: 0;
+  }
+
+  .cv-job + .cv-job {
+    border-top: 0.4pt solid #ccc;
+    margin-top: var(--s-4);
+    padding-top: var(--s-4);
+  }
+
+  .cv-desc {
+    break-after: avoid;
+  }
+
+  .cv-job-head {
+    align-items: baseline;
+    break-after: avoid;
+    flex-direction: row;
+    gap: 6mm;
+    justify-content: space-between;
+  }
+
+  .cv-job-title {
+    font-weight: 700;
+  }
+
+  .cv-job-title > span {
+    font-weight: 400;
+  }
+
+  .cv-dates {
+    flex-shrink: 0;
+    letter-spacing: 0;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .cv-desc {
+    margin: var(--s-2) 0 var(--s-2);
+  }
+
+  .cv-bullets {
+    margin: 0 0 var(--s-2);
+  }
+
+  .cv-bullets > li + li {
+    margin-top: var(--s-1);
+  }
+
+  .cv-stack {
+    column-gap: 2mm;
+    flex-wrap: nowrap;
+    padding: 0;
+  }
+
+  .cv-stack-label {
+    flex-shrink: 0;
+    text-transform: none;
+  }
+
+  /* The marker is an inline square on a hanging indent, not an absolutely positioned box: a positioned item paints after the in-flow content of its section, and Chrome writes the PDF text in paint order, so the bullets would land behind the stack line that follows them. */
+  .list-square > li {
+    padding-left: 4mm;
+    position: static;
+    text-indent: -4mm;
+  }
+
+  .list-square > li::before {
+    display: inline-block;
+    height: 1.4mm;
+    margin-right: 2.6mm;
+    position: static;
+    text-indent: 0;
+    vertical-align: 0.3mm;
+    width: 1.4mm;
+  }
+
+  /* Selected projects: the home page's row (components/selected-project.tsx) on a three-column grid, year, name and role on the first line, the summary and the site address under it (2pt, one group), the main technologies as tags under that; the next project starts 10pt lower, five times the gap inside. */
+  .cv-projects {
+    border: 0;
+  }
+
+  .cv-projects > li {
+    border: 0;
+    break-inside: avoid;
+  }
+
+  /* The PDF keeps two pages: the Skills section names the stack once, so the per-job stack lines stay on the site. */
+  .cv-page .cv-stack {
+    display: none;
+  }
+
+  /* The PDF keeps two pages, so it lists the first two selected projects; the site lists all of them. */
+  .cv-projects > li:nth-child(n + 3) {
+    display: none;
+  }
+
+  .cv-projects > li + li {
+    margin-top: var(--s-4);
+  }
+
+  .cv-project {
+    align-items: baseline;
+    column-gap: 3mm;
+    grid-template-areas:
+      "year name role"
+      "sum sum sum"
+      "stack stack stack";
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 0;
+    row-gap: 0;
+  }
+
+  .cv-page .cv-p-year {
+    grid-area: year;
+  }
+
+  .cv-page .cv-p-name {
+    font-size: 10pt;
+    font-weight: 700;
+    grid-area: name;
+  }
+
+  .cv-page .cv-p-role {
+    grid-area: role;
+    text-transform: none;
+  }
+
+  .cv-page .cv-p-sum {
+    font-size: 9.5pt;
+    grid-area: sum;
+    line-height: 1.42;
+    margin-top: var(--s-1);
+  }
+
+  /* The PDF keeps two pages: a project prints its name, year, role, address and stack, and the summary stays on the site. display: none keeps the text out of the PDF text layer too. */
+  .cv-page .cv-p-sum-text {
+    display: none;
+  }
+
+  .cv-page .cv-p-stack {
+    gap: var(--s-1);
+    grid-area: stack;
+    margin-top: var(--s-2);
+  }
+
+  .cv-page .cv-p-tech {
+    border: 0.4pt solid #ccc;
+    color: var(--cv-tech);
+    font-size: 8pt;
+    padding: 0 var(--s-2);
+  }
+
+  /* Core skills: a two-column list, the group name in bold and its technologies beside it, then the line to the full stack. */
+  .cv-skills {
+    column-gap: 4mm;
+    display: grid;
+    grid-template-columns: 42mm minmax(0, 1fr);
+    row-gap: var(--s-2);
+  }
+
+  .cv-skill {
+    display: contents;
+  }
+
+  .cv-page .cv-skill-name {
+    border: 0;
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding: 0;
+    text-transform: none;
+  }
+
+  .cv-skill-items {
+    padding: 0;
+  }
+
+  .cv-page .cv-skills-all {
+    margin-top: var(--s-3);
+  }
+
+  .cv-edu {
+    break-inside: avoid;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .cv-page .cv-edu h3 {
+    font-size: 10pt;
+  }
+
+  .cv-langs {
+    gap: 10mm;
+  }
+
+  .cv-langs > li {
+    border: 0;
+    padding: 0;
+  }
+
+  .cv-page .cv-interests {
+    font-size: 9.5pt;
+  }
+
+  /* A technology is brick with a hairline underline, a project address black with the same rule, a figure a heavier deeper vermilion. The rule prints as a vector line where a background gradient might not. */
+  .cv-page .rich-link,
+  .cv-page .cv-p-url {
+    background: none;
+    text-decoration: underline;
+    text-decoration-color: #bbb;
+    text-decoration-thickness: 0.4pt;
+    text-underline-offset: 0.55mm;
+  }
+
+  .cv-page .cv-p-url {
+    color: #000;
+  }
+
+  .cv-page .rich-link {
+    color: var(--cv-tech);
+    font-weight: 500;
+  }
+
+  /* The skills list is nothing but technologies: plain weight, no rule. */
+  .cv-page .cv-skill-items .rich-link {
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .cv-page strong {
+    color: inherit;
+    font-weight: 700;
+  }
+
+  .cv-page .rich-num {
+    color: var(--cv-num);
+    font-weight: 600;
+  }
+
+  .cv-page .cv-contact-icon {
+    color: var(--primary);
+  }
+
+  /* External URLs print after their link text. Links marked data-bare already show the address as their text. */
+  .cv-page a[href^="http"]:not([data-bare])::after {
+    content: " (" attr(href) ")";
+    overflow-wrap: anywhere;
+  }
+
+  .cv-page p,
+  .cv-page li {
+    orphans: 2;
+    widows: 2;
+  }
+
+  .cv-page h3 {
+    break-after: avoid;
+  }
+
+  .cv-page li {
+    break-inside: avoid;
+  }
+
+  .cv-page li.cv-job {
+    break-inside: auto;
+  }
+
+  .cv-page .max-w-4xl,
+  .cv-page .cv-measure {
+    max-width: none;
+  }
+}

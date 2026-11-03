@@ -1,0 +1,21 @@
+## What I analysed
+
+- The product. A fundraising and prize-draw platform built around spin wheels. A money wheel has a donation goal and an entry amount. A pot wheel belongs to an item that a user lists and an admin approves. Users hold a wallet, buy entries and watch the winner being drawn live.
+- The materials. A working codebase: a NestJS back end with Prisma on PostgreSQL, about 150 routes and 31 data models, and a Next.js 13 front end of which only the admin side was readable.
+- The money side. Deposits by saved card, payouts through a connected account and through PayPal, subscription plans with coupons and promo codes, and paid promotion of a pot.
+- The rest of the scope. A marketplace with a cart and orders, follows, public profiles, live chat inside a wheel, email and in-app notifications, and an admin back office with analytics.
+- The starting point. The product already existed in this form, so the work was a wide system on versions from 2022 and 2023, not a blank page.
+
+I made the estimate and identified the risks. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**A draw people can trust.** The whole product is a draw with money and prizes, so the pick has to be fair, recorded and explainable afterwards. I recommended estimating the draw as its own piece. The server makes the pick and stores the entry list, the result and the time. The wheel on screen only shows a result that is already decided. The estimate also needs a rule for a failed spin.
+
+**Timed jobs that survive restarts and more than one server.** Entry openings, reminder emails and the spin itself run on timers registered inside the app at start. With one process that works, but a deploy at the wrong minute or a second instance changes what runs and how often. I recommended a durable scheduler with stored jobs, one worker per job, retries and a catch-up pass for missed times. The draw itself must be safe to repeat, so a second run of the same job cannot pay a winner twice.
+
+**A wallet that is really a ledger.** Balances, entry fees, cashback, card deposits, bank payouts, PayPal payouts, refunds and subscriptions all touch the same money, and every provider reports in its own time and can repeat a message. I recommended an append-only ledger with one path that writes to it, provider events handled once, a daily reconciliation against the providers and an admin view for exceptions. I estimated payments and payouts as their own block, with its own test plan, ahead of the marketplace.
+
+I also sliced the estimate by value: draws, wallet and payouts first, then the admin and analytics, then marketplace and subscriptions, then the social features. The upgrade from the 2022 and 2023 framework versions stayed a separate line, so it did not hide inside every slice.

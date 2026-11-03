@@ -1,0 +1,15 @@
+## Patterns and decisions
+
+The tool is a single FastAPI application written in Python. It serves one page on localhost, and a command-line downloader does the heavy work behind it: matching a music link to audio, downloading, converting to MP3 at 320 kbps, and writing the title, artist and cover art into each file. I wrote everything around that engine: the page, the queue, the progress stream, the fallback and the launchers.
+
+The page first turns a pasted link into a preview: a list of tracks with covers, artists and durations, each with a checkbox. Tracks already sitting in the Downloads folder are badged, unchecked and sorted to the bottom, so a second run over the same album only fetches what is missing. An existing file is never overwritten. A log panel keeps the last few thousand lines in memory, with copy and refresh buttons, so a failed track can be diagnosed without a terminal.
+
+The whole app is one Python file with the page embedded in it. A tool used by one person on one machine needs no build step and no second process.
+
+## Cases
+
+**One worker thread and a live progress stream.** The downloader binds its event loop to the thread that created it, so calling it from request handlers broke in subtle ways. I moved all of its work onto a single worker thread. Batches run strictly one after another. Inside a batch the downloader keeps a rolling window of up to five tracks, and a new one starts as soon as another finishes. The page marks only the active tracks as searching and leaves the rest as queued, so the list reads honestly. The worker cannot talk to the browser directly, so each batch gets its own thread-safe queue. The downloader reports a stage and a percentage per track, and I push those into the queue. A server-sent events endpoint drains it every fraction of a second and streams the messages to the page, where each row changes colour by stage and shows a thin bar. A final message closes the stream and lists the failures. Server-sent events fit because the traffic flows one way and the browser parses it natively.
+
+**A fallback for other people's lists.** Lists that belong to someone else are refused by the normal route. Instead of telling the user to give up, I read the public view of the list, which needs no sign-in, pull the track links out of its data, and run the normal per-track lookup on each one. The preview then looks the same as for any other link.
+
+**Launchers that stay out of the way.** A start script launches the server without a console window, and the app opens its own browser tab. A second launch finds the port taken, opens a tab on the running instance and exits. Windows pops a console for every child process the downloader starts, so I patched process creation to hide them all. The page has a quit button, and a stop script ends whatever listens on the port, for the case where the tab is already closed. A tiny script draws the application icon.

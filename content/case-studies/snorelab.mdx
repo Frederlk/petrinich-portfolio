@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The archive is all front-end code: 50+ React components, 15+ page files and 60+ SCSS files. The WordPress back end and the two PHP endpoints belong to the rest of the team.
+- The bundle is the front end of a WordPress theme. React comes from the WordPress global element library, and the build extends the WordPress scripts package with React and React DOM as externals.
+- There is no router library. A post or product slug is the last segment of the URL. Links are plain anchors, and WordPress serves each page.
+- Content comes from the WordPress REST API. A fetch hook loads data with error state, and a second hook loads a list and finds one item by slug. Fields from Advanced Custom Fields come with each post.
+- Article HTML from the editor is turned into elements with html-react-parser. It has no fixed widths, so each image caption is sized to the wider of its two images, on load and on resize.
+- Lists of up to 100 items load in one request and are filtered in the browser. There is no pagination.
+- Swiper drives the carousels. The viewport width maps to fractional slide counts, so the next card peeks out. Axios drives the resume upload progress.
+- Styles are Sass in the 7-1 layout with BEM class names.
+
+## Cases
+
+**A React shell inside WordPress.** The site had to stay on WordPress, because editors manage articles, products, reviews and FAQs there. It still needed a React interface. Each of 16 entry HTML files holds a root div with the id of its page. The entry script finds those divs. A root component picks the page component from a map by that id, copies the data attributes into props and renders the header, the page and the footer. Header and footer are React on every page.
+
+**A questionnaire engine for Stop-BANG and Epworth.** Both tests have many questions and score bands, and the client needed to change them. I wrote one questionnaire component. It takes the test type, either Stop-BANG or Epworth, and reads that test's questions and result bands from the page's Advanced Custom Fields. Radio values are summed. Each result band holds conditions, each one a comparison (greater, greater or equal, less, less or equal) against a value, and a small switch evaluates them. The result title and text replace the form. Two thin wrappers pass the type.
+
+**An article list with no server search.** The content library needed category tabs and search without a search endpoint. The page makes one fetch of 100 posts and one of categories. An "All" tab is added in front with a sentinel id. Tabs filter by the post's categories. Search matches the lower-cased query in title and excerpt. A category query parameter in the URL selects the first tab, so a link can open a category.

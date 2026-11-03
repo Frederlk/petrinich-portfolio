@@ -1,0 +1,19 @@
+## What I analysed
+
+- The product. A seasonal jobs board for work abroad, in niches such as ski season, summer camps, au pair, fruit picking and language teaching. Companies pay for services to publish vacancies, and candidates browse and apply. It ran on WordPress in nine languages, with translated addresses in language subfolders.
+- The specification. It asked for one admin platform in English with central control of companies, services and payments, postings and applications. It also asked for a redesigned public site with better navigation and job search, a company dashboard, a candidate panel and job intake from partner XML feeds. One constraint ran through all of it: no URL may change.
+- The technology. I recommended Next.js with TypeScript and Tailwind CSS, Prisma on PostgreSQL, Better Auth, oRPC and next-intl, hosted on Vercel, with Sentry for monitoring.
+- Three places where the estimate overrode the specification. I proposed one codebase instead of two, because the public site, the admin and the API fit together in one app. I proposed PostgreSQL full-text search instead of a separate search engine, because the number of active vacancies is a few thousand. I proposed a small blog editor inside the app instead of Strapi, because the blog is the only managed content.
+- The delivery plan. Eight phases, each with a sign-off, from foundations through a rehearsed data migration and a validated staging crawl to go-live with monitoring.
+
+I made the estimate, identified the risks and gave the technology advice. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**Losing search rankings at the switch.** The business lives on organic traffic. The site has thousands of indexed pages in nine languages, and some of them can only be reached by a direct link, so a crawl of the menu would miss them. One forgotten address or one wrong permanent redirect costs rankings, and browsers cache permanent redirects. I recommended building the address map from Search Console exports instead of from navigation. The redirects run in middleware, because the map outgrows the limit of the hosting platform. A crawl of the staging site checks redirects, language links, structured data and canonical addresses before anything goes live. The cutover is rehearsed with a rollback test, and Search Console is watched daily for two to three weeks afterwards. This part rests on human judgement and a fixed calendar window.
+
+**Importing legacy data of unknown quality.** Jobs and companies sit in WordPress, and historical applications sit in HubSpot behind a separate way of extracting them. The estimate assumes the data is recoverable and reasonably structured. Dirty data would inflate both the build and the final stabilisation. I recommended asking for a sample export in discovery to judge quality early. The import pipeline is built in the backend phase and rehearsed again and again. The final migration waits for the cutover window, after the old site is frozen.
+
+**Payment and quote integrations that look simpler than they are.** HubSpot has no ready event for an accepted quote. The trigger is a generic property change filtered on status, and it behaves differently when the buyer clicks, when a sales rep marks the quote, or when an e-signature is used. I recommended verifying the trigger on a test portal before committing to the scope. For Shopify, the signature of the paid-order webhook is checked against the raw request body, and repeated deliveries of the same event are ignored, so a credit is granted once. The purchase-to-activation cycle is signed off in Shopify test mode.

@@ -1,0 +1,18 @@
+I built LaslesVPN in 2021 as a one-page landing for a VPN service, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the testimonials slider setup, not with the template's menu, scroll and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Eight blocks on the home page: a hero, a users counter card, features, plans, a global network block, partners, testimonials and a subscribe block.
+- Three page partials of Sass, about 950 lines in total, with BEM class names and 69 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first: 56 max-width queries against 4 min-width ones.
+- Spacing and sizes in 31 places scale smoothly between a desktop and a tablet value instead of jumping at a breakpoint.
+- Hover styles sit inside a hover-capability media query, so touch screens do not get stuck states.
+- Next to the first catering page, this one practised fluid spacing and a Swiper slider with several slides in view.
+
+## Cases
+
+**Plan cards that stay even.** The design has three plan cards in a row with a lot of inner padding. I made the row a flex container with three equal cards, and set the padding of each card to shrink from the desktop value to a smaller one between the desktop and tablet widths. On a phone the cards wrap into a column with a fixed card width, so they keep their proportions.
+
+**Testimonials slider with a fractional view.** The design shows two and a half cards, so the next one peeks in. I set Swiper to show two and a half slides on desktop, two on tablet and one on a phone, with arrows, bullets and keyboard control, and wrote the card styles in the home partial.
+
+**Card that floats over the hero.** The users counter is a white rounded row that overlaps the block above it, with a soft shadow. I drew the shadow on a pseudo-element narrower than the card and centered under it, so the glow looks like it sits on the page and not on the card edges, and I cut the row padding on the tablet and small phone breakpoints.

@@ -1,0 +1,21 @@
+## What I analysed
+
+- The product. An online marketplace in the Philippines where pig farmers list animals for sale and buyers search, pay and ask for delivery. The mockups widened it into general farm classifieds: other livestock, eggs, feed, produce, boats, equipment, vehicles, real estate, services and jobs.
+- The materials. 81 static HTML mockup pages in 23 page folders. There was no data model, no API and no written brief, so the scope had to be read from the screens.
+- The selling flow. A two-step start with photos and details, then a form whose fields depend on the category, and a confirmation page.
+- The buying flow. A listing page with a deep category tree, sorting, age and weight filters and a price per kilogram. A single listing page carries a seller card, a make-an-offer panel, a chat with the seller and reviews.
+- Accounts. Sign up, email verification, saved items, an inbox, a drawer of notifications and account settings.
+- Money and delivery. Checkout with card, GCash and PayPal, a service fee line, a page where payment details for sellers are entered, and a review request after payment. Delivery is a request form with a map pin and a quote by contact.
+- What the pages left open. Who holds the money, how a sale is confirmed, how delivery is priced, moderation, and any admin role.
+
+I made the estimate from the mockups, identified the risks and gave the technology advice. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate. The pages were also full of near-duplicate variants, about 15 for some screens, so I picked the target version of each screen before counting any scope and listed what I left out.
+
+**Many categories with different listing fields.** The mockups start as a pig shop and grow into a general marketplace. Weight and age matter for animals, area and rooms for real estate, harvest season for produce. Built page by page, every category becomes its own template. I recommended one listing model: a common core of title, price, location, photos, status and seller, plus category attributes held as data. One form and one listing page then render every category from its definition. The first release covers livestock and feed, and later categories arrive as configuration. I estimated the core once and each category as a small increment.
+
+**Taking money between strangers.** Checkout offers three payment methods, adds a fee, and there is a separate page for receiving payments. Each method is a separate integration. The mockups do not say who holds the funds or what happens in a dispute. I recommended treating payments as their own phase. It starts with one gateway that covers local wallets and cards, and the order states are defined first: offer, accepted, paid, delivered, released. Before the build begins, the client decides whether the platform holds the money or only connects the parties. PayPal comes later.
+
+**Offers, chat and notifications.** Behind small screens sits a whole feature set: price offers, chat inside a listing, a full inbox, a negotiation prompt, a notification drawer and price alerts. It looks cheap on paper and is the part that most often swells an estimate. I recommended one module with a fixed first version. Conversations are stored and tied to a listing, an offer is a message type with a status, and notifications are generated from events and delivered by email and as an in-app list. Real-time delivery and push notifications come later.

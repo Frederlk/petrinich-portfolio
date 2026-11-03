@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- Stripe is the source of truth for plans, prices and customers. One sync function mirrors it into the database, and the webhook calls it.
+- Product copy lives in Sanity. Price and ids come from Stripe through an editor action called "Sync from Stripe" and the product and price webhook events.
+- The Stripe webhook runs the state steps before it answers. Notifications and analytics run after the response, with three attempts and a 15 second bound.
+- Access to a video is one pure function of the member row. The page gate and the token gate both use it, so they cannot disagree.
+- Most public pages render from Sanity. A circuit breaker trips when Sanity answers 402 over quota, and the pages and the sitemap fall back to a static list instead of failing.
+- Academy module pages are dynamic, because they read the session and the saved watch state.
+- The four Cron routes on Vercel fail closed behind a shared secret.
+- A page-coverage gate fails CI when a new page ships without an end-to-end test path, and its baseline can only shrink. Vitest covers the units and Playwright the journeys, accessibility and SEO, in 140+ test files in all.
+
+## Cases
+
+**Video access that makes harvesting by a paying member hard.** A signed Mux token can be handed to ffmpeg and turned into an MP4. The options were measured and each member is limited to one stream. The slot claim is race-free because of a unique constraint on member and slot, not a count followed by an insert. A ceiling of 25 distinct chapters an hour and a honeypot module that records a PostHog event on direct slug access add two more layers.
+
+**Lifecycle emails that are neither lost nor sent twice.** A webhook redelivery or an interrupted background task can lose an email or send it twice. A ledger table has a unique event key. A compare-and-swap claim runs before the call to the email provider, a sweeper cron retries stuck rows, and a provider-side unique id is the second layer.
+
+**A cutover that refuses to be wrong.** The task was to move users, subscriptions and statuses from a MySQL dump to PostgreSQL without breaking paying members. The scripts are re-runnable and default to a dry run. The Stripe warm-up and reconcile scripts print whether the key is live or test and refuse to apply on a test key. A destructive-sync constant needs a commit to turn on, so the sync cannot cancel subscriptions by accident. A one-page checklist has a confirm step for each move.

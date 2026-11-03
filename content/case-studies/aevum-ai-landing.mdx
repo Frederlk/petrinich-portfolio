@@ -1,0 +1,21 @@
+## What I analysed
+
+- The product. A marketing landing page for a service that promises EU AI Act compliance documents to AI companies outside the EU. The visitor reads about the problem and the solution, takes a short risk quiz, joins a waitlist and can read a small blog.
+- The reference build. The materials included a working build made with an AI web-app builder, using React, Vite, Wouter, Tailwind CSS and Express. It was a reference build of the page. It showed the scope clearly: one home page of several sections, a quiz with three questions, a waitlist form, a blog with a list and a post page, and a written design direction.
+- How the data moves. Every page is drawn in the browser. The articles live inside the code. The quiz and the waitlist send the contact straight from the browser to a mailing list.
+- The wording of the result. The quiz turns three answers into a score and a risk level, and the result text reads like a legal verdict.
+- The promise behind the page. The promise behind the page is a document-generation product of its own, and the page only advertises it.
+
+I made the estimate, identified the risks and gave the technology advice. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**The page lives on search, and the build hides its content from search.** The business case depends on organic reach through articles about the regulation. The reference page draws everything in the browser, sets its titles and descriptions with script and keeps the articles inside the code. I recommended pre-rendered pages, so that titles, descriptions and structured data are already in the HTML a crawler receives. Articles belong in content files or a headless CMS, so that a writer can publish without a developer.
+
+**Email capture without a server.** The quiz and the waitlist call the mailing list from the browser. A production page needs one place that holds the list credentials, checks the consent and records it. I recommended one small server endpoint between the form and the mailing tool. It validates the input, stores the consent with a time stamp, tags the contact with the quiz result and returns a plain success or an error. The consent wording stays as a lawyer approves it.
+
+**A risk score that reads like a legal classification.** Three weighted questions produce a level and a sentence that sounds like an official ruling under the regulation. A visitor can take it as advice. I recommended labelling the result as an indicative readiness score and treating it as lead qualification. The weights and the level texts should go to a compliance adviser for review, and sit in a data file so that the adviser can change them without code. Any statistics and quotes on the page need sources that can be shown.
+
+I also kept the landing page separate from the document-generation product in the estimate, because the two carry different risks and mixing them would make the estimate impossible to compare.

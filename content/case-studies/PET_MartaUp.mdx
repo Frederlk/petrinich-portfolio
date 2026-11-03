@@ -1,0 +1,18 @@
+I built MartaUp in 2021 as a one-page landing for a web services studio, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the hero slider setup, not with the template's menu, scroll and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Four blocks on the home page: a hero slider with five slides, a services block with three columns, a content block with three rows and a testimonials block.
+- Three page partials of Sass, about 690 lines in total, with BEM class names and 48 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and 33 spacing and size values scale fluidly between a desktop and a smaller value.
+- Repeated text styles are shared through Sass extends, which keeps the column and content partials short.
+- The footer partial is under 50 lines, the header partial about 190 and the home partial about 450.
+- This exercise practised turning a grid into a swipe row with CSS alone, and a fade slider with autoplay.
+
+## Cases
+
+**Hero slider that fades.** The design has five full slides with a title each. I used Swiper with the fade effect and cross-fade, bullet pagination, a 4 second autoplay and a loop, and styled the slide text in the home partial so every slide has the same structure.
+
+**Services columns without wrapping surprises.** Three columns hold an image, a title and a text. I made the row a flex container with a fixed column basis, a gap that scales with the width, and a wrap on the phone breakpoint, so the columns fall into one stack. A decorative shape on the left side is hidden under a custom 1330 px query when it would overlap the content.
+
+**Testimonial cards as a swipe row.** On desktop the three cards sit in a centered grid of fixed width columns. On tablet and below I turned the same grid into a horizontal scroll row, with negative side margins and matching padding so the cards slide edge to edge, with no second markup and no slider library for it.

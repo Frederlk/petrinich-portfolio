@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- The admin app is a thin client of a separate HTTP API. It is Next.js with the App Router. Server components read the session, and client components hold the tables, forms and dialogs.
+- Sign-in is by email link through Supabase Auth, and the app is invite-only. Middleware refreshes the session on every request and sends signed-out visitors to the sign-in page.
+- Every mutation is a server action built with next-safe-action on three levels: open, signed-in and admin-only. Each action has a Zod input schema, and each API response is parsed with Zod. The same schemas serve as the TypeScript types for tables, forms and detail pages.
+- Server actions reach the API through one fetch helper that adds the admin key on the server.
+- Forms use React Hook Form with a Zod resolver and a set of typed field wrappers. The UI is Radix UI and Tailwind CSS, with light and dark themes.
+- Typed environment variables come from T3 Env, and the React Compiler is on. A GitHub Actions workflow runs lint and typecheck on every push.
+- One table of role by resource by action drives the route middleware, the menu and the admin-only action wrapper, and a reporter's list is narrowed to the reporter's own reports.
+
+## Cases
+
+**One table, all state in the URL.** The app has several list screens, and each needs tabs, filters, search, sorting, paging and hidden columns. An admin also wants to reload a filtered view or send it to a colleague. The app has one generic table on TanStack Table that writes every piece of its state into the query string with nuqs. A parser cache on the server reads the same schema, so the first render already matches the link. A new list is a matter of passing columns, tabs and filter definitions.
+
+**A report form with fish and photos.** One trip holds a variable list of fish. Each fish has a species, count, length, weight and an optional photo, and the trip itself carries up to 3 pictures. The API expects one multipart request. The form uses a dynamic field array and an image picker with previews and a cap. The action builds a single body: trip photos as repeated files, the fish data as one JSON field with a photo count per fish, and the fish photos appended in the same order so the API can match them. On edit, existing pictures show with a delete option, and an explicit flag tells the API when none remain.
+
+**Invite with preset defaults.** Reporters are field staff who log many similar trips from the same boat, landing and city. When an admin invites a reporter, the dialog can fix city, boat, landing, trip length and a booking link. They are stored with the user and applied to the report form, where those fields are locked and marked with a padlock. A hover card lists the presets, and a reporter with a booking link gets a button for it. Changing the role later edits the presets, and they are cleared when the user stops being a reporter.

@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The app is local-first. Nothing leaves the machine: the models run on my own graphics card, and the only server is on localhost.
+- The app is split in three. A React interface in a webview, a Python service built with FastAPI that holds the models, and a Rust shell built with Tauri that owns the life of the service.
+- The service loads each model on first use and keeps it on the card for the next run. It runs one inference at a time, because the card is the bottleneck.
+- PyTorch comes from the CUDA index on purpose, so a build can never fall back to a CPU-only wheel without anyone noticing.
+- The interface runs a sequential queue. A cancel stops the loop and aborts the request in flight, and a re-run replaces its result and frees the preview memory.
+- A Claude Code skill runs the upscaler from the command line, through the running service or, without it, with the engine loaded in its own process.
+
+## Cases
+
+**Large images on an 8 GB card, without seams.** A 4x upscale of a big picture does not fit into video memory in one pass, and cutting it into tiles leaves visible lines where the tiles meet. I cut the image into 512 pixel tiles that overlap by 32 pixels and run each tile in half precision. The overlaps are cross-faded with a linear feather mask, and the sum is divided by the accumulated weights. After each image the engine empties the GPU cache, so pictures up to 4096 pixels on the long side go through without seams.
+
+**Transparent edges without dark fringes.** Fully transparent pixels carry garbage colour, usually black, and an upscaler pushes that colour into the soft edges of a sticker or a game token as a dark halo. Before inference I fill the transparent pixels with the nearest real colour by repeated neighbour dilation. The colour image goes through the model first. The alpha matte is upscaled separately through the same model, averaged back to one channel and put back as the alpha. Cut-outs keep clean edges at 4x, and I ran the anime model over a real folder of token art this way.
+
+**One app that owns a Python service.** The interface is web technology and the models need Python and CUDA, but I wanted one program, not two programs and a terminal. The Rust shell starts the service when the window opens, with no console window, and writes its output to a log file. A button opens a live console on that log. When the window closes, the shell kills the whole process tree, because a plain kill left the Python worker holding the port. The shell also finds the server folder by walking up from the executable, since a path fixed at compile time broke when the repository moved.
+
+**Replacing the original without losing it.** Batch upscaling is most useful when the result takes the place of the source, but a drag and drop inside a webview gives no file path, and an overwrite must never destroy the original. I read the native drag-drop event to get real disk paths and moved reading and writing into custom native commands. In overwrite mode the original goes to the Recycle Bin first and the new file is written second, which matters when the source is already WebP and both share one path. The export is lossy WebP at a quality just under the maximum, because the top setting means lossless in the browser and gives files as large as PNG. A result over the WebP size limit is scaled to fit, a file without a known path falls back to a normal download, and a failure on one file does not stop the batch. A folder of pictures turns into sharper files in place, and every original stays recoverable.

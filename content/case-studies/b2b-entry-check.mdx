@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- One Next.js app served three kinds of organization: sellers, buyers and the back office. Route groups kept the areas apart, and a request-level guard sent admins to their own section and kept everyone else out of it.
+- The code was organized by feature, with a data-access layer per entity.
+- Every server action went through a wrapped client built on next-safe-action. Variants covered signed-in users, admins, users with MFA, write access and an active subscription. Arcjet rate limiting and error capture came with them.
+- Prisma on PostgreSQL held the data in 25+ models. Supabase Auth handled sign-in with TOTP multi-factor, and uploaded files went to Supabase Storage.
+- Interface text came from next-intl in German and English, with the language kept in a cookie.
+- Tables used TanStack Table, and table and tab state lived in the URL through nuqs.
+- Two cron jobs ran maintenance: a daily one cleaned expired codes and invitation tokens, and a weekly one updated trusted buyer status.
+
+## Cases
+
+**One wizard for two kinds of company.** Sellers and buyers register with different data, documents and legal forms. They must confirm their email, they may leave halfway, and buyers often arrive from an invitation. I built one sign-up wizard for both roles: account type, personal details, organization and documents. A persisted Zustand store keeps the progress and resets when the role changes. An email code step with rate limiting confirms the address, and buyer organizations get a buyer number. An invitation link prefills email, company and VAT ID. Accepting an invitation creates the auth user and closes the invitation in one transaction.
+
+**One access model for three kinds of organization.** Sellers, buyers and admins share one app, with approval states, deactivation, subscription limits and MFA. An admin must never land in the seller dashboard. I put one cached validation function behind every server action, with options for admin, MFA level, approval, deactivation and subscription. On top of it sits a permission table of 8 roles over 14 resource types. The sign-in flow asks for the second factor when the account has one.
+
+**Admin review of registrations and documents.** Every new company is checked by hand before it can work, and its documents can be approved, rejected or requested again. I built an inspection screen per customer with tabs for personal data, organization and documents. Approving, rejecting, locking, changing the permission level and switching API access each check the admin's rights and send the user an email. Document decisions work the same way, including a request to upload a file again. The admin portal has 10+ pages. It also covers admin accounts and invitations, plans with limits and overage pricing, which sync to Stripe, and a billing view that combines subscriptions with Stripe invoices.

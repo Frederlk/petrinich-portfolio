@@ -1,0 +1,21 @@
+{
+  "education": [
+    {
+      "school": "School of Business and Management Technology of Belarusian State University (SBMT BSU)",
+      "degree": "Bachelor of Marketing",
+      "dates": "2018-2022",
+      "location": "Minsk, Belarus"
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "level": "C1"
+    },
+    {
+      "name": "Russian",
+      "level": "Native"
+    }
+  ],
+  "interests": "Dungeon Master for **500+** Dungeons & Dragons games since 2021: planning, improvising and keeping a group on one goal. I also play guitar."
+}

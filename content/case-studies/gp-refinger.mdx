@@ -1,0 +1,14 @@
+## Patterns and decisions
+
+- The tool is four Python scripts on the standard library. The parser, the report writer and the score writer are all my code, with no third-party program behind them.
+- The work runs in four separate steps: analyse, report, apply, verify. The analysis only reads. A person decides between the report and the apply step.
+- A Guitar Pro score is an archive with an XML score inside. The original file is never opened for writing. The unified result is a new file next to it.
+- Pitch is the invariant. Every step either computes it, preserves it or checks it.
+
+## Cases
+
+**Finding the same riff under different fingerings.** The same riff sits on different strings and frets in different bars, so comparing fret numbers sees two different riffs. I computed the real pitch of every note from the track tuning and the fret, and compared riffs by pitch and rhythm only. As a sanity check, the computed pitch is compared with the pitch stored in the file for every note. The search tries windows from long to short, never crosses a rest, keeps non-overlapping occurrences and skips a window that mostly lies inside a longer repeat. A repeat is reported only when at least two different fingerings exist among its occurrences. On a five-track score of 166 bars this gave 16 divergent riffs on the two guitar tracks.
+
+**Proposing edits for a person to review.** An automatic rewrite of someone's tab is not something to trust blindly, and a fingering that is easy on paper can be wrong on the neck. The target fingering is always one the score already uses, so it is real and playable. Among those, I pick the cheapest: total frets, plus the hand shifts counted twice, plus a penalty for every note from the twelfth fret up. Notes with a hammer-on, pull-off, slide, bend, tap, harmonic or tie are never moved. The report lists each riff with its bars, a table of the competing fingerings per beat and the proposed result. It marks a pick with a warning when it overrides the majority or when a lower open-string option exists. The run proposed 160+ edits, and I struck two riffs from the list as debatable before applying anything.
+
+**Changing a fingering without changing a pitch.** The score stores each note with its string, fret and a stored pitch, and a beat points to its notes by id. Editing a note in place would also change every beat that shares it. So the apply step clones the note under a new id, changes only its string and fret, and repoints the one beat. It stops if a single note is given two different targets. Every other entry of the archive is copied unchanged. The verify step then parses the original and the new file again. It checks that both are well-formed XML, that the beat count is equal, that the pitches match beat by beat and that the stored pitch still equals tuning plus fret. It also prints how many string and fret changes were made, so the result can be compared with the report.

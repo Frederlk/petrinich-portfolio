@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- The dashboard is a Next.js app with 15+ pages: places, cities, neighborhoods, categories, vibes, routes and picks, plus a login. Every page except the login and the home redirect sits behind a session cookie that the proxy checks on each request. The token the admin uses for the API stays on the server.
+- The writes are 30+ server actions built with next-safe-action, plus the image upload route handler.
+- Filters, sort and search on the places list live in the URL with nuqs.
+- The API client is openapi-fetch, typed from the contract. Zod schemas are generated from it. Both come from the live OpenAPI document of the API, so the admin follows the contract.
+- Forms use React Hook Form. Small shared state, such as the place preview sheet, uses Zustand. UI parts come from Base UI and shadcn/ui, and React Compiler handles memoization.
+- Images go through a route handler. Server actions cap the body at 1 MB by default and a route handler has no such cap. The browser compresses each image first. The handler checks the session and forwards the file to the API.
+- The admin is deployed to Railway with a Dockerfile and a health check on the login page.
+
+## Cases
+
+**Editing districts on a map.** Curators had to draw district borders, and a hand-edited JSON field would not work for that. I built the editor on Leaflet with Geoman. A curator draws or reshapes a polygon on the map, and the form sends it to the API. A banner on the dashboard lists boundaries that are missing, invalid, approximate or overlapping. The editor reports overlaps and does not fix them on its own, so the curator decides.
+
+**A grid layout curators can change.** The iOS app shows each city as a grid of zones. The layout had to change without a new app build. I built a tile editor with a canvas, a tile inspector, a live preview tile and undo. A second page assigns neighborhoods to zones and creates new ones. Saving writes the layout rectangles to the database, and the app reads them from the grid endpoint.
+
+**Adding a place without retyping it.** A place has many fields, and Google holds many of them. The new-place wizard starts with a Google search. It maps Google types to the app's categories and fills the form from the result. A manual mode covers places that Google does not know. An existing place can be refreshed from Google later.
+
+**Types from a spec that needs an old compiler.** One of the generators for the API types needs a compiler API that TypeScript 7 removed. A small script redirects that one tool to a TypeScript 6 alias. The rest of the admin stays on the new compiler.

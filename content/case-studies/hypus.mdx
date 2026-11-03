@@ -1,0 +1,33 @@
+## What I analysed
+
+Hypus is a web app for Shopify merchants. The merchant signs in with a Google account, connects a store and goes through a cost setup wizard that collects every component of order cost, so the app can calculate how profitable the store is. The delivered frontend is a TanStack Start app with 8 sections and 20 pages, backed by a separate service.
+
+My work covered the following.
+
+- **Estimate.** I estimated the work.
+- **Code review.** I reviewed the original client code.
+- **Analysis and advisory.** I analysed the product and advised the client.
+- **Development plan.** I wrote the plan the team worked from.
+
+After that I led 2 developers. They built the product and released it. I wrote no code on this project, so this page covers the analysis, the plan and the lead role, not an implementation.
+
+## Risks and recommendations
+
+The delivered product contains three product decisions. The team built them, and each is described here as delivered.
+
+**Rate cards of any size in an AI chat.** Each fulfilment centre keeps its costs in carrier rate cards, often PDF, CSV or spreadsheet files of several megabytes. The merchant had to describe a centre in a conversation, attach those files and see a live summary of the cost model before confirming it. The delivered product is built for large files: it asks the server for signed addresses and the browser sends the files straight to cloud storage. The chat handles both an instant answer and a background job that the client polls. The conversation is saved as soon as it exists, so a reload does not lose it.
+
+**A long setup that can be left and resumed.** The setup spans 8 sections and 20 pages and mixes typed values, imports and AI output. A merchant will not finish that in one sitting. The delivered setup is one versioned document with a defined shape. Each page saves its own slice, a return visit loads the saved document and puts the per-page saves on top, and the sidebar shows progress from the saved step markers. Leaving a page with unsaved edits asks for confirmation, and each page can be reset to its defaults.
+
+**A builder for any custom cost.** Merchants have costs no preset covers: a subscription, a packing fee per item, a percentage of ad spend, a rate that changes with volume, a cost that applies to one country, channel or brand. The model had to express all of them in one structure. The delivered builder is a four-step flow. A cost is fixed or a percentage, each with several bases such as per order, per item, of revenue or of media spend. Either kind can be tiered by revenue, orders, media spend or items. Conditions filter by country, channel or brand and combine with and/or. Each option shows a worked example, and the result lands in the same typed document as everything else.
+
+## Patterns and decisions
+
+The team built these parts. They show how the product works, not my code.
+
+- **Backend behind server functions.** Every call goes through server functions, so the browser never holds the backend address or the token.
+- **Silent session refresh.** Google sign-in is exchanged on the server for a short-lived token, and a middleware refreshes it without interrupting the merchant.
+- **Defaults the merchant can edit.** Shopify platform fees, Shopify Payments fees and VAT rates for 20+ countries start from preset values.
+- **Three ways to supply product cost.** Keep a default, import from Shopify, or generate a spreadsheet template keyed by product type, brand, product ID or variant ID.
+- **Marketing spend by channel.** Each of 10 channels takes data from a spreadsheet link or a manual figure, and 3 of them also through an API connection.
+- **Checks on the upload path.** The team tested the direct upload with Playwright.

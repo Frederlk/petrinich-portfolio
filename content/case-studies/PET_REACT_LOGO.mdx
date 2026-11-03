@@ -1,0 +1,18 @@
+I built LOGO in 2022 as a sports web shop in React, from a given design, with Russian copy. It has a home page, a catalog, a product page and a cart, plus a not-found page. The Sass mixins, the menu script and the dynamic-adapt script come from the earlier starter template. The components, containers, hooks, data and Sass partials are mine. It is the largest of this group by Sass: 13 components, 15 containers, 4 hooks and services, and 22 Sass files of about 100 KB.
+
+## Patterns and decisions
+
+- Five lazy-loaded routes with react-router-dom, including a product route that takes an id, and breadcrumbs generated from a routes list.
+- Shared state through React context: one for the cart list and one for the compare list, passed down from the app component.
+- Catalog logic in one container: sorting by name or price, a choice of items per page, grid and list view, and react-paginate for the pages.
+- Formik and Yup forms in the cart, the sidebar filter and the search bar, with two validation sets for a fast order and a full delivery order.
+- A price range filter built on rc-slider, with the two ends tied to number inputs.
+- Compared with Mozy and Luxtrader, this exercise added shared state, persistence in the browser and a fetch hook, which moved the work from showing data to handling it.
+
+## Cases
+
+**Cart that remembers.** The order list had to survive a page change and a reload. I kept the cart in context, wrote quantity and line totals to local storage from the order lines, and read the stored quantity first when the page opens. A shared quantity control clamps the value between 1 and 100 and strips non-digits, and the same rule serves the product card and the cart line.
+
+**Catalog with sorting and pages.** Products had to be sortable, paged and shown as a grid or a list. I held the sort type, page size, offset and view in state, recalculated the page slice and page count when they change, and gave the pagination its own component with a page-size select next to it.
+
+**A reusable fetch hook.** The footer shows two community widgets with member avatars from an external API. I wrote a fetch hook that tracks waiting, loading and error states and a service on top of it that gets the group and its members, then a small helper picks what to show for each state: spinner, content or error message.

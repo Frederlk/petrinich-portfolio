@@ -1,0 +1,18 @@
+I built CloudBudget in 2021 as a one-page landing for a budget management service, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the slider setup, not with the template's popup, custom select, form and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Six sections in the markup: a main block, an about block with a video, a features block, a tech block, a slider block and a contact block with a form.
+- Four page partials of Sass, about 1,050 lines in total, with BEM class names and 88 media queries across the page stylesheets.
+- Colors, fonts and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- 45 spacing and size values use a fluid mixin that scales between the design width and a minimum width.
+- Feature cards switch between four, two and one column with CSS grid, and hover styles sit inside a hover-capability media query.
+- Compared with a plain one-page exercise, this one adds a Swiper slider that changes its effect by breakpoint, a video popup and a form with a custom select.
+
+## Cases
+
+**Slider that changes its effect.** The focused block shows overlapping cards on desktop and a simple fade on phones. I set up Swiper with Navigation, Keyboard and Fade modules, a fade effect and zero space between slides by default, then switched to the slide effect with a negative gap of 395 pixels from 1110 pixels up, so the cards overlap only where the design has room for it. Keyboard control works only while the slider is in the viewport.
+
+**Video in a popup.** The about block has a thumbnail with a play icon. I made the thumbnail a link tied to a popup by a data attribute, and put a video element with two sources (mp4 and webm) in a separate markup partial that the page includes at the end. The template's popup script opens and closes it, and I wrote the popup look in Sass.
+
+**Contact form with a select.** The form needed a service choice next to the text fields. I wrote a native select with a placeholder option, marked the required fields with data attributes and the error text beside them, and left the replacement of the select and the validation to the template scripts.

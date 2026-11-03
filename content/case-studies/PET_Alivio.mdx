@@ -1,0 +1,17 @@
+I built Alivio in 2021 as a one-page landing site about stress management, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer, common rules and home sections, and the page's video script, not with the template's menu, scroll observer and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Four sections in the markup: a full-screen hero, a works block, a video block and a product block.
+- Four page partials of Sass, about 880 lines in total, with BEM class names and 72 media queries between them.
+- Colors, the font and four breakpoints (desktop, tablet, phone and small phone) are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- Hover styles sit inside a hover-capability media query, so touch screens do not get stuck states.
+- Spacing and font sizes scale fluidly between the desktop width and a breakpoint width through the template's size mixin, 49 calls in total, where Prime One used fixed rem values per breakpoint.
+
+## Cases
+
+**Spacing that scales instead of jumping.** The hero and section paddings in the design are large on desktop and small on a phone. Instead of one fixed value per breakpoint, I gave the mixin a start size, an end size and the width range, for example a top padding that goes from 175 px to 30 px on the way down to the small phone width, so there is no visible jump at a breakpoint.
+
+**Video that starts from its own cover.** The video block shows a cover over the player. I wrote a short script: a click on the cover starts or pauses the video and toggles a playing state on the block, which the styles can react to.
+
+**Reveal on scroll without extra code.** The works and product columns had to appear as the visitor reaches them. I marked 12 blocks with the template's watch attributes, set to fire once, so they animate when they come into view and the page needed no scroll code of my own.

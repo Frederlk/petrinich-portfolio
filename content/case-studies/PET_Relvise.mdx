@@ -1,0 +1,18 @@
+I built Relvise in 2022 as a one-page site for a finance and consultancy company, from a given design. It runs on the same ready Gulp and Webpack starter template as my other pages of that year, and was hosted on Firebase. The page markup, the Sass partials and one small page script are mine; the template's scroll observer, accordion and menu code are not.
+
+## Patterns and decisions
+
+- Eight sections on one page: a hero, services, advantages, practice areas, a who-we-are block with a video and trust items, a subscribe strip, a get-in-touch block and a contact form, plus a footer.
+- About 1,250 lines of Sass in four page partials, with a home partial of 953 lines, BEM names and 104 media queries.
+- A palette of seven color variables and the same four breakpoints, with a desktop-first layout and a hover-capability query around hover styles.
+- Scroll animations come from one Sass mixin I applied twelve times, with each block taking its own start offset, speed and delay.
+- Grids use plain column counts that drop from four to two to one per breakpoint.
+- Compared with the first catering page, this one added entrance animation, a mobile accordion and an embedded video, while sizes stayed fixed per breakpoint.
+
+## Cases
+
+**Hero that loads in sequence.** The headline, the lead text and the buttons had to appear one after another when the page finished loading. I gave each a hidden start state and a 30 px slide, and changed only the transition delay (0.3, 0.5 and 0.8 seconds), triggered by the loaded class on the page.
+
+**Footer that folds on phones.** The footer has five link groups on desktop. Below 480 px I turned them into an accordion by marking the footer with the template's spoller attributes in the markup, with one column open at a time, and styled the header row and arrow in the footer partial.
+
+**Short captions from long text.** The icon items in the trust block had captions of uneven length. I wrote a small page script that cuts any caption longer than 28 characters and adds an ellipsis, so the items kept an even rhythm without changing the markup.

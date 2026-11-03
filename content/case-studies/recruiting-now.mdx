@@ -1,0 +1,21 @@
+## What I analysed
+
+- The product. A candidate pool for six regions of southern Germany. Candidates sign up once, and employers search the pool and contact the candidates.
+- The problem. About 2.3% of visitors finish signup and about 94% never touch a field, because the form sits far down the page. The client measures effective conversion: the signup rate times the share of profiles that are searchable.
+- The live page. I measured it on phone and desktop sizes. The form is about five and a half screens down on a phone, the input text size makes iOS Safari zoom on focus, and registration needs three steps and a password.
+- The existing stack. From the live page I read that it runs on Next.js, Vercel and Supabase, with PostHog and Sentry for monitoring and Resend as a probable email service. The estimate reuses that stack and adds no new vendors.
+- The plan in three stages. Stage one asks for first name, email and postcode only. Stage two follows the email confirmation with eight filter questions, one per screen, tapped rather than typed. Stage three is a profile area that reminders pull candidates into. A profile counts as searchable when stages one and two are complete.
+
+I wrote the estimate, the specification draft, the signup-flow rules and the research notes. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**The sign-in link breaks in another browser.** Many candidates arrive from an ad inside the in-app browser of a social app, then open the confirmation email in a mail app that launches a different browser. A link that depends on the browser that asked for it fails at the exact moment stage two should start. I recommended a 6-digit code in the email as the main method, typed where the candidate started, with a link as the fallback. The link opens on a one-tap page first, so mail scanners cannot use the token up. The flow gets tested on real iPhone and Android devices across the in-app browsers and mail apps.
+
+**The "searchable" rule hides profiles that employers use today.** Once employer search filters on complete fields, every existing incomplete profile drops out of the results. Employers would read a smaller pool as a broken product, and candidates would never learn why contacts stopped. I recommended counting the incomplete profiles before the switch and giving existing ones a 14-day grace period. A banner and an email go out on day 0, a reminder on day 7 and a last call on day 12, and the profile is hidden on day 14. Completing the profile restores visibility at once.
+
+**A/B test measurement under low traffic.** The test needs a visitor count that can be trusted. Analytics tools in Germany see well under half of real visitors because of ad blockers and cookie consent, so using one as the denominator would distort both versions. I recommended an assignment log that the server writes on the first request, one row per assignment with bots excluded. That log is the visitor count, and the analytics tool serves funnel diagnostics only. I also recommended a fixed sample size, a daily check of the split ratio, results read only in full weeks, and fewer but bolder rounds.
+
+I also proposed a quick win ahead of the test: move today's form up the page right away. It becomes the control version, so the test measures what the three stages add and not the form position.

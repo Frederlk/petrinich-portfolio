@@ -1,0 +1,1482 @@
+[
+  {
+    "id": "react",
+    "name": "React",
+    "group": "Core stack",
+    "aliases": ["React 19", "React.js"]
+  },
+  {
+    "id": "next-js",
+    "name": "Next.js",
+    "group": "Core stack",
+    "aliases": ["Next.js (App Router)", "NextJS"]
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "group": "Core stack",
+    "aliases": []
+  },
+  {
+    "id": "tailwind-css",
+    "name": "Tailwind CSS",
+    "group": "Core stack",
+    "aliases": ["Tailwind CSS 4"]
+  },
+  {
+    "id": "claude-code",
+    "name": "Claude Code",
+    "group": "Core stack",
+    "aliases": []
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "group": "Core stack",
+    "aliases": ["Postgres"]
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "group": "Core stack",
+    "aliases": []
+  },
+  {
+    "id": "ag-grid",
+    "name": "AG Grid",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "base-ui",
+    "name": "Base UI",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "bootstrap",
+    "name": "Bootstrap",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "chart-js",
+    "name": "Chart.js",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "count-up",
+    "name": "count-up",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "draft-js",
+    "name": "Draft.js",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "electron",
+    "name": "Electron",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "embla-carousel",
+    "name": "Embla Carousel",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "expo",
+    "name": "Expo",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "fumadocs",
+    "name": "Fumadocs",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "gsap",
+    "name": "GSAP",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "headless-ui",
+    "name": "Headless UI",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "jquery",
+    "name": "jQuery",
+    "group": "Front end",
+    "aliases": ["JQuery"]
+  },
+  {
+    "id": "leaflet",
+    "name": "Leaflet",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "lightgallery",
+    "name": "LightGallery",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "mapbox",
+    "name": "Mapbox",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "masonry",
+    "name": "Masonry",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "material-ui",
+    "name": "Material UI",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "motion",
+    "name": "Motion",
+    "group": "Front end",
+    "aliases": ["Framer Motion"]
+  },
+  {
+    "id": "radix-ui",
+    "name": "Radix UI",
+    "group": "Front end",
+    "aliases": ["Radix"]
+  },
+  {
+    "id": "react-compiler",
+    "name": "React Compiler",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "react-native",
+    "name": "React Native",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "react-three-fiber",
+    "name": "React Three Fiber",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "react-helmet",
+    "name": "react-helmet",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "react-paginate",
+    "name": "react-paginate",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "react-parallax",
+    "name": "react-parallax",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "react-router-dom",
+    "name": "react-router-dom",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "recharts",
+    "name": "Recharts",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "sass",
+    "name": "Sass",
+    "group": "Front end",
+    "aliases": ["SCSS"]
+  },
+  {
+    "id": "shadcn-ui",
+    "name": "shadcn/ui",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "slick",
+    "name": "Slick",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "storybook",
+    "name": "Storybook",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "styled-components",
+    "name": "Styled Components",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "svg-animation",
+    "name": "SVG animation",
+    "group": "Front end",
+    "aliases": ["SMIL"],
+    "listedByOwner": true
+  },
+  {
+    "id": "swiper",
+    "name": "Swiper",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "tanstack-router",
+    "name": "TanStack Router",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "tanstack-start",
+    "name": "TanStack Start",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "tauri",
+    "name": "Tauri",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "three-js",
+    "name": "Three.js",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "tiptap",
+    "name": "Tiptap",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "wouter",
+    "name": "Wouter",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "node-js",
+    "name": "Node.js",
+    "group": "APIs & back end",
+    "aliases": ["NodeJS"]
+  },
+  {
+    "id": "cron-jobs",
+    "name": "Cron jobs",
+    "group": "APIs & back end",
+    "aliases": ["Cron", "Node-cron", "Vercel Cron", "node-cron"]
+  },
+  {
+    "id": "express",
+    "name": "Express",
+    "group": "APIs & back end",
+    "aliases": ["Express.js"]
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "google-maps-platform",
+    "name": "Google Maps",
+    "group": "APIs & back end",
+    "aliases": [
+      "Google Maps Platform (Places API, Geocoding)",
+      "Geocoding API",
+      "Places API"
+    ]
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "hono",
+    "name": "Hono",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "koa",
+    "name": "Koa",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "multer",
+    "name": "Multer",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "nestjs",
+    "name": "NestJS",
+    "group": "APIs & back end",
+    "aliases": ["Nest.js"]
+  },
+  {
+    "id": "openapi",
+    "name": "OpenAPI",
+    "group": "APIs & back end",
+    "aliases": ["REST and OpenAPI (openapi-typescript)"]
+  },
+  {
+    "id": "orpc",
+    "name": "oRPC",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "pg-boss",
+    "name": "pg-boss",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "pino",
+    "name": "Pino",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "rabbitmq",
+    "name": "RabbitMQ",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "rest-apis",
+    "name": "REST APIs",
+    "group": "APIs & back end",
+    "aliases": ["REST", "RESTful API"]
+  },
+  {
+    "id": "signalr",
+    "name": "SignalR",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "socket-io",
+    "name": "Socket.IO",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "telegram-bot-api",
+    "name": "Telegram Bot API",
+    "group": "APIs & back end",
+    "aliases": ["Telegram"]
+  },
+  {
+    "id": "trpc",
+    "name": "tRPC",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "webhooks",
+    "name": "Webhooks",
+    "group": "APIs & back end",
+    "aliases": ["Webhook"]
+  },
+  {
+    "id": "zod-openapi",
+    "name": "Zod OpenAPI",
+    "group": "APIs & back end",
+    "aliases": []
+  },
+  {
+    "id": "algolia",
+    "name": "Algolia",
+    "group": "Data",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "amazon-dynamodb",
+    "name": "Amazon DynamoDB",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "cheerio",
+    "name": "Cheerio",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "convex",
+    "name": "Convex",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "drizzle",
+    "name": "Drizzle",
+    "group": "Data",
+    "aliases": ["Drizzle ORM"]
+  },
+  {
+    "id": "firebase",
+    "name": "Firebase",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "knex",
+    "name": "Knex",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "meilisearch",
+    "name": "Meilisearch",
+    "group": "Data",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "minio",
+    "name": "MinIO",
+    "group": "Data",
+    "aliases": ["MinIO (S3-compatible storage)", "S3-compatible storage"]
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "mongoose",
+    "name": "Mongoose",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "neon",
+    "name": "Neon",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "pgvector",
+    "name": "pgvector",
+    "group": "Data",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "postgresql-rls",
+    "name": "PostgreSQL RLS",
+    "group": "Data",
+    "aliases": ["PostgreSQL Row Level Security", "RLS", "Row Level Security"]
+  },
+  {
+    "id": "prisma",
+    "name": "Prisma",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "puppeteer",
+    "name": "Puppeteer",
+    "group": "Data",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "redis",
+    "name": "Redis",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "supabase",
+    "name": "Supabase",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "typeorm",
+    "name": "TypeORM",
+    "group": "Data",
+    "aliases": []
+  },
+  {
+    "id": "typesense",
+    "name": "Typesense",
+    "group": "Data",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "upstash-redis",
+    "name": "Upstash Redis",
+    "group": "Data",
+    "aliases": ["Upstash Redis and Vector", "Upstash"]
+  },
+  {
+    "id": "upstash-vector",
+    "name": "Upstash Vector",
+    "group": "Data",
+    "aliases": ["Upstash Redis and Vector", "Upstash"]
+  },
+  {
+    "id": "web-scraping",
+    "name": "Web scraping",
+    "group": "Data",
+    "aliases": ["Scrapers", "Scraping"]
+  },
+  {
+    "id": "browser-extensions",
+    "name": "Browser extensions",
+    "group": "Platform & web APIs",
+    "aliases": ["Chrome extensions", "WebExtensions"],
+    "listedByOwner": true
+  },
+  {
+    "id": "canvas-api",
+    "name": "Canvas API",
+    "group": "Platform & web APIs",
+    "aliases": ["Canvas", "HTML Canvas", "Konva"]
+  },
+  {
+    "id": "indexeddb",
+    "name": "IndexedDB",
+    "group": "Platform & web APIs",
+    "aliases": ["idb-keyval"]
+  },
+  {
+    "id": "pwa",
+    "name": "PWA",
+    "group": "Platform & web APIs",
+    "aliases": ["Progressive Web App"]
+  },
+  {
+    "id": "seo",
+    "name": "SEO",
+    "group": "Platform & web APIs",
+    "aliases": [
+      "SEO and structured data (JSON-LD, sitemap, robots)",
+      "JSON-LD",
+      "Sitemap",
+      "Structured data",
+      "robots.txt"
+    ]
+  },
+  {
+    "id": "server-sent-events",
+    "name": "Server-Sent Events",
+    "group": "Platform & web APIs",
+    "aliases": ["EventSource", "SSE"]
+  },
+  {
+    "id": "service-workers",
+    "name": "Service Workers",
+    "group": "Platform & web APIs",
+    "aliases": ["Service Worker", "Serwist", "Workbox"]
+  },
+  {
+    "id": "web-audio-api",
+    "name": "Web Audio API",
+    "group": "Platform & web APIs",
+    "aliases": ["Web Audio"],
+    "listedByOwner": true
+  },
+  {
+    "id": "web-workers",
+    "name": "Web Workers",
+    "group": "Platform & web APIs",
+    "aliases": ["Web Worker"],
+    "listedByOwner": true
+  },
+  {
+    "id": "websockets",
+    "name": "WebSockets",
+    "group": "Platform & web APIs",
+    "aliases": ["WebSocket"]
+  },
+  {
+    "id": "cursor",
+    "name": "Cursor",
+    "group": "AI engineering",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "factory-droid",
+    "name": "Droid (Factory)",
+    "group": "AI engineering",
+    "aliases": ["Factory", "Factory Droid"],
+    "listedByOwner": true
+  },
+  {
+    "id": "gemini-cli",
+    "name": "Gemini CLI",
+    "group": "AI engineering",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "openrouter",
+    "name": "OpenRouter",
+    "group": "AI engineering",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "vercel-ai-sdk",
+    "name": "Vercel AI SDK",
+    "group": "AI engineering",
+    "aliases": ["AI SDK"]
+  },
+  {
+    "id": "openai-api",
+    "name": "OpenAI API",
+    "group": "AI engineering",
+    "aliases": ["OpenAI"]
+  },
+  {
+    "id": "gemini-api",
+    "name": "Gemini API",
+    "group": "AI engineering",
+    "aliases": ["Google Gemini", "Gemini"]
+  },
+  {
+    "id": "mcp",
+    "name": "MCP",
+    "group": "AI engineering",
+    "aliases": ["MCP servers"]
+  },
+  {
+    "id": "claude-api",
+    "name": "Anthropic Claude API",
+    "group": "AI engineering",
+    "aliases": ["Anthropic API"]
+  },
+  {
+    "id": "fal-ai",
+    "name": "fal.ai",
+    "group": "AI engineering",
+    "aliases": []
+  },
+  {
+    "id": "faster-whisper",
+    "name": "faster-whisper",
+    "group": "AI engineering",
+    "aliases": []
+  },
+  {
+    "id": "hugging-face",
+    "name": "Hugging Face",
+    "group": "AI engineering",
+    "aliases": ["HuggingFace"]
+  },
+  {
+    "id": "langfuse",
+    "name": "Langfuse",
+    "group": "AI engineering",
+    "aliases": []
+  },
+  {
+    "id": "pytorch",
+    "name": "PyTorch",
+    "group": "AI engineering",
+    "aliases": ["torch"]
+  },
+  {
+    "id": "real-esrgan",
+    "name": "Real-ESRGAN",
+    "group": "AI engineering",
+    "aliases": []
+  },
+  {
+    "id": "arcjet",
+    "name": "Arcjet",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "aws-cognito",
+    "name": "AWS Cognito",
+    "group": "Auth, payments, email",
+    "aliases": ["AWS (S3, EC2, Cognito)"]
+  },
+  {
+    "id": "better-auth",
+    "name": "Better Auth",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "clerk",
+    "name": "Clerk",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "cloudflare-turnstile",
+    "name": "Cloudflare Turnstile",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "docusign",
+    "name": "DocuSign",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "recaptcha",
+    "name": "Google reCAPTCHA",
+    "group": "Auth, payments, email",
+    "aliases": ["reCAPTCHA"]
+  },
+  {
+    "id": "jwt",
+    "name": "JWT",
+    "group": "Auth, payments, email",
+    "aliases": ["JSON Web Tokens"]
+  },
+  {
+    "id": "msal",
+    "name": "MSAL",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "nextauth",
+    "name": "NextAuth",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "oauth",
+    "name": "OAuth",
+    "group": "Auth, payments, email",
+    "aliases": [
+      "OAuth 2.0 and OpenID Connect",
+      "OAuth 2.0",
+      "OIDC",
+      "OpenID Connect"
+    ]
+  },
+  {
+    "id": "paypal",
+    "name": "PayPal",
+    "group": "Auth, payments, email",
+    "aliases": ["PayPal JS SDK"]
+  },
+  {
+    "id": "resend",
+    "name": "Resend",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "sendgrid",
+    "name": "SendGrid",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "nodemailer",
+    "name": "Nodemailer",
+    "group": "Auth, payments, email",
+    "aliases": ["SMTP (Nodemailer)", "SMTP"]
+  },
+  {
+    "id": "square",
+    "name": "Square",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "supabase-auth",
+    "name": "Supabase Auth",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "twilio",
+    "name": "Twilio",
+    "group": "Auth, payments, email",
+    "aliases": []
+  },
+  {
+    "id": "aws",
+    "name": "AWS",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "aws-amplify",
+    "name": "AWS Amplify",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "aws-ec2",
+    "name": "AWS EC2",
+    "group": "Infrastructure & observability",
+    "aliases": ["AWS (S3, EC2, Cognito)"]
+  },
+  {
+    "id": "aws-s3",
+    "name": "AWS S3",
+    "group": "Infrastructure & observability",
+    "aliases": ["AWS (S3, EC2, Cognito)"]
+  },
+  {
+    "id": "axiom",
+    "name": "Axiom",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "caddy",
+    "name": "Caddy",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "cloudflare-r2",
+    "name": "Cloudflare R2",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "cloudflare-workers",
+    "name": "Cloudflare Workers",
+    "group": "Infrastructure & observability",
+    "aliases": ["Workers"]
+  },
+  {
+    "id": "cloudinary",
+    "name": "Cloudinary",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "core-web-vitals",
+    "name": "Core Web Vitals",
+    "group": "Infrastructure & observability",
+    "aliases": ["Web Vitals"]
+  },
+  {
+    "id": "datadog-rum",
+    "name": "Datadog RUM",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "docker-compose",
+    "name": "Docker Compose",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "github-actions",
+    "name": "GitHub Actions",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "google-analytics",
+    "name": "Google Analytics",
+    "group": "Infrastructure & observability",
+    "aliases": ["Google Analytics and Tag Manager", "GA4", "Google Tag Manager"]
+  },
+  {
+    "id": "google-cloud",
+    "name": "Google Cloud",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "linux-vps",
+    "name": "Linux VPS hosting",
+    "group": "Infrastructure & observability",
+    "aliases": ["VPS"]
+  },
+  {
+    "id": "meta-pixel",
+    "name": "Meta Pixel",
+    "group": "Infrastructure & observability",
+    "aliases": [
+      "Meta Pixel and Conversions API",
+      "Conversions API",
+      "Facebook Pixel"
+    ]
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "group": "Infrastructure & observability",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "nginx",
+    "name": "Nginx",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "opentelemetry",
+    "name": "OpenTelemetry",
+    "group": "Infrastructure & observability",
+    "aliases": ["OTel"]
+  },
+  {
+    "id": "plausible",
+    "name": "Plausible",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "posthog",
+    "name": "PostHog",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "railway",
+    "name": "Railway",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "umami",
+    "name": "Umami",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "vercel-analytics",
+    "name": "Vercel Analytics",
+    "group": "Infrastructure & observability",
+    "aliases": ["Vercel Analytics and Speed Insights", "Speed Insights"]
+  },
+  {
+    "id": "vercel-blob",
+    "name": "Vercel Blob",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "axe-core",
+    "name": "axe-core",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "biome",
+    "name": "Biome",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "dotenvx",
+    "name": "dotenvx",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "eslint",
+    "name": "ESLint",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "husky",
+    "name": "Husky",
+    "group": "Quality & tooling",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "jest",
+    "name": "Jest",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "knip",
+    "name": "Knip",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "lighthouse-ci",
+    "name": "Lighthouse CI",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "oxfmt",
+    "name": "oxfmt",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "oxlint",
+    "name": "oxlint",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "playwright",
+    "name": "Playwright",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "prettier",
+    "name": "Prettier",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "t3-env",
+    "name": "T3 Env",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "ultracite",
+    "name": "Ultracite",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "vitest",
+    "name": "Vitest",
+    "group": "Quality & tooling",
+    "aliases": []
+  },
+  {
+    "id": "bun",
+    "name": "Bun",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "gulp",
+    "name": "Gulp",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "nx",
+    "name": "Nx",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "pnpm",
+    "name": "pnpm",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "turborepo",
+    "name": "Turborepo",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "webpack",
+    "name": "Webpack",
+    "group": "Build tools",
+    "aliases": []
+  },
+  {
+    "id": "builder-io",
+    "name": "Builder.io",
+    "group": "CMS & commerce",
+    "aliases": []
+  },
+  {
+    "id": "payload",
+    "name": "Payload",
+    "group": "CMS & commerce",
+    "aliases": []
+  },
+  {
+    "id": "sanity",
+    "name": "Sanity",
+    "group": "CMS & commerce",
+    "aliases": []
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "group": "CMS & commerce",
+    "aliases": ["Shopify (Hydrogen)"]
+  },
+  {
+    "id": "storyblok",
+    "name": "Storyblok",
+    "group": "CMS & commerce",
+    "aliases": []
+  },
+  {
+    "id": "strapi",
+    "name": "Strapi",
+    "group": "CMS & commerce",
+    "aliases": []
+  },
+  {
+    "id": "axios",
+    "name": "Axios",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "date-fns",
+    "name": "date-fns",
+    "group": "State, forms & data fetching",
+    "aliases": ["Date-fns"]
+  },
+  {
+    "id": "formik",
+    "name": "Formik",
+    "group": "State, forms & data fetching",
+    "aliases": ["formik"]
+  },
+  {
+    "id": "i18next",
+    "name": "i18next",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "next-intl",
+    "name": "next-intl",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "next-safe-action",
+    "name": "next-safe-action",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "nuqs",
+    "name": "nuqs",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "react-hook-form",
+    "name": "React Hook Form",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "redux",
+    "name": "Redux",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "redux-toolkit",
+    "name": "Redux Toolkit",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "tanstack-query",
+    "name": "TanStack Query",
+    "group": "State, forms & data fetching",
+    "aliases": ["React Query"]
+  },
+  {
+    "id": "tanstack-table",
+    "name": "TanStack Table",
+    "group": "State, forms & data fetching",
+    "aliases": ["Table and Virtual"]
+  },
+  {
+    "id": "tanstack-virtual",
+    "name": "TanStack Virtual",
+    "group": "State, forms & data fetching",
+    "aliases": ["Table and Virtual"]
+  },
+  {
+    "id": "yup",
+    "name": "Yup",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "zod",
+    "name": "Zod",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "zustand",
+    "name": "Zustand",
+    "group": "State, forms & data fetching",
+    "aliases": []
+  },
+  {
+    "id": "css",
+    "name": "CSS",
+    "group": "Languages & markup",
+    "aliases": []
+  },
+  {
+    "id": "html",
+    "name": "HTML",
+    "group": "Languages & markup",
+    "aliases": []
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "group": "Languages & markup",
+    "aliases": []
+  },
+  {
+    "id": "mdx",
+    "name": "MDX",
+    "group": "Languages & markup",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "group": "Languages & markup",
+    "aliases": []
+  },
+  {
+    "id": "ffmpeg",
+    "name": "FFmpeg",
+    "group": "Media & real time",
+    "aliases": []
+  },
+  {
+    "id": "hls",
+    "name": "HLS",
+    "group": "Media & real time",
+    "aliases": []
+  },
+  {
+    "id": "mux",
+    "name": "Mux",
+    "group": "Media & real time",
+    "aliases": []
+  },
+  {
+    "id": "onvif",
+    "name": "ONVIF",
+    "group": "Media & real time",
+    "aliases": []
+  },
+  {
+    "id": "sharp",
+    "name": "sharp",
+    "group": "Media & real time",
+    "aliases": []
+  },
+  {
+    "id": "webrtc",
+    "name": "WebRTC",
+    "group": "Media & real time",
+    "aliases": []
+  },
+  {
+    "id": "anchor",
+    "name": "Anchor",
+    "group": "Web3",
+    "aliases": []
+  },
+  {
+    "id": "ethers",
+    "name": "ethers",
+    "group": "Web3",
+    "aliases": []
+  },
+  {
+    "id": "solana",
+    "name": "Solana",
+    "group": "Web3",
+    "aliases": []
+  },
+  {
+    "id": "thirdweb",
+    "name": "Thirdweb",
+    "group": "Web3",
+    "aliases": []
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "group": "Design & collaboration",
+    "aliases": []
+  },
+  {
+    "id": "google-stitch",
+    "name": "Google Stitch",
+    "group": "Design & collaboration",
+    "aliases": ["Stitch"],
+    "listedByOwner": true
+  },
+  {
+    "id": "illustrator",
+    "name": "Illustrator",
+    "group": "Design & collaboration",
+    "aliases": []
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "group": "Design & collaboration",
+    "aliases": []
+  },
+  {
+    "id": "linear",
+    "name": "Linear",
+    "group": "Design & collaboration",
+    "aliases": []
+  },
+  {
+    "id": "pencil",
+    "name": "Pencil",
+    "group": "Design & collaboration",
+    "aliases": ["pen.dev"],
+    "listedByOwner": true
+  },
+  {
+    "id": "photoshop",
+    "name": "Photoshop",
+    "group": "Design & collaboration",
+    "aliases": []
+  },
+  {
+    "id": "vue",
+    "name": "Vue",
+    "group": "Front end",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "nuxt",
+    "name": "Nuxt",
+    "group": "Front end",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "pinia",
+    "name": "Pinia",
+    "group": "State, forms & data fetching",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "lenis",
+    "name": "Lenis",
+    "group": "Front end",
+    "aliases": []
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "cloudflare-tunnel",
+    "name": "Cloudflare Tunnel",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  },
+  {
+    "id": "infisical",
+    "name": "Infisical",
+    "group": "Infrastructure & observability",
+    "aliases": []
+  }
+]

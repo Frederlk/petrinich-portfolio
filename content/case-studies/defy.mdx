@@ -1,0 +1,21 @@
+## What I analysed
+
+- The product. A fashion marketplace on Solana. Designers register, create collections, add products with images, sizes and stock, and mint them as NFTs. Visitors browse designers, collections and products, look at the NFTs a wallet owns and buy NFTs that are listed for sale.
+- The reference build. The materials were a working build in three pieces: a Next.js front end, a separate Express API on MongoDB, and the client side of an Anchor program that runs the marketplace. It was an early prototype, and the program itself was not part of the materials.
+- How the data moves. The catalogue of collections, products and sizes sits in the database. Images and metadata go to AWS S3. Ownership, price and sale status sit on the chain, and the browser talks to the program directly through a wallet.
+- The marketplace program. It has three actions. A seller lists an NFT and the program takes it into a vault, a seller removes a listing, and a buyer pays in a stable token and receives the NFT from the vault.
+- The accounts. Designers sign in with an email and a password, and the wallet is an optional field on the profile. About thirty routes on the API cover the public pages and the studio.
+
+I made the estimate, identified the risks and gave the technology advice. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**Two records of the same sale.** A listing exists on the chain and also as a row in the database, and a product carries both a database id and a token address. If the two disagree, a shopper sees an item that cannot be bought, or buys one the shop does not show. I recommended treating the chain as the source of truth for ownership, price and sale status, and the database as a search and display index that is rebuilt from chain events. The estimate therefore includes an indexer that follows the list, remove and buy events, instead of two writes from the page.
+
+**A program that holds money and goods.** The marketplace program takes custody of every listed NFT and moves a payment token between wallets. A fashion brand cannot ship a store on a program nobody has reviewed, and the program source was not in the materials, so its size could not be judged. I split the estimate into the web application and the on-chain program. An independent review of the program and a trial on a test network come before any date on the main network. The payment token, the fee model and the listing rules are fixed in writing first.
+
+**Designers are accounts, buyers are wallets.** A designer signs in with a password, while a buyer acts only through a wallet, and the wallet is only an optional profile field and is not linked to a proven address. I recommended making the wallet the identity. The user signs in by signing a message, the designer profile is linked to the proven address, and a password route stays only as an optional recovery. This also takes the password store out of the scope.
+
+One question sits under all three: whether an NFT here is a digital collectible or a claim on a physical garment. The data model has sizes and stock, but a purchase on the chain moves a single token, so I asked for that to be decided before stock and shipping were sized.

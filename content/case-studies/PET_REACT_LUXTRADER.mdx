@@ -1,0 +1,20 @@
+I built Luxtrader in 2022 as a one-page React landing for a luxury auction, from a given design, with Russian copy. It was hosted on Vercel. The Sass mixins, the menu script and the dynamic-adapt script come from the earlier starter template. The containers, the timer, the hook, the data and the Sass partials are mine.
+
+The page has a hero slider, a lots slider, categories, services, a quote, and a news and events block with a subscribe form. I counted 8 containers, 1 shared component, 1 custom hook and 12 Sass files of about 45 KB, with a 21 KB home stylesheet.
+
+## Patterns and decisions
+
+- Every block is a container component that maps over a constants module, so lots, categories, news and menu items are plain data.
+- Two Swiper sliders, the hero and the lots, both looped with keyboard control and custom arrows; the lots slider shows one, two or three slides by width.
+- date-fns gives the countdown difference and formats the news dates; the only hand-written date math splits seconds into days, hours and minutes.
+- Formik and Yup validate the subscribe field and show the error under it.
+- Layout is desktop-first Sass with BEM names and breakpoint variables: 32 media queries in the home stylesheet alone.
+- Compared with the Mozy exercise, this one stayed on one page and went deeper into interactivity: timers, sliders and a document-level event hook.
+
+## Cases
+
+**Countdown on every lot.** Each lot card needed the time left until its deadline. I wrote a timer component that takes a date, asks date-fns for the difference in seconds, splits it into days, hours, minutes and seconds, and ticks once a second. The lots carry their own deadlines in the data.
+
+**Closing the user menu from anywhere.** The header has a user badge that opens a menu, and a click elsewhere has to close it. I wrote a small hook that attaches a window listener once, keeps the latest handler in a ref and removes the listener on unmount. The header handler opens the menu on the badge and closes it on any click outside the menu.
+
+**Slider arrows that wait.** The hero slider has a loading ring between the arrows that animates on each change. I kept two pieces of state: one switches the ring class on, the other disables both arrows for one second, so the animation matches the slide speed of 1000 ms and quick double clicks do not skip slides.

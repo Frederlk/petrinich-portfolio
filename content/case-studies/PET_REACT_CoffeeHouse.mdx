@@ -1,0 +1,18 @@
+I built Coffee House in 2022 as a small React site for a coffee shop, with placeholder text and six coffee products. It has a home page, a catalog page, a text page and a product page, and it was a short exercise in routing and in filtering data in state.
+
+## Patterns and decisions
+
+- Four pages and a not-found page, loaded lazily behind a spinner, built from 6 shared components and a header and footer.
+- A single data file holds the six products, and every card, the best-of list and the product page read from it.
+- Four Sass partials, about 660 lines in total, with BEM class names, 31 media queries and four breakpoint variables; the common partial uses the template's fluid-value mixin 18 times.
+- Parallax backgrounds on the home page come from a React parallax component with a different strength for each block.
+- Each page sets its own title and description through react-helmet.
+- Compared with the Gulp pages, this exercise moved from one long document to routes, components and state.
+
+## Cases
+
+**Search and filter in the catalog.** The catalog keeps two pieces of state, the active country and the search text. The country filter narrows the list first, and the title search narrows the result of it, so the two controls work together. The filter bar is a prop of the same catalog component, so one page can show the plain card grid and another the same grid with controls.
+
+**One product page for six products.** The product route takes an id from the address. The page finds the matching item in the data, shows the image, country, description and price, and sets the page title from the product name. The cards link to it with the same id, so adding a product needs only a new record in the data file.
+
+**Full-height screens on phones.** The first block must fill the screen, which on phones breaks because of the moving address bar. I added the template's full-height helper and a data attribute on the blocks that need it, and ran it in an effect at the app level.

@@ -1,0 +1,18 @@
+I built Mavic in 2021 as a one-page landing for the Mavic 2 Pro drone, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer, common blocks and home sections, the slider setup and the parallax call, not with the template's accordion, scroll and full-screen scripts.
+
+## Patterns and decisions
+
+- Five full-screen sections in the markup: a home block, a "what" block with a slider, an advantages block, an info block and a questions block, about 455 lines of markup.
+- Four page partials of Sass, about 1,440 lines in total, with BEM class names and 117 media queries across the page stylesheets.
+- Colors, fonts and four breakpoints are variables at the top of the main stylesheet, and 29 spacing and size values use a fluid mixin.
+- Four keyframe animations draw SVG lines that connect parts of the page, and the lines are hidden on narrower screens.
+- A parallax library moves the section images, and a header menu moves between containers on a tablet breakpoint through the template's attribute.
+- Compared with the Woodies and CloudBudget landings, this one adds full-screen sections, parallax and animated SVG lines.
+
+## Cases
+
+**Lines that draw between blocks.** The design has thin decorative lines that connect parts of the page. I placed each SVG absolutely, set its dash length and offset in Sass, and animated the offset with keyframes that run once and stay in the final state. The lines have different start and end offsets, so each one finishes at its own point, and a media query hides them on narrow screens.
+
+**Questions as an accordion.** The questions block needed one open answer at a time. I wrote the list markup with the template's accordion attributes, including the one-open setting, and styled the open state in Sass. The block also carries the watcher attributes, so it appears when scrolled into view.
+
+**Slider that follows its content height.** The "what" block has a fade slider with arrows. I set Swiper to Navigation and Fade with automatic height, so the block takes the height of the active slide, and built the arrow selectors from the block's own class.

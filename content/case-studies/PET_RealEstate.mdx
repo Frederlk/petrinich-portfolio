@@ -1,0 +1,18 @@
+I built RealEstate in 2021 as a two-page site for real estate services, from a given design: a home page and a listing page. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer, home and listing pages, and the page scripts, not with the template's menu, form and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Two HTML pages: a home page with a full-screen hero and five more blocks, and a listing page with a gallery, details, a description and a side form.
+- Four page partials of Sass, about 1,490 lines in total, with BEM class names and 86 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and 56 spacing and size values scale fluidly between a desktop and a smaller value.
+- Hover styles sit inside ten hover-capability media queries, and a few page scripts toggle the same blocks by click on touch devices.
+- Two Swiper sliders, each set up for its own markup: a fade slider in the listing gallery, and a similar listings row with one slide per view on small phones, two from 480 px and three from 768 px.
+- It is the only landing in this group with a second page, so it practised sharing the header, footer and styles between pages.
+
+## Cases
+
+**Slider whose dots are thumbnails.** The listing page has a fade slider with pagination bullets. I wrote a short script that reads the image of every slide and sets it as the background of the matching bullet, so the dots became a row of small previews with no extra markup.
+
+**Side form that moves.** The listing page has a request form beside the description on desktop. I marked the form's container for the template's markup mover, so it drops below the content on the tablet breakpoint, and marked the name, phone and email fields as required in the markup so the template's validation reads the rules from the page.
+
+**Dropdown and cards by click.** On the home page the filter categories open a submenu by hover on desktop. A small script toggles an active class on click for touch devices only, and the feedback cards use the same idea to show their text.

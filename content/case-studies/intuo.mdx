@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- I built about half of the project, with 2 other developers. The product is the front end of a retrieval-style chat assistant, called Sirio in the interface. A separate back-end API answers the questions, and the interface talks to it through eight calls.
+- The interface is Next.js with the App Router, React and TypeScript, with Tailwind CSS and Radix UI components in the shadcn/ui style. One optional catch-all route serves both a new chat and an open conversation, so every conversation has its own address.
+- Server state lives in TanStack Query. Query definitions for the conversation list and for the messages of each conversation are shared between components, and failed requests retry with a growing delay.
+- Responses from the back end are parsed with Zod before the interface uses them, including the events of the answer stream.
+- Forms use React Hook Form with a small wrapper that plugs a Zod schema in as the resolver. The prompt box and the rename dialog both use it.
+- Answers and source texts render as Markdown with highlighted code blocks. Copying an answer and saving it as a text file are one click each.
+- ESLint and Prettier are set up, and the package manager is pnpm.
+
+## Cases
+
+**Streamed answers kept in the query cache.** An answer arrives in chunks, and the message history, the sidebar and the answer card all had to agree while it grew. The cached message list is the single source, with no separate stream state. On send, the question goes into the cached message list at once as an optimistic message with an empty answer, and the card shows a loader. Each chunk is appended to the last message with an Immer update. When the stream ends, the list is invalidated and reloaded, so the stored answer replaces the streamed one. The flow has one source of truth, and a Zod union separates answer text from metadata in the events.
+
+**The first question creates and names the conversation.** There is no create-chat step, the user only types. When the address holds no conversation, the submit handler first creates one, named after the question. It then moves the address to the new conversation, refreshes the sidebar list and only then sends the question to the stream. The sidebar shows the named conversation immediately, the address can be shared or reloaded, and every conversation gets a readable name without extra input.
+
+**Cited sources next to the original page.** An answer from documents is trusted only when the reader can see where it came from. Each answer opens a side sheet with one collapsible card per source: a cover image, the source name and the source text as Markdown. The cover images load through their own query keyed by the image path, so a source that repeats is fetched once. A dialog on each card shows the full original page.
+
+**Filters that travel with the question.** The user narrows the search by year, sentiment, topic, sub-topic and stakeholder group before asking, 24 options in all. The form state comes from one list of filter groups and its default values are generated from that list, so a new group is one more entry. Each group is a popover with checkboxes and a live count in its button label. On submit, the checked options become a map of group to selected values and go out with the question.

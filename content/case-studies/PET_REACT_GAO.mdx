@@ -1,0 +1,18 @@
+I built GAO in 2022 as a React and TypeScript registration flow: a create-account page that leads to a five-step form, hosted on Firebase. It is the first project in this group written in TypeScript and with global state, and I wrote the components, hooks, store and styles myself.
+
+## Patterns and decisions
+
+- Three routes with lazy-loaded pages (home, registration and a not-found page), and a scroll-to-top reset on every route change.
+- Five steps (hub, objectives, profile, interests, about) defined once as data and rendered into both the form and the progress bar.
+- Redux Toolkit holds the current step and the submitted user, and its data-fetching layer reads the option lists from Firebase.
+- Formik runs the form and Yup the rules: one required hub, one to three objectives, one to ten interests, name length limits and a URL pattern for social links.
+- Seven custom hooks, among them a debounce, a click-outside and a typed Redux pair, and Sass page styles in three partials with 32 media queries.
+- Compared with my Gulp pages, this project added a typed component tree, routing, shared state and a real backend for data and file upload.
+
+## Cases
+
+**One form across five screens.** The form had to validate as a whole while showing one step at a time. I put the step list in a shared data module, kept the step index in a Redux slice, and mounted every step inside one Formik form with a shared context for values and errors, so the Back and Next buttons only change the index and the progress line width.
+
+**Options from Firebase, not from code.** Hubs, objectives and interests are many and may change. I stored them as Firestore collections and wrapped them in one query endpoint that takes a collection name and returns the documents, so each step asks for its list and shows a spinner until it arrives.
+
+**Search with a delay.** The hub step offers popular cities as radio buttons and a search for the rest. I debounced the typed text with a custom hook, filtered the list on the delayed value, and let a chosen non-popular hub appear as a new radio option next to the popular ones. The profile step uploads the chosen photo to Firebase Storage under a unique name and stores the returned link in the form.

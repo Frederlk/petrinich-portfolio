@@ -1,0 +1,18 @@
+I built Cappadocia in 2021 as a one-page landing for a travel tour, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the slider setup, not with the template's menu, form, scroll, gallery and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Six sections in the markup: a full-screen hero, a story block with a slider, the trip, the hotel with a photo gallery, the price and a registration block with a form.
+- Three page partials of Sass, about 880 lines in total, with BEM class names and 58 media queries between them.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and 46 spacing and size values scale fluidly between a desktop and a smaller value.
+- Layout mixes flex and CSS grid, with column widths written as percentages of the 1200 px container, and repeated text styles shared through 11 Sass extends.
+- Two Swiper sliders with arrows and keyboard control, one for the story and one for the trip.
+- LightGallery, which Binary already used, came with its own Sass partials, and the template's gallery module starts it from an attribute.
+
+## Cases
+
+**Trip slider that changes its place.** The trip slider has a different place in the layout on tablet and below. I marked it for the template's markup mover with the tablet breakpoint, so one block of markup serves both layouts, and set it up as a Swiper with arrows, keyboard control, a loop and auto height.
+
+**Photo gallery from a data attribute.** The hotel photos open in a lightbox. I marked the hotel photo block with the template's gallery attribute, which makes the template's gallery module start LightGallery on it, so a second gallery would need only the same attribute. The gallery styles came in as their own Sass partials next to the page ones.
+
+**Two columns that keep the design ratio.** The price block has a list of what is included on one side and a second column on the other. I set the grid columns as 530 and 370 parts of the 1200 px container, so the ratio from the design holds on any desktop width, then switched to two equal columns on the tablet breakpoint and to one column at 630 px. The registration block below it is a two-column grid on desktop with an image beside the form, and its form fields carry required and error attributes in the markup for the template validation.

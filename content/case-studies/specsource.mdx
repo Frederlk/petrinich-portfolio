@@ -1,0 +1,20 @@
+## What I analysed
+
+- The product. A large, mature SaaS that thousands of interior designers, enterprise-level firms among them, use to specify products for their projects. It builds specification sheets, schedules, budgets and purchase orders.
+- The existing application. I went through the client's code and checked it for risk. The stack was React, TypeScript and Tailwind CSS, with its own translation layer. The client had its own development team, so the estimate was written for that team to build from.
+- The engagement. A redesign of the front end only, carried out inside the running application, plus a new admin panel. The back end, the API, the data layer, the global state and the product logic stayed out of scope.
+- The pages. The project list, the specification schedule with grouping, column control and bulk actions, a quick view panel, the copy project flow, project revisions, project configuration, project info, the budget builder and a dashboard with widgets.
+- The admin panel. About forty sections, from offices, users and address lists to libraries, catalog categories, purchase order settings, a report builder and an activity log. The first list-and-form sections are estimated in full and the later ones as reuse of them.
+- The estimate documents. Three of them: the main redesign, the admin panel, and a third version covering the dashboard and a room types feature. Each is a task list per feature with a risk buffer. I also helped create the project documents the work needed.
+
+I did the estimation, the risk checking and the analysis of the existing code, and I helped find the risks in it. The client's own team was to build it, so I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**A redesign over mixed styling.** The existing application carries older styles beside newer ones, so every page estimate had to include room to clean up before the new look could be applied. Without that, each page would have been priced too low. I put a shared component kit first and made every page estimate reuse it, with room for cleanup on each page. The new layout wraps the old routes and sits behind a switch, so old and new screens run side by side and the switch can be turned off if something goes wrong. I also asked whether dependencies may be updated and new ones added.
+
+**Tight coupling to the browser extension.** The web application and the extension that captures catalog items from manufacturer sites depend on each other. A change to the interface that looks safe can break capture. I recommended validating every change against the extension, treating it as a regression area in testing and leaving product behaviour alone unless a change is asked for.
+
+**Slowness that a cleaner interface makes visible.** A redesign draws attention to slow responses, but the back end is out of scope. I kept the performance work on the front end, with loading states, skeletons and optimistic updates where they are safe, and asked the client to confirm that boundary in writing. Two smaller points followed. The existing admin screens open as modals, and I asked whether the new admin should move to its own routes with browser history or keep the modals, because the answer changes the estimate. I also recommended building every screen with translation keys from the start and testing it with long strings.

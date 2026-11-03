@@ -1,0 +1,19 @@
+## What I analysed
+
+- The product. A web platform for buying an ERC-20 style token. A buyer registers, logs in, passes identity verification, then pays either with a connected crypto wallet or by bank transfer with an uploaded confirmation. An operator approves verification and confirms bank transfers.
+- The reference build. The materials held a small working build: a React and Vite front end with nine routes, an Express back end with a MongoDB database, an embedded identity verification widget and the interface of the token contract. It showed the scope clearly, though it came with no brief and no estimate.
+- The wallet path. The home page connects a wallet through Thirdweb, lets the buyer pick a currency and an amount, shows how many tokens that buys and sends the payment. A back end route then sends the tokens to the buyer.
+- The bank path. A second tab collects the transfer details and a confirmation file. The back end stores the record as pending, completed or failed, and an operator route marks it completed.
+- The token contract. The interface covers minting, burning, a blacklist, an airdrop, signed approvals and a treasury wallet. The contract itself was not part of the materials.
+
+I made the estimate, identified the risks and gave the technology advice. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**Two payment paths that must end in one order record.** A wallet payment is confirmed on the chain. A bank transfer is confirmed by a person reading an uploaded file. Both end with tokens in the buyer's wallet. I recommended one order with the same statuses for both paths: created, paid, verified, delivered. The wallet path is verified on the chain from the transaction hash. The bank path is queued for an operator and delivered on approval. I counted the operator screen, with a list, a file view, approve and reject, as real scope, because the reference had only the routes behind it.
+
+**Identity verification as a gate before purchase and release.** The reference has an embedded verification widget and an operator approval flag. I recommended that the provider's result, by webhook or status check, sets the approval, and that both purchase and token release stay blocked until it is set. An audit trail records who approved what. The choice of provider went into the estimate as a question for the client.
+
+**Foundations before features.** I put one foundation item ahead of the feature work. Accounts get separate buyer and operator roles, and the bank confirmation files move to private cloud storage, which the notes of the build already asked for.

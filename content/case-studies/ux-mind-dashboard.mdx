@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- I built the whole app alone: a small internal admin tool for the studio, behind a login, that reports tracked time and keeps a registry of the studio's own projects.
+- It is Next.js with the App Router and TypeScript. Pages are async server components that fetch directly, and only the interactive pieces (tables, calendar, form) run in the browser.
+- Clerk guards every route. Prisma on MySQL stores the registry and the token data, with relation mode on, so the database holds no foreign keys.
+- Zod parses every answer from the time tracker and the form input. The same schema shape runs in the browser form and in the server action, and React Hook Form and next-safe-action connect the two.
+- One typed table component on TanStack Table serves four different lists. Each list is a column definition and a few lines, with shared paging and an empty state.
+- Reads from the time tracker use Next fetch revalidation, short for a single project and one hour for lists, members and activities.
+
+## Cases
+
+**A third-party OAuth token that stays alive on the server.** The time tracker API needs a short-lived access token that is renewed from a refresh token. The renewed pair has to survive restarts and serverless instances, and a rotated refresh token must never be lost. I kept one row in the database with both tokens and the expiry, which I read from the decoded token. Before every request the client loads that row, creating it from configuration on first use. It compares the expiry with the clock, refreshes through the token endpoint when the time has passed, and saves the new pair back. Pages call the API with no manual token handling at all.
+
+**A month of activity from an API that allows one week.** The API refuses ranges longer than one week and returns results in pages, but the dashboard has to show any period a person picks. When a range is longer than seven days, the client cuts it into week-long intervals and fetches them in parallel. Inside each interval it follows the cursor until the cursor ends, then merges everything. The same method serves organization-wide and single-project queries. A range picked on the calendar comes back as one total.
+
+**A server-rendered report driven by a calendar.** A time report needs a period picker, and a client-side fetch layer would have duplicated the data code. I made the calendar do one thing: write the start and end dates into the URL inside a transition, with the end moved forward by a day so the last day counts. The server page reads those dates, calls the client and renders the total and the tables, while a spinner shows during the transition. Report links can be shared, there is no data layer in the browser, and fetching happens in one place. The total shows in whole hours, and a breakdown table groups the raw activity rows, sums the seconds and joins names from the member list.
+
+**A registry of the studio's own projects.** A studio needed one place to look up its own projects and open their tracked time. I added a small own table with a unique name and optional, indexed ids from the outside tools, with list, add, edit and detail pages. One form component serves both add and edit. It validates on blur and keeps the submit button off until the form is valid and changed. The detail page takes the time tracker id and pulls live data for that project: the tracked total and the breakdown table for the chosen period. When the id points to nothing, the page says so instead of showing an empty report.

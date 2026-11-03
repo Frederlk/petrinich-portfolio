@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- There is no REST or RPC layer. Every read and write that needs the server is a Server Action built with next-safe-action. One action kind serves open calls, and another loads the Supabase user and puts it in the context for signed-in ones.
+- Sign-in is a phone number and a one-time code through Supabase Auth. Sign-in never creates a user, so an unknown phone cannot register by signing in. A middleware refreshes the session and sends anonymous visitors from the profile and cart pages back to the home page.
+- Each vehicle stores four coverage counters, computed once at import. The list and the detail page never scan the JSON of functions.
+- The cart line is a product row with a status of awaiting payment or paid. Adding a vehicle already in the cart updates the open line, and every cart mutation filters by the user id from the session.
+- Stripe line items are built from the price in the database. Card and PayPal checkouts both end in the same two tables, so order history reads one source.
+- Vehicle pictures are found by file name in one Google Drive folder. When nothing matches, the UI falls back to a placeholder.
+
+## Cases
+
+**One fulfilment for the webhook and the redirect page.** Stripe sends a webhook, and the buyer also lands on the success page. Both finish the same payment, and a naive handler would mark the products twice. I wrote one fulfilment function. It loads the session from Stripe and refuses an unpaid one. Then it looks for a checkout row whose primary key is the Stripe session id. If the row exists, it returns without writing. If not, it creates the row, connects the cart products and marks them paid. The webhook checks the Stripe signature. The success page calls the same function with the webhook flag off, because it needs the products back to show them. Whoever arrives second writes nothing.
+
+**An xlsx import in the browser, in 300-row chunks.** The catalogue arrives as one vendor report. It has a row per vehicle and a column per diagnostic function, which is too much for one Server Action call. The browser parses the report sheet with xlsx and reads the headers from row 2. It maps the cell codes 1, 2, 3 and 99 to four confidence levels and counts each level per vehicle. Then it sends 300 vehicles per call. The first call clears the table, and the last one revalidates the home page. The dialog shows the upload percentage while it runs. The server never sees the whole file.
+
+**A URL-state catalogue that the wishlist page reuses.** The catalogue had to be shareable and server-rendered on the first load, and it had to load more on scroll. The filters are nuqs parsers that update the URL and re-render on the server, and a server search-params cache feeds the page. The client runs an infinite query and takes the next cursor from a Server Action, 16 vehicles per page. A filtered list is a link anyone can open. The wishlist page needed the same list limited to one wishlist. I did not write a second one. I pass the wishlist id into the filter of the same query and render the same component.

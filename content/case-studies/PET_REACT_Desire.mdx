@@ -1,0 +1,18 @@
+I built Desire in 2022 as a multi-page furniture store site in React, from a given design. The Sass structure and the menu, scroll and adaptive-markup helpers came over from the starter I used on the earlier landings, so I credit myself with the components, the routing, the state, the forms and the page styles, not with those helpers.
+
+## Patterns and decisions
+
+- Six pages behind react-router-dom: home, about, blog, gallery, contact and a not-found page. The blog page also serves single articles from a nested route.
+- Page code is split into 6 shared components, 16 page containers and 6 page components, and every page loads lazily behind a loading spinner.
+- Four Formik forms with Yup rules: the footer subscribe, the contact form, the blog search and the article comments.
+- One custom hook wraps window event listeners with a stable callback; other effects handle scroll-to-top on a route change, in-view animation and video play state.
+- The styles are Sass partials per page, about 120 media queries in seven partials, on the same variables and four breakpoints as the landings.
+- Compared with Mozy and John, this exercise added a nested article route, router link state that pre-filters the blog, a recursive comment tree and a lightbox refreshed after filtering.
+
+## Cases
+
+**Blog with filters, pagination and state in the router.** The blog list filters by category, tag and a search text, and shows three articles per page with react-paginate. A click on a tag or category anywhere passes its value through the router link state, so the blog page opens already filtered. A filter change resets the page offset, and an empty result shows a reset button.
+
+**Comments with replies.** The single article lists comments and nested replies, rendered by a component that calls itself. The reply button focuses the form and marks the target, and a click outside clears it. The form validates with Yup, and the name and email can be remembered in local storage for the next comment.
+
+**Gallery filter that refreshes the lightbox.** The gallery page and the short gallery on the home page share one component. A tag button filters the pictures, and I refresh LightGallery after each filter change, so the lightbox always matches the visible pictures. Breadcrumbs for every page come from one route list.

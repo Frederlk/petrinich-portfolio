@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- The server is Python on the standard library only. A threading HTTP server serves the page, streams the scan, answers audio requests and runs the trim. There is no framework and no installed package.
+- FFmpeg does the audio work: silence detection, decoding for the waveform, and the cut with fades. My code adds the decision rules, the file safety and the whole interface.
+- The interface is plain JavaScript, HTML and CSS with a Canvas API waveform and no build step.
+- Each side of a track is judged on its own, so a track can be flagged for a quiet start, a quiet end, both, or neither.
+- Nothing is deleted. Every edit keeps the original beside the new file.
+
+## Cases
+
+**Silence that is not quite silent.** The tracks have long ambient intros and outros, and a quiet stretch is rarely empty. A rare drum hit inside a long lull breaks a strict silence test. FFmpeg finds the quiet stretches, then I merge any two that are separated by a loud burst of 2 seconds or less. A track is flagged only when the merged stretch lasts at least 4 seconds and begins at the start or reaches the end, within half a second. The result is one suggested cut point per side.
+
+**Reviewing each cut before it is applied.** A suggestion is a guess, so every track shows its waveform before anything changes. The waveform is a mono copy of the audio reduced to about 300 bars, because more bars looked like a solid block at normal window widths. The part to be cut is tinted, and each cut point is a handle I can drag, with a live time label. The handles cannot cross. Where the tool found nothing on a side, a button adds a cut 4 seconds from the edge, and a cross removes one. A click on the waveform plays from that point, so I can listen to the exact spot. Flagged tracks come first and are ticked, clean tracks come last and are not, and nothing is hidden. I can trim one track or every ticked track in a row.
+
+**An edit that cannot lose a file.** Trimming overwrites music I care about, so the original is renamed with a visible prefix instead of deleted. The new file takes the old name, with a 1.5 second fade in and fade out so playlist transitions never click. A second trim of the same track is refused, so the first original is never overwritten. Windows briefly locks files while a scanner or a just-closed player lets go, so the rename is retried five times before the tool names the likely cause. The page releases its own audio element before a trim for the same reason. If FFmpeg fails, the rename is rolled back and the track stays as it was.
+
+**A small server that behaves like a real one.** Analysing a folder takes a while, and I did not want a blank page. The scan answers with newline-delimited JSON in chunked encoding that I wrote by hand: first the track count, then one line per track as its analysis finishes, with four analyses running at once because each one mostly waits on FFmpeg. The page draws each row on arrival and sorts once the stream ends. The audio element needs byte-range answers before it reports a duration or allows seeking, so the server handles those itself.

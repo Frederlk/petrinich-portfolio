@@ -1,0 +1,26 @@
+I built GoCorona in 2022 as a one-page landing site for a concept COVID-19 healthcare app. It is a small personal project with no client, and the statistics on the page are placeholder copy. The page was hosted on Firebase and used a ready build template.
+
+## What I built
+
+- One page: header with a burger menu, a hero, app promo, statistics, an expert video and three feature cards, then a footer with app store badges.
+- Layout partials for the head, header, footer and scripts, included into the page at build time.
+- About 38 KB of Sass, split into base, common, header, footer and home partials, with BEM class names.
+- Hosting on Firebase.
+
+The page sits on a ready Gulp and Webpack starter template. The scroll observer and the menu script come from that template.
+
+## Patterns and decisions
+
+- Colors, three breakpoints and the container width live as Sass variables in the main stylesheet.
+- The layout is desktop-first, with max-width media queries on the three breakpoints.
+- Hover styles are wrapped in a hover-capability media query.
+- Images are served as WebP where the browser supports it.
+- The page has no forms, slider or tests.
+
+## Cases
+
+Scroll reveal without a library. Each block had to animate as it entered the viewport, and I wanted the timing in the stylesheet. The template toggles a class through an IntersectionObserver. I used its Sass mixin for that in the header and home styles, with a hidden start state, a 30 px slide and staggered delays of 0, 0.3 and 0.6 seconds.
+
+Fluid sizing from 320 px up. One design had to scale from phone to desktop. I used the template's adaptive-value mixin, which emits clamp() values with a calc() fallback, plus the em-based breakpoints and a 16:9 wrapper for the YouTube embed.
+
+Menu without layout shift. When the off-canvas menu opens, the scrollbar disappears and the page jumps. The template's body lock pads the body by the scrollbar width and sets a lock class, while a menu-open class drives the panel in the header styles.

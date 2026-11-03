@@ -1,0 +1,20 @@
+I built Binary in 2021 as a landing page for a design services studio, from a given design. The page was hosted on Firebase and sits on the same ready Gulp and Webpack starter template as the two pages before it. The build setup, the mixins, the form helpers and the scroll scripts come from that template. The page markup, the Sass partials and the page's own scripts are mine.
+
+The page has five sections: a full-height main block with a scroll arrow, an about block, a portfolio with six images, a partners block and a contact form.
+
+## Patterns and decisions
+
+- About 25 KB of Sass in eleven files, plus the LightGallery style files in a separate folder, with BEM class names.
+- Colors, the container width and four breakpoints live as Sass variables in the main stylesheet.
+- The layout is desktop-first: 26 media queries, and the adaptive-value mixin is used 32 times for fluid sizing.
+- The full-height main block also reacts to short screens, with a media query on height next to the width one.
+- Portfolio images open in LightGallery, started from a data attribute on the list so the markup stays plain.
+- Compared with AOD, this exercise moved from one slider to a gallery plus a hand-written script, and wired a smooth scroll from the arrow to the next block.
+
+## Cases
+
+**Portfolio filter without a library.** Six works had to be filterable by Web, Apps and Other. I gave every item a class for its category and every filter button a number, wrote a small script that shows all items for the first button and only the matching ones otherwise, and moved the active class between the buttons. Items start hidden and a showed class turns them on, so the Sass holds the state and the script only moves classes.
+
+**Gallery from the same list.** The same list that the filter works on also had to open large images. I put the image source on each list item and marked the list with the template's gallery attribute. Filtering and the gallery stayed independent of each other.
+
+**Two-column grids that collapse.** The portfolio list and two more blocks use a two-column grid that falls to one column at the mobile width. I wrote the grids as equal-width column tracks, with fluid gaps from the adaptive mixin and a hover shadow on the items, a step on from the flex columns of AOD.

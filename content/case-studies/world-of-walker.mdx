@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- The platform around my work is a Next.js app with 120+ pages and 60+ API routes, built by the client's team. Clerk handles sign-in and a webhook keeps each fan in Convex.
+- Convex is the live back end: 100+ tables, 700+ public functions and 350+ indexes. Scheduled jobs reconcile what real-time updates can miss, such as stale presence and online counts.
+- The shop has two carts. Physical goods go through Shopify and digital avatar assets go through Convex, paid in an in-app currency. One hook picks the cart by id shape.
+- Editors manage public content in Strapi. The pages read it through one typed client and TanStack Query.
+- Drone energy, condition and sync rules live in a shared module and in server functions. Each minigame keeps its balance values in one preferences object.
+- Page state such as the active game tab lives in the URL through nuqs.
+- Tracking goes to Meta Pixel and Umami, and the tag manager gets the same events.
+
+## Cases
+
+**Games that cannot be replayed by reloading.** "Rise of the Drones" has four minigames: Bond Resonance, Calibrate Sensors, Stabilize Core and Pulse Energy. Each costs 5 energy and pays a reward. A player could reload the page to get another try for free. I count the attempts on the server. Starting a minigame takes the energy and writes the attempt as "not yet won" at the start, so a reload does not erase it. Each game type allows 2 attempts in a rolling 24 hours. A new start within 5 seconds of an unfinished attempt is refused, and a third try is refused without charging energy. The reward step, within 5 minutes, marks the attempt won or lost. Both refusals show as toasts in the game dialog.
+
+**A news strip that cannot break the landing page.** The new landing page shows the latest video, music and live items from Strapi. A CMS outage must not break the first page a visitor sees. The request starts in the server render and the strip streams behind Suspense with a three-card skeleton. If the fetch fails, the strip shows "No latest news available" and logs a warning. The strip shows at most one item each for video, music and live. An editor can link a card to any path, or let the page build a link from the category and the item's slug.
+
+**A sidebar that yields to the page.** The avatar editor, chat and product pages need the full width, and a manual toggle must still work. A route list and pattern matching decide where the sidebar hides. Dynamic route segments turn into a regex for the detail routes. A ref remembers the previous state, so the sidebar collapses only when a route newly matches and reopens when the user leaves. It does not override a toggle on every render.

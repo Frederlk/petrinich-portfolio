@@ -1,0 +1,17 @@
+## What I analysed
+
+- The product. The web app of a SaaS where interior designers build specification sheets, schedules, budgets and purchase orders for their projects.
+- The code. A copy of the client's existing application, kept as one repository with three packages: the web app, a browser extension that captures catalog items from manufacturer sites, and a shared package of components, icons and helpers that both of them use. The client had its own development team, so I read the code to estimate work on it, not to build anything.
+- The size of the app. The route table has 94 entries across five user types: designers, support staff, clients, dealers and manufacturers. The same code also builds the support panel, selected by a flag at build time. The interface comes in four languages.
+- The building blocks. AG Grid for the data screens, SignalR for live updates, MSAL for Microsoft sign-in, Zustand for state, i18next for translation, Recharts for charts and Datadog RUM for monitoring, on React, TypeScript, Tailwind CSS and Vite.
+- The project documents. I checked the code for risk, helped find the problems an estimate has to cover and helped create the project documents the work needed.
+
+## Risks and recommendations
+
+These are the risks I raised from reading the code, next to the redesign estimate.
+
+**A large shared component package.** The web app builds from a shared package of roughly two hundred icon components and roughly 190 other components, so one change reaches many screens. I recommended estimating the shared kit once, as its own item, and letting components change only in that package.
+
+**More screens than the customer sees.** Ninety-four routes and five user types make the redesign larger than the screens a designer uses every day. Each type has its own menus and its own access rules, and the support panel comes from the same code. I estimated by feature area from the route table and recommended redesigning the page shell once. Each user type could be estimated and checked on its own.
+
+**Data screens on a grid library.** Schedules, budgets and purchase orders run on an enterprise grid with grouping, column resizing, pinning and bulk actions. Giving it a new look means working through the theme system of the grid and not against it, and the effort is easy to underestimate. I recommended keeping these screens as separate estimate items, leaving their behaviour as it is and taking only the visual layer through the theme.

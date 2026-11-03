@@ -1,0 +1,19 @@
+## Patterns and decisions
+
+- A user holds a list of roles and one active role, so a player becomes an organizer without a second account. A short step-by-step flow walks the player through the change, and a guard enforces the step order.
+- Permissions live in two layers. oRPC middleware checks roles for the app. PostgreSQL row-level security covers direct Supabase access, such as Storage and Realtime.
+- The Stripe webhook checks the signature against two secrets, one for the platform and one for Connect accounts. Each event id is claimed once, the route answers 200 at once and does the work after the response. Cron sweepers redrive stuck events.
+- Five Cron jobs on Vercel run in offset groups, because one handler doing everything starved the connection pool. Vercel Cron sends GET and the procedures accept POST only, so each cron route calls the procedure directly.
+- The round timer does not broadcast every second. The server announces only state changes, such as start, pause and end, together with its own clock. Each phone ticks locally and corrects its drift against that clock.
+- Canada needed a country field on the organization, since Stripe fixes an account's country at creation. The sign-up wizard validates the state or province against it, address search covers both countries, and the privacy page has a Canada section.
+- The integration suite runs against a real PostgreSQL database with the row-level security policies applied, so a policy mistake fails a test and not a customer.
+
+## Cases
+
+**The last seat.** Two buyers can go for the last seat at the same moment, and a waitlist claim can race a fresh purchase. Registration and waitlist claims both take an advisory lock per event inside the transaction that checks capacity and writes, so the seat count cannot be oversold. A waitlist offer lasts 24 hours at the price the person signed up for, and a cron job expires the ones that are not taken.
+
+**A refund that fires once.** Tickets are charged directly on the organizer's Stripe account, and a refund returns the ticket price but keeps the service fee. A double click or a retry must not refund twice. The refund is claimed as requested in the database before Stripe is called, and the claim is rolled back if Stripe rejects it. The webhook is the only writer of the final state, and it also cancels the registration and offers the seat to the waitlist. The organizer's refund button and the sweeper that cancels a whole event share one function.
+
+**Live updates after a rollback.** A live screen must not hear about a write that was rolled back, and a dropped connection must not strand a phone in the middle of a tournament. Broadcasts go out through database wrappers that take the transaction, so a failed write sends nothing. They use a private channel gated by row-level security. The client reconnects with backoff, and a safety poll every 15 seconds runs only while the event is live. Standings are recomputed on the server and refetched when a broadcast arrives.
+
+**RLS without recursion.** The row-level security policies for events and registrations referenced each other and recursed. The checks moved into security-definer helpers in a separate schema, which break the cycle. On the organization table, table-wide read access is revoked and replaced by an allowlist of columns, so billing and plan data never reach a logged-in client.

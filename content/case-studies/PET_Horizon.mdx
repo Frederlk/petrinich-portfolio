@@ -1,0 +1,18 @@
+I built Horizon in 2021 as a one-page landing for the game Horizon: Forbidden West, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, the slider setup and the filter script, not with the template's scroll watcher, full-screen and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Five sections in the markup: a home block with a background video, an info block, a characters block, a "connected" block with a filter and a slider, and an availability block, about 360 lines of markup.
+- Four page partials of Sass, about 1,290 lines in total, with BEM class names and 103 media queries across the page stylesheets.
+- Colors, fonts and four breakpoints are variables at the top of the main stylesheet, and 36 spacing and size values use a fluid mixin. Some queries go min-width where the design needs it, for example at 1100 pixels.
+- Sections reveal when they scroll into view: the markup carries watcher attributes with a threshold and a once flag, and the Sass reacts to the view class the template sets.
+- Three Swiper sliders, two of them linked to each other.
+- Compared with the Woodies and CloudBudget landings, this one adds a background video, a content filter and sliders that control each other.
+
+## Cases
+
+**Two sliders in sync.** The characters block has two sliders that must always show matching slides. I used Swiper with the Controller module and pointed each slider at the other, gave one of them a fade effect, and made a click on a slide of the other move both. The setup runs only if both containers exist on the page.
+
+**Filter without a framework.** The connected block has four tabs (all, news, two networks) over a row of cards. I put the tab number in a data attribute and a matching class on each card. A click handler marks every card as shown for the first tab, and for the others hides all and shows only the cards with the matching class, then moves the active class to the clicked tab. The Sass handles the show and hide states.
+
+**Slider with a fractional count.** The same block shows cards in a slider where a part of the next card peeks out, so the design reads as scrollable. I set 4.4 slides per view on wide screens and stepped down through 4, 3, 2 and 1 as the width shrinks, with the steps at 1310, 991.98, 767.98 and 479.98 pixels.

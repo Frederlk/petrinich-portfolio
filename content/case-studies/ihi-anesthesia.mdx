@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- The site has no accounts, no payments, no database and no CMS. Visitors read the page, ask for a proposal, join the newsletter or send a message. Every lead goes to Mailchimp.
+- One Zod schema serves the client and the server. The browser checks each form step with it, and the next-safe-action server actions check everything again. One error mapper turns Zod, rate limit and generic errors into a plain message for the form.
+- The proposal form is two steps. Step 1 is validated before the user moves on, and focus jumps to the first bad field. The date range reaches the server as one string, so the server schema only sees strings and file URLs.
+- Uploads go from the browser straight to Vercel Blob with a token from one route. The route accepts PDF and Word files only, up to 5 MB each.
+- Security headers and a CSP live in the Next.js config. Env variables go through T3 Env.
+- SEO covers metadata, Open Graph cards, a sitemap and JSON-LD for the organization.
+
+## Cases
+
+**Rate limit before the upload, cleanup after a failed submit.** A limit inside the submit action fires after the files are already uploaded. So I made the limit its own action. The form calls it first, then uploads the NDA and RFP files, then submits. If Mailchimp fails, the server action deletes both uploaded files, logs the cleanup and rethrows the original error. When Mailchimp fails, no uploaded file stays in Blob.
+
+**Mailchimp as the only back end.** Proposals, newsletter signups and contact messages all land in one Mailchimp audience as members with merge fields. I wrote a small fetch client for the REST API. A known address makes Mailchimp answer 400 with "Member Exists". The newsletter treats that as success. Proposal and contact requests send a PUT to the member, addressed by the MD5 hash of the lowercase email, so the fields update instead of failing. Subscribers get a newsletter tag.
+
+**Dialogs driven by the URL.** The later version has three dialogs: proposal, newsletter and contact. One small hook sits on top of nuqs. Each dialog has its own query key in the URL. Every call-to-action on the page opens the right form through its key. A link from outside the site can open it too. The back button closes it. In the first version the proposal dialog ignored clicks outside it, so a half-filled request was not lost.

@@ -1,0 +1,18 @@
+I built Funiro in 2021 as a one-page landing for a furniture shop, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the page markup, the Sass partials for the header, footer and home sections, and the page's own script, not with the template's menu, form and observer code.
+
+## Patterns and decisions
+
+- Six sections in the markup: a main slider, advantages, a product grid, a rooms slider, a tips slider and a furniture gallery.
+- Four Sass partials, about 1,670 lines in total, with BEM class names and 83 media queries between them.
+- Three Swiper sliders with different settings: a looping hero with parallax on its text, a rooms strip with automatic slide width and a tips slider that shows 1.1, 2 or 3 slides by breakpoint.
+- Hover styles sit inside hover-capability queries, and the template's value-scaling mixin is used 65 times for fluid sizes.
+- The page script is plain JavaScript with one delegated click handler for search, cart and the "show more" button.
+- Compared with WooCommerce, this exercise added several sliders on one page, a lightbox gallery and real interaction logic on the page.
+
+## Cases
+
+**Add to cart with a flying image.** The product cards needed a cart that feels alive. On click I clone the product image, place it at the card's coordinates, then transition it to the cart icon and shrink it to nothing. When the transition ends the script updates the counter and the cart list, and a repeated product only raises its quantity. Removing an item reverses the same counts.
+
+**Load more from a JSON file.** The grid shows four products, and the "show more" button fetches the rest from a JSON file and builds the cards as template strings. The button holds itself while the request runs and removes itself once the products are in, so it cannot fire twice.
+
+**Gallery that follows the mouse.** The furniture block is a wide strip of image columns wider than the screen. I measure the columns, convert the cursor position to a percentage and move the strip with an eased animation frame loop, and only on devices without touch. The images also open in a LightGallery lightbox.

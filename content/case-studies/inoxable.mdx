@@ -1,0 +1,19 @@
+## What I analysed
+
+- The client's original brief. It asked for a site driven by templates and a headless CMS, not hand-built pages. It also asked for 10 to 12 reusable blocks and for a future material finder and long-form specification pages to be prepared in the data model. I answered each of its questions in the first estimate.
+- The technology. I recommended Next.js, TypeScript, Tailwind CSS, Zod, Storyblok, Vercel and Plausible. I chose Storyblok over Sanity because its Visual Editor lets editors work without a developer.
+- The content model. Materials, processes and specifications became separate content types with shared option lists and finder-ready attributes. That keeps the later finder from needing a new architecture.
+- The client's design package. I checked the brand guide, the mockups, the copy and the sitemap. They were good enough that a full Figma file was not needed. I also listed what was missing: responsive designs, mockups for most templates and interaction states.
+- The client's answers and later scope points. Dutch only at launch, French as an addition, forms to a shared mailbox, spam protection with Cloudflare Turnstile. I folded them into four versions of the estimate and a milestone plan with a live preview demo at the end of each milestone.
+
+I did the estimate, the architecture and the development plan, and supervised the developer who built the site. I wrote no code. The finished site reached a mobile Lighthouse Performance score of 98 to 99 and used 36 CMS blocks. That is the developer's delivery.
+
+## Risks and recommendations
+
+My delivery included recommendations next to the estimate. These are the risks that shaped it.
+
+**Design inputs set the price more than code does.** The first scope offered AI-generated mockups with no interaction states. I proposed a paid validation sprint before any fixed price, then committed once the real package proved sound. I would not fix a price on loose mockups before a thin vertical slice runs.
+
+**A third-party embed hides unknowns.** The client wanted a third-party quoting portal inside the site. I read its SDK at source level. It has an undocumented message protocol, no way to pass a login token and no height event, and its cookie behaviour in an iframe was unverified. I kept it out of the core and quoted it as separate scope, as a range to firm up after the vendor replied.
+
+**Scope creep through blocks and the data model.** The client expected the block count to grow. The rule I wrote was that a variant of an agreed block is included, and a new block is a change request. A section that needs data the model does not hold is a content-model change. Fixing the model first keeps later pages content work.

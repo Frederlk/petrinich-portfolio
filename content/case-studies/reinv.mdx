@@ -1,0 +1,20 @@
+## What I analysed
+
+- The product. A referral and viral marketing application. A business creates a referral campaign and gets a share link. People who sign up through the link become ambassadors with own links, sign-ups are counted per campaign and per ambassador, and a reward goes out when an ambassador reaches a set number of referrals.
+- The messaging side. The business writes to ambassadors and referrals in bulk by email and SMS, with a rich-text editor, saved messages and social share blocks.
+- The AI survey. A business builds a prompt, and a visitor answers its questions in a chat driven by a language model. The conversations are stored, listed by prompt or by email and exported to PDF.
+- The existing application. The client already had a working application and its own development team. The materials were that application itself: a React front end, a single Express backend packaged for AWS Lambda, Amazon DynamoDB for data, AWS Cognito for accounts, and a link to a marketing CRM. There was no brief, so the code was the specification.
+
+I did a lot of the estimation, risk checking and code analysis of this existing application, helped find the risks in it and helped create the project documents the work required. The client had its own development team, so I wrote no code, and the client did not continue the development with the agency.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**One wide table holding the whole referral model.** Campaigns, ambassadors and referrals share a single table, so the estimate had to cover how that model is read and counted. The estimate had to cover how counts are produced and how the model grows as campaigns multiply. I recommended defining the referral domain first, with campaign, ambassador, referral, reward and reward grant as separate things, and choosing keys for the questions the dashboards actually ask. Counting and granting rewards move into a step that records each grant once. Migrating the existing campaigns is its own line in the estimate.
+
+**The AI chat and the CRM called straight from the product.** The survey chat and the CRM link are two integrations, so the estimate had to cover where the model choice, the cost of a survey, the stored conversation and the retries are handled, since every new integration adds another place that talks to a vendor. I recommended one server-side layer in front of the model and the CRM. It owns the prompts, the conversation storage, the limits per client and the model name, so the prompt editor and the survey page talk only to the product's own API. I estimated it as a module with its own cost controls.
+
+**Three ways to send email and one to send SMS.** The product can send email through three different paths and keeps a counter per client, while SMS runs on purchased numbers. Deliverability, unsubscribe handling and quotas are product features that need one owner, and SMS needs a written consent rule. I recommended one send service per channel with a queue, an unsubscribe list, a sending log and per-client quotas, with a second provider kept only as a fallback. The SMS consent rule is fixed in writing before anything is built on it.
+
+The estimate also priced a stabilising phase first, with tests around sign-up, rewards and sends and the backend split by domain, so that the estimate for the feature work is only as firm as that phase makes it.

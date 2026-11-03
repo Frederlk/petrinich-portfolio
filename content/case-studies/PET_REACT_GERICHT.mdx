@@ -1,0 +1,18 @@
+I built Gericht in 2022 as a one-page restaurant landing page in React, from a given Figma design, and hosted it on Vercel. Unlike my Gulp and Webpack pages, it is a Create React App project: the page is made of components, the copy and image lists are data, and the Sass follows the structure of my earlier pages. The text on the page is placeholder copy.
+
+## Patterns and decisions
+
+- Nine section and layout components (header, main screen, about, special menu, chef's word, video, awards, gallery and footer) plus three shared ones: a heading block, a menu list and an image wrapper.
+- A constants folder holds the slides, menu items and awards, so components map over data instead of repeating markup.
+- About 1,520 lines of Sass in four page partials, with BEM names and 98 media queries, and the same four breakpoint variables as my earlier pages.
+- Swiper through its React bindings for the main screen and the gallery, with breakpoints for slides per view from 2 to 5.
+- Formik and Yup for the newsletter field, and a small scroll library for the scroll-down link.
+- Compared with the Gulp pages, this project added components with props, state and a build with no template; the adaptive-markup script stayed, called from an effect.
+
+## Cases
+
+**One heading component, many uses.** Every section opens with a small subtitle, a spoon ornament, a title, optional text and a button. Instead of repeating the markup, I made one heading component with props for each optional part, including whether the title is the page's main heading and where the ornament sits.
+
+**Menu lists from data.** The special menu has two columns, wine and beer and cocktails, with titles, prices and tags. I stored both lists as arrays and wrote a single menu component that renders a title row, a dotted line and a price, then a row of tags, so a new item is one object.
+
+**Video with a custom play button.** The video block shows a poster and a round play button over a muted video. A click toggles a state flag and a ref to the video element, which starts or pauses playback and fades the overlay out and back in through a class.

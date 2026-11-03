@@ -1,0 +1,19 @@
+## What I analysed
+
+- The product. An inventory and demand-planning platform for Shopify merchants. It suggests what to reorder and when, creates purchase orders, manages suppliers and bundles, and carries an AI assistant and a forecasting pipeline.
+- The existing code. The client had a running product and its own engineering team. I went through the back end, which is three NestJS applications on one PostgreSQL schema: the API, a sync worker fed by RabbitMQ and a demand-planning application. The estimate had to cover what already existed, so I read it before sizing anything.
+- Reorder and demand planning. Reorder suggestions come from a stock simulation in the database that uses forecast demand and inbound purchase orders. Demand plans are kept per store, with user overrides at several levels and values cached per month.
+- The forecasting pipeline. A separate Python service with several interchangeable forecast models behind one interface. The assistant is also Python, and it is read-only.
+- The planned extensions. A move from one store per account to several stores and sales channels, and a connection to warehouse and third-party logistics systems through a single adapter. I estimated both.
+
+I led the project with 3 other developers. I did the estimate, identified the risks, analysed the code and gave advice on the planned extensions. I wrote no code on this project.
+
+## Risks and recommendations
+
+These are the risks I raised next to the estimate.
+
+**Changing the planning unit under the two busiest modules.** Warehouse support turns the planning unit from one stock curve per store into one product at one physical location across several connections. That touches reorder and demand planning, the paths every merchant uses, so a mistake would regress all of them. I would not size it as an ordinary feature. I recommended putting the change behind a feature flag, proving that a single store gives byte-identical results to today, rolling it out one catalog group at a time, and starting that work first because it carries the most risk. I estimated it as its own item, apart from the adapter work.
+
+**Moving a single-store data model to organisations and connections.** Every table in the product hangs off the store, so the foundation phase is the real cost, not the screens for matching products. I recommended keeping the store table and adding columns and aliases instead of a rename, moving every existing store into a default organisation, and capping the batches in which matches are suggested on very large catalogs. Linking and undoing a link had to be safe when a bulk action meets a manual one. The channel contract had to be checked against a written document before the first adapter, so that Shopify assumptions do not leak into it.
+
+**Heavy calculation and sync on large catalogs.** Reorder maths per product per day and the first sync of a store are the heaviest work, and more connections multiply the volume. I recommended keeping the heavy maths in the database where batch lookups work, caching monthly values, running refreshes in the background with a status the client can poll, and treating sync as three modes: initial, full and incremental. I estimated performance work as a separate line.

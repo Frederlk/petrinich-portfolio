@@ -1,0 +1,18 @@
+I built Gravity in 2021 as a landing page for design services plus a separate blog page, from a given design. It sits on a ready Gulp and Webpack starter template, so I credit myself with the two pages of markup, the Sass partials, the slider setup and the filter and search scripts, not with the template's menu, popup, form and adaptive-markup scripts.
+
+## Patterns and decisions
+
+- Two pages: a landing page with a slider hero, about, services, an easy-steps block, works and testimonials, and a blog page.
+- Five page partials of Sass, about 1,670 lines in total, with BEM class names and 129 media queries between them; the home partial alone is 930 lines with 74 queries.
+- Colors, the font and four breakpoints are variables at the top of the main stylesheet, and the layout goes desktop-first with max-width queries.
+- Three Swiper sliders, each importing only the modules it needs.
+- 89 calls of the template's fluid size mixin for gaps, paddings and font sizes.
+- This was the first of these pages with two pages, several sliders and hand-written interface scripts, where Alivio had one page and one script.
+
+## Cases
+
+**Three sliders, three behaviors.** The hero fades between slides, autoplays every six seconds and shows a progress bar as pagination; the services slider moves by arrows; the testimonials slider fades with its own arrows. I wrote one init function with a separate config per slider, and each block runs only if its element exists on the page.
+
+**Works filter in a few lines.** Six work cards had to be filtered by category. I stored the category in a data attribute on each menu item and as a class on each card, and the click handler hides every card that lacks the chosen class, with an all option that shows everything and moves the active state to the matching link.
+
+**Search that opens and closes itself.** The header search is an icon that reveals a form. One click handler on the document toggles the active state when the icon is clicked and closes the form on a click anywhere outside it.

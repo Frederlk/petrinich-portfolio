@@ -1,0 +1,51 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.jsonc",
+
+  // Run with `bun knip` — report only, never `--fix`. An unsettled config reports used code as unused, so verify every finding by hand before acting on it: the report is a shortlist, not a verdict.
+  "entry": [
+    "app/**/{page,layout,route,error,not-found,loading,template,default,global-error}.tsx",
+    "scripts/**/*.{ts,mjs,sh}",
+    "**/*.test.ts",
+    // The logging surface named in `CLAUDE.md` § Utilities; no page logs yet, and an entry (not `ignore`) keeps `tslog` counted as used.
+    "utils/logger.ts",
+  ],
+
+  "project": ["**/*.{ts,tsx,mjs}"],
+
+  "ignore": [
+    // Agent tooling — skills, rules, hooks, worktrees. Nothing here is imported by the app. `.claude/worktrees/` is a second full checkout per parallel task, so without this Knip reports another checkout's work as this branch's dead code.
+    ".claude/**",
+    // Shipped template surface with no consumer until a project adopts it (`CLAUDE.md` § Utilities). Listed individually, never as a directory glob, so a NEW unreferenced file still fails; delete an entry when its consumer lands.
+    "utils/format-price.ts",
+  ],
+
+  // `.husky/pre-commit` runs `bun typecheck`, and Knip's husky plugin reads that as an unlisted *binary* rather than as the `package.json` script it is — its shell parser resolves a script name from `package.json` but not from a hook file. Scoped to the one file by `ignoreIssues` rather than suppressed globally with `ignoreBinaries`, which does not match here.
+  "ignoreIssues": {
+    ".husky/**": ["binaries"],
+  },
+
+  // `uvx` runs zizmor (`check:workflows`) and `uv run` stamps the CV PDF (scripts/cv-pdf.ts), Python tools with no npm package to list. `explorer.exe` is Windows' own URL opener in scripts/linkedin.ts.
+  "ignoreBinaries": ["uvx", "uv", "explorer.exe"],
+
+  "ignoreDependencies": [
+    // Run as `bun dotenvx` from hooks, docs and commands, never imported.
+    "@dotenvx/dotenvx",
+    // Wired in `styles/globals.css` with `@plugin`, not imported.
+    "tailwindcss-animate",
+    "@igorkowalczyk/is-browser",
+    // Tailwind v4 is CSS-first: `@import "tailwindcss"` and `@import "tw-animate-css"` are the whole registration, and Knip parses TypeScript, not CSS at-rules.
+    "tailwindcss",
+    "tw-animate-css",
+  ],
+
+  "rules": {
+    // Off: an export with no consumer is surface the next page may use, not rot. Unused files are still reported.
+    "exports": "off",
+    "types": "off",
+    "nsExports": "off",
+    "nsTypes": "off",
+    "enumMembers": "off",
+    // `AccordionPanel`/`AccordionContent` style pairs are deliberate aliases that ease the Radix-to-Base UI migration.
+    "duplicates": "off",
+  },
+}

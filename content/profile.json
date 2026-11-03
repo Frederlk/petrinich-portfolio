@@ -1,0 +1,32 @@
+{
+  "name": "Sergey Petrinich",
+  "title": "Lead Full-Stack Developer",
+  "linkedinHeadline": "Lead Full-Stack Developer | TypeScript, Next.js, React",
+  "location": "Remote, worldwide · Central European Time",
+  "headline": "I build web products end to end: API, admin, interface and the infrastructure behind them.",
+  "intro": "Lead full-stack developer at a UX/UI design agency. I turn Figma designs into production Next.js apps: SaaS products, admin panels, dashboards and marketing sites, and I lead the developers who build them.",
+  "summary": "Lead full-stack developer with **{years} years** of experience, building production web apps since {since}. I joined UX MIND, a design agency, in February 2024 and lead its development: I run the technical side of client projects from estimate to launch. I have led {developersLed} developers across my career, up to {peakTeam} at a time, and because the agency has no HR I also run hiring: {hired} developers hired so far. My stack is TypeScript, Next.js, React, Prisma, PostgreSQL and Tailwind CSS. I review code, build with Claude Code every day and talk to clients directly.",
+  "contacts": [
+    {
+      "label": "Portfolio",
+      "url": "https://sergey-petrinich.vercel.app"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Frederlk"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/petrinichsergey"
+    },
+    {
+      "label": "Telegram",
+      "url": "https://t.me/Frederlk"
+    },
+    {
+      "label": "E-Mail",
+      "url": "mailto:petrinich.sergey@gmail.com"
+    }
+  ],
+  "photo": "/avatar.webp"
+}

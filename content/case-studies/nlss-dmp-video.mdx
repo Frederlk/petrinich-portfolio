@@ -1,0 +1,18 @@
+## Patterns and decisions
+
+- The app is Next.js with the App Router and React Compiler. The project notes say there is no manual memoization.
+- The main screen is a shell. It picks the active view from a query parameter and loads each tab dynamically without server rendering. A tab's code and API calls wait until the operator opens it.
+- The camera wall is virtualized, so a long camera list renders only the visible tiles. Tile order and selection live in local storage.
+- The multi-camera layout lives in the URL through nuqs. A layout can be shared as a link and survives a reload.
+- The dashboard has 9 pages and 70+ route handlers between the screens and the gateway.
+- Forms go through one shared hook on React Hook Form and Zod. Environment variables are validated with T3 Env.
+- The UI sits on 40+ components built from Radix UI and Tailwind CSS in the shadcn style.
+- Biome runs through Ultracite.
+
+## Cases
+
+**One connection for a wall of cameras.** A 4x4 grid of independent WebRTC streams is 16 connections. That is too heavy for the browser and for the gateway box. The grid runs on one peer connection with a video and an audio transceiver per camera. Tracks are matched to tiles by stream id, with a fallback to the transceiver index. The connection is cached at module level, so it survives route changes and is dropped after 30 idle minutes. Video quality follows the camera count: full quality for 1 to 4 cameras, 640 px for 5 to 9, 480 px for 10 or more. If the grid endpoint fails, a flag in session storage stops a refresh from retrying it in a loop.
+
+**One UI that runs alone and inside another app.** The same dashboard had to work as its own app and as an iframe in a host application. The host owns the login and the navigation. The embed mode turns on from a query parameter or from an iframe check, and a blocked cross-origin access counts as embedded. Then the header and the sidebar disappear. The page shows a waiting state until the host sends a JWT. Messages go both ways through a typed postMessage contract. The dashboard reports a tile click and its own height. The host sends navigate commands. Incoming messages pass type guards, and the code never trusts the raw event data.
+
+**A player that feels like a security recorder.** Operators scrub footage with the keyboard, not the mouse. The player steps frames using the real frame rate from the browser's playback quality data, with a default as fallback. J and L cycle playback speed in both directions, and the arrow keys step. The shortcuts stay silent while the focus is in an input, a dialog or a tree. A dual timeline shows footage segments, detection events and bookmarks for the chosen date, and an event density bar shows where the activity is. The same player plays live and recorded video, and adds zoom and pan, snapshots, bookmarks and a jump to a timestamp.

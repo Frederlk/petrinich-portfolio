@@ -1,0 +1,4 @@
+# Gitignored files copied into a new worktree created by `claude --worktree`. Gitignore syntax.
+# A worktree is a fresh checkout, so untracked and ignored files are absent unless named here.
+# Deliberately NOT listed: .env.production. Production secrets in every parallel checkout widen the blast radius of a stray `git add -A` or a leaked directory, and local work never needs them. Never .env.keys either: dotenvx private keys stay in the main checkout.
+.env.local

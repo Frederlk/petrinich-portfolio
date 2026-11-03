@@ -1,0 +1,20 @@
+## What I analysed
+
+- The codebase is one repo with a React app, an Express server, shared types and constants, and a database folder. Data sits in PostgreSQL behind Knex migrations.
+- Express mounts about 90 routers over thin controllers and roughly 150 model classes, one per table.
+- Auth has two layers: Passport sessions kept in PostgreSQL, and AWS Cognito. A separate permission model covers admin roles and shared access.
+- Stripe billing is usage-based, and background jobs run inside the server process, including a retry job for failed usage.
+- Signing, background checks and billing report back through webhooks, each with its own status values.
+- GitLab CI builds the Docker image and deploys it to AWS with Helm.
+
+## Risks and recommendations
+
+My delivery included recommendations on technologies and on the stages of the work, next to the estimate. The risks below are what made the estimate hard.
+
+**Nearly nine years of workflows.** The schema has about 310 migrations, from 2017 to January 2026. Steps and workflows differ per physician group, and some customers have their own seed data. There is no single fixed flow. Any change touches configurable steps, positions and white-label groups.
+
+**Results that arrive later.** Each integration needs a vendor account and a sandbox to test, and sandbox behaviour is not in the repo. Work on signing, background checks or billing cannot be sized from the code alone.
+
+**Tools outside the TypeScript.** Document conversion depends on LibreOffice, pdftk, Ghostscript, ImageMagick and Chromium in the Docker image. The TypeScript alone does not show that, and it makes local setup heavy.
+
+**Old parts next to new ones.** Tailwind CSS 1.9 and TypeScript 4.5 sit next to Node.js 22 and PostgreSQL 16. An upgrade there touches code and infrastructure together.

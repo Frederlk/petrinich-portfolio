@@ -1,0 +1,16 @@
+## Patterns and decisions
+
+- Pages are server-rendered in the Next.js App Router, with a loading state per route segment. React Compiler is on, and the client router cache times are tuned.
+- Sign-in and sign-up use Clerk with an email code and no passwords. Member details (company, home base, position) live in Clerk metadata, so there is no user table. A Zod schema checks them on read and falls back to empty values when the data is bad.
+- Server code sits behind three layers of next-safe-action clients: a plain one, one that needs a signed-in user, and one that needs the admin role. A typed permission matrix denies any role it does not know.
+- Environment variables are declared once with T3 Env and validated at start. Forms use React Hook Form with shared Zod schemas.
+- The Resend email sender has a React Email template, an optional delayed send and a validated recipient.
+- The repo carries a README with the setup steps, a pnpm setup and a GitHub Actions workflow.
+
+## Cases
+
+**Dialogs that open from any page.** The consultation and BASC ID buttons sit in the header, the hero, the banners and the portal cards. Passing state down to all of them would have tangled the tree. Each dialog has one query-string flag with nuqs, and both dialogs are mounted once in the root layout. A typed button component per dialog only sets its flag. The flag clears when the dialog closes, and a link with the flag opens the dialog for whoever receives it.
+
+**Server action layers.** I wanted the sign-in and admin checks written once, not repeated in each action. I built three action clients: a plain one, one that needs a signed-in user, and one that needs the admin role. The signed-in client puts the Clerk user into the action context. The admin client rejects anyone whose organization role is not admin. The permission matrix is role by resource by action, with ownership predicates, and it denies any role it does not know. Server errors reach the form as readable messages.
+
+**Profile data without a table.** Members need three profile fields, and no user table was wanted. The fields live in Clerk user metadata, set at sign-up. A parsing function reads them back through Zod. Bad or missing metadata gives empty strings instead of an error, so a broken profile never breaks a page.

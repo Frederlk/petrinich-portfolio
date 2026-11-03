@@ -1,0 +1,20 @@
+## Patterns and decisions
+
+- I led 1 other developer. As the full-stack developer, I built all the chat and battle screens, the authentication and the calculations of a later version. The other developer built the landing page and the other pages. The product sends one prompt to several AI models and shows the answers side by side.
+- The app is Next.js with the App Router, React, TypeScript and Tailwind CSS, with Radix UI primitives under the shadcn UI components. The prompt travels in the address, and the mode and the chosen models stay in the browser.
+- Server actions run through next-safe-action, with one client for public calls and one that adds the signed-in user. Forms use React Hook Form with Zod, and the environment is validated with a typed schema.
+- Authentication is Supabase Auth: a phone number with a one-time code, Google or GitHub. Data lives in PostgreSQL through Prisma.
+- Models come from the Vercel AI SDK with adapters for Claude, OpenAI and Gemini, plus three more vendors through the same interface.
+- TanStack Query reads the daily winners and the word count, and nuqs keeps the prompt in the address.
+- Pane swaps, the random model button and the compare step are animated with Motion.
+- GitHub Actions runs lint and typecheck on every push.
+
+## Cases
+
+**Several models streaming in one request.** A duel has to start two vendors at the same moment. Each has its own SDK, its own limits and its own way of taking images and documents, and both answers must grow live on screen. One server action reads the chosen models, finds each in the catalogue, builds the right adapter and opens a separate set of streams for every pane. Each model runs in its own task with smoothed output, its own option shape and a token cap. Attachments become image, file or plain-text parts depending on the type and on what the model accepts. Time and an estimated word count are written when a pane finishes. If one model fails, only its pane stops and the other keeps going.
+
+**One typed model catalogue.** Models change every few months, and each has a vendor, a provider route and a different set of abilities. One typed list holds the display name, the vendor, the provider route and the name the provider expects. It also holds the persona, the tagline, the colours, the icon and a benchmark link. Vendor and route are separate fields, so a model served by another provider than its maker is still shown under the right name. The grid, the random picker, the rankings and the list of models the API supports all read from that list. A second list names the models that cannot take images, so the attachment code knows when to fall back to text. Moving to newer versions touches the data and not the screens.
+
+**From the first prompt to a verdict.** A visitor should get a comparison and then say which answer was better. The landing page starts a duel and passes the prompt in the address. From there the battle screen was my part. It accepts the prompt, submits it and streams both answers. A Compare step then sends the two answers to GPT-4o and shows a table and a short summary in Markdown. The analysis is made again only when the answers changed. A winner button stores a vote, and the votes feed a daily ranking of the six models. Prompts are limited in length and filtered for profanity in seven languages, and only the last ten exchanges are sent as memory.
+
+**From paid word packs to a free product.** The product first sold use in word packs. I made the change to a free product. The pricing page, the success and cancel pages and the pricing links were removed. The Stripe and PayPal code and the database were left in place for a rollback. The word allowance stayed as a way to track use, with a larger one for signed-in users.

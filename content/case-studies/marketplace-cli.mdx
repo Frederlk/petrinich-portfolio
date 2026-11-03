@@ -1,0 +1,17 @@
+## Patterns and decisions
+
+- The caller is an AI agent, not a person. Every design choice starts from what a program with a hard time limit, a small reading budget and no way to ask a follow-up question needs from a command.
+- The tool is TypeScript on Bun, close to 1,400 lines, with one runtime dependency, Playwright. The syntax is limited to what Node can also run, so the code stays portable.
+- Layers are kept thin. A command line entry calls commands, commands call a run object that holds the time budget and opens browser sessions only when needed, and site adapters sit on top of pure parsers of the shops' data.
+- Browser profiles, saved runs and raw dumps live in a home folder outside the repository.
+- Requests to each shop are queued with a pause between them.
+
+## Cases
+
+**A command line built for a caller that is an AI agent.** The agent has a hard 120 second limit and cannot ask what went wrong, while the shops fail in ways that sometimes need a human. Every command prints one JSON envelope, for success and failure alike. A single table of 15 error codes states for each one whether a person is needed, whether a retry makes sense, what to tell the user in plain Russian and what the agent should do next. A time budget ends before the caller's limit. A loop over many products stops in time and returns what is done plus a list of what remains to re-run. Output too large for the reading cap goes to a saved run that the envelope points to. Exit codes are ordered so that "a site needs the user" outranks "partial result".
+
+**Reading shop data from inside a real browser.** Both shops answer a plain HTTP client with a check page. I kept a persistent browser profile per shop and sent every request from inside a loaded page of that shop, so the data is read the way a visitor sees it. One shop works without a window. The other needs a real one, so I parked it off every monitor and added a doctor command that warns if some monitor would still show it. When a page does not answer, the session reloads the home page and retries a few times, then stops with a named error and a message that says what to do. A second call while the browser is in use gets an immediate "busy" answer. When the Windows session is locked and a shop returns an empty list, the tool reports a locked screen instead of "nothing found".
+
+**"Cheapest" is not "best".** Neither shop shows how often something was bought, price sorting favours junk, and an average over three reviews means little. I scored each offer out of 100: price against the cheapest at half the weight, rating pulled toward the mean of the results at 30 percent, and a log-scaled review count as the stand-in for demand at 20 percent. The parts come back with the score. Filters normalise spelling, including Cyrillic and Latin unit forms, and a funnel shows how many offers each filter removed. For reviews, the low-star share is exact when the shop publishes the distribution and labelled an estimate when it does not. A count of defect words in a hand-built Russian list catches complaints written under a good rating. Variants merged into one card are detected so the same reviews are not counted twice.
+
+**Tests without the shops.** The browser cannot run in a test, and the shops change. The parsers are tested on 50+ checks over captured shop replies, and the adapters run over a fake transport that serves those replies. The real browser path is checked live, by hand.
