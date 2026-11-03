@@ -203,7 +203,10 @@ void describe("repoRelative", () => {
     path.join(root, relative).replaceAll("\\", "/");
 
   void it("scopes a nested linked worktree against its own root, the main tree against the repository", () => {
-    const worktrees = path.join(REPO_ROOT, ".claude", "worktrees");
+    const claudeDir = path.join(REPO_ROOT, ".claude");
+    const worktrees = path.join(claudeDir, "worktrees");
+    // `.claude/` is gitignored, so a clean clone (CI) has none; one left behind here makes `dead-paths.ts` treat it as a real root and fail on every citation into it.
+    const createdClaudeDir = !fs.existsSync(claudeDir);
     const createdWorktrees = !fs.existsSync(worktrees);
     fs.mkdirSync(worktrees, { recursive: true });
     const worktree = fs.mkdtempSync(
@@ -232,6 +235,9 @@ void describe("repoRelative", () => {
       fs.rmSync(worktree, { recursive: true, force: true });
       if (createdWorktrees) {
         fs.rmdirSync(worktrees);
+      }
+      if (createdClaudeDir) {
+        fs.rmdirSync(claudeDir);
       }
     }
   });
