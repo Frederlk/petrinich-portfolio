@@ -11,7 +11,8 @@ import { usePathname } from "next/navigation";
 import { StatusHeader } from "~/components/fallbacks/status-header";
 
 import { Button } from "~/ui/button";
-import { CtaLink, ctaLinkVariants } from "~/ui/cta-link";
+import { CtaButton } from "~/ui/cta-button";
+import { CtaLink } from "~/ui/cta-link";
 import {
   Empty,
   EmptyContent,
@@ -129,25 +130,22 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
       <StatusHeader
         actions={
           <>
-            <button
-              className={ctaLinkVariants({ size: "xl" })}
-              onClick={reset}
-              type="button"
-            >
+            <CtaButton onClick={reset} size="xl">
               Try again
-            </button>
+            </CtaButton>
             <CtaLink href={ROUTES.HOME} size="xl" variant="outline">
               Go home
             </CtaLink>
           </>
         }
         code="500"
+        note="Try again in a moment. If it keeps failing, the digest below finds the error in my log."
         statement="Something broke on my side, not yours."
       >
         <dl className="grid grid-cols-1 border-t border-b border-surface-container-high sm:grid-cols-3">
           {facts.map((f) => (
             <div
-              className="border-surface-container-high p-space-md not-last:border-b sm:p-space-lg sm:not-last:border-r sm:not-last:border-b-0"
+              className="border-surface-container-high p-space-md not-last:border-b sm:p-space-lg sm:not-first:border-l sm:not-last:border-b-0"
               key={f.label}
             >
               <dt className="type-label text-secondary">{f.label}</dt>

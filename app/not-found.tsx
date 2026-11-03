@@ -29,11 +29,12 @@ export default function NotFound() {
           </>
         }
         code="404"
+        note="The link may be old or mistyped. Every project I have worked on is on the work page."
         statement="This page is not in the index."
       >
         {/* The requested address as a lookup against the work index, in the fact band of the project page and the 500 page. */}
         <dl className="grid grid-cols-1 border-t border-b border-surface-container-high sm:grid-cols-3">
-          <div className="border-b border-surface-container-high p-space-md sm:col-span-2 sm:border-r sm:border-b-0 sm:p-space-lg">
+          <div className="border-b border-surface-container-high p-space-md sm:col-span-2 sm:border-b-0 sm:p-space-lg">
             <dt className="type-label text-secondary">Query</dt>
             <dd className="mt-space-xs type-h3 break-all text-tertiary-container line-through">
               <RequestedPath />
@@ -42,7 +43,7 @@ export default function NotFound() {
               [Not in index]
             </dd>
           </div>
-          <div className="p-space-md sm:p-space-lg">
+          <div className="border-surface-container-high p-space-md sm:border-l sm:p-space-lg">
             <dt className="type-label text-secondary">Matches</dt>
             <dd className="mt-space-xs type-h3 text-primary-container">0</dd>
             <dd className="mt-1 type-body-sm text-secondary">
