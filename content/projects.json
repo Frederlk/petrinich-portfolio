@@ -116,6 +116,11 @@
     ],
     "media": ["/work/ohbirdie.webp"],
     "featured": true,
+    "highlights": [
+      "Led 1 other developer and built about half of the app: set the architecture, planned the tasks and reviewed the code.",
+      "Built the whole back end: auth, billing, the admin area and 220+ type-safe oRPC procedures on 32 Prisma models, serving 24,000+ API calls a month.",
+      "Built the Stripe webhook (signature check, de-duplication), Twilio SMS webhooks, 5 cron jobs and CI with Postgres integration tests; wrote most of the 3,400+ test cases."
+    ],
     "caseStudy": "ohbirdie"
   },
   {
@@ -202,6 +207,10 @@
     "links": [],
     "media": ["/work/noaspot.webp"],
     "featured": true,
+    "highlights": [
+      "Built the REST API alone (81 endpoints, 22 Prisma models, 1,000+ test cases) and defined the OpenAPI contract the iOS app and admin use.",
+      "Benchmarked search on 85 queries over 423 real places: embeddings (top 3) matched the accuracy of a Gemini call (97.6% vs 95.3%) at 15x lower p90 latency (407 ms vs 6,025 ms); shipped a search mode with no LLM call."
+    ],
     "caseStudy": "noaspot-api",
     "aiOrchestrated": true
   },
@@ -473,6 +482,11 @@
     ],
     "media": ["/work/swiftbeauty.webp"],
     "featured": true,
+    "highlights": [
+      "Led 1 other developer and built about 80% of the Next.js app meant to replace the PHP back end: UI, API and tests (1,500+ cases) on 84 mostly legacy Prisma models.",
+      "Found that 92% of production requests missed the cache because of one root-layout setting; restored static pages with hourly revalidation and removed a monitoring tunnel that made up 28% of function invocations.",
+      "Linked Stripe subscriptions to legacy members ahead of the move off PHP, moved video from CastLabs to Mux, and cut the end-to-end test run in CI about 2x from a 17-minute baseline."
+    ],
     "caseStudy": "swiftbeauty"
   },
   {
@@ -3552,6 +3566,10 @@
     ],
     "media": ["/work/tesl-decks.webp"],
     "featured": true,
+    "highlights": [
+      "Built it alone, directing AI agents: 80 oRPC handlers on 22 Drizzle tables, 2,600+ test cases with Stryker mutation testing.",
+      "Added a 1-hour edge cache purged by tag when a deck is saved, and sign-in with Discord, Google, Steam or an email code."
+    ],
     "caseStudy": "tesl-decks",
     "aiOrchestrated": true
   },

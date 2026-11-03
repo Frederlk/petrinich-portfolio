@@ -24,7 +24,8 @@ const projectLine = (p: Project) => {
   const url = publicUrl(p);
   const head =
     url === null ? `**${p.name}**` : `**${p.name}** (${link(url, url)})`;
-  return `- ${head}: ${p.summary} Role: ${ROLE_LABELS[p.role]}.`;
+  const highlights = (p.highlights ?? []).map((h) => `\n  - ${h}`).join("");
+  return `- ${head}: ${p.summary} Role: ${ROLE_LABELS[p.role]}.${highlights}`;
 };
 
 const contactLines = () =>

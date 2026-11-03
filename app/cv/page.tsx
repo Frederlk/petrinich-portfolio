@@ -99,7 +99,7 @@ function BareLink({ className, url }: { className?: string; url: string }) {
 const firstSentence = (text: string) =>
   /^.+?\.(?=\s|$)/.exec(text)?.[0] ?? text;
 
-// One project: name, year, role and address on the first line, the first sentence of the summary, then its core technologies (`coreTechs`, the same list a /work row shows) as plain text.
+// One project: name, year, role and address on the first line, the first sentence of the summary, its highlights as bullets, then its core technologies (`coreTechs`, the same list a /work row shows) as plain text.
 function CvProject({ project }: { project: Project }) {
   const url = publicUrl(project);
   const meta = [
@@ -119,6 +119,15 @@ function CvProject({ project }: { project: Project }) {
       <p className="type-body text-secondary">
         {firstSentence(project.summary)}
       </p>
+      {project.highlights === undefined ? null : (
+        <ul className="cv-bullets list-square flex flex-col gap-1 type-body-sm text-secondary">
+          {project.highlights.map((h) => (
+            <li key={h}>
+              <RichText origin={siteUrl}>{h}</RichText>
+            </li>
+          ))}
+        </ul>
+      )}
       <p className="type-body-sm text-secondary">
         <span className="cv-meta">Stack: </span>
         {coreTechs(project.stack)

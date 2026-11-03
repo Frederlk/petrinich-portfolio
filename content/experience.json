@@ -34,14 +34,11 @@
     ],
     "description": "UX MIND is a digital design agency. It builds SaaS products, admin dashboards and marketing sites for clients in Europe and the US.",
     "bullets": [
-      "Led {led.ux-mind} developers on client projects, up to {peak.ux-mind} at a time: estimate every project, decide who takes which task, review code, coach, and act as the clients' technical contact.",
-      "Run hiring and recruiting, because the agency has no HR: screen candidates, set the test tasks, interview and onboard. Hired {hired.ux-mind} developers.",
-      "Led or built {ledOrBuilt.ux-mind} client projects, from marketing sites to SaaS platforms and admin dashboards.",
-      "Set the team's default stack (Next.js App Router, TypeScript, Prisma on PostgreSQL, Better Auth, oRPC, React Hook Form with Zod, Tailwind CSS) and the quality gates new projects start with (Biome, Husky, GitHub Actions, Vitest).",
-      "Built client integrations with Stripe, Shopify, Sanity, Twilio, Resend, Mux, Leaflet, Upstash, Arcjet, Sentry, PostHog and the Vercel AI SDK with Gemini.",
-      "Designed the studio's technical interview: a 90-minute simulated workday where candidates work real tasks with Claude Code and AI-played teammates, and are graded on judgement instead of recall.",
-      "Wrote `ux-mind-helpers`, a zero-dependency toolbox of 8 codemods and lint guards for the agency's projects (import aliases, Tailwind values, React Compiler checks, `.env` sync).",
-      "Adopted Claude Code in August 2025 and wrote the team's conventions for using it."
+      "Led {led.ux-mind} developers on client projects, up to {peak.ux-mind} at a time: estimates, task planning, code review and coaching; the clients' technical contact.",
+      "Led or built {ledOrBuilt.ux-mind} client projects: platforms (OhBirdie!, Swiftbeauty), a REST API and admin dashboard for an iOS travel guide (NoaSpot), an association platform (Euregio Academy) and content sites (Alan Walker official site, ABH).",
+      "Run hiring because the agency has no HR: screening, test tasks, interviews and onboarding; hired {hired.ux-mind} developers. Designed the technical interview, a 90-minute simulated workday with Claude Code and AI-played teammates, graded on judgement instead of recall.",
+      "Set the default stack and quality gates new projects start with: Next.js App Router, TypeScript, Prisma on PostgreSQL, Better Auth, oRPC, React Hook Form with Zod, Tailwind CSS; Biome, Husky, GitHub Actions, Vitest. Integrated Stripe, Shopify, Sanity, Twilio, Resend, Mux, Leaflet, Upstash, Arcjet, Sentry, PostHog and the Vercel AI SDK with Gemini.",
+      "Wrote `ux-mind-helpers`, a zero-dependency toolbox of 8 codemods and lint guards (import aliases, Tailwind values, React Compiler checks, `.env` sync), and the team's Claude Code conventions after adopting it in August 2025."
     ],
     "links": [
       {
@@ -74,8 +71,8 @@
     ],
     "description": "Self-employed client work next to UX MIND: marketing sites and a streaming platform built end to end, plus fixes and hosting for existing sites.",
     "bullets": [
-      "Built alba.swiss end to end: the first version in April 2025 and the September 2026 rebuild, a marketing site with 16 animated sections and a request-an-introduction form.",
-      "Built and deployed the Department of Human Dynamics site, a marketing site for an AI research group with structured data for SEO (62 commits).",
+      "Built alba.swiss end to end, the site of a Swiss technology consultancy: the first version in April 2025 and the September 2026 rebuild, with 16 animated sections and a request-an-introduction form.",
+      "Built and deployed the Department of Human Dynamics site for an AI research group on Next.js and the React Compiler, with structured data for SEO (62 commits).",
       "Built a live-video streaming platform alone: adaptive HLS video, creator profiles with media feeds, English and Dutch with next-intl, a Sanity CMS, and Docker with Nginx on a VPS.",
       "Took over gdd.education: UI polish and bug fixes, a move from Vercel to a VPS, Docker builds, DNS and self-hosted Umami analytics."
     ],
@@ -96,9 +93,8 @@
     ],
     "description": "Cloud treasury management product that helps companies aggregate their cash management tools on one platform.",
     "bullets": [
-      "Introduced a new folder structure and one shared way of building features, which made onboarding new people easier.",
-      "Led {led.ceviant} developers on the app's front end, one of them an intern I mentored.",
-      "Led development and maintenance of the app's key features, its refactoring and regular code reviews."
+      "Led {led.ceviant} developers on the treasury app's front end, one of them an intern I mentored, and ran regular code reviews.",
+      "Introduced a shared folder structure and one way of building features, which made onboarding easier; led the key features and the refactoring."
     ],
     "links": [
       {
@@ -127,7 +123,7 @@
     ],
     "description": "Software outstaffing company. I joined in autumn 2022, worked on an internal project first, then was placed full-time on Ceviant.",
     "bullets": [
-      "Led {led.tapston} developers on the internal project before the Ceviant placement.",
+      "Led {led.tapston} developers on an internal project before the Ceviant placement.",
       "Designed the project's architecture, built the landing page and a UI kit shared across the product, and developed product features."
     ],
     "links": [

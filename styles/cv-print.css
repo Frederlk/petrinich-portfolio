@@ -47,7 +47,7 @@
     color: #000;
     font-size: 9.5pt;
     font-variant-ligatures: none;
-    line-height: 1.4;
+    line-height: 1.3;
     min-height: 0;
   }
 
@@ -85,7 +85,7 @@
       .type-h3
     ) {
     font-size: 9.5pt;
-    line-height: 1.4;
+    line-height: 1.3;
   }
 
   .cv-page :is(.cv-meta, .key-stat-label) {
@@ -242,7 +242,7 @@
     gap: var(--s-1);
   }
 
-  /* The marker is an inline square on a hanging indent, not an absolutely positioned box: a positioned item paints after the in-flow content of its section, and Chrome writes the PDF text in paint order, so the bullets would land behind the text that follows them. */
+  /* The marker is the accent glyph U+25AA on a hanging indent, not a CSS box: a glyph stays square at any viewer zoom and puts a list marker into the text layer for parsers. Arial, because Archivo Narrow has no geometric shapes and Arial is a static TrueType font, so the Type3 guard in scripts/cv-pdf-meta.py still holds. The marker stays in flow, not absolutely positioned: a positioned item paints after the in-flow content of its section, and Chrome writes the PDF text in paint order, so the bullets would land behind the text that follows them. */
   .list-square > li {
     padding-left: 4mm;
     position: static;
@@ -250,14 +250,15 @@
   }
 
   .list-square > li::before {
-    background: var(--cv-meta);
+    background: none;
+    color: var(--cv-accent);
+    content: "\25AA";
     display: inline-block;
-    height: 1.3mm;
-    margin-right: 2.7mm;
+    font-family: Arial, sans-serif;
+    height: auto;
     position: static;
     text-indent: 0;
-    vertical-align: 0.35mm;
-    width: 1.3mm;
+    width: 4mm;
   }
 
   .cv-projects {

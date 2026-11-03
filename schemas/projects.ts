@@ -18,6 +18,8 @@ export const projectSchema = z.object({
   // Id of the experience.json job the project was done in, or null for the owner's own projects; per-job counts are derived from it.
   employer: z.string().min(1).nullable(),
   featured: z.boolean(),
+  // What the owner built and its sourced numbers, 2 or 3 lines; printed under the project on the CV and in /cv.md, not on the project page.
+  highlights: z.array(z.string()).optional(),
   // Plain capability lines, or titled groups of them (one per part of the product); `featureGroups` reads both.
   features: z.array(
     z.union([

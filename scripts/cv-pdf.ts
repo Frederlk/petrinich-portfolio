@@ -81,12 +81,13 @@ try {
     throw new Error(`${url} did not come up`);
   }
 
-  // A throwaway profile keeps headless Chrome from handing the job to an open browser. The tagged-PDF and outline flags give the file a structure tree (screen readers, text extraction in reading order) and bookmarks from the headings.
+  // A throwaway profile keeps headless Chrome from handing the job to an open browser. The tagged-PDF and outline flags give the file a structure tree (screen readers, text extraction in reading order) and bookmarks from the headings. Reduced motion keeps the figures' count-up (components/motion/count-up.tsx) from running during the print, which once printed every figure as 0.
   execFileSync(
     chrome,
     [
       "--headless=new",
       "--disable-gpu",
+      "--force-prefers-reduced-motion",
       `--user-data-dir=${profileDir}`,
       "--no-pdf-header-footer",
       "--export-tagged-pdf",
