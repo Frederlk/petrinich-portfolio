@@ -25,6 +25,8 @@ const Resume = z.object({
   work: z.array(z.object({ position: z.string() })),
 });
 const NEXT_BIN = join(ROOT, "node_modules", "next", "dist", "bin", "next");
+// Next runs on node, as `bun run build` and Vercel run it, not on the bun that runs this script: under bun's runtime `next build` reports the root layout's URL hooks as blocking prerender on /work/[slug] (measured 2026-11-03: 3 errors under bun, none under node).
+const NODE = "node";
 const CHROME_CANDIDATES = [
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
@@ -42,7 +44,7 @@ if (chrome === undefined) {
 }
 
 if (!process.argv.includes("--reuse-build")) {
-  execFileSync(process.execPath, [NEXT_BIN, "build"], {
+  execFileSync(NODE, [NEXT_BIN, "build"], {
     cwd: ROOT,
     stdio: "inherit",
   });
@@ -53,7 +55,7 @@ if (!process.argv.includes("--reuse-build")) {
   process.exit(1);
 }
 
-const server = spawn(process.execPath, [NEXT_BIN, "start", "-p", `${PORT}`], {
+const server = spawn(NODE, [NEXT_BIN, "start", "-p", `${PORT}`], {
   cwd: ROOT,
   stdio: "inherit",
 });
