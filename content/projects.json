@@ -4285,7 +4285,7 @@
     "role": "sole",
     "roleNote": "I defined the format and put together the whole package: the session design, the teammate briefs, the tickets, the rubric and the guides.",
     "year": 2026,
-    "status": "completed",
+    "status": "in-progress",
     "summary": "A 90-minute simulated-workday hiring interview. Candidates are meant to work realistic tickets with Claude Code and five AI teammates in a chat, and a person grades the candidate's way of working instead of the amount finished.",
     "features": [
       {
