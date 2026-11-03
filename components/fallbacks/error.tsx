@@ -137,7 +137,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
             key={f.label}
           >
             <dt className="type-label text-secondary">{f.label}</dt>
-            <dd className={cn("mt-space-xs type-code break-all", f.tone)}>
+            <dd className={cn("mt-space-xs type-h3 break-all", f.tone)}>
               {f.value}
             </dd>
           </div>

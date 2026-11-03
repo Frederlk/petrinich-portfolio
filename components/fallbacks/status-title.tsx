@@ -2,7 +2,7 @@
 export function StatusTitle({ code }: { code: string }) {
   return (
     <div className="mb-space-lg w-full overflow-hidden">
-      <h1 className="type-display text-on-surface select-none" data-fit="short">
+      <h1 className="type-display text-on-surface select-none" data-fit="code">
         {code}
         <span className="text-primary-container">.</span>
       </h1>

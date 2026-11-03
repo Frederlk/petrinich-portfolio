@@ -38,6 +38,11 @@
       font-size: 4.5rem;
     }
   }
+  /* A three-digit status code (404, 500) spans about half the frame at any width. */
+  &[data-fit="code"] {
+    font-size: clamp(8rem, 48vw, 24rem);
+    line-height: 0.85;
+  }
 }
 
 /* Page title. */

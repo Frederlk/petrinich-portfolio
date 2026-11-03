@@ -8,7 +8,7 @@ import { featuredProjects } from "~/lib/content";
 import { ROUTES } from "~/constants/routes";
 
 import { WorkLedger } from "~/features/work/components/work-ledger";
-import { toWorkRow } from "~/features/work/work-rows";
+import { toWorkRow, workRows } from "~/features/work/work-rows";
 
 export const metadata = { title: "Page not found" };
 
@@ -21,31 +21,38 @@ export default function NotFound() {
       <p className="mb-space-2xl max-w-3xl type-h2 text-on-surface">
         This page is not in the index.
       </p>
-      {/* The requested address as a ledger row that found nothing. */}
-      <div className="grid grid-cols-1 items-start gap-y-1.5 border-t border-b border-surface-container-high py-space-md lg:grid-cols-12 lg:items-center lg:gap-gutter lg:px-space-md">
-        <div className="type-meta text-tertiary max-lg:hidden lg:col-span-1">
-          –
+      {/* The requested address as a lookup against the work index, in the fact band of the project page and the 500 page. */}
+      <dl className="grid grid-cols-1 border-t border-b border-surface-container-high sm:grid-cols-3">
+        <div className="border-b border-surface-container-high p-space-md sm:col-span-2 sm:border-r sm:border-b-0 sm:p-space-lg">
+          <dt className="type-label text-secondary">Query</dt>
+          <dd className="mt-space-xs type-h3 break-all text-tertiary-container line-through">
+            <RequestedPath />
+          </dd>
+          <dd className="mt-space-sm type-label text-primary-container">
+            [Not in index]
+          </dd>
         </div>
-        <div className="type-h3 break-all text-tertiary-container line-through lg:col-span-8">
-          <RequestedPath />
+        <div className="p-space-md sm:p-space-lg">
+          <dt className="type-label text-secondary">Matches</dt>
+          <dd className="mt-space-xs type-h3 text-primary-container">0</dd>
+          <dd className="mt-1 type-body-sm text-secondary">
+            of {workRows.length} entries
+          </dd>
         </div>
-        <div className="type-label text-primary-container lg:col-span-3 lg:text-right">
-          [Not in index]
-        </div>
-      </div>
-      <h2 className="mt-space-2xl mb-space-sm type-label text-secondary">
-        Closest entries
-      </h2>
-      <div className="border-t border-surface-container-high">
-        <WorkLedger grouped={false} rows={closest} />
-      </div>
-      <div className="mt-space-2xl flex flex-wrap items-center gap-space-md">
+      </dl>
+      <div className="mt-space-xl flex flex-wrap items-center gap-space-md">
         <CtaLink href={ROUTES.WORK} size="xl">
           See all work
         </CtaLink>
         <CtaLink href={ROUTES.HOME} size="xl" variant="outline">
           Go home
         </CtaLink>
+      </div>
+      <h2 className="mt-space-2xl mb-space-sm type-label text-secondary">
+        Closest entries
+      </h2>
+      <div className="border-t border-surface-container-high">
+        <WorkLedger grouped={false} rows={closest} />
       </div>
     </main>
   );
