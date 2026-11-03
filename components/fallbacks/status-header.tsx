@@ -16,7 +16,7 @@ export function StatusHeader({
 }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3">
-      <div className="w-full overflow-hidden pb-space-lg lg:col-span-2 lg:pb-space-2xl">
+      <div className="w-full overflow-hidden pt-space-xl pb-space-lg lg:col-span-2 lg:pb-space-2xl">
         <h1
           className="type-display text-on-surface select-none"
           data-fit="code"
@@ -25,7 +25,7 @@ export function StatusHeader({
           <span className="text-primary-container">.</span>
         </h1>
       </div>
-      <div className="flex flex-col justify-end pb-space-2xl lg:border-l lg:border-surface-container-high lg:pl-space-lg">
+      <div className="flex flex-col justify-end pb-space-2xl lg:border-l lg:border-surface-container-high lg:pt-space-xl lg:pl-space-lg">
         <p className="type-h2 text-on-surface">{statement}</p>
         <p className="mt-space-sm max-w-prose type-body text-secondary">
           {note}

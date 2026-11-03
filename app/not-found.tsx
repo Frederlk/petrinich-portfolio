@@ -16,7 +16,7 @@ const closest = featuredProjects.slice(0, 3).map(toWorkRow);
 
 export default function NotFound() {
   return (
-    <main className="container pt-space-xl pb-space-2xl">
+    <main className="container pb-space-2xl">
       <StatusHeader
         actions={
           <>
@@ -34,7 +34,7 @@ export default function NotFound() {
       >
         {/* The requested address as a lookup against the work index, in the fact band of the project page and the 500 page. */}
         <dl className="grid grid-cols-1 border-t border-b border-surface-container-high sm:grid-cols-3">
-          <div className="border-b border-surface-container-high p-space-md sm:col-span-2 sm:border-b-0 sm:p-space-lg">
+          <div className="border-b border-surface-container-high px-0 py-space-md sm:col-span-2 sm:border-b-0 sm:p-space-lg">
             <dt className="type-label text-secondary">Query</dt>
             <dd className="mt-space-xs type-h3 break-all text-tertiary-container line-through">
               <RequestedPath />
@@ -43,7 +43,7 @@ export default function NotFound() {
               [Not in index]
             </dd>
           </div>
-          <div className="border-surface-container-high p-space-md sm:border-l sm:p-space-lg">
+          <div className="border-surface-container-high px-0 py-space-md sm:border-l sm:p-space-lg">
             <dt className="type-label text-secondary">Matches</dt>
             <dd className="mt-space-xs type-h3 text-primary-container">0</dd>
             <dd className="mt-1 type-body-sm text-secondary">

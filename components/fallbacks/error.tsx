@@ -126,7 +126,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
     { label: "Route", value: pathname, tone: "text-on-surface" },
   ];
   return (
-    <main className="container pt-space-xl pb-space-2xl">
+    <main className="container pb-space-2xl">
       <StatusHeader
         actions={
           <>
@@ -145,7 +145,7 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
         <dl className="grid grid-cols-1 border-t border-b border-surface-container-high sm:grid-cols-3">
           {facts.map((f) => (
             <div
-              className="border-surface-container-high p-space-md not-last:border-b sm:p-space-lg sm:not-first:border-l sm:not-last:border-b-0"
+              className="border-surface-container-high px-0 py-space-md not-last:border-b sm:p-space-lg sm:not-first:border-l sm:not-last:border-b-0"
               key={f.label}
             >
               <dt className="type-label text-secondary">{f.label}</dt>
