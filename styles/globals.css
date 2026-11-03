@@ -884,10 +884,3 @@
     transition-duration: 0.01ms !important;
   }
 }
-
-/* Without JS nothing would ever lift the first-load splash (components/layout/splash.tsx). */
-@media (scripting: none) {
-  [data-splash] {
-    display: none;
-  }
-}
