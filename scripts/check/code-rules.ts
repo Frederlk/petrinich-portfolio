@@ -193,6 +193,88 @@ const VENDORED_MEMO_DIRS = ["components/ui", "hooks"];
  */
 const SANCTIONED_BARRELS = new Set<string>();
 
+/**
+ * Tests sanctioned to write inside the repository, as repo-relative paths, each with its reason.
+ *
+ * `scripts/check/code-rules.test.ts`: its linked-worktree case must sit inside the repository, because that is the shape it tests; it removes everything it created, `.claude/` included.
+ */
+const SANCTIONED_REPO_WRITERS = new Set(["scripts/check/code-rules.test.ts"]);
+
+/** The top-level arguments of the call whose `(` is at `open`, split on commas outside any bracket and any string literal. */
+function callArguments(source: string, open: number): string[] {
+  const args: string[] = [];
+  let depth = 0;
+  let start = open + 1;
+  for (let index = open; index < source.length; index++) {
+    const char = source.charAt(index);
+    if (char === '"' || char === "'" || char === "`") {
+      index++;
+      while (index < source.length && source[index] !== char) {
+        index += source[index] === "\\" ? 2 : 1;
+      }
+    } else if ("([{".includes(char)) {
+      depth++;
+    } else if (")]}".includes(char)) {
+      depth--;
+      if (depth === 0) {
+        args.push(source.slice(start, index));
+        return args;
+      }
+    } else if (char === "," && depth === 1) {
+      args.push(source.slice(start, index));
+      start = index + 1;
+    }
+  }
+  args.push(source.slice(start));
+  return args;
+}
+
+/** Expressions that are the repository when a test runs: `bun run test` starts in the repo root. */
+const REPO_ROOT_EXPR =
+  /(?<![\w.$])(?:REPO_ROOT\b|import\.meta\.dirname\b|process\.cwd\(\))/;
+
+/** Code with single- and double-quoted string contents blanked, so a name inside quotes is not a reference to it. */
+const withoutStrings = (code: string): string =>
+  code.replaceAll(/'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"/g, '""');
+
+/**
+ * Whether an expression at offset `at` reaches the repository: it names a root, or an identifier whose nearest earlier `const`/`let`/`var` declaration does, followed to a fixpoint so `path.join(claudeDir, "x")` counts when `claudeDir` came from `REPO_ROOT`. Nearest earlier, so a `dir` redeclared under `os.tmpdir()` in a later test is judged by that declaration.
+ *
+ * ponytail: text order, not lexical scope — a sibling closure's declaration can shadow the right one. A parser removes it; none ships with TypeScript 7.
+ */
+function repoReach(source: string): (code: string, at: number) => boolean {
+  const declarations = [
+    ...source.matchAll(/\b(?:const|let|var)\s+(\w+)\s*=([^;]*)/g),
+  ].map((match) => ({
+    name: match[1] ?? "",
+    at: match.index,
+    init: withoutStrings(match[2] ?? ""),
+  }));
+  const tainted = new Set<(typeof declarations)[number]>();
+  const reaches = (code: string, at: number): boolean =>
+    REPO_ROOT_EXPR.test(code) ||
+    [...code.matchAll(/(?<![\w.$])[A-Za-z_$][\w$]*/g)].some(([id]) => {
+      const declaration = declarations.findLast(
+        (candidate) => candidate.name === id && candidate.at < at
+      );
+      return declaration !== undefined && tainted.has(declaration);
+    });
+  let grew = true;
+  while (grew) {
+    grew = false;
+    for (const declaration of declarations) {
+      if (
+        !tainted.has(declaration) &&
+        reaches(declaration.init, declaration.at)
+      ) {
+        tainted.add(declaration);
+        grew = true;
+      }
+    }
+  }
+  return reaches;
+}
+
 const lineOf = (source: string, offset: number): number =>
   source.slice(0, offset).split("\n").length;
 
@@ -445,6 +527,63 @@ const RULES: readonly Rule[] = [
         ].map((match) => ({ line: lineOf(source, match.index) }));
       }
       return [];
+    },
+  },
+  {
+    id: "test-writes-repo",
+    message:
+      "A test writes under os.tmpdir() (fs.mkdtempSync(path.join(os.tmpdir(), …))), never inside the repository: a leftover there changes what the checks see. An empty `.claude/` left by a test made dead-paths fail in CI while the parallel local gates stayed green. A test whose subject must live in the repo goes in SANCTIONED_REPO_WRITERS in code-rules.ts with its reason.",
+    test(file, source) {
+      if (
+        !/\.test\.[cm]?ts$/.test(file) ||
+        SANCTIONED_REPO_WRITERS.has(rel(file))
+      ) {
+        return [];
+      }
+      const reaches = repoReach(source);
+      // Only the path written to counts — the destination for a copy or rename, the first argument otherwise — so a file whose contents name the repository is not a write into it.
+      return [
+        ...source.matchAll(
+          /\b(mkdirSync|mkdtempSync|writeFileSync|appendFileSync|cpSync|copyFileSync|renameSync|rmSync)\s*\(/g
+        ),
+      ]
+        .filter((match) => {
+          const args = callArguments(source, match.index + match[0].length - 1);
+          const destination = /^(?:cp|copyFile|rename)Sync$/.test(
+            match[1] ?? ""
+          );
+          const target = args[destination ? 1 : 0] ?? "";
+          return reaches(withoutStrings(target), match.index);
+        })
+        .map((match) => ({ line: lineOf(source, match.index) }));
+    },
+  },
+  {
+    id: "workflow-checkout-permissions",
+    message:
+      'actions/checkout needs `contents: read`. A top-level `permissions: {}` with no `contents:` grant in a job makes checkout of a private repository fail with "repository not found" (profile-sync.yml, 2026-11-03; zizmor does not flag it). Grant `contents: read` at the top level or in the job that checks out.',
+    test(file, _source, raw) {
+      if (!/^\.github\/workflows\/[^/]+\.ya?ml$/.test(rel(file))) {
+        return [];
+      }
+      // Comments blanked within their line, so line numbers hold and a commented-out checkout does not count.
+      const yaml = raw.replaceAll(/(^|\s)#.*$/gm, "$1");
+      const jobs = /^jobs:[ \t]*$/m.exec(yaml);
+      if (!/^permissions:\s*\{\s*\}/m.test(yaml) || jobs === null) {
+        return [];
+      }
+      // Each job is a key at two-space indent under `jobs:`, and needs its own grant once the top level grants nothing.
+      return [
+        ...yaml
+          .slice(jobs.index)
+          .matchAll(/^ {2}[\w-]+:[^\n]*\n(?: {3,}[^\n]*\n?|[ \t]*\n)*/gm),
+      ]
+        .filter(
+          ([job]) =>
+            /\buses:\s*["']?actions\/checkout@/.test(job) &&
+            !/^\s+contents:\s*(?:read|write)\b/m.test(job)
+        )
+        .map((match) => ({ line: lineOf(yaml, jobs.index + match.index) }));
     },
   },
 ];

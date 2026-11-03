@@ -13,7 +13,7 @@
  *   bun scripts/check/dead-paths.ts a.ts b.md  # only these (pre-commit passes staged paths)
  */
 
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -48,10 +48,11 @@ const ROOT_SEGMENTS = new Set([
     .readdirSync(REPO_ROOT, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
     .map((entry) => entry.name),
-  // Dot directories count only where they exist: `.claude/` and `.scratch/` are gitignored, so a public clone and CI have neither, and a citation into them cannot be checked there.
-  ...[".claude", ".scratch", ".github", ".husky", ".vscode"].filter((dir) =>
-    fs.existsSync(path.join(REPO_ROOT, dir))
-  ),
+  ".claude",
+  ".scratch",
+  ".github",
+  ".husky",
+  ".vscode",
 ]);
 
 const EXTENSIONS = "ts|tsx|mts|mjs|cjs|js|jsx|md|json|jsonc|sh|sql|css|ya?ml";
@@ -110,63 +111,90 @@ const isUnchecked = (relative: string): boolean =>
     (dir) => relative === dir || relative.startsWith(`${dir}/`)
   );
 
-const argv = process.argv.slice(2);
-const candidates = (argv.length > 0 ? argv.map(rel) : trackedFiles()).filter(
-  (relative) =>
-    SCANNED_EXTENSIONS.some((ext) => relative.endsWith(ext)) &&
-    !isUnchecked(relative)
-);
-
-const findings: { file: string; line: number; cited: string }[] = [];
-
-for (const relative of candidates) {
-  const full = path.join(REPO_ROOT, relative);
-  const { data: body } = tryCatchSync(() => fs.readFileSync(full, "utf8"));
-  if (body === null) {
-    continue;
+/**
+ * Whether `cited`, a root-addressed citation in the repo-relative file `citingFile`, fails to resolve.
+ *
+ * A citation into a gitignored path (`.claude/`, `.scratch/`, `private/`) is never dead: the target exists only on the owner's machine, so a public clone and CI cannot check it, and the answer must not differ between them and a local run. Git decides what is ignored, asked only on a miss, so one spawn per unresolved citation.
+ */
+export function isDeadCitation(cited: string, citingFile: string): boolean {
+  if (fs.existsSync(path.join(REPO_ROOT, cited))) {
+    return false;
   }
+  // A README addresses its own subtree: `scripts/README.md` can write `check/gates.sh` for `scripts/check/gates.sh`. The first segment still had to look like a root directory to get here, so this only rescues a citation that resolves — it does not open the gate to arbitrary short references.
+  if (fs.existsSync(path.join(REPO_ROOT, path.dirname(citingFile), cited))) {
+    return false;
+  }
+  // This file is listed as deliberately naming something absent. See INTENTIONALLY_ABSENT.
+  if (INTENTIONALLY_ABSENT.has(citingFile)) {
+    return false;
+  }
+  const ignored = spawnSync("git", [
+    "-C",
+    REPO_ROOT,
+    "check-ignore",
+    "-q",
+    cited,
+  ]);
+  return ignored.status !== 0;
+}
 
-  for (const [index, line] of body.split("\n").entries()) {
-    for (const [, cited] of line.matchAll(CITATION_RE)) {
-      if (cited === undefined) {
-        continue;
-      }
-      const [first = ""] = cited.split("/");
+function main(): void {
+  const argv = process.argv.slice(2);
+  const candidates = (argv.length > 0 ? argv.map(rel) : trackedFiles()).filter(
+    (relative) =>
+      SCANNED_EXTENSIONS.some((ext) => relative.endsWith(ext)) &&
+      !isUnchecked(relative)
+  );
 
-      // Not addressed from the root — a short reference, not a claim about where a file lives.
-      if (!ROOT_SEGMENTS.has(first)) {
-        continue;
-      }
-      if (fs.existsSync(path.join(REPO_ROOT, cited))) {
-        continue;
-      }
-      // A README addresses its own subtree: `scripts/README.md` can write `check/gates.sh` for `scripts/check/gates.sh`. The first segment still had to look like a root directory to get here, so this only rescues a citation that resolves — it does not open the gate to arbitrary short references.
-      if (fs.existsSync(path.join(REPO_ROOT, path.dirname(relative), cited))) {
-        continue;
-      }
-      // This file is listed as deliberately naming something absent. See INTENTIONALLY_ABSENT.
-      if (INTENTIONALLY_ABSENT.has(relative)) {
-        continue;
-      }
+  const findings: { file: string; line: number; cited: string }[] = [];
 
-      findings.push({ file: relative, line: index + 1, cited });
+  for (const relative of candidates) {
+    const full = path.join(REPO_ROOT, relative);
+    const { data: body } = tryCatchSync(() => fs.readFileSync(full, "utf8"));
+    if (body === null) {
+      continue;
+    }
+
+    for (const [index, line] of body.split("\n").entries()) {
+      for (const [, cited] of line.matchAll(CITATION_RE)) {
+        if (cited === undefined) {
+          continue;
+        }
+        const [first = ""] = cited.split("/");
+
+        // Not addressed from the root — a short reference, not a claim about where a file lives.
+        if (!ROOT_SEGMENTS.has(first)) {
+          continue;
+        }
+        if (isDeadCitation(cited, relative)) {
+          findings.push({ file: relative, line: index + 1, cited });
+        }
+      }
     }
   }
+
+  if (findings.length === 0) {
+    console.log(`dead paths OK (${candidates.length} files checked)`);
+    process.exit(0);
+  }
+
+  console.error(
+    `Citations pointing at files that do not exist: ${findings.length}\n`
+  );
+  for (const finding of findings) {
+    console.error(`  ${finding.file}:${finding.line}`);
+    console.error(`    \`${finding.cited}\`\n`);
+  }
+  console.error(
+    "A path written from the repository root is a claim that can be checked, and these do not hold. Fix the path, or — if the target is in node_modules or gone for good — name the symbol in words instead, per `.claude/rules/comments.md`."
+  );
+  process.exit(1);
 }
 
-if (findings.length === 0) {
-  console.log(`dead paths OK (${candidates.length} files checked)`);
-  process.exit(0);
+// Only scan when run as a command: the test imports `isDeadCitation`, and a bare import must not walk the repo.
+if (
+  process.argv[1] !== undefined &&
+  import.meta.filename === path.resolve(process.argv[1])
+) {
+  main();
 }
-
-console.error(
-  `Citations pointing at files that do not exist: ${findings.length}\n`
-);
-for (const finding of findings) {
-  console.error(`  ${finding.file}:${finding.line}`);
-  console.error(`    \`${finding.cited}\`\n`);
-}
-console.error(
-  "A path written from the repository root is a claim that can be checked, and these do not hold. Fix the path, or — if the target is in node_modules or gone for good — name the symbol in words instead, per `.claude/rules/comments.md`."
-);
-process.exit(1);

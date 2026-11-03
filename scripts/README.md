@@ -20,7 +20,7 @@ Repo tooling. Nothing here is part of the application.
 | `check/dead-paths.ts` | Backticked repository paths that do not exist | `bun check:paths`, pre-commit, CI |
 | `check/sibling-identical.sh` | Changed files now byte-identical to a sibling repo's copy, the ones to review after a port | by hand |
 | `check/build-when-needed.sh` | `bun cv:pdf` (build + reprint, PDF re-staged) when a staged file feeds `/cv`; otherwise `bun run build` only when a staged file is a route or build config | pre-commit |
-| `check/gates.sh` | Every check, one report | `bun gates` |
+| `check/gates.sh` | Every check, one report; `--ci` runs them one at a time in CI's order, so a leftover one gate writes for the next shows up locally; `--fast` skips the build | `bun gates` |
 | `check/ci-summary.ts` | The step table on a CI run's summary page | CI |
 | `merge-patch.ts` | Merges writer patches into `content/projects.json` (or `--early` batches into `content/early-work.json`), checks stack ids and formats the file | by hand, per wave |
 | `cv-pdf.ts` | Builds the site, serves it on port 4312 and prints `/cv` to the committed `public/Sergey-Petrinich-CV.pdf` through headless Chrome (tagged, with an outline), then stamps its metadata with `cv-pdf-meta.py` | `bun cv:pdf`, pre-commit via `check/build-when-needed.sh` |
@@ -37,6 +37,6 @@ The guard hook, `.claude/hooks/guard.ts`, imports `check/code-rules.ts`, so the 
 This repo is the one place the CV lives; every channel is rendered from `content/`.
 
 1. Edit `content/*.json` (or `content/case-studies/`). The reasons behind the numbers and wording are in `private/notes/decisions.md`.
-2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-CV.pdf` and stages it. It runs because `bun install` (the `prepare` script) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. A fresh clone without `bun install` has no hooks. An edit made on GitHub directly runs no hook: pull, run `bun cv:pdf` and commit the PDF.
+2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-CV.pdf` and stages it. It runs because `bun run prepare` (husky) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. On the owner's machine `bun install` runs no lifecycle scripts, so a fresh clone has no hooks until `bun run prepare`; `bun gates` fails its `hooks` gate until then. An edit made on GitHub directly runs no hook: pull, run `bun cv:pdf` and commit the PDF.
 3. Push. Vercel deploys the site, and the Profile sync workflow updates the GitHub profile (`bun sync:github` shows the same change locally).
 4. Run `bun linkedin` in your own terminal and paste what it copies.

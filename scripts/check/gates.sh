@@ -6,18 +6,23 @@
 # Every gate except `build` runs at once; `build` runs after them, alone, because it rewrites `.next/` while `typecheck` and `knip` may be reading generated types. The report is printed in a fixed order once everything has finished.
 #
 # `--fast` (`bun gates --fast`) skips `build`, for the main checkout, where a build would rewrite the `.next/` the owner's dev server reads.
+#
+# `--ci` (`bun gates --ci`) runs the gates one at a time, in the order of `.github/workflows/ci.yml` (which also runs `bun check:workflows`; this does not). Parallel runs hide what one gate leaves behind for the next: a test once left an empty `.claude/` that failed `dead-paths` in CI while the local gates stayed green. It combines with `--fast`.
 
 set -u
 
 FAST=0
-case "${1:-}" in
-  "") ;;
-  --fast) FAST=1 ;;
-  *)
-    echo "usage: gates.sh [--fast]" >&2
-    exit 2
-    ;;
-esac
+SERIAL=0
+for arg in "$@"; do
+  case "$arg" in
+    --fast) FAST=1 ;;
+    --ci) SERIAL=1 ;;
+    *)
+      echo "usage: gates.sh [--fast] [--ci]" >&2
+      exit 2
+      ;;
+  esac
+done
 
 cd "$(dirname "$0")/../.."
 
@@ -33,23 +38,40 @@ start() {
   name="$1"
   shift
   ORDER="$ORDER $name"
-  (
+  if [ "$SERIAL" = 1 ]; then
+    echo "  run   $name"
     "$@" >"$DIR/$name.log" 2>&1
     echo $? >"$DIR/$name.rc"
-  ) &
+  else
+    (
+      "$@" >"$DIR/$name.log" 2>&1
+      echo $? >"$DIR/$name.rc"
+    ) &
+  fi
+}
+
+# Pre-commit runs only through husky's repo-local `core.hooksPath`. Without it the Shai-Hulud guard's global hooksPath takes over and `.husky/pre-commit` silently never runs, as it did for this repo's first commits.
+hooks() {
+  actual=$(git config core.hooksPath)
+  if [ "$actual" != ".husky/_" ]; then
+    echo "core.hooksPath is '${actual}', not '.husky/_': .husky/pre-commit does not run. Fix: bun run prepare (it runs husky; bun install on this machine runs no lifecycle scripts)."
+    return 1
+  fi
 }
 
 echo "Gates:"
 
-start typecheck      bun typecheck
+# CI's order, which `--ci` relies on, minus CI's first check, `bun check:workflows` (zizmor through uv). `hooks` and `guard-test` are local-only.
+start hooks          hooks
 start lint           bun lint
 start format         bun format:check
+start typecheck      bun typecheck
+start test           bun run test
 start markdown-links bun scripts/check/markdown-links.ts
 start dead-paths     bun scripts/check/dead-paths.ts
 start code-rules     bun scripts/check/code-rules.ts
 start case-studies   bun scripts/check/case-studies.ts
 start knip           bun knip
-start test           bun run test
 # The Claude guard hook lives in the gitignored `.claude/`, so its tests run only where the folder exists (the owner's checkout), never in CI or a public clone.
 if [ -d .claude/hooks ]; then
   start guard-test   bun test ./.claude/hooks

@@ -118,6 +118,30 @@ const CASES: {
     caught: ["components/button.test.tsx", "it('renders', () => {});"],
     passes: ["package.json", '{ "dependencies": { "jsdom": "^27.0.0" } }'],
   },
+  {
+    id: "test-writes-repo",
+    why: "a scratch directory under the OS temp dir is where a test writes",
+    caught: [
+      "scripts/thing.test.ts",
+      'const dir = path.join(REPO_ROOT, ".claude");\nconst sub = path.join(dir, "x");\nfs.mkdirSync(sub, { recursive: true });',
+    ],
+    passes: [
+      "scripts/thing.test.ts",
+      'const REPO_ROOT = "/r";\nconst dir = fs.mkdtempSync(path.join(os.tmpdir(), "x-"));\nfs.writeFileSync(path.join(dir, "a"), REPO_ROOT);\nfs.rmSync(dir, { recursive: true });',
+    ],
+  },
+  {
+    id: "workflow-checkout-permissions",
+    why: "an empty top level with `contents: read` granted in the job is the least-privilege shape",
+    caught: [
+      ".github/workflows/x.yml",
+      "permissions: {}\njobs:\n  a:\n    steps:\n      - uses: actions/checkout@abc # v7\n",
+    ],
+    passes: [
+      ".github/workflows/x.yml",
+      "permissions: {}\njobs:\n  a:\n    permissions:\n      contents: read\n    steps:\n      - uses: actions/checkout@abc # v7\n",
+    ],
+  },
 ];
 
 void describe("code-rules", () => {
@@ -160,6 +184,42 @@ void describe("code-rules", () => {
     ["docs/d.md", `Never run ${WRONG} install here.`, "package-manager", false],
     ["docs/e.md", "See http://a.com/x.ts:80 for details", "file-line", false],
     ["features/x/index.ts", "export const a = 1;", "barrel", false],
+    [
+      "scripts/a.test.ts",
+      'const dir = path.join(REPO_ROOT, "a");\nit("x", () => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), "x-")); fs.rmSync(dir); });',
+      "test-writes-repo",
+      false,
+    ],
+    [
+      "scripts/b.test.ts",
+      'const dir = path.join(REPO_ROOT, "a");\nconst t = os.tmpdir();\nfs.writeFileSync(path.join(t, "dir"), "x");',
+      "test-writes-repo",
+      false,
+    ],
+    [
+      "scripts/c.test.ts",
+      'fs.cpSync(path.join(a, "x)"), path.join(REPO_ROOT, "y"));',
+      "test-writes-repo",
+      true,
+    ],
+    [
+      "scripts/d.test.ts",
+      'fs.mkdirSync(path.join(process.cwd(), ".claude"));',
+      "test-writes-repo",
+      true,
+    ],
+    [
+      ".github/workflows/two.yml",
+      "permissions: {}\njobs:\n  a:\n    permissions:\n      contents: read\n    steps:\n      - uses: actions/checkout@abc\n  b:\n    steps:\n      - uses: actions/checkout@abc\n",
+      "workflow-checkout-permissions",
+      true,
+    ],
+    [
+      ".github/workflows/commented.yml",
+      "permissions: {}\njobs:\n  a:\n    steps:\n      # - uses: actions/checkout@abc\n      - run: echo hi\n",
+      "workflow-checkout-permissions",
+      false,
+    ],
   ] as const) {
     void it(`${file}: ${rule} ${shouldCatch ? "caught" : "passes"}`, () => {
       assert.equal(ids(file, source).includes(rule), shouldCatch);
@@ -205,7 +265,7 @@ void describe("repoRelative", () => {
   void it("scopes a nested linked worktree against its own root, the main tree against the repository", () => {
     const claudeDir = path.join(REPO_ROOT, ".claude");
     const worktrees = path.join(claudeDir, "worktrees");
-    // `.claude/` is gitignored, so a clean clone (CI) has none; one left behind here makes `dead-paths.ts` treat it as a real root and fail on every citation into it.
+    // `.claude/` is gitignored, so a clean clone (CI) has none; one left behind here changes what the checks see, as it once failed `dead-paths.ts` in CI only.
     const createdClaudeDir = !fs.existsSync(claudeDir);
     const createdWorktrees = !fs.existsSync(worktrees);
     fs.mkdirSync(worktrees, { recursive: true });
