@@ -38,6 +38,9 @@ import type { ComponentType } from "react";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Every real slug is prerendered by generateStaticParams; only an unknown slug renders at request time, and it ends in notFound(). That render may block, so the root layout's URL hooks (the nav links, nuqs) need no Suspense boundary or skeleton here.
+export const instant = false;
+
 export function generateStaticParams() {
   return [...projects, ...earlyPages].map((p) => ({ slug: p.id }));
 }
