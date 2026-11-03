@@ -26,7 +26,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-space-md">
           <Link
-            className="link-draw type-h3 text-on-surface uppercase hover:text-primary"
+            className="type-h3 text-on-surface uppercase link-draw hover:text-primary"
             href={ROUTES.HOME}
             transitionTypes={NAV_BACK}
           >

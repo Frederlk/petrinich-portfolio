@@ -25,6 +25,10 @@
 html {
   view-transition-name: root !important;
 }
+/* React then hides the root group it did not expect with an opacity-0 animation (fill forwards); an important declaration outranks any animation, so the page snapshots stay visible. */
+::view-transition-group(root) {
+  opacity: 1 !important;
+}
 ::view-transition-old(root),
 ::view-transition-new(root) {
   mix-blend-mode: normal;

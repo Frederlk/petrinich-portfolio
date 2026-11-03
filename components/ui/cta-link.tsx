@@ -24,13 +24,13 @@ export const ctaLinkVariants = cva(
           "fill-sweep border border-primary-container type-button text-primary-container sweep-primary-container hover:text-on-primary-container",
         outline:
           "fill-sweep border border-on-surface bg-transparent type-button text-on-surface sweep-on-surface hover:text-surface",
-        // The orange download link of a channel list: caps, underline draws in.
-        download: "justify-end link-draw type-button text-primary-container",
+        // The orange download link of a channel list: caps, underline fades in.
+        download: "justify-end type-button text-primary-container link-draw",
         // A plain text link on the right of a channel row: no box, no caps.
         channel:
-          "justify-end link-draw type-code break-all text-on-surface hover:text-primary-container",
+          "justify-end type-code break-all text-on-surface link-draw hover:text-primary-container",
         // A plain text link in a footer list: no box, no caps.
-        text: "justify-start link-draw type-code text-on-surface-variant hover:text-primary",
+        text: "justify-start type-code text-on-surface-variant link-draw hover:text-primary",
         primary:
           "fill-sweep bg-primary-container type-button text-on-primary-container sweep-on-surface hover:text-surface",
       },

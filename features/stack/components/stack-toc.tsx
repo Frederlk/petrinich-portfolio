@@ -95,14 +95,15 @@ export function StackToc({
     <nav
       aria-label="Technology groups"
       className={cn(
-        "sticky top-[calc(4rem+var(--search-band))] z-30 -mx-margin-mobile border-b border-surface-container-high bg-surface md:-mx-margin lg:static lg:mx-0 lg:border-b-0",
+        "sticky top-[calc(4rem+var(--search-band))] z-30 -mx-margin-mobile border-b border-surface-container-high bg-surface md:-mx-margin lg:static lg:mx-0 lg:flex lg:min-h-0 lg:flex-col lg:border-b-0",
         className
       )}
     >
       {/* From lg up a long list scrolls on its own; the scrollbar shows only while the pointer is over it or it scrolls. The list's `ml-px` keeps the active bar, which sits on the left rule, inside the clip. */}
       <ScrollArea
-        className="lg:max-h-[calc(100svh-5.5rem-var(--search-band))]"
+        className="lg:flex lg:flex-col"
         fade
+        viewportClassName="lg:min-h-0"
       >
         <ul
           className="flex snap-x gap-space-sm overflow-x-auto px-margin-mobile py-space-sm md:px-margin lg:ml-px lg:flex-col lg:gap-0 lg:overflow-visible lg:border-l lg:border-surface-container-high lg:p-0"

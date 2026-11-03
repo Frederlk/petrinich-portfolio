@@ -7,7 +7,7 @@ import { NAV_ITEMS, navTransition } from "~/components/layout/nav-items";
 
 import { cn } from "~/lib/cn";
 
-// The desktop links of the header. The current section gets the vermilion underline; "Experience" is a hash link on the home page and is never current. Every link carries the 1px bottom border (transparent unless current), so the static fallback below and the hydrated links have the same height.
+// The desktop links of the header. The current section keeps the hover underline, in vermilion; "Experience" is a hash link on the home page and is never current.
 export function NavLinkList({ pathname }: { pathname: string | null }) {
   return (
     <>
@@ -20,10 +20,10 @@ export function NavLinkList({ pathname }: { pathname: string | null }) {
           <Link
             aria-current={current ? "page" : undefined}
             className={cn(
-              "border-b link-draw py-space-xs type-button",
+              "py-space-xs type-button link-draw",
               current
-                ? "border-primary-container text-on-surface"
-                : "border-transparent text-on-surface-variant hover:text-on-surface"
+                ? "text-on-surface decoration-primary-container!"
+                : "text-on-surface-variant hover:text-on-surface"
             )}
             href={item.href}
             key={item.href}

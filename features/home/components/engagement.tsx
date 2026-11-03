@@ -78,8 +78,11 @@ export function Engagement() {
                   size="none"
                   variant="download"
                 >
-                  <DownloadSimpleIcon aria-hidden className="mr-2 size-4" />
                   Download PDF
+                  <DownloadSimpleIcon
+                    aria-hidden
+                    className="ml-space-xs size-4"
+                  />
                 </CtaLink>
               </li>
             </ul>

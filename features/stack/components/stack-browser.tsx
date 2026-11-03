@@ -77,13 +77,13 @@ export function StackView({
   const hasCore = shownCore.length > 0;
 
   return (
-    // Below lg the search sticks under the site header across the page, then the core cells, the contents strip and the groups follow (CSS `order`, because the sidebar wrapper is `display: contents` there). From lg up the search heads the sidebar, which sticks as one column with the contents list beside the cells and the groups. `--search-band` is the search's height (2.75rem field plus its padding), which the sticky contents and the group anchors add to their offsets so nothing hides behind it.
+    // Below lg the search sticks under the site header across the page, then the core cells, the contents strip and the groups follow (CSS `order`, because the sidebar wrapper is `display: contents` there). From lg up the search heads the sidebar, which sticks as one column with the contents list beside the cells and the groups; the column is capped at the screen under its sticky top plus a 16px bottom gap, and the list takes what the search leaves, so its height is never computed by hand. `--search-band` is the search's height (2.75rem field plus its padding), which the sticky contents and the group anchors add to their offsets so nothing hides behind it.
     <div
       className="flex flex-col [--search-band:--spacing(15)] lg:grid lg:grid-cols-[15rem_1fr] lg:gap-x-space-xl lg:pt-space-md"
       ref={view}
     >
-      <div className="contents lg:sticky lg:top-19 lg:row-span-2 lg:block lg:self-start">
-        <search className="sticky top-16 z-40 order-1 mt-space-md bg-surface py-space-sm lg:static lg:mt-0 lg:pt-0">
+      <div className="contents lg:sticky lg:top-19 lg:row-span-2 lg:flex lg:max-h-[calc(100svh-var(--spacing)*23)] lg:flex-col lg:self-start">
+        <search className="sticky top-16 z-40 order-1 mt-space-md bg-surface py-space-sm lg:static lg:order-none lg:mt-0 lg:pt-0">
           <label
             className="flex min-h-11 cursor-text items-center gap-space-sm border border-surface-container-high bg-surface-container-low px-space-md transition-colors duration-200 ease-(--ease-enter) focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-ring hover:bg-surface-container"
             htmlFor="stack-search"

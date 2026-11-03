@@ -54,11 +54,14 @@ export function Footer() {
             {/* A plain link is the one pointer every AI fetcher follows; the head and Link header carry the same addresses. */}
             <p>
               For AI agents:{" "}
-              <a className="underline" href={LLMS_PATH}>
+              <a className="underline decoration-1" href={LLMS_PATH}>
                 llms.txt
               </a>{" "}
               ·{" "}
-              <a className="underline" href={PAGE_TWINS["/"].markdown}>
+              <a
+                className="underline decoration-1"
+                href={PAGE_TWINS["/"].markdown}
+              >
                 cv.md
               </a>
             </p>
@@ -132,8 +135,8 @@ export function Footer() {
               size="none"
               variant="text"
             >
-              <DownloadSimpleIcon aria-hidden className="mr-2 size-4" />
               CV: Download PDF
+              <DownloadSimpleIcon aria-hidden className="ml-space-xs size-4" />
             </CtaLink>
           </div>
           <div className="mt-space-xs flex items-center justify-between gap-space-md border-t border-surface-container-high pt-space-sm type-meta text-secondary">
