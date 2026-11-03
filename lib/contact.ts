@@ -11,7 +11,7 @@ export const email = mailto.replace("mailto:", "");
 export const AVAILABILITY = "Open to full-time, contract and freelance work";
 
 // The CV file lives at one public path and is saved under the same name, so a copy on a recruiter's disk says whose CV it is. `/cv.pdf` redirects here (next.config.ts).
-export const CV_PDF_NAME = "Sergey-Petrinich-CV.pdf";
+export const CV_PDF_NAME = "Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf";
 export const CV_PDF_PATH = `/${CV_PDF_NAME}`;
 export const webContacts = profile.contacts.filter((c) =>
   c.url.startsWith("http")

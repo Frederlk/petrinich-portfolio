@@ -1,55 +1,140 @@
 {
-  "skills": [
-    "typescript",
-    "javascript",
-    "html",
-    "css",
-    "sass",
-    "react",
-    "next-js",
-    "tailwind-css",
-    "zustand",
-    "redux-toolkit",
-    "tanstack-query",
-    "react-hook-form",
-    "formik",
-    "zod",
-    "yup",
-    "node-js",
-    "orpc",
-    "trpc",
-    "graphql",
-    "openapi",
-    "express",
-    "nestjs",
-    "postgresql",
-    "mysql",
-    "prisma",
-    "drizzle",
-    "supabase",
-    "convex",
-    "firebase",
-    "better-auth",
-    "clerk",
-    "nextauth",
-    "supabase-auth",
-    "stripe",
-    "paypal",
-    "square",
-    "sanity",
-    "builder-io",
-    "strapi",
-    "storyblok",
-    "shopify",
-    "git",
-    "docker",
-    "vercel",
-    "aws",
-    "playwright",
-    "jest",
-    "biome",
-    "eslint",
-    "sentry",
-    "posthog"
+  "groups": [
+    {
+      "name": "Core stack",
+      "items": [
+        "typescript",
+        "react",
+        "next-js",
+        "node-js",
+        "postgresql",
+        "tailwind-css",
+        "docker"
+      ]
+    },
+    {
+      "name": "Front end",
+      "items": [
+        "javascript",
+        "html",
+        "css",
+        "sass",
+        "shadcn-ui",
+        "radix-ui",
+        "base-ui",
+        "motion",
+        "gsap",
+        "react-compiler",
+        "recharts"
+      ]
+    },
+    {
+      "name": "State, forms & data fetching",
+      "items": [
+        "tanstack-query",
+        "tanstack-table",
+        "zustand",
+        "redux-toolkit",
+        "react-hook-form",
+        "formik",
+        "zod",
+        "yup",
+        "nuqs"
+      ]
+    },
+    {
+      "name": "APIs & back end",
+      "items": [
+        "orpc",
+        "trpc",
+        "rest-apis",
+        "graphql",
+        "openapi",
+        "express",
+        "nestjs",
+        "hono",
+        "webhooks",
+        "cron-jobs"
+      ]
+    },
+    {
+      "name": "Data",
+      "items": [
+        "prisma",
+        "drizzle",
+        "supabase",
+        "mysql",
+        "mongodb",
+        "redis",
+        "neon",
+        "convex",
+        "firebase"
+      ]
+    },
+    {
+      "name": "Auth & payments",
+      "items": [
+        "better-auth",
+        "clerk",
+        "nextauth",
+        "supabase-auth",
+        "oauth",
+        "jwt",
+        "stripe",
+        "paypal",
+        "square"
+      ]
+    },
+    {
+      "name": "CMS & integrations",
+      "items": [
+        "sanity",
+        "builder-io",
+        "strapi",
+        "storyblok",
+        "shopify",
+        "resend",
+        "twilio"
+      ]
+    },
+    {
+      "name": "AI",
+      "items": [
+        "claude-code",
+        "vercel-ai-sdk",
+        "openai-api",
+        "claude-api",
+        "gemini-api",
+        "mcp"
+      ]
+    },
+    {
+      "name": "Quality & tooling",
+      "items": [
+        "git",
+        "playwright",
+        "vitest",
+        "jest",
+        "biome",
+        "eslint",
+        "prettier",
+        "husky",
+        "storybook",
+        "pnpm"
+      ]
+    },
+    {
+      "name": "Infrastructure & observability",
+      "items": [
+        "docker-compose",
+        "github-actions",
+        "vercel",
+        "aws",
+        "cloudflare-workers",
+        "nginx",
+        "sentry",
+        "posthog"
+      ]
+    }
   ]
 }

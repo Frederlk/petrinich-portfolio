@@ -23,10 +23,10 @@ Repo tooling. Nothing here is part of the application.
 | `check/gates.sh` | Every check, one report; `--ci` runs them one at a time in CI's order, so a leftover one gate writes for the next shows up locally; `--fast` skips the build | `bun gates` |
 | `check/ci-summary.ts` | The step table on a CI run's summary page | CI |
 | `merge-patch.ts` | Merges writer patches into `content/projects.json` (or `--early` batches into `content/early-work.json`), checks stack ids and formats the file | by hand, per wave |
-| `cv-pdf.ts` | Builds the site, serves it on port 4312 and prints `/cv` to the committed `public/Sergey-Petrinich-CV.pdf` through headless Chrome (tagged, with an outline), then stamps its metadata with `cv-pdf-meta.py` | `bun cv:pdf`, pre-commit via `check/build-when-needed.sh` |
+| `cv-pdf.ts` | Builds the site, serves it on port 4312 and prints `/cv` to the committed `public/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf` through headless Chrome (tagged, with an outline), then stamps its metadata with `cv-pdf-meta.py` | `bun cv:pdf`, pre-commit via `check/build-when-needed.sh` |
 | `sync-github.ts` | Renders the GitHub profile README and account fields (name, bio, blog, location, company, hireable) from `content/` and writes them through `gh`; dry run unless `--apply` | `bun sync:github`, `.github/workflows/profile-sync.yml` |
 | `linkedin.ts` | Walks through every LinkedIn field rendered from `content/` as plain text: copies it, opens the edit page, waits; remembers what was pasted in `linkedin-state.json` (gitignored private folder) so the next run shows only changes | `bun linkedin` in your own terminal |
-| `cv-pdf-meta.py` | Sets title, author, subject, keywords, creator, language, dates and XMP of the printed CV with PyMuPDF; needs `uv` | run by `cv-pdf.ts` |
+| `cv-pdf-meta.py` | Fails when the printed CV runs past two pages or carries a Type3 font, then sets title, author, subject, keywords, creator, language, dates and XMP with PyMuPDF; needs `uv` | run by `cv-pdf.ts` |
 | `lib/is-record.ts` | Shared by the guard hook and `check/ci-summary.ts` | imported, never run |
 | `verify/` | Pixel-check harness, see its own README | `bun verify` |
 
@@ -37,6 +37,6 @@ The guard hook, `.claude/hooks/guard.ts`, imports `check/code-rules.ts`, so the 
 This repo is the one place the CV lives; every channel is rendered from `content/`.
 
 1. Edit `content/*.json` (or `content/case-studies/`). The reasons behind the numbers and wording are in `private/notes/decisions.md`.
-2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-CV.pdf` and stages it. It runs because `bun run prepare` (husky) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. On the owner's machine `bun install` runs no lifecycle scripts, so a fresh clone has no hooks until `bun run prepare`; `bun gates` fails its `hooks` gate until then. An edit made on GitHub directly runs no hook: pull, run `bun cv:pdf` and commit the PDF.
+2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf` and stages it. It runs because `bun run prepare` (husky) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. On the owner's machine `bun install` runs no lifecycle scripts, so a fresh clone has no hooks until `bun run prepare`; `bun gates` fails its `hooks` gate until then. An edit made on GitHub directly runs no hook: pull, run `bun cv:pdf` and commit the PDF.
 3. Push. Vercel deploys the site, and the Profile sync workflow updates the GitHub profile (`bun sync:github` shows the same change locally).
 4. Run `bun linkedin` in your own terminal and paste what it copies.

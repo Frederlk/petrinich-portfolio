@@ -51,7 +51,7 @@ export function cvMarkdown() {
     "",
     profile.summary,
     "",
-    "## Core skills",
+    "## Skills",
     "",
     ...cvSkillGroups.map((g) => `- **${g.name}:** ${g.items.join(", ")}`),
     "",
@@ -83,7 +83,7 @@ export function cvMarkdown() {
   }
   lines.push(
     "",
-    "## Selected projects",
+    "## Projects",
     "",
     ...selectedProjects.map(projectLine),
     "",

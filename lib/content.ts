@@ -103,7 +103,7 @@ for (const p of projects) {
   }
 }
 
-const cvSkillIds = cvSkillsSchema.parse(cvSkillsJson).skills;
+const cvSkills = cvSkillsSchema.parse(cvSkillsJson).groups;
 
 export const techById = new Map(technologies.map((t) => [t.id, t]));
 export const projectById = new Map(projects.map((p) => [p.id, p]));
@@ -124,7 +124,10 @@ for (const w of earlyWork) {
 for (const o of openSource) {
   assertKnownTechnologies(`open-source.json "${o.id}"`, o.stack);
 }
-assertKnownTechnologies("cv-skills.json", cvSkillIds);
+assertKnownTechnologies(
+  "cv-skills.json",
+  cvSkills.flatMap((g) => g.items)
+);
 
 // The technologies of the "Core stack" group, in file order: what the person data names as the main stack.
 export const coreStackNames = technologies
@@ -133,14 +136,8 @@ export const coreStackNames = technologies
 
 export const featuredProjects = projects.filter((p) => p.featured);
 
-// The /cv skills list: the technologies chosen in cv-skills.json, grouped by their technology group in file order.
-export const cvSkillGroups = (() => {
-  const groups = new Map<string, string[]>();
-  for (const id of cvSkillIds) {
-    const tech = techById.get(id);
-    if (tech) {
-      groups.set(tech.group, [...(groups.get(tech.group) ?? []), tech.name]);
-    }
-  }
-  return [...groups].map(([name, items]) => ({ items, name }));
-})();
+// The /cv skills list: the groups of cv-skills.json with their technology ids resolved to names (every id is checked above).
+export const cvSkillGroups = cvSkills.map((g) => ({
+  items: g.items.flatMap((id) => techById.get(id)?.name ?? []),
+  name: g.name,
+}));

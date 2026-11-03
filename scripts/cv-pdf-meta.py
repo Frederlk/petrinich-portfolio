@@ -17,6 +17,17 @@ with open(meta_path, encoding="utf-8") as f:
     meta = json.load(f)
 
 doc = pymupdf.open(pdf_path)
+
+# The CV must stay two pages and its fonts must embed as outline fonts: a variable font prints as Type3 glyphs, which viewers draw unhinted (the 2026-11-03 "Full" with uneven letters) and parsers extract worse. Either failure stops the print, and with it the pre-commit hook.
+MAX_PAGES = 2
+problems = []
+if doc.page_count > MAX_PAGES:
+    problems.append(f"{doc.page_count} pages, the CV keeps to {MAX_PAGES}")
+type3 = {f[3] or f[4] for page in range(doc.page_count) for f in doc.get_page_fonts(page) if f[2] == "Type3"}
+if type3:
+    problems.append(f"Type3 fonts {sorted(type3)}: a variable font reached the print (app/cv/page.tsx, CV_FONT)")
+if problems:
+    sys.exit("cv-pdf-meta: " + "; ".join(problems))
 # Chrome stamps its creation date from a virtual clock (--virtual-time-budget), so both dates are set from the real UTC time of this run.
 now = datetime.now(timezone.utc).strftime("D:%Y%m%d%H%M%S+00'00'")
 created = now

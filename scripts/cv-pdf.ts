@@ -1,4 +1,4 @@
-// Prints /cv?print=1 (a plain /cv redirects to the home page) to public/Sergey-Petrinich-CV.pdf through headless Chrome, using the page's own print stylesheet (styles/cv-print.css: A4, its @page margins and running footer, no browser header or footer), then stamps the document info and XMP with scripts/cv-pdf-meta.py (needs `uv`). The file is committed and served as /Sergey-Petrinich-CV.pdf (/cv.pdf redirects to it), so run `bun cv:pdf` and commit the result whenever the CV content or print styles change.
+// Prints /cv?print=1 (a plain /cv redirects to the home page) to public/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf through headless Chrome, using the page's own print stylesheet (styles/cv-print.css: A4 and its @page margins, no browser header or footer), then stamps the document info and XMP with scripts/cv-pdf-meta.py (needs `uv`), which also fails on a third page or a Type3 font. The file is committed and served as /Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf (/cv.pdf redirects to it), so run `bun cv:pdf` and commit the result whenever the CV content or print styles change.
 // Builds the site (skip with --reuse-build), serves it on a spare port, prints, and stops the server. Ported from the old portfolio's cv-pdf.ts, minus the pdf-lib author stamp.
 import { execFileSync, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
@@ -11,7 +11,11 @@ import { z } from "zod";
 const PORT = 4312;
 const ROOT = join(import.meta.dirname, "..");
 // Same name as CV_PDF_NAME in lib/contact.ts (duplicated here, not imported).
-const OUT = join(ROOT, "public", "Sergey-Petrinich-CV.pdf");
+const OUT = join(
+  ROOT,
+  "public",
+  "Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf"
+);
 const META_SCRIPT = join(import.meta.dirname, "cv-pdf-meta.py");
 
 // The part of /resume.json the PDF metadata is built from.

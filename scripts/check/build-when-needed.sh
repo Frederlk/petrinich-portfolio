@@ -1,5 +1,5 @@
 #!/bin/sh
-# Runs `next build` only when a staged file could break it, because a build costs ~26s against typecheck's ~2s  and most commits cannot break one. When a staged file feeds the CV, it runs `bun cv:pdf` instead — that builds too, then reprints public/Sergey-Petrinich-CV.pdf and stages it, so the committed PDF never lags the content.
+# Runs `next build` only when a staged file could break it, because a build costs ~26s against typecheck's ~2s  and most commits cannot break one. When a staged file feeds the CV, it runs `bun cv:pdf` instead — that builds too, then reprints public/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf and stages it, so the committed PDF never lags the content.
 # This script lives in scripts/check/, so the repo root is ../..
 cd "$(dirname "$0")/../.." || exit 1
 
@@ -23,7 +23,7 @@ cv_matched=$(printf '%s\n' "$staged" | grep -E '^(app/cv/|app/layout\.tsx|conten
 if [ -n "$cv_matched" ]; then
   echo "CV sources changed — rebuilding the site and reprinting the CV PDF:"
   printf '  %s\n' "$cv_matched"
-  if bun cv:pdf && git add public/Sergey-Petrinich-CV.pdf; then
+  if bun cv:pdf && git add public/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf; then
     exit 0
   fi
   echo ""

@@ -150,11 +150,16 @@ const nextConfig: NextConfig = {
 
   // ============ Routing ============
   redirects: () => [
-    // The CV file name carries its owner; the old address keeps working.
+    // The CV file name carries its owner and role; the short address and the 2026 name without the role (already sent out in applications) keep working.
     {
-      destination: "/Sergey-Petrinich-CV.pdf",
+      destination: "/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf",
       permanent: true,
       source: "/cv.pdf",
+    },
+    {
+      destination: "/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf",
+      permanent: true,
+      source: "/Sergey-Petrinich-CV.pdf",
     },
     // The CV is the home page now. The old print sheet stays at /cv?print=1: scripts/cv-pdf.ts prints it into the PDF.
     {
