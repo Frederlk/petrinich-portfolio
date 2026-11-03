@@ -508,8 +508,7 @@
     "id": "pgvector",
     "name": "pgvector",
     "group": "Data",
-    "aliases": [],
-    "listedByOwner": true
+    "aliases": []
   },
   {
     "id": "postgresql-rls",
