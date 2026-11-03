@@ -11,7 +11,6 @@ import {
 } from "../lib/content.ts";
 import { parseDateRange } from "../lib/dates.ts";
 import { deriveStats, fillNumbers, numberTokens } from "../lib/derive-stats.ts";
-import { experienceSchema } from "../schemas/experience.ts";
 
 import type { Project } from "../schemas/projects.ts";
 
@@ -151,30 +150,6 @@ void describe("parseDateRange", () => {
       parseDateRange("February 2024 – Present").start.iso,
       "2024-02"
     );
-  });
-});
-
-void describe("experienceSchema team", () => {
-  const job = {
-    bullets: [],
-    company: "C",
-    dates: "2024",
-    description: "",
-    id: "c",
-    links: [],
-    role: "R",
-    stack: [],
-  };
-
-  void it("reads the CMS's emptied team values as not set", () => {
-    const [blank, partial] = experienceSchema.parse([
-      { ...job, team: {} },
-      { ...job, team: { hired: "", led: 3, peak: null } },
-    ]);
-    assert.equal(blank?.team, undefined);
-    assert.equal(partial?.team?.led, 3);
-    assert.equal(partial?.team?.hired, undefined);
-    assert.equal(partial?.team?.peak, undefined);
   });
 });
 

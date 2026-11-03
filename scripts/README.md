@@ -36,7 +36,7 @@ The guard hook, `.claude/hooks/guard.ts`, imports `check/code-rules.ts`, so the 
 
 This repo is the one place the CV lives; every channel is rendered from `content/`.
 
-1. Edit `content/*.json` (or `content/case-studies/`), by hand or in Pages CMS. The reasons behind the numbers and wording are in `private/notes/decisions.md`.
-2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-CV.pdf` and stages it. It runs because `bun install` (the `prepare` script) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. A fresh clone without `bun install` has no hooks. A Pages CMS save commits on GitHub, where no hook runs: pull, run `bun cv:pdf` and commit the PDF.
+1. Edit `content/*.json` (or `content/case-studies/`). The reasons behind the numbers and wording are in `private/notes/decisions.md`.
+2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-CV.pdf` and stages it. It runs because `bun install` (the `prepare` script) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. A fresh clone without `bun install` has no hooks. An edit made on GitHub directly runs no hook: pull, run `bun cv:pdf` and commit the PDF.
 3. Push. Vercel deploys the site, and the Profile sync workflow updates the GitHub profile (`bun sync:github` shows the same change locally).
 4. Run `bun linkedin` in your own terminal and paste what it copies.

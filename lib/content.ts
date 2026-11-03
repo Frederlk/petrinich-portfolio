@@ -20,7 +20,7 @@ import profileJson from "~/content/profile.json";
 import projectsJson from "~/content/projects.json";
 import technologiesJson from "~/content/technologies.json";
 
-// Every file is parsed at module load, so a bad edit in the CMS fails the build instead of shipping. The first parse feeds the counts; the exported content is parsed again after its `{token}` placeholders are filled with them (deriveStats, fillNumbers), so prose never types a number the data can count.
+// Every file is parsed at module load, so a bad edit fails the build instead of shipping. The first parse feeds the counts; the exported content is parsed again after its `{token}` placeholders are filled with them (deriveStats, fillNumbers), so prose never types a number the data can count.
 const counted = {
   earlyWork: earlyWorkSchema.parse(earlyWorkJson),
   experience: experienceSchema.parse(experienceJson),

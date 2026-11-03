@@ -18,7 +18,6 @@ The dev server runs on [http://localhost:4224](http://localhost:4224). Env vars 
 
 - `content/*.json` is the source of the site, parsed with the Zod schemas in `schemas/` when the app builds (`lib/content.ts`). A bad value fails the build.
 - `content/case-studies/<project id>.mdx` is a project's case study, linked through the project's `caseStudy` field.
-- `.pages.yml` configures [Pages CMS](https://pagescms.org) to edit these files; it mirrors the schemas.
 
 ## Routes
 
