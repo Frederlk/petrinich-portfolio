@@ -18,7 +18,7 @@ Audit of every typography combination in the app, taken at the HEAD before the t
 |---:|---|---|
 | 28 | `font-code-sm text-code-sm` | app/cv/page.tsx, app/work/[slug]/page.tsx, components/layout/contact-row.tsx and 10 more |
 | 12 | `font-code-sm text-code-sm tracking-widest uppercase` | app/cv/page.tsx, app/work/[slug]/page.tsx, components/layout/footer.tsx and 2 more |
-| 11 | `font-code-md text-code-md tracking-wider uppercase` | app/work/[slug]/loading.tsx, app/work/[slug]/page.tsx, components/layout/contact-row.tsx and 8 more |
+| 10 | `font-code-md text-code-md tracking-wider uppercase` | app/work/[slug]/page.tsx, components/layout/contact-row.tsx and 8 more |
 | 7 | `font-body-md text-body-md` | app/work/[slug]/page.tsx, components/layout/experience-entry.tsx, features/home/components/about.tsx and 3 more |
 | 6 | `font-body-sm text-body-sm` | app/cv/page.tsx, app/work/[slug]/page.tsx, features/home/components/hero.tsx and 2 more |
 | 5 | `font-headline-sm text-headline-sm tracking-tight uppercase` | app/cv/page.tsx, components/layout/footer.tsx, components/layout/header.tsx and 1 more |

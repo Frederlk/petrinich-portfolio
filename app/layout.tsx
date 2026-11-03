@@ -5,6 +5,7 @@ import { Suspense, type PropsWithChildren } from "react";
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { NavigationProgress } from "~/components/layout/navigation-progress";
+import { Splash } from "~/components/layout/splash";
 import { MotionProvider } from "~/components/motion/motion-provider";
 
 import { ToastProvider } from "~/ui/toast";
@@ -59,6 +60,7 @@ export default async function RootLayout({
         <link href="/llms.txt" rel="describedby" type="text/plain" />
       </head>
       <body className="relative">
+        <Splash />
         <NuqsAdapter>
           <MotionProvider>
             <TooltipProvider>

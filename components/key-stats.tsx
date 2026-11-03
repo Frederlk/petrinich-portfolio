@@ -5,14 +5,12 @@ import { CountUp } from "~/components/motion/count-up";
 import { cn } from "~/lib/cn";
 import { keyStats } from "~/lib/stats";
 
-// The headline figures as a row of big numerals: the same order everywhere (lib/stats.ts keyStats), a short vermilion rule above each numeral, the label under it, a hairline between the cells. `count` shows the first N; `links={false}` leaves the labels plain (the PDF is printed from a local server, so a relative link would carry a localhost address); `animated={false}` shows plain text (the loading pages must not count twice). The count-up plays once per figure, the first time it scrolls into view (components/motion/count-up.tsx).
+// The headline figures as a row of big numerals: the same order everywhere (lib/stats.ts keyStats), a short vermilion rule above each numeral, the label under it, a hairline between the cells. `count` shows the first N; `links={false}` leaves the labels plain (the PDF is printed from a local server, so a relative link would carry a localhost address). The count-up plays once per figure, the first time it scrolls into view (components/motion/count-up.tsx).
 export function KeyStats({
-  animated = true,
   className,
   count = keyStats.length,
   links = true,
 }: {
-  animated?: boolean;
   className?: string;
   count?: number;
   links?: boolean;
@@ -42,7 +40,7 @@ export function KeyStats({
             )}
           </dt>
           <dd className="key-stat-value m-0 type-stat text-on-surface before:mb-space-sm before:block before:h-0.5 before:w-6 before:bg-primary-container">
-            {animated ? <CountUp value={stat.value} /> : stat.value}
+            <CountUp value={stat.value} />
           </dd>
         </div>
       ))}
