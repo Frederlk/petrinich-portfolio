@@ -40,6 +40,9 @@ export type Field = {
 export const plain = (text: string) =>
   text.replaceAll(/\*\*(.+?)\*\*/g, "$1").replaceAll(/`([^`]+)`/g, "$1");
 
+// The skills step offers the first 50 CV skills in group order (core stack first): the full CV list is 86 and LinkedIn caps a profile's skills (owner's call, 2026-11-03).
+const LINKEDIN_SKILLS = 50;
+
 const linkedinUrl = (() => {
   const url = profile.contacts.find((c) => c.label === "LinkedIn")?.url;
   if (url === undefined) {
@@ -96,7 +99,10 @@ export function linkedinFields(): Field[] {
       how: "Skills → add any of these that are missing, one at a time; pin the first three as top skills.",
       key: "skills",
       label: "Skills",
-      text: cvSkillGroups.flatMap((g) => g.items).join(", "),
+      text: cvSkillGroups
+        .flatMap((g) => g.items)
+        .slice(0, LINKEDIN_SKILLS)
+        .join(", "),
       url: `${linkedinUrl}/details/skills/`,
     },
   ];

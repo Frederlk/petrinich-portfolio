@@ -41,7 +41,7 @@
       "Built client integrations with Stripe, Shopify, Sanity, Twilio, Resend, Mux, Leaflet, Upstash, Arcjet, Sentry, PostHog and the Vercel AI SDK with Gemini.",
       "Designed the studio's technical interview: a 90-minute simulated workday where candidates work real tasks with Claude Code and AI-played teammates, and are graded on judgement instead of recall.",
       "Wrote `ux-mind-helpers`, a zero-dependency toolbox of 8 codemods and lint guards for the agency's projects (import aliases, Tailwind values, React Compiler checks, `.env` sync).",
-      "Adopted Claude Code in 08.2025 and wrote the team's conventions for using it."
+      "Adopted Claude Code in August 2025 and wrote the team's conventions for using it."
     ],
     "links": [
       {
@@ -74,7 +74,7 @@
     ],
     "description": "Self-employed client work next to UX MIND: marketing sites and a streaming platform built end to end, plus fixes and hosting for existing sites.",
     "bullets": [
-      "Built alba.swiss end to end: the first version in 04.2025 and the 09.2026 rebuild, a marketing site with 16 animated sections and a request-an-introduction form.",
+      "Built alba.swiss end to end: the first version in April 2025 and the September 2026 rebuild, a marketing site with 16 animated sections and a request-an-introduction form.",
       "Built and deployed the Department of Human Dynamics site, a marketing site for an AI research group with structured data for SEO (62 commits).",
       "Built a live-video streaming platform alone: adaptive HLS video, creator profiles with media feeds, English and Dutch with next-intl, a Sanity CMS, and Docker with Nginx on a VPS.",
       "Took over gdd.education: UI polish and bug fixes, a move from Vercel to a VPS, Docker builds, DNS and self-hosted Umami analytics."

@@ -47,7 +47,7 @@ const CV_FONT = localFont({
 });
 
 // Projects printed on the CV; the site lists all of them.
-const CV_PROJECTS = 3;
+const CV_PROJECTS = 4;
 
 // "February 2024 – Present" as machine-readable <time> elements around the same visible text; an open end ("Present") has no date to tag.
 function DateRange({ dates }: { dates: string }) {
