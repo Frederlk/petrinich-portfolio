@@ -110,7 +110,7 @@
     "id": "tapston",
     "company": "Tapston",
     "role": "Front-End Developer",
-    "dates": "Autumn 2022 – December 2023",
+    "dates": "December 2022 – December 2023",
     "stack": [
       "TypeScript",
       "React",
@@ -121,7 +121,7 @@
       "Styled-Components",
       "Storybook"
     ],
-    "description": "Software outstaffing company. I joined in autumn 2022, worked on an internal project first, then was placed full-time on Ceviant.",
+    "description": "Software outstaffing company. I joined in December 2022, worked on an internal project first, then was placed full-time on Ceviant.",
     "bullets": [
       "Led {led.tapston} developers on an internal project before the Ceviant placement.",
       "Designed the project's architecture, built the landing page and a UI kit shared across the product, and developed product features."
