@@ -70,7 +70,7 @@ export function StackView({
     <div className="[--search-band:--spacing(15)]">
       <search className="sticky top-16 z-40 mt-space-md bg-surface py-space-sm">
         <label
-          className="flex min-h-11 items-center gap-space-sm border border-surface-container-high bg-surface-container-low px-space-md transition-colors duration-200 ease-(--ease-enter) focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-ring hover:border-surface-container-highest"
+          className="flex min-h-11 cursor-text items-center gap-space-sm border border-surface-container-high bg-surface-container-low px-space-md transition-colors duration-200 ease-(--ease-enter) focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-ring hover:border-surface-container-highest"
           htmlFor="stack-search"
         >
           <MagnifyingGlassIcon
