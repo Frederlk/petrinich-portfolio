@@ -46,7 +46,7 @@ export function TabsTab({
         "text-secondary transition-colors delay-150 duration-200 hover:bg-surface-container hover:text-on-surface hover:delay-0",
         "data-active:text-on-primary-container data-active:hover:bg-transparent data-active:hover:text-on-primary-container data-active:hover:delay-150",
         // Focus state
-        "outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+        "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring data-active:focus-visible:outline-on-primary-container",
         className
       )}
       data-slot="tabs-tab"

@@ -405,6 +405,36 @@ const RULES: readonly Rule[] = [
     },
   },
   {
+    id: "outline-none-focus",
+    message:
+      "Drop `outline-none` from a class string that also draws a variant outline (`focus-visible:outline-2`, `data-highlighted:outline-2`, …). In Tailwind v4 `outline-none` sets `--tw-outline-style: none` and `outline-<n>` draws with `outline-style: var(--tw-outline-style)`, so the ring never shows (measured on the /work tabs, Filters and sort labels). `outline-hidden` does the same. The browser's own ring appears only under `:focus-visible`, where the custom outline replaces it, so a mouse click shows nothing.",
+    test(file, source) {
+      if (!hasExt(file, ".ts", ".tsx")) {
+        return [];
+      }
+      // One element's classes: a string literal, or a whole `cn(…)` call, whose group literals split the pair across arguments (SelectTrigger did).
+      const units = [
+        ...[...source.matchAll(/"[^"\n]*"|'[^'\n]*'|`[^`]*`/g)].map(
+          (match) => ({ at: match.index, text: match[0] })
+        ),
+        ...[...source.matchAll(/\bcn\s*\(/g)].map((match) => ({
+          at: match.index,
+          text: callArguments(source, match.index + match[0].length - 1).join(
+            " "
+          ),
+        })),
+      ];
+      const lines = units
+        .filter(
+          ({ text }) =>
+            /(?<![\w:-])outline-(?:none|hidden)(?![\w-])/.test(text) &&
+            /:outline(?:-\d|(?![\w-]))/.test(text)
+        )
+        .map(({ at }) => lineOf(source, at));
+      return [...new Set(lines)].map((line) => ({ line }));
+    },
+  },
+  {
     id: "package-manager",
     message: `This repo and this machine use bun — "bunx" where another project would reach for ${WRONG_RUNNER}.`,
     test(file, _source, raw) {

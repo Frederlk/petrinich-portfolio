@@ -16,6 +16,9 @@ export function PageTransition(): ReactElement {
   );
 }
 
+// The morph runs only on a typed navigation; every link between two of a project's names carries a type. A /work filter change pushes its URL inside a transition (nuqs), and an untyped share there flew each row's name in from its old position for 600ms while the rest of the row rose with the page (measured on the dev server).
+const MORPH = { default: "none", "nav-back": "morph", "nav-forward": "morph" };
+
 // A project's name as one shared element: a ledger row, the project title and a previous / next card that show the same project morph into each other across a navigation (`.morph` in styles/motion.css). The child must be a single element.
 export function ProjectName({
   children,
@@ -25,7 +28,7 @@ export function ProjectName({
   id: string;
 }) {
   return (
-    <ViewTransition default="none" name={`project-${id}`} share="morph">
+    <ViewTransition default="none" name={`project-${id}`} share={MORPH}>
       {children}
     </ViewTransition>
   );

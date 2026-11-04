@@ -30,7 +30,7 @@ export const contactRowClass = cn(
   // Typography & Colors
   "fill-sweep text-on-surface sweep-primary-container hover:text-on-primary-container data-highlighted:text-on-primary-container",
   // Focus state
-  "outline-none focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-on-primary-container"
+  "focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-on-primary-container"
 );
 
 const onFill =

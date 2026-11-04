@@ -29,7 +29,7 @@ export function ScrollArea({
       <ScrollAreaPrimitive.Viewport
         className={cn(
           // oxlint-disable-next-line shadcn/no-arbitrary-values -- the viewport takes the height cap of the root, and no scale value says "inherit"
-          "max-h-[inherit] overscroll-contain outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+          "max-h-[inherit] overscroll-contain focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
           fade && "scroll-fade",
           fadeX && "scroll-fade-x",
           viewportClassName

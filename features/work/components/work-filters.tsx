@@ -259,7 +259,7 @@ const triggerClass = cn(
   // Typography & Colors
   "type-button text-on-surface transition-colors hover:bg-surface-container data-popup-open:bg-surface-container",
   // Focus state
-  "outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+  "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
 );
 
 function TriggerBody({ count }: { count: number }): ReactNode {
@@ -281,7 +281,7 @@ export function FiltersControl(props: Props) {
   const count = activeFilterCount(props.filters);
   const clear = (
     <button
-      className="cursor-pointer type-label text-secondary outline-none hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring disabled:invisible"
+      className="cursor-pointer type-label text-secondary hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring disabled:invisible"
       disabled={count === 0}
       onClick={() => {
         props.onChange({
@@ -331,7 +331,7 @@ export function FiltersControl(props: Props) {
             <DrawerClose
               render={
                 <button
-                  className="min-h-12 cursor-pointer bg-primary-container px-space-lg type-button text-on-primary-container outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  className="min-h-12 cursor-pointer bg-primary-container px-space-lg type-button text-on-primary-container focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   type="button"
                 >
                   Show {props.resultCount}
@@ -413,7 +413,7 @@ export function ActiveChips({
         <li key={chip.label}>
           <button
             aria-label={`Remove filter ${chip.label}`}
-            className="group flex min-h-8 cursor-pointer items-center gap-space-xs border border-surface-container-high bg-surface-container-low px-space-sm type-label text-on-surface outline-none hover:border-primary-container hover:text-primary-container focus-visible:outline-2 focus-visible:outline-ring"
+            className="group flex min-h-8 cursor-pointer items-center gap-space-xs border border-surface-container-high bg-surface-container-low px-space-sm type-label text-on-surface hover:border-primary-container hover:text-primary-container focus-visible:outline-2 focus-visible:outline-ring"
             onClick={() => {
               onChange(chip.clear);
             }}

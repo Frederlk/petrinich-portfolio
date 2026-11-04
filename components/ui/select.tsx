@@ -27,7 +27,7 @@ export function SelectTrigger({
   return (
     <SelectPrimitive.Trigger
       className={cn(
-        "flex h-control w-full cursor-pointer items-center justify-between gap-space-sm px-space-md text-left type-button text-secondary transition-colors duration-200 outline-none select-none",
+        "flex h-control w-full cursor-pointer items-center justify-between gap-space-sm px-space-md text-left type-button text-secondary transition-colors duration-200 select-none",
         "hover:bg-surface-container hover:text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring data-popup-open:bg-surface-container data-popup-open:text-on-surface",
         className
       )}

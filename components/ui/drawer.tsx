@@ -51,7 +51,7 @@ export function DrawerContent({
             <Tip label="Close">
               <DrawerPrimitive.Close
                 aria-label="Close"
-                className="flex size-12 cursor-pointer items-center justify-center text-secondary outline-none hover:bg-surface-container hover:text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+                className="flex size-12 cursor-pointer items-center justify-center text-secondary hover:bg-surface-container hover:text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
               >
                 <XIcon aria-hidden className="size-5" />
               </DrawerPrimitive.Close>

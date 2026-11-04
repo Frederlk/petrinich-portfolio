@@ -124,7 +124,7 @@ export function StackView({
                 <Tip label="Clear search">
                   <button
                     aria-label="Clear search"
-                    className="-mr-space-sm flex size-9 shrink-0 cursor-pointer items-center justify-center text-secondary transition-colors duration-200 ease-(--ease-enter) outline-none hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring"
+                    className="-mr-space-sm flex size-9 shrink-0 cursor-pointer items-center justify-center text-secondary transition-colors duration-200 ease-(--ease-enter) hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring"
                     onClick={() => {
                       change("");
                       field.current?.focus();

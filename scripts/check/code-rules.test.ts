@@ -77,6 +77,18 @@ const CASES: {
     ],
   },
   {
+    id: "outline-none-focus",
+    why: "`outline-none` alone on an element that draws no custom ring, and a variant-scoped `focus:outline-none`, are not the pair",
+    caught: [
+      "components/thing.tsx",
+      'const x = <button className={cn("flex outline-none", "focus-visible:outline-2 focus-visible:outline-ring")} />;',
+    ],
+    passes: [
+      "components/thing.tsx",
+      'const x = <><input className="outline-none" /><button className="focus-visible:outline-2 focus-visible:outline-ring" /><a className="focus:outline-none" /></>;',
+    ],
+  },
+  {
     id: "ts-ignore",
     why: "`@ts-expect-error` is the sanctioned form and fails once the error is gone",
     caught: ["lib/thing.ts", "// @ts-ignore\nconst x = wrong();"],

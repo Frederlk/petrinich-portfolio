@@ -86,7 +86,7 @@ export function LedgerHeader({
             <button
               aria-label={`Sort by ${column.label}${active ? `, ${dir === "asc" ? "ascending" : "descending"}` : ""}`}
               className={cn(
-                "group/sort -mx-1 flex cursor-pointer items-center gap-1 px-1 uppercase transition-colors outline-none hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring",
+                "group/sort -mx-1 flex cursor-pointer items-center gap-1 px-1 uppercase transition-colors hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring",
                 active && "text-on-surface"
               )}
               onClick={() => {

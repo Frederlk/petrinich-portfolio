@@ -91,7 +91,7 @@ export function ComboboxChip({
   return (
     <ComboboxPrimitive.Chip
       className={cn(
-        "flex h-7 max-w-36 min-w-0 items-center bg-surface-container-high ps-space-sm type-label whitespace-nowrap text-on-surface outline-none data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-ring",
+        "flex h-7 max-w-36 min-w-0 items-center bg-surface-container-high ps-space-sm type-label whitespace-nowrap text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
         className
       )}
       data-slot="combobox-chip"
