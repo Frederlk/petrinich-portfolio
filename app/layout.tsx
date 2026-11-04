@@ -45,8 +45,14 @@ export const metadata: Metadata = {
   title: { default: defaultTitle, template: `%s | ${profile.name}` },
 };
 
-// Without viewport-fit=cover the safe-area insets resolve to 0, and the contact drawer would sit under the home indicator.
-export const viewport: Viewport = { viewportFit: "cover" };
+// Without viewport-fit=cover the safe-area insets resolve to 0, and the contact drawer would sit under the home indicator. No pinch zoom, by the owner's choice: the scale lock covers Android, and iOS Safari, which ignores it, gets `touch-action` in globals.css.
+export const viewport: Viewport = {
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  width: "device-width",
+};
 
 export default async function RootLayout({
   children,

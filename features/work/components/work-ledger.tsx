@@ -136,7 +136,8 @@ export function WorkLedger({
     <div className="flex w-full flex-col">
       {groups.map(([year, items]) => (
         <div className="w-full" key={year ?? "undated"}>
-          <div className="flex w-full items-baseline gap-space-sm border-b border-surface-container-high bg-surface-container-low px-0 py-space-xs type-meta lg:px-space-md">
+          {/* Below lg the rows have no side padding, so the band drops its fill there and its text lines up with theirs. */}
+          <div className="reveal flex w-full items-baseline gap-space-sm border-b border-surface-container-high px-0 py-space-xs type-meta lg:bg-surface-container-low lg:px-space-md">
             <span className="type-label text-on-surface">
               {year ?? "Undated"}
             </span>

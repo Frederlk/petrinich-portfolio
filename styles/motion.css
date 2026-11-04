@@ -16,15 +16,6 @@
 ::view-transition-old(site-header) {
   display: none;
 }
-/* The header's logo or name, whichever shows (Header): it has its own name, so it is cut out of the still header and morphs above it, the logo and the name cross-fading as the box changes shape. */
-@utility vt-brand {
-  view-transition-name: brand;
-}
-::view-transition-group(brand) {
-  animation-duration: 600ms;
-  animation-timing-function: var(--ease-move);
-  z-index: 101;
-}
 ::view-transition-new(site-header) {
   animation: none;
 }

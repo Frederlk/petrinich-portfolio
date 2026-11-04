@@ -8,8 +8,6 @@
 /* Dark only. `<html class="dark">` is static, so the template's `dark:` / `not-dark:` variants keep resolving; there is no light palette and no switch. */
 @custom-variant dark (&:is(.dark *));
 @custom-variant skeleton-pulse (&:is([data-skeleton="pulse"] *));
-/* Anywhere on the page while the home page is shown: its `<main>` carries `data-home`, so the layout's header can tell without reading the route. `data-away` marks a home page Next keeps mounted but hidden (HomeMarker). */
-@custom-variant home (&:is(html:not([data-away]):has(main[data-home]) *));
 
 /* Values from the Google Stitch export (design/stitch/A, tailwind config), see DESIGN.md. Template roles are bound to the Stitch palette: `primary` is Stitch's #ffb5a1, the vermilion CTA fill is `primary-container`, `secondary` is the light grey used for body text. */
 :root {
@@ -914,6 +912,11 @@
   pre {
     @apply font-mono;
   }
+}
+
+/* Pans only: no pinch or double-tap zoom, the part of the zoom lock iOS Safari honours (the viewport meta in the root layout covers the rest). */
+html {
+  touch-action: pan-x pan-y;
 }
 
 /* A hash link on the same page glides to its target; `data-scroll-behavior` on `<html>` keeps route changes instant. */

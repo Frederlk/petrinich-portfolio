@@ -1,9 +1,9 @@
 import { DownloadSimpleIcon } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
 import { ContactMenu } from "~/components/layout/contact-menu";
+import { Logo } from "~/components/layout/logo";
 import { MobileNav } from "~/components/layout/mobile-nav";
 import { NavLinkList, NavLinks } from "~/components/layout/nav-links";
 import { NAV_BACK } from "~/components/motion/page-transition";
@@ -17,7 +17,7 @@ import { profile } from "~/lib/content";
 
 import { ROUTES } from "~/constants/routes";
 
-// The Stitch shell: a fixed 64px bar. Below md the links collapse into the square menu button at the right (MobileNav) and the Contact button stays beside it and opens a bottom drawer; below sm Contact is a square envelope button too. Below md the home page shows the logo in place of the name; both are the one `brand` view-transition element, so leaving home morphs the logo into the name and coming back morphs it into the logo.
+// The Stitch shell: a fixed 64px bar. Below md the links collapse into the square menu button at the right (MobileNav) and the Contact button stays beside it and opens a bottom drawer; below sm Contact is a square envelope button too. The logo at the left is the home link on every page and at every width.
 export function Header() {
   return (
     <header
@@ -27,19 +27,12 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-space-md">
           <Link
-            className="type-h3 text-on-surface uppercase link-draw hover:text-primary"
+            aria-label={profile.name}
+            className="press shrink-0 text-primary-container"
             href={ROUTES.HOME}
             transitionTypes={NAV_BACK}
           >
-            <span className="vt-brand max-md:home:hidden">{profile.name}</span>
-            <Image
-              alt={profile.name}
-              className="hidden size-9 vt-brand max-md:home:block"
-              height={36}
-              src="/icon.svg"
-              unoptimized
-              width={36}
-            />
+            <Logo aria-hidden className="size-9" />
           </Link>
           <TextScramble
             className="hidden border-l border-surface-container-high pl-space-md type-meta text-secondary lg:inline-block"
