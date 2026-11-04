@@ -10,7 +10,7 @@ export type PagePath = keyof typeof PAGE_TWINS;
 
 export const LLMS_PATH = "/llms.txt";
 
-// A project page has a Markdown twin at the page address plus ".md"; next.config.ts rewrites it to the route handler.
+// Every /work/<slug> page (project, early work or open source) has a Markdown twin at the page address plus ".md"; next.config.ts rewrites it to the route handler.
 export const projectMarkdownPath = (id: string) => `/work/${id}.md`;
 
 type Twins = { json?: string; markdown?: string };

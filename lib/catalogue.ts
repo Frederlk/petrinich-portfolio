@@ -3,6 +3,7 @@ import {
   earlyWork,
   openSource,
   profile,
+  projectById,
   projects,
   siteNumbers,
   techById,
@@ -15,6 +16,7 @@ import { publicUrl } from "~/lib/project-url";
 import { screenshotOf } from "~/lib/screenshot";
 import { SITE_FILES, SITE_PAGES, absolute } from "~/lib/site-pages";
 import { projectMarkdownPath } from "~/lib/site-routes";
+import { earlyById, openSourceById } from "~/lib/work-pages";
 
 import type { Project } from "~/schemas/projects";
 
@@ -183,16 +185,9 @@ function projectBlock(p: Project, level: 1 | 3) {
   ].join("\n");
 }
 
-export const projectMarkdown = (p: Project) =>
+const earlyBlock = (w: (typeof earlyWork)[number], level: 1 | 3) =>
   [
-    projectBlock(p, 1),
-    `Back to the [work archive](${absolute("/work.md")}) · [CV](${absolute("/cv.md")}) · [all of it in one file](${absolute("/llms-full.txt")})`,
-    "",
-  ].join("\n");
-
-const earlyBlock = (w: (typeof earlyWork)[number]) =>
-  [
-    `### ${w.title}`,
+    `${"#".repeat(level)} ${w.title}`,
     "",
     w.summary,
     "",
@@ -202,9 +197,9 @@ const earlyBlock = (w: (typeof earlyWork)[number]) =>
     "",
   ].join("\n");
 
-const openSourceBlock = (o: (typeof openSource)[number]) =>
+const openSourceBlock = (o: (typeof openSource)[number], level: 1 | 3) =>
   [
-    `### ${o.name}`,
+    `${"#".repeat(level)} ${o.name}`,
     "",
     o.summary,
     "",
@@ -213,6 +208,33 @@ const openSourceBlock = (o: (typeof openSource)[number]) =>
     `- **Project:** ${o.url}`,
     "",
   ].join("\n");
+
+// A /work/<slug> page in any of its three lists, so every twin the Link header and the Accept rewrite point at exists.
+function workPageBlock(slug: string) {
+  const project = projectById.get(slug);
+  if (project !== undefined) {
+    return projectBlock(project, 1);
+  }
+  const early = earlyById.get(slug);
+  if (early !== undefined) {
+    return earlyBlock(early, 1);
+  }
+  const contribution = openSourceById.get(slug);
+  return contribution === undefined ? null : openSourceBlock(contribution, 1);
+}
+
+// The Markdown twin of a /work/<slug> page; null for an unknown slug.
+export function workPageMarkdown(slug: string) {
+  const block = workPageBlock(slug);
+  if (block === null) {
+    return null;
+  }
+  return [
+    block,
+    `Back to the [work archive](${absolute("/work.md")}) · [CV](${absolute("/cv.md")}) · [all of it in one file](${absolute("/llms-full.txt")})`,
+    "",
+  ].join("\n");
+}
 
 // The body shared by /work.md and llms-full.txt: every project, the early work, then the open-source contributions, at heading levels 2 and 3.
 export const workBody = () =>
@@ -226,14 +248,14 @@ export const workBody = () =>
       .map((p) => projectBlock(p, 3)),
     "## Early work",
     "",
-    `${earlyWork.length} earlier exercises, built alone, without a page of their own.`,
+    `${earlyWork.length} earlier exercises, built alone, each with a page and a Markdown twin of its own.`,
     "",
-    ...earlyWork.map(earlyBlock),
+    ...earlyWork.map((w) => earlyBlock(w, 3)),
     "## Open source",
     "",
     `${openSource.length} contributions to projects owned by others, linked to each project's own site.`,
     "",
-    ...openSource.map(openSourceBlock),
+    ...openSource.map((o) => openSourceBlock(o, 3)),
   ].join("\n");
 
 export const workMarkdown = () =>

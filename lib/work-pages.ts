@@ -1,11 +1,17 @@
-import { EARLY_ROLE, earlyWork, openSource, projectById } from "~/lib/content";
+import {
+  EARLY_ROLE,
+  earlyWork,
+  openSource,
+  projectById,
+  projects,
+} from "~/lib/content";
 
 import type { EarlyWork } from "~/schemas/early-work";
 import type { OpenSource } from "~/schemas/open-source";
 import type { Project } from "~/schemas/projects";
 
-const earlyById = new Map(earlyWork.map((w) => [w.id, w]));
-const openSourceById = new Map(openSource.map((o) => [o.id, o]));
+export const earlyById = new Map(earlyWork.map((w) => [w.id, w]));
+export const openSourceById = new Map(openSource.map((o) => [o.id, o]));
 
 // An early entry in the shape of a project, so /work/<id> renders both with one page. The kind line of the page says "Early work" (see `isEarly`).
 function earlyAsProject(w: EarlyWork): Project {
@@ -62,6 +68,9 @@ function openSourceAsProject(o: OpenSource): Project {
 }
 
 export const openSourcePages = openSource.map(openSourceAsProject);
+
+// Every /work/<slug> page; the HTML page and its Markdown twin prerender the same list.
+export const WORK_PAGES = [...projects, ...earlyPages, ...openSourcePages];
 
 // Which list a /work/<slug> page belongs to; previous and next walk only that list.
 export type PageOrigin = "early" | "open-source" | "project";

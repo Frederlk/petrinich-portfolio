@@ -29,7 +29,7 @@ const defaultTitle = `${profile.name}, ${profile.title}`;
 export const metadata: Metadata = {
   alternates: {
     canonical: "./",
-    // The home page's twins as <link rel="alternate">; /work and /stack announce their own (pageMetadata).
+    // The home page's twins as <link rel="alternate">; /work and /stack announce their own (pageMetadata), each /work/<slug> page its Markdown twin (generateMetadata).
     types: { "application/json": "/resume.json", "text/markdown": "/cv.md" },
   },
   authors: [{ name: profile.name, url: siteUrl }],

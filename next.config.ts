@@ -117,7 +117,7 @@ const nextConfig: NextConfig = {
       headers: [
         { key: "Link", value: linkHeader({ markdown: "/work/:slug.md" }) },
       ],
-      source: "/work/:slug([a-z0-9-]+)",
+      source: "/work/:slug([A-Za-z0-9_-]+)",
     },
   ],
   // An agent that asks for Markdown (Claude's web fetch sends Accept: text/markdown) gets the page's Markdown twin at the same address. beforeFiles, because the pages themselves would otherwise answer first.
@@ -147,7 +147,7 @@ const nextConfig: NextConfig = {
         {
           destination: "/work/:slug/md",
           has: wantsMarkdown,
-          source: "/work/:slug([a-z0-9-]+)",
+          source: "/work/:slug([A-Za-z0-9_-]+)",
         },
       ],
       fallback: [],

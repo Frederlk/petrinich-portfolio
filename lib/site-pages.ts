@@ -31,7 +31,19 @@ export const SITE_PAGES = [
   ),
 ] as const;
 
-// A page's head metadata from its SITE_PAGES entry, so the head, site.json and llms.txt share one description and each page announces its own Markdown and JSON twins. Next.js replaces the layout's openGraph object instead of merging it, so the shared fields are repeated here.
+// A page's openGraph block. Next.js replaces the layout's openGraph object instead of merging it, and drops the root opengraph-image with it, so a page that sets its own title repeats the shared fields and names the image, without the build hash and size tags the file convention adds on /; the twitter tags follow openGraph.
+export const openGraphFor = (title: string, description: string) =>
+  ({
+    description,
+    images: "/opengraph-image",
+    locale: "en_US",
+    siteName: profile.name,
+    title: `${title} | ${profile.name}`,
+    type: "website",
+    url: "./",
+  }) satisfies Metadata["openGraph"];
+
+// A page's head metadata from its SITE_PAGES entry, so the head, site.json and llms.txt share one description and each page announces its own Markdown and JSON twins.
 export function pageMetadata(path: (typeof SITE_PAGES)[number]["path"]) {
   const entry = SITE_PAGES.find((p) => p.path === path) ?? SITE_PAGES[0];
   return {
@@ -43,14 +55,7 @@ export function pageMetadata(path: (typeof SITE_PAGES)[number]["path"]) {
       },
     },
     description: entry.description,
-    openGraph: {
-      description: entry.description,
-      locale: "en_US",
-      siteName: profile.name,
-      title: `${entry.title} | ${profile.name}`,
-      type: "website",
-      url: "./",
-    },
+    openGraph: openGraphFor(entry.title, entry.description),
     title: entry.title,
   } satisfies Metadata;
 }

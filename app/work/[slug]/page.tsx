@@ -20,7 +20,7 @@ import { TechChip } from "~/components/tech-chip";
 import { Tip } from "~/ui/tooltip";
 
 import { cn } from "~/lib/cn";
-import { projects, techById } from "~/lib/content";
+import { techById } from "~/lib/content";
 import { coreTechs } from "~/lib/core-stack";
 import { featureGroups } from "~/lib/feature-groups";
 import {
@@ -33,10 +33,12 @@ import {
   WORK_ROLE_LABELS,
 } from "~/lib/labels";
 import { publicUrl } from "~/lib/project-url";
+import { openGraphFor } from "~/lib/site-pages";
+import { projectMarkdownPath } from "~/lib/site-routes";
 import { projectPageJsonLd } from "~/lib/structured-data";
 import { byName, groupRank, homeGroup } from "~/lib/tech-groups";
 import { bare } from "~/lib/url";
-import { earlyPages, openSourcePages, pageSubject } from "~/lib/work-pages";
+import { WORK_PAGES, pageSubject } from "~/lib/work-pages";
 
 import { workRows } from "~/features/work/work-rows";
 
@@ -49,9 +51,7 @@ type Props = { params: Promise<{ slug: string }> };
 export const instant = false;
 
 export function generateStaticParams() {
-  return [...projects, ...earlyPages, ...openSourcePages].map((p) => ({
-    slug: p.id,
-  }));
+  return WORK_PAGES.map((p) => ({ slug: p.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -60,7 +60,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) {
     return {};
   }
-  return { description: project.summary, title: project.name };
+  // The page's own twin; without `alternates` the layout's /cv.md and /resume.json would be inherited.
+  return {
+    alternates: {
+      canonical: "./",
+      types: { "text/markdown": projectMarkdownPath(project.id) },
+    },
+    description: project.summary,
+    openGraph: openGraphFor(project.name, project.summary),
+    title: project.name,
+  };
 }
 
 const caseStudyModule = z.object({
