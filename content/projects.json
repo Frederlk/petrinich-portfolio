@@ -5941,5 +5941,93 @@
     "media": ["/work/dnd-char-sheet.webp"],
     "featured": false,
     "caseStudy": "dnd-char-sheet"
+  },
+  {
+    "anonymous": false,
+    "domain": [],
+    "featured": false,
+    "kind": "personal",
+    "links": [
+      {
+        "type": "live",
+        "url": "https://sergey-petrinich.vercel.app"
+      }
+    ],
+    "media": ["/work/petrinich-portfolio.webp"],
+    "employer": null,
+    "role": "sole",
+    "scope": ["fullstack"],
+    "id": "petrinich-portfolio",
+    "name": "Portfolio and CV site",
+    "year": 2026,
+    "status": "live",
+    "roleNote": "I built it alone with AI-assisted workflows: I made the product and architecture decisions, agents wrote much of the code.",
+    "summary": "My portfolio, where the home page is the CV, next to a filterable work table and a stack page. The same content files also produce the CV PDF, the GitHub profile README and the LinkedIn text.",
+    "features": [
+      {
+        "title": "Site",
+        "items": [
+          "CV home page, print view, filterable work table, a page for every project and early-work entry, and a stack page with project counts per technology",
+          "Social preview image and Umami analytics proxied through the site origin"
+        ]
+      },
+      {
+        "title": "One content source",
+        "items": [
+          "Content in JSON and MDX parsed with Zod, with numbers such as years and project counts computed from the data",
+          "CV PDF printed through headless Chrome and checked for page count and fonts",
+          "GitHub profile README and account fields synced by a workflow on content changes and monthly",
+          "LinkedIn field text with limit checks and change detection"
+        ]
+      },
+      {
+        "title": "Agent-readable",
+        "items": [
+          "Markdown twin for every page, served by Accept header or by address",
+          "JSON Resume, JSON exports, structured data, sitemap and a robots file naming AI crawlers"
+        ]
+      },
+      {
+        "title": "Guard rails",
+        "items": [
+          "Edit hook, pre-commit and CI running the same rule checks",
+          "CI with pinned actions, workflow linting and a push-integrity workflow"
+        ]
+      }
+    ],
+    "stack": [
+      "next-js",
+      "react",
+      "typescript",
+      "tailwind-css",
+      "zod",
+      "bun",
+      "base-ui",
+      "shadcn-ui",
+      "react-compiler",
+      "motion",
+      "mdx",
+      "seo",
+      "t3-env",
+      "nuqs",
+      "date-fns",
+      "husky",
+      "oxlint",
+      "oxfmt",
+      "ultracite",
+      "knip",
+      "dotenvx",
+      "github-actions",
+      "vercel",
+      "umami",
+      "claude-code",
+      "python",
+      "node-js",
+      "git",
+      "playwright",
+      "google-stitch"
+    ],
+    "aiOrchestrated": true,
+    "caseStudy": "petrinich-portfolio"
   }
 ]
