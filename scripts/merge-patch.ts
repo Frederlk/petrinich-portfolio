@@ -40,6 +40,7 @@ export function mergePatch(record: Json, patch: Json): Json {
 const NEW_PROJECT_DEFAULTS: Json = {
   anonymous: false,
   domain: [],
+  employer: null,
   featured: false,
   kind: "personal",
   links: [],
