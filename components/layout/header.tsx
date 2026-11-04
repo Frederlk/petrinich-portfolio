@@ -17,7 +17,7 @@ import { profile } from "~/lib/content";
 
 import { ROUTES } from "~/constants/routes";
 
-// The Stitch shell: a fixed 64px bar. Below md the links collapse into the square menu button at the right (MobileNav) and the Contact button stays beside it and opens a bottom drawer; below sm Contact is a square envelope button too. The logo at the left is the home link on every page and at every width.
+// The Stitch shell: a fixed 64px bar. Below md the links collapse into the square menu button at the right (MobileNav) and the Contact button stays beside it and opens a bottom drawer; below sm Contact is a square envelope button too. The logo at the left is the home link on every page, with the name beside it from sm up.
 export function Header() {
   return (
     <header
@@ -28,11 +28,18 @@ export function Header() {
         <div className="flex items-center gap-space-md">
           <Link
             aria-label={profile.name}
-            className="press shrink-0 text-primary-container"
+            className="group flex shrink-0 items-center gap-space-sm"
             href={ROUTES.HOME}
             transitionTypes={NAV_BACK}
           >
-            <Logo aria-hidden className="size-9" />
+            <Logo aria-hidden className="size-9 text-primary-container" />
+            {/* Below sm only the logo shows; the link keeps its name through `aria-label`. */}
+            <span
+              aria-hidden
+              className="type-h3 text-on-surface uppercase link-draw group-hover:text-primary max-sm:hidden"
+            >
+              {profile.name}
+            </span>
           </Link>
           <TextScramble
             className="hidden border-l border-surface-container-high pl-space-md type-meta text-secondary lg:inline-block"
