@@ -23,7 +23,7 @@ const ICONS = {
   telegram: TelegramLogoIcon,
 } as const satisfies Record<ContactChannel["id"], unknown>;
 
-// One row of the contact list, shared by the desktop menu, the mobile drawer and the home contact block below lg: icon, label over a muted handle, and an arrow (up-right for a page on another site). On hover or focus the vermilion fill sweeps in from the left, the text turns dark and the arrow slides; the focus ring is dark and inset, so it shows on the fill. The mobile nav drawer's rows take the same look.
+// One row of the contact list, shared by the desktop menu, the mobile drawer and the home contact block below lg: icon, label over a muted handle, and an up-right arrow on every row, since each one leaves the page (another site, the mail app, a download). On hover or focus the vermilion fill sweeps in from the left, the text turns dark and the arrow slides; the focus ring is dark and inset, so it shows on the fill. The mobile nav drawer's rows take the same look.
 export const contactRowClass = cn(
   // Layout & Size
   "group flex min-h-12 w-full items-center gap-space-md border-b border-surface-container-high px-space-md py-space-sm last:border-b-0",
@@ -63,7 +63,7 @@ export function ContactRowLink({
           {channel.handle}
         </span>
       </span>
-      <ArrowSlide className="shrink-0" external={external} />
+      <ArrowSlide className="shrink-0" external />
     </a>
   );
 }
