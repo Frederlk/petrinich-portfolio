@@ -19,7 +19,7 @@ const rows = selectedProjects.map(toWorkRow);
 // The same rows and column header as /work, so a project looks and links the same in both places; without the year groups, the sort buttons and the filters.
 export function SelectedWork() {
   return (
-    <section className="container pb-space-3xl">
+    <section className="container pb-space-2xl sm:pb-space-3xl">
       <SectionHeader action={all} title="Selected work" />
       <WorkLedgerHeader />
       <WorkLedger grouped={false} rows={rows} />

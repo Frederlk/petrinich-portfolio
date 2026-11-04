@@ -3292,7 +3292,7 @@
     "roleNote": "I led 1 other developer and built the public pages, the content editor setup, the practitioner self-service area and the office tools. The other developer built a few public pages and the filters.",
     "year": 2026,
     "status": "completed",
-    "summary": "Rebuild of the website of a Seattle association of independent psychologists, psychiatrists and psychiatric nurse practitioners, built to replace a ten-year-old WordPress site. Visitors filter the practitioner directory and read profiles, the office edits all content in an embedded Sanity Studio, and invited practitioners can edit the practitioner's own profile page after an emailed-code sign-in after an emailed-code sign-in.",
+    "summary": "Rebuild of the website of a Seattle association of independent psychologists, psychiatrists and psychiatric nurse practitioners, built to replace a ten-year-old WordPress site. Visitors filter the practitioner directory and read profiles, the office edits all content in an embedded Sanity Studio, and invited practitioners can edit the practitioner's own profile page after an emailed-code sign-in.",
     "features": [
       {
         "title": "Public site",

@@ -19,7 +19,7 @@ export function FpsMeter() {
       if (now - windowStart >= 1000) {
         const fps = Math.round((frames * 1000) / (now - windowStart));
         if (out.current !== null) {
-          out.current.textContent = `${fps} fps · worst ${Math.round(worst)} ms`;
+          out.current.textContent = `${fps} fps · ${Math.round(worst)} ms`;
         }
         frames = 0;
         worst = 0;

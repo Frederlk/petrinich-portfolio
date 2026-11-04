@@ -23,8 +23,8 @@ const ICONS = {
   telegram: TelegramLogoIcon,
 } as const satisfies Record<ContactChannel["id"], unknown>;
 
-// One row of the contact list, shared by the desktop menu and the mobile drawer: icon, label over a muted handle, and an arrow. On hover or focus the vermilion fill sweeps in from the left, the text turns dark and the arrow slides; the focus ring is dark and inset, so it shows on the fill.
-const contactRowClass = cn(
+// One row of the contact list, shared by the desktop menu, the mobile drawer and the home contact block below lg: icon, label over a muted handle, and an arrow (up-right for a page on another site). On hover or focus the vermilion fill sweeps in from the left, the text turns dark and the arrow slides; the focus ring is dark and inset, so it shows on the fill. The mobile nav drawer's rows take the same look.
+export const contactRowClass = cn(
   // Layout & Size
   "group flex min-h-12 w-full items-center gap-space-md border-b border-surface-container-high px-space-md py-space-sm last:border-b-0",
   // Typography & Colors
@@ -36,7 +36,7 @@ const contactRowClass = cn(
 const onFill =
   "transition-colors duration-300 group-hover:text-on-primary-container group-data-highlighted:text-on-primary-container";
 
-// The anchor of one channel. Menu items pass Base UI's item props through `rest`, the drawer passes its close handler.
+// The anchor of one channel. Menu items and the drawer's Close pass Base UI's props through `rest`.
 export function ContactRowLink({
   channel,
   className,
@@ -63,7 +63,7 @@ export function ContactRowLink({
           {channel.handle}
         </span>
       </span>
-      <ArrowSlide className="shrink-0" />
+      <ArrowSlide className="shrink-0" external={external} />
     </a>
   );
 }

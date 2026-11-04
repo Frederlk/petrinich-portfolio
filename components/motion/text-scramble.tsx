@@ -2,6 +2,8 @@
 
 import { useEffect, useEffectEvent, useRef } from "react";
 
+import { prefersReducedMotion } from "~/lib/motion";
+
 const DURATION_MS = 360;
 const STEP_MS = 40;
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -24,10 +26,7 @@ export function TextScramble({
 
   const play = () => {
     const node = ref.current?.firstChild;
-    if (
-      !node ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
+    if (!node || prefersReducedMotion()) {
       return;
     }
     stop.current();

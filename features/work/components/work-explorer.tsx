@@ -6,6 +6,7 @@ import { useQueryStates } from "nuqs";
 import { DigitSwap } from "~/components/motion/digit-swap";
 
 import { Input } from "~/ui/input";
+import { ScrollArea } from "~/ui/scroll-area";
 import { Tabs, TabsList, TabsTab } from "~/ui/tabs";
 import { Tip } from "~/ui/tooltip";
 
@@ -32,6 +33,21 @@ import {
   type TechOption,
   type WorkRow,
 } from "~/features/work/work-types";
+
+// A ref callback for the chosen tab: brings it into view inside the strip when it is cut off. It moves only the strip's own viewport; `scrollIntoView` would scroll the window too.
+function scrollIntoStrip(tab: HTMLElement | null) {
+  const strip = tab?.closest<HTMLElement>('[data-slot="scroll-area-viewport"]');
+  if (!tab || !strip) {
+    return;
+  }
+  const edge = strip.getBoundingClientRect();
+  const box = tab.getBoundingClientRect();
+  if (box.left < edge.left) {
+    strip.scrollLeft -= edge.left - box.left;
+  } else if (box.right > edge.right) {
+    strip.scrollLeft += box.right - edge.right;
+  }
+}
 
 type Props = {
   rows: readonly WorkRow[];
@@ -83,19 +99,32 @@ export function WorkExplorer({ domains, rows, roles, techs, years }: Props) {
             }}
             value={filters.type}
           >
-            {/* Below lg the six tabs overflow: the strip scrolls sideways, and a fade on its right edge (with room after the last tab) says there is more. */}
-            <div className="hide-scrollbar h-control overflow-x-auto border border-surface-container-high max-lg:mask-r-from-85% max-lg:pe-10">
-              <TabsList className="h-full w-max min-w-full">
-                {TYPE_TABS.map((tab) => (
-                  <TabsTab className="shrink-0" key={tab} value={tab}>
-                    {TYPE_TAB_LABELS[tab]}
-                    <span className="tabular-nums">
-                      <DigitSwap value={countOf(tab)} />
-                    </span>
-                  </TabsTab>
-                ))}
-              </TabsList>
-            </div>
+            {/* Below lg the six tabs overflow: the strip scrolls sideways inside the toolbar box and fades at an edge only while there is more that way. The viewport scrolls sideways only (`!` beats Base UI's inline `overflow: scroll`), and `overscroll-y-auto` lets a vertical swipe on it reach the page. */}
+            <ScrollArea
+              className="w-auto"
+              fadeX
+              viewportClassName="overflow-y-hidden! overscroll-y-auto"
+            >
+              <div className="w-max min-w-full">
+                <div className="h-control border border-surface-container-high">
+                  <TabsList className="h-full w-max min-w-full">
+                    {TYPE_TABS.map((tab) => (
+                      <TabsTab
+                        className="shrink-0"
+                        key={tab}
+                        ref={tab === filters.type ? scrollIntoStrip : undefined}
+                        value={tab}
+                      >
+                        {TYPE_TAB_LABELS[tab]}
+                        <span className="tabular-nums">
+                          <DigitSwap value={countOf(tab)} />
+                        </span>
+                      </TabsTab>
+                    ))}
+                  </TabsList>
+                </div>
+              </div>
+            </ScrollArea>
           </Tabs>
           <div className="flex min-w-0 flex-1 items-stretch gap-space-sm">
             <search className="min-w-0 flex-1">

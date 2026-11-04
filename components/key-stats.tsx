@@ -18,32 +18,53 @@ export function KeyStats({
   return (
     <dl
       className={cn(
-        "key-stats grid grid-cols-2 gap-y-space-lg sm:auto-cols-fr sm:grid-flow-col",
+        "key-stats grid grid-cols-2 gap-y-space-lg",
+        // Three figures fit one row at any width (the long labels shorten below xs); four wait for sm.
+        count === 3
+          ? "auto-cols-fr grid-flow-col"
+          : "sm:auto-cols-fr sm:grid-flow-col",
         className
       )}
     >
-      {keyStats.slice(0, count).map((stat) => (
-        <div
-          className="key-stat flex flex-col-reverse justify-end border-l border-surface-container-high pl-space-md first:border-l-0 first:pl-0 max-sm:odd:border-l-0 max-sm:odd:pl-0"
-          key={stat.label}
-        >
-          <dt className="key-stat-label type-label text-secondary">
-            {stat.href === null || !links ? (
-              stat.label
-            ) : (
-              <Link
-                className="link-draw hover:text-primary-container"
-                href={stat.href}
-              >
-                {stat.label}
-              </Link>
+      {keyStats.slice(0, count).map((stat) => {
+        const label =
+          "short" in stat ? (
+            <>
+              <span className="xs:hidden">{stat.short}</span>
+              <span className="max-xs:hidden">{stat.label}</span>
+            </>
+          ) : (
+            stat.label
+          );
+        return (
+          <div
+            className={cn(
+              "key-stat flex flex-col-reverse justify-end border-l border-surface-container-high pl-space-md first:border-l-0 first:pl-0",
+              // Three cells share 320px, so below xs the gutter narrows.
+              count === 3
+                ? "max-xs:pl-space-sm"
+                : "max-sm:odd:border-l-0 max-sm:odd:pl-0"
             )}
-          </dt>
-          <dd className="key-stat-value m-0 type-stat text-on-surface before:mb-space-sm before:block before:h-0.5 before:w-6 before:bg-primary-container">
-            <CountUp value={stat.value} />
-          </dd>
-        </div>
-      ))}
+            key={stat.label}
+          >
+            <dt className="key-stat-label type-label text-secondary">
+              {stat.href === null || !links ? (
+                label
+              ) : (
+                <Link
+                  className="link-draw hover:text-primary-container"
+                  href={stat.href}
+                >
+                  {label}
+                </Link>
+              )}
+            </dt>
+            <dd className="key-stat-value m-0 type-stat text-on-surface before:mb-space-sm before:block before:h-0.5 before:w-6 before:bg-primary-container">
+              <CountUp value={stat.value} />
+            </dd>
+          </div>
+        );
+      })}
     </dl>
   );
 }

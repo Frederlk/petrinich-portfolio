@@ -2,44 +2,82 @@
 
 import { ListIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
-import { NAV_ITEMS } from "~/components/layout/nav-items";
+import { contactRowClass } from "~/components/layout/contact-row";
+import { NAV_ITEMS, navTransition } from "~/components/layout/nav-items";
+import { ArrowSlide } from "~/components/motion/arrow-slide";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/ui/dropdown-menu";
+import { ctaLinkVariants } from "~/ui/cta-link";
+import { Drawer, DrawerContent, DrawerTrigger } from "~/ui/drawer";
 
-// The Stitch header has no menu below md. The round 32px chip that sits at the right edge there is this menu's button on small screens, so the footprint stays the reference's and the links stay reachable.
+import { cn } from "~/lib/cn";
+
+import type { ComponentProps } from "react";
+
+function MenuButton({ className, ...props }: ComponentProps<"button">) {
+  return (
+    <button
+      {...props}
+      aria-label="Menu"
+      className={cn(
+        ctaLinkVariants({ size: "icon", variant: "outline" }),
+        className
+      )}
+      type="button"
+    >
+      <ListIcon aria-hidden className="size-4.5" />
+    </button>
+  );
+}
+
+// The rows mount only while the drawer is open, after hydration, so reading the path here needs no Suspense boundary. The current section is marked as in the desktop links, and each link takes the same slide direction.
+function NavRows({ onNavigate }: { onNavigate: () => void }) {
+  const pathname = usePathname();
+  return (
+    <ul>
+      {NAV_ITEMS.map((item) => {
+        const current =
+          !item.href.includes("#") && pathname.startsWith(item.href);
+        return (
+          <li key={item.href}>
+            <Link
+              aria-current={current ? "page" : undefined}
+              className={cn(
+                contactRowClass,
+                "type-button",
+                current && "border-l-2 border-l-primary-container"
+              )}
+              href={item.href}
+              onClick={onNavigate}
+              transitionTypes={navTransition(pathname, item.href)}
+            >
+              <span className="flex-1">{item.label}</span>
+              <ArrowSlide className="shrink-0" />
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+// The header has no nav links below md, so this bottom drawer holds them there, beside the contact drawer.
 export function MobileNav() {
+  const [open, setOpen] = useState(false);
   return (
     <div className="md:hidden">
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <button
-              aria-label="Menu"
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-on-primary"
-              type="button"
-            />
-          }
-        >
-          <ListIcon aria-hidden className="size-4.5" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" indicator="none">
-          {NAV_ITEMS.map((item) => (
-            <DropdownMenuItem
-              key={item.href}
-              render={<Link href={item.href} />}
-              variant="nav"
-            >
-              {item.label}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Drawer onOpenChange={setOpen} open={open}>
+        <DrawerTrigger render={(props) => <MenuButton {...props} />} />
+        <DrawerContent title="Menu">
+          <NavRows
+            onNavigate={() => {
+              setOpen(false);
+            }}
+          />
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }

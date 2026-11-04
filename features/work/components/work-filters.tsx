@@ -1,7 +1,6 @@
 "use client";
 
 import { FunnelSimpleIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
-import { useState, type ReactNode } from "react";
 
 import { BadgeOverflow } from "~/ui/badge-overflow";
 import {
@@ -18,7 +17,7 @@ import {
   ComboboxPopup,
   ComboboxValue,
 } from "~/ui/combobox";
-import { Drawer, DrawerContent, DrawerTrigger } from "~/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "~/ui/drawer";
 import { Popover, PopoverContent, PopoverTrigger } from "~/ui/popover";
 import { ScrollArea } from "~/ui/scroll-area";
 import {
@@ -41,6 +40,8 @@ import {
   WORK_ROLES,
   type WorkRow,
 } from "~/features/work/work-types";
+
+import type { ReactNode } from "react";
 
 const ALL = "all";
 
@@ -275,9 +276,8 @@ function TriggerBody({ count }: { count: number }): ReactNode {
   );
 }
 
-// One Filters button. From md up it opens a popover under the button, below md the same fields open in the bottom drawer; both triggers are in the markup and CSS shows one.
+// One Filters button. From md up it is labelled and opens a popover under the button; below md it is a square funnel beside the search field, with the count as a badge on its corner, and the same fields open in the bottom drawer. Both triggers are in the markup and CSS shows one.
 export function FiltersControl(props: Props) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const count = activeFilterCount(props.filters);
   const clear = (
     <button
@@ -300,15 +300,27 @@ export function FiltersControl(props: Props) {
 
   return (
     <>
-      <Drawer onOpenChange={setDrawerOpen} open={drawerOpen}>
+      <Drawer>
         <DrawerTrigger
           render={(triggerProps) => (
             <button
               {...triggerProps}
-              className={cn(triggerClass, "md:hidden")}
+              aria-label={count > 0 ? `Filters, ${count} active` : "Filters"}
+              className={cn(triggerClass, "size-control px-0 md:hidden")}
               type="button"
             >
-              <TriggerBody count={count} />
+              <FunnelSimpleIcon
+                aria-hidden
+                className="size-4 text-primary-container"
+              />
+              {count > 0 ? (
+                <span
+                  aria-hidden
+                  className="absolute -top-2 -right-2 min-w-5 bg-primary-container px-1 text-center type-meta text-on-primary-container"
+                >
+                  {count}
+                </span>
+              ) : null}
             </button>
           )}
         />
@@ -316,15 +328,16 @@ export function FiltersControl(props: Props) {
           <FilterFields {...props} />
           <div className="flex items-center justify-between gap-space-md border-t border-surface-container-high p-space-md">
             {clear}
-            <button
-              className="min-h-12 cursor-pointer bg-primary-container px-space-lg type-button text-on-primary-container outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-              onClick={() => {
-                setDrawerOpen(false);
-              }}
-              type="button"
-            >
-              Show {props.resultCount}
-            </button>
+            <DrawerClose
+              render={
+                <button
+                  className="min-h-12 cursor-pointer bg-primary-container px-space-lg type-button text-on-primary-container outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  type="button"
+                >
+                  Show {props.resultCount}
+                </button>
+              }
+            />
           </div>
         </DrawerContent>
       </Drawer>

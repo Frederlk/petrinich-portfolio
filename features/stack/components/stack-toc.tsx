@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEventListener } from "usehooks-ts";
 
 import { ScrollArea } from "~/ui/scroll-area";
 
@@ -10,19 +11,14 @@ import { indicatorSpring } from "~/lib/motion";
 
 type Entry = { count: number; id: string; name: string };
 
-// Table of contents with scroll-spy. From lg up it is a sticky column beside the groups; below, a sticky row of pills that scrolls the active pill into view. The active mark is one shared-layout element that slides between entries.
-export function StackToc({
-  className,
-  entries,
-}: {
-  className?: string;
-  entries: readonly Entry[];
-}) {
+// Module-level, because usehooks-ts re-binds the listener whenever the options object changes identity.
+const PASSIVE = { passive: true } as const;
+
+// Table of contents with scroll-spy, from lg up only: a sticky column beside the groups, the active mark one shared-layout element that slides between entries.
+export function StackToc({ entries }: { entries: readonly Entry[] }) {
   const [picked, setPicked] = useState(entries[0]?.id ?? "");
   // A group the search hid cannot stay active.
-  const active = entries.some((e) => e.id === picked)
-    ? picked
-    : (entries[0]?.id ?? "");
+  const active = (entries.find((e) => e.id === picked) ?? entries[0])?.id ?? "";
   const list = useRef<HTMLUListElement>(null);
   const reduced = useReducedMotion();
 
@@ -44,99 +40,79 @@ export function StackToc({
     for (const section of sections) {
       observer.observe(section);
     }
-    // The last group is too short to reach the band, so the page end selects it.
-    const last = entries.at(-1)?.id;
-    const onScroll = () => {
+    return () => {
+      observer.disconnect();
+    };
+  }, [entries]);
+
+  // The last group is too short to reach the band, so the page end selects it.
+  useEventListener(
+    "scroll",
+    () => {
+      const last = entries.at(-1)?.id;
       const atEnd =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 2;
       if (atEnd && last !== undefined) {
         setPicked(last);
       }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [entries]);
+    },
+    undefined,
+    PASSIVE
+  );
 
-  useEffect(() => {
-    const el = list.current?.querySelector<HTMLElement>(
-      `[data-id="${active}"]`
-    );
-    const row = list.current;
-    // From lg up the column scrolls inside the ScrollArea viewport.
-    const column = row?.closest<HTMLElement>(
+  // The column scrolls on its own when it is taller than the screen; the active entry is brought to its middle. Only a change of `active` re-runs it; the motion preference is read at that moment.
+  const centerActive = useEffectEvent((id: string) => {
+    const el = list.current?.querySelector<HTMLElement>(`[data-id="${id}"]`);
+    const column = list.current?.closest<HTMLElement>(
       "[data-slot=scroll-area-viewport]"
     );
-    if (!el || !row) {
-      return;
-    }
-    const behavior = reduced === true ? "auto" : "smooth";
-    // Below lg the entries are a sideways strip; from lg up a column that scrolls on its own when it is taller than the screen. Either way the active entry is brought to the middle.
-    // The strip scrolls on the list, or on the viewport around it when the list grows to its full width.
-    const strip = row.scrollWidth > row.clientWidth ? row : column;
-    if (strip && strip.scrollWidth > strip.clientWidth) {
-      strip.scrollTo({
-        behavior,
-        left: el.offsetLeft - (strip.clientWidth - el.clientWidth) / 2,
-      });
-    }
-    if (column && column.scrollHeight > column.clientHeight) {
+    if (el && column && column.scrollHeight > column.clientHeight) {
       column.scrollTo({
-        behavior,
+        behavior: reduced === true ? "auto" : "smooth",
         top: el.offsetTop - (column.clientHeight - el.clientHeight) / 2,
       });
     }
-  }, [active, reduced]);
+  });
+  useEffect(() => {
+    centerActive(active);
+  }, [active]);
 
   return (
     <nav
       aria-label="Technology groups"
-      className={cn(
-        "sticky top-[calc(4rem+var(--search-band))] z-30 -mx-margin-mobile border-b border-surface-container-high bg-surface md:-mx-margin lg:static lg:mx-0 lg:flex lg:min-h-0 lg:flex-col lg:border-b-0",
-        className
-      )}
+      className="flex min-h-0 flex-col max-lg:hidden"
     >
-      {/* From lg up a long list scrolls on its own; the scrollbar shows only while the pointer is over it or it scrolls. The list's `ml-px` keeps the active bar, which sits on the left rule, inside the clip. */}
-      <ScrollArea
-        className="lg:flex lg:flex-col"
-        fade
-        viewportClassName="lg:min-h-0"
-      >
+      {/* A long list scrolls on its own; the scrollbar shows only while the pointer is over it or it scrolls. The list's `ml-px` keeps the active bar, which sits on the left rule, inside the clip. */}
+      <ScrollArea className="flex flex-col" fade viewportClassName="min-h-0">
         <ul
-          className="flex snap-x gap-space-sm overflow-x-auto px-margin-mobile py-space-sm md:px-margin lg:ml-px lg:flex-col lg:gap-0 lg:overflow-visible lg:border-l lg:border-surface-container-high lg:p-0"
+          className="ml-px flex flex-col border-l border-surface-container-high"
           ref={list}
         >
           {entries.map((entry) => {
-            const current = entry.id === active;
+            const isActive = entry.id === active;
             return (
-              <li
-                className="shrink-0 snap-center"
-                data-id={entry.id}
-                key={entry.id}
-              >
+              <li data-id={entry.id} key={entry.id}>
                 <a
-                  aria-current={current ? "true" : undefined}
+                  aria-current={isActive ? "true" : undefined}
                   className={cn(
-                    "relative flex items-center justify-between gap-space-md px-space-md py-1.5 type-body-sm whitespace-nowrap capitalize transition-[background-color,color,border-color] duration-200 ease-(--ease-enter) max-lg:border max-lg:border-surface-container-high lg:h-9 lg:py-0",
-                    current
-                      ? "text-on-surface max-lg:border-primary-container lg:bg-surface-container-low"
+                    "relative flex h-9 items-center justify-between gap-space-md px-space-md type-body-sm whitespace-nowrap capitalize transition-[background-color,color] duration-200 ease-(--ease-enter)",
+                    isActive
+                      ? "bg-surface-container-low text-on-surface"
                       : "text-secondary hover:text-on-surface"
                   )}
                   href={`#${entry.id}`}
                 >
-                  {current ? (
+                  {isActive ? (
                     <motion.span
                       aria-hidden
-                      className="absolute inset-x-0 bottom-0 h-0.5 bg-primary-container lg:inset-y-0 lg:right-auto lg:-left-px lg:h-auto lg:w-0.5"
+                      className="absolute inset-y-0 -left-px w-0.5 bg-primary-container"
                       layoutId="toc-active"
                       transition={indicatorSpring}
                     />
                   ) : null}
                   {entry.name}
-                  <span className="hidden w-6 text-right type-meta text-on-surface-variant lg:inline">
+                  <span className="w-6 text-right type-meta text-on-surface-variant">
                     {entry.count}
                   </span>
                 </a>

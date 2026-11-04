@@ -14,6 +14,8 @@ export const ctaLinkVariants = cva(
     variants: {
       size: {
         none: "",
+        // A square icon button, the 36px height of an `md` button; vermilion-edged while its popup is open.
+        icon: "size-9 data-popup-open:border-primary-container",
         lg: "px-space-lg py-space-sm has-[>svg:first-child:not(:only-child)]:pl-5 has-[>svg:last-child:not(:only-child)]:pr-5",
         md: "px-space-md py-space-sm has-[>svg:first-child:not(:only-child)]:pl-3 has-[>svg:last-child:not(:only-child)]:pr-3",
         tall: "px-space-xl py-space-md has-[>svg:first-child:not(:only-child)]:pl-9 has-[>svg:last-child:not(:only-child)]:pr-9",
@@ -29,8 +31,8 @@ export const ctaLinkVariants = cva(
         // A plain text link on the right of a channel row: no box, no caps.
         channel:
           "justify-end type-code break-all text-on-surface link-draw hover:text-primary-container",
-        // A plain text link in a footer list: no box, no caps.
-        text: "justify-start type-code text-on-surface-variant link-draw hover:text-primary",
+        // An orange text link in a footer list: no box, no caps.
+        text: "justify-start type-code text-primary-container link-draw",
         primary:
           "fill-sweep bg-primary-container type-button text-on-primary-container sweep-on-surface hover:text-surface",
       },

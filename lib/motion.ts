@@ -13,6 +13,10 @@ export const duration = {
   fast: 0.15,
 } as const;
 
+// Read at the moment of action (browser only), not through a hook: a subscription starts at `false` and settles after hydration, which would re-run an animation that already started.
+export const prefersReducedMotion = (): boolean =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 // The sliding indicator of tabs and the table of contents.
 export const indicatorSpring = {
   damping: 38,

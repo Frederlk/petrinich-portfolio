@@ -6,7 +6,8 @@ export const popoverPositioner = "";
 export const popoverAnimationStates =
   "data-starting-style:scale-98 data-starting-style:opacity-0 data-ending-style:scale-98 data-ending-style:opacity-0 data-instant:duration-0";
 
-export const popoverAnimation = `transition-[scale,opacity] ${popoverAnimationStates}`;
+// `ease-enter` starts fast, so the first frames after a click already show the popup; the default ease-in-out kept it near opacity 0 for 60 ms.
+export const popoverAnimation = `transition-[scale,opacity] ease-enter ${popoverAnimationStates}`;
 
 export const popoverPopup = cn(
   "surface-glow",

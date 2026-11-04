@@ -22,7 +22,7 @@ const components: MDXComponents = {
     </a>
   ),
   blockquote: ({ children }: Props) => (
-    <blockquote className="my-space-lg border-l-2 border-primary-container pl-space-md type-body text-on-surface">
+    <blockquote className="reveal my-space-lg border-l-2 border-primary-container pl-space-md type-body text-on-surface">
       {children}
     </blockquote>
   ),
@@ -30,23 +30,23 @@ const components: MDXComponents = {
     <code className="type-code text-on-surface">{children}</code>
   ),
   h2: ({ children }: Props) => (
-    <h2 className="mt-space-2xl mb-space-sm type-h2 text-on-surface first:mt-0">
+    <h2 className="reveal mt-space-xl mb-space-sm type-h2 text-on-surface first:mt-0 sm:mt-space-2xl">
       {children}
     </h2>
   ),
   h3: ({ children }: Props) => (
-    <h3 className="mt-space-lg mb-space-xs type-h3 text-on-surface">
+    <h3 className="reveal mt-space-lg mb-space-xs type-h3 text-on-surface">
       {children}
     </h3>
   ),
   li: ({ children }: Props) => <li>{rich(children)}</li>,
   ol: ({ children }: Props) => (
-    <ol className="my-space-md list-decimal space-y-space-xs pl-space-lg type-body text-secondary">
+    <ol className="reveal my-space-md list-decimal space-y-space-xs pl-space-lg type-body text-secondary">
       {children}
     </ol>
   ),
   p: ({ children }: Props) => (
-    <p className="my-space-md type-body text-secondary first:mt-0">
+    <p className="reveal my-space-md type-body text-secondary first:mt-0">
       {rich(children)}
     </p>
   ),
@@ -54,7 +54,7 @@ const components: MDXComponents = {
     <strong className="font-semibold text-on-surface">{children}</strong>
   ),
   ul: ({ children }: Props) => (
-    <ul className="list-square my-space-md space-y-space-xs type-body text-secondary">
+    <ul className="reveal list-square my-space-md space-y-space-xs type-body text-secondary">
       {children}
     </ul>
   ),

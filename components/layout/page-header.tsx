@@ -8,7 +8,7 @@ export function PageHeader({
   title,
 }: PropsWithChildren<{ title: string }>) {
   return (
-    <header className="flex flex-col justify-between gap-space-lg border-b border-surface-container-high pb-space-lg md:flex-row md:items-end">
+    <header className="flex flex-col justify-between gap-space-lg border-b border-surface-container-high pb-space-lg lg:flex-row lg:items-end">
       <div className="max-w-prose space-y-space-sm">
         <h1 className="m-0 type-h1 text-on-surface">{title}</h1>
         <p className="type-body text-secondary">{children}</p>

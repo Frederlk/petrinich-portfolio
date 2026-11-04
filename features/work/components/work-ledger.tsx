@@ -38,8 +38,12 @@ function RowBody({ row }: { row: WorkRow }) {
     </h3>
   );
   return (
-    <div className="row-shift grid grid-cols-1 items-start gap-y-2 px-space-md py-space-md lg:grid-cols-12 lg:items-center lg:gap-gutter">
-      <div className="type-meta text-tertiary group-hover:text-on-surface lg:col-span-1">
+    <div className="row-shift grid grid-cols-1 items-start gap-y-1.5 px-0 py-space-md lg:grid-cols-12 lg:items-center lg:gap-gutter lg:px-space-md">
+      {/* Below lg the year and the role share one line above the name; from lg each has its own column. */}
+      <div className="type-meta text-tertiary lg:hidden">
+        {row.year ?? "–"} · {WORK_ROLE_SHORT[row.role]}
+      </div>
+      <div className="type-meta text-tertiary group-hover:text-on-surface max-lg:hidden lg:col-span-1">
         {row.year ?? "–"}
       </div>
       <div className="flex flex-col lg:col-span-3">
@@ -66,7 +70,7 @@ function RowBody({ row }: { row: WorkRow }) {
       <div className="line-clamp-2 type-body text-secondary lg:col-span-4">
         {row.summary}
       </div>
-      <div className="type-meta text-on-surface lg:col-span-1">
+      <div className="type-meta text-on-surface max-lg:hidden lg:col-span-1">
         <Tip label={WORK_ROLE_HINTS[row.role]}>
           <span>{WORK_ROLE_SHORT[row.role]}</span>
         </Tip>
@@ -132,7 +136,7 @@ export function WorkLedger({
     <div className="flex w-full flex-col">
       {groups.map(([year, items]) => (
         <div className="w-full" key={year ?? "undated"}>
-          <div className="flex w-full items-baseline gap-space-sm border-b border-surface-container-high bg-surface-container-low px-space-md py-space-xs type-meta">
+          <div className="flex w-full items-baseline gap-space-sm border-b border-surface-container-high bg-surface-container-low px-0 py-space-xs type-meta lg:px-space-md">
             <span className="type-label text-on-surface">
               {year ?? "Undated"}
             </span>

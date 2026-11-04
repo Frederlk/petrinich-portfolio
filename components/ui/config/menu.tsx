@@ -79,7 +79,6 @@ export const menuItemVariants = cva(menuItem, {
       default: "",
       destructive: "",
       muted: "",
-      nav: "min-h-11 type-button",
     },
   },
 });

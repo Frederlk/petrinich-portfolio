@@ -2,7 +2,8 @@
 
 import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import { parseAsString, useQueryState } from "nuqs";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useEventListener } from "usehooks-ts";
 
 import { Input } from "~/ui/input";
 import { Tip } from "~/ui/tooltip";
@@ -32,37 +33,31 @@ export function StackView({
 }: Props & { onQueryChange?: (query: string) => void; query: string }) {
   const field = useRef<HTMLInputElement>(null);
   const view = useRef<HTMLDivElement>(null);
-  // A search typed further down the page would leave the shorter results above the screen, under the sticky field. So the page first scrolls back to where the field sticks (its 16px top margin under the 64px header), and the results start right below it; above that point nothing moves.
+  // A search typed further down the page would leave the shorter results above the screen, under the sticky field. So the page first jumps back to where the field sticks (its 16px top margin under the 64px header), and the results start right below it; above that point nothing moves. `instant` overrides the page's smooth `scroll-behavior`, so typing never animates.
   const change = (next: string) => {
     const el = view.current;
     if (el !== null) {
       const top = el.getBoundingClientRect().top + window.scrollY + 16 - 64;
       if (window.scrollY > top) {
-        window.scrollTo({ top });
+        window.scrollTo({ behavior: "instant", top });
       }
     }
     onQueryChange?.(next);
   };
 
-  useEffect(() => {
-    // "/" jumps to the field unless the user is already typing somewhere.
-    const onKey = (e: KeyboardEvent) => {
-      if (
-        e.key === "/" &&
-        !e.metaKey &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !isTyping(e.target)
-      ) {
-        e.preventDefault();
-        field.current?.focus();
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-    };
-  }, []);
+  // "/" jumps to the field unless the user is already typing somewhere.
+  useEventListener("keydown", (e) => {
+    if (
+      e.key === "/" &&
+      !e.metaKey &&
+      !e.ctrlKey &&
+      !e.altKey &&
+      !isTyping(e.target)
+    ) {
+      e.preventDefault();
+      field.current?.focus();
+    }
+  });
 
   const shownCore = filterItems(core, query);
   const shownGroups = filterGroups(groups, query);
@@ -77,7 +72,7 @@ export function StackView({
   const hasCore = shownCore.length > 0;
 
   return (
-    // Below lg the search sticks under the site header across the page, then the core cells, the contents strip and the groups follow (CSS `order`, because the sidebar wrapper is `display: contents` there). From lg up the search heads the sidebar, which sticks as one column with the contents list beside the cells and the groups; the column is capped at the screen under its sticky top plus a 16px bottom gap, and the list takes what the search leaves, so its height is never computed by hand. `--search-band` is the search's height (2.75rem field plus its padding), which the sticky contents and the group anchors add to their offsets so nothing hides behind it.
+    // Below lg the search sticks under the site header across the page, then the core cells and the groups follow (CSS `order`, because the sidebar wrapper is `display: contents` there); there is no contents list. From lg up the search heads the sidebar, which sticks as one column with the contents list beside the cells and the groups; the column is capped at the screen under its sticky top plus a 16px bottom gap, and the list takes what the search leaves, so its height is never computed by hand. `--search-band` is the search's height (2.75rem field plus its padding), which the group anchors add to their offsets so nothing hides behind it.
     <div
       className="flex flex-col [--search-band:--spacing(15)] lg:grid lg:grid-cols-[15rem_1fr] lg:gap-x-space-xl lg:pt-space-md"
       ref={view}
@@ -144,7 +139,7 @@ export function StackView({
           </label>
         </search>
         {found === 0 || shownGroups.length === 0 ? null : (
-          <StackToc className="order-3 lg:order-none" entries={tocEntries} />
+          <StackToc entries={tocEntries} />
         )}
       </div>
       {found === 0 ? (

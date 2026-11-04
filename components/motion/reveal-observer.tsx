@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { ease } from "~/lib/motion";
+import { ease, prefersReducedMotion } from "~/lib/motion";
 
 const SELECTOR = ".reveal, .reveal-words";
 const STEP_MS = 70;
@@ -64,7 +64,7 @@ function play(el: Element, delay: number) {
 // The section reveals (`.reveal`, `.reveal-words`; layout in styles/motion.css). Every element is armed once: on mount, and whenever a navigation or a filter adds one (a MutationObserver), so no page wires anything. Only an element that starts below the viewport is held at its start state, so nothing on screen blinks out; it plays once when it scrolls into view, and the ones that arrive in the same callback are staggered. Everything runs through the Web Animations API and never writes an attribute: Next hydrates a page after the layout, and an attribute written before that is a hydration mismatch. The server HTML is the final page for crawlers and no-JS readers; reduced motion arms nothing, and printing drops every hold. Rects are all read before any animation starts, so arming a long ledger forces one layout, not one per row.
 export function RevealObserver() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       return () => {};
     }
     const armed = new WeakSet<Element>();

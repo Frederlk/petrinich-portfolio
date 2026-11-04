@@ -7,6 +7,7 @@ import { About } from "~/features/home/components/about";
 import { Engagement } from "~/features/home/components/engagement";
 import { Experience } from "~/features/home/components/experience";
 import { Hero } from "~/features/home/components/hero";
+import { HomeMarker } from "~/features/home/components/home-marker";
 import { SelectedWork } from "~/features/home/components/selected-work";
 import { StackTeaser } from "~/features/home/components/stack-teaser";
 
@@ -15,7 +16,11 @@ export default function Home() {
   return (
     <>
       <PageTransition />
-      <main className="min-h-screen w-full bg-surface text-on-surface">
+      <main
+        className="min-h-screen w-full bg-surface text-on-surface"
+        data-home
+      >
+        <HomeMarker />
         <JsonLd data={profilePageJsonLd("")} />
         <Hero />
         <StackTeaser />

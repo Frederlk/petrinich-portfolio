@@ -1,9 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useEventListener, useTimeout } from "usehooks-ts";
 
 const GIVE_UP_MS = 15_000;
+// Module-level, because usehooks-ts re-binds the listener whenever the options object changes identity.
+const CAPTURE = { capture: true } as const;
 
 // A thin vermilion bar across the top of the viewport from the click on an internal link until the new page is in place. Next has no navigation events, so the click is caught in the capture phase (before the Link handler calls preventDefault) and the bar ends when `usePathname` changes. A link to the same path (a filter, a hash) is not a navigation and is ignored; a timer ends a bar whose click never navigated. The bar fades in only after 300 ms: every page is static and prefetched, so a fast navigation shows nothing and only a slow one shows the bar.
 export function NavigationProgress() {
@@ -17,8 +20,10 @@ export function NavigationProgress() {
     setLeaving(null);
   }
 
-  useEffect(() => {
-    const onClick = (event: MouseEvent) => {
+  // Window capture runs before any document or element listener, so before the Link handler.
+  useEventListener(
+    "click",
+    (event) => {
       if (
         event.button !== 0 ||
         event.metaKey ||
@@ -46,24 +51,17 @@ export function NavigationProgress() {
       ) {
         setLeaving(window.location.pathname);
       }
-    };
-    document.addEventListener("click", onClick, { capture: true });
-    return () => {
-      document.removeEventListener("click", onClick, { capture: true });
-    };
-  }, []);
+    },
+    undefined,
+    CAPTURE
+  );
 
-  useEffect(() => {
-    if (leaving === null) {
-      return () => {};
-    }
-    const timer = setTimeout(() => {
+  useTimeout(
+    () => {
       setLeaving(null);
-    }, GIVE_UP_MS);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [leaving]);
+    },
+    leaving === null ? null : GIVE_UP_MS
+  );
 
   return leaving === null ? null : (
     <div

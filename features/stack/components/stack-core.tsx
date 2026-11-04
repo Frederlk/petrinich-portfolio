@@ -18,7 +18,10 @@ function CellRow({
       className="flex flex-wrap gap-px border border-surface-container-high bg-surface-container-high"
     >
       {items.map((item) => (
-        <li className="reveal grow basis-36 bg-surface" key={item.id}>
+        <li
+          className="reveal grow basis-32 bg-surface sm:basis-36"
+          key={item.id}
+        >
           <Link
             className="group row-accent flex h-full flex-col justify-between gap-space-xs p-space-md transition-[background-color,color,border-color] duration-200 ease-(--ease-enter) hover:bg-surface-container-low"
             href={`/work?tech=${item.id}`}

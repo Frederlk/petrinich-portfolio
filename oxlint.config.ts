@@ -38,7 +38,7 @@ export default defineConfig({
     // ── Design system (@shadcn/lint) ─────────────────────────────────
     // `no-restyle` is the reason this plugin is here: a page may place a component (margin, width, grid position) but not restyle it. Its messages read the component's own CVA axes, so a violation on `<Badge>` lists the variants that exist instead of pointing at a doc. `allow: ["layout"]` is what makes it usable — without it even `flex` on a `<Label>` is a violation.
     //
-    // Each option excludes only non-defects: a `Skeleton` takes the shape of the content it stands in for; `DrawerTrigger`, `PopoverTrigger` and `DropdownMenuTrigger` are headless and own no style, and since 0.2.3 the rule follows their `render` button, so the button's own classes are the page's to set. They are named one by one, not matched as `*Trigger`, so a styled trigger such as `SelectTrigger` stays checked.
+    // Each option excludes only non-defects: a `Skeleton` takes the shape of the content it stands in for; `DrawerTrigger`, `DrawerClose`, `PopoverTrigger` and `DropdownMenuTrigger` are headless and own no style, and since 0.2.3 the rule follows their `render` element, so that element's own classes are the page's to set. They are named one by one, not matched as `*Trigger`, so a styled trigger such as `SelectTrigger` stays checked.
     "shadcn/no-restyle": [
       "error",
       {
@@ -46,7 +46,8 @@ export default defineConfig({
         contracts: [
           { pattern: "^Skeleton$", allow: ["layout", "rounded-*"] },
           {
-            pattern: "^(DrawerTrigger|PopoverTrigger|DropdownMenuTrigger)$",
+            pattern:
+              "^(DrawerTrigger|DrawerClose|PopoverTrigger|DropdownMenuTrigger)$",
             allow: [
               "layout",
               "spacing",

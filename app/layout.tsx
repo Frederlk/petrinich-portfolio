@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense, type PropsWithChildren } from "react";
 
+import { BackToTop } from "~/components/layout/back-to-top";
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { NavigationProgress } from "~/components/layout/navigation-progress";
@@ -55,7 +56,12 @@ export default async function RootLayout({
     loadFpsMeter === null ? null : (await loadFpsMeter()).FpsMeter;
 
   return (
-    <html className={cn("dark antialiased", FONT_FAMILY)} lang="en">
+    // `data-scroll-behavior` makes Next scroll instantly on a route change, so the smooth `scroll-behavior` in globals.css glides only same-page hash links.
+    <html
+      className={cn("dark antialiased", FONT_FAMILY)}
+      data-scroll-behavior="smooth"
+      lang="en"
+    >
       <head>
         <link href="/llms.txt" rel="describedby" type="text/plain" />
       </head>
@@ -73,6 +79,7 @@ export default async function RootLayout({
                   <Footer />
                 </div>
                 <RevealObserver />
+                <BackToTop />
                 {FpsMeter === null ? null : <FpsMeter />}
               </ToastProvider>
             </TooltipProvider>

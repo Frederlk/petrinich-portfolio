@@ -8,6 +8,8 @@
 /* Dark only. `<html class="dark">` is static, so the template's `dark:` / `not-dark:` variants keep resolving; there is no light palette and no switch. */
 @custom-variant dark (&:is(.dark *));
 @custom-variant skeleton-pulse (&:is([data-skeleton="pulse"] *));
+/* Anywhere on the page while the home page is shown: its `<main>` carries `data-home`, so the layout's header can tell without reading the route. `data-away` marks a home page Next keeps mounted but hidden (HomeMarker). */
+@custom-variant home (&:is(html:not([data-away]):has(main[data-home]) *));
 
 /* Values from the Google Stitch export (design/stitch/A, tailwind config), see DESIGN.md. Template roles are bound to the Stitch palette: `primary` is Stitch's #ffb5a1, the vermilion CTA fill is `primary-container`, `secondary` is the light grey used for body text. */
 :root {
@@ -530,6 +532,16 @@
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(6));
 }
 
+/* The same offset for a fixed element: the back-to-top button. */
+@utility bottom-safe-5 {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(5));
+}
+
+/* The footer's bottom padding: at the end of the page the back-to-top button (`bottom-safe-5`, an icon button) sits below the last line instead of over it. */
+@utility pb-safe-16 {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(16));
+}
+
 @utility hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -590,6 +602,17 @@
   );
 }
 
+/* `scroll-fade` across a horizontal strip, from `--scroll-area-overflow-x-start` and `-end`. */
+@utility scroll-fade-x {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 min(2.5rem, var(--scroll-area-overflow-x-start, 0px)),
+    #000 calc(100% - min(2.5rem, var(--scroll-area-overflow-x-end, 0px))),
+    transparent 100%
+  );
+}
+
 @utility focus-ring {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -611,9 +634,11 @@
   transition:
     text-decoration-color 260ms var(--ease-enter),
     color 180ms ease;
-  &:hover,
-  :where(.group:hover) & {
-    text-decoration-color: currentColor;
+  @media (hover: hover) {
+    &:hover,
+    :where(.group:hover) & {
+      text-decoration-color: currentColor;
+    }
   }
 }
 
@@ -623,9 +648,11 @@
   transition:
     text-decoration-color 260ms var(--ease-enter),
     color 180ms ease;
-  &:hover {
-    color: var(--primary);
-    text-decoration-color: currentColor;
+  @media (hover: hover) {
+    &:hover {
+      color: var(--primary);
+      text-decoration-color: currentColor;
+    }
   }
 }
 
@@ -680,9 +707,13 @@
     transition: clip-path 360ms var(--ease-enter);
     z-index: -1;
   }
-  &:hover::before,
   &[data-highlighted]::before {
     clip-path: inset(0);
+  }
+  @media (hover: hover) {
+    &:hover::before {
+      clip-path: inset(0);
+    }
   }
 }
 
@@ -709,8 +740,10 @@
     transition: opacity 200ms ease;
     width: 2px;
   }
-  &:hover::before {
-    opacity: 1;
+  @media (hover: hover) {
+    &:hover::before {
+      opacity: 1;
+    }
   }
 }
 
@@ -718,19 +751,30 @@
   .row-shift {
     transition: translate 320ms var(--ease-enter);
   }
-  .group:hover .row-shift {
-    translate: 0.5rem 0;
-  }
   .arrow-slide,
-  .arrow-slide-back {
+  .arrow-slide-back,
+  .arrow-slide-out {
     transition: translate 260ms var(--ease-enter);
   }
-  .group:hover .arrow-slide,
   .group[data-highlighted] .arrow-slide {
     translate: 0.25rem 0;
   }
-  .group:hover .arrow-slide-back {
-    translate: -0.25rem 0;
+  .group[data-highlighted] .arrow-slide-out {
+    translate: 0.125rem -0.125rem;
+  }
+  @media (hover: hover) {
+    .group:hover .row-shift {
+      translate: 0.5rem 0;
+    }
+    .group:hover .arrow-slide {
+      translate: 0.25rem 0;
+    }
+    .group:hover .arrow-slide-back {
+      translate: -0.25rem 0;
+    }
+    .group:hover .arrow-slide-out {
+      translate: 0.125rem -0.125rem;
+    }
   }
   .press:active {
     scale: 0.97;
@@ -869,6 +913,13 @@
   samp,
   pre {
     @apply font-mono;
+  }
+}
+
+/* A hash link on the same page glides to its target; `data-scroll-behavior` on `<html>` keeps route changes instant. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 

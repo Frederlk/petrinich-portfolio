@@ -36,9 +36,7 @@ export default function StackPage() {
             <StackBrowser {...stackProps} />
           </Suspense>
         </div>
-        <div className="pt-space-2xl md:pt-space-3xl">
-          <Engagement />
-        </div>
+        <Engagement />
       </main>
     </>
   );

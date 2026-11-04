@@ -21,7 +21,7 @@ export function SectionHeader({
       </h2>
       {action ? (
         <Link
-          className="group hidden type-button text-on-surface hover:text-primary-container md:inline"
+          className="reveal group hidden type-button text-on-surface hover:text-primary-container md:inline-block"
           href={action.href}
         >
           <span className="link-draw">{action.label}</span>
@@ -34,7 +34,7 @@ export function SectionHeader({
 
 export function SectionMoreLink({ href, label }: Action) {
   return (
-    <div className="mt-space-md md:hidden">
+    <div className="reveal mt-space-md md:hidden">
       <CtaLink className="w-full" href={href} variant="outline">
         {label}
       </CtaLink>

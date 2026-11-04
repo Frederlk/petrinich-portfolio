@@ -4,6 +4,7 @@ import { XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRef } from "react";
 
+import { prefersReducedMotion } from "~/lib/motion";
 import { SCREENSHOT_SIZE } from "~/lib/screenshot";
 
 const SIZES = "(min-width: 1536px) 1344px, 100vw";
@@ -12,7 +13,7 @@ const SIZES = "(min-width: 1536px) 1344px, 100vw";
 function swap(update: () => Promise<void> | void, after = () => {}) {
   if (
     typeof document.startViewTransition !== "function" ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    prefersReducedMotion()
   ) {
     void Promise.resolve(update()).finally(after);
     return;

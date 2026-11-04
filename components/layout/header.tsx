@@ -1,4 +1,5 @@
 import { DownloadSimpleIcon } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -16,7 +17,7 @@ import { profile } from "~/lib/content";
 
 import { ROUTES } from "~/constants/routes";
 
-// The Stitch shell: a fixed 64px bar. Below md the links collapse into the round chip at the right (MobileNav) and the Contact button stays beside it and opens a bottom drawer.
+// The Stitch shell: a fixed 64px bar. Below md the links collapse into the square menu button at the right (MobileNav) and the Contact button stays beside it and opens a bottom drawer; below sm Contact is a square envelope button too. Below md the home page shows the logo in place of the name; both are the one `brand` view-transition element, so leaving home morphs the logo into the name and coming back morphs it into the logo.
 export function Header() {
   return (
     <header
@@ -30,7 +31,15 @@ export function Header() {
             href={ROUTES.HOME}
             transitionTypes={NAV_BACK}
           >
-            {profile.name}
+            <span className="vt-brand max-md:home:hidden">{profile.name}</span>
+            <Image
+              alt={profile.name}
+              className="hidden size-9 vt-brand max-md:home:block"
+              height={36}
+              src="/icon.svg"
+              unoptimized
+              width={36}
+            />
           </Link>
           <TextScramble
             className="hidden border-l border-surface-container-high pl-space-md type-meta text-secondary lg:inline-block"
@@ -59,7 +68,7 @@ export function Header() {
               <DownloadSimpleIcon aria-hidden className="size-4" />
               <span>CV</span>
             </a>
-            <ContactMenu />
+            <ContactMenu compact />
             <MobileNav />
           </div>
         </div>

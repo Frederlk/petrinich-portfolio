@@ -16,7 +16,7 @@ const all = {
 // The core stack as on /stack, with the way on to the full list.
 export function StackTeaser() {
   return (
-    <section className="container pb-space-3xl">
+    <section className="container pb-space-2xl sm:pb-space-3xl">
       <SectionHeader action={all} title="Core stack" />
       <StackCore core={coreStack?.items ?? []} />
       <SectionMoreLink {...all} />

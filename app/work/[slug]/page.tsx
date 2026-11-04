@@ -91,7 +91,7 @@ function EndCard({ back = false, count }: { back?: boolean; count: number }) {
   return (
     <Link
       className={cn(
-        "group row-accent p-space-xl hover:bg-surface-container-low",
+        "group row-accent p-space-md hover:bg-surface-container-low sm:p-space-xl",
         back ? "text-left" : "text-left md:text-right"
       )}
       href="/work"
@@ -102,7 +102,7 @@ function EndCard({ back = false, count }: { back?: boolean; count: number }) {
         All work
         {back ? null : <ArrowSlide />}
       </div>
-      <div className="my-space-xs type-h2 text-tertiary uppercase">
+      <div className="my-space-xs type-h3 text-tertiary uppercase sm:type-h2">
         Back to the full list
       </div>
       <div className="type-meta text-secondary">{count} projects</div>
@@ -161,7 +161,7 @@ export default async function ProjectPage({ params }: Props) {
       <main className="min-h-screen w-full bg-surface text-on-surface">
         <ReadProgress />
         <JsonLd data={projectPageJsonLd(project)} />
-        <section className="container pt-space-xl pb-space-2xl">
+        <section className="container pt-space-xl pb-space-xl sm:pb-space-2xl">
           <div className="mb-space-lg w-full overflow-hidden">
             <ProjectName id={project.id}>
               <h1
@@ -189,8 +189,9 @@ export default async function ProjectPage({ params }: Props) {
               {domains.join(" · ")}
             </p>
           )}
-          <dl className="grid grid-cols-1 border-t border-b border-surface-container-high sm:grid-cols-2 lg:grid-cols-4">
-            <div className="border-b border-surface-container-high p-space-lg sm:border-r lg:border-b-0">
+          {/* Year and My part share the first row at any width; Core stack and Website take a row each below sm. */}
+          <dl className="reveal grid grid-cols-2 border-t border-b border-surface-container-high lg:grid-cols-4">
+            <div className="border-r border-b border-surface-container-high p-space-md sm:p-space-lg lg:border-b-0">
               <dt className={factLabel}>Year</dt>
               <dd className={factValue}>{project.year ?? "–"}</dd>
               <dd className={factNote}>
@@ -199,7 +200,7 @@ export default async function ProjectPage({ params }: Props) {
                   : WORK_KIND_LABELS[origin]}
               </dd>
             </div>
-            <div className="border-b border-surface-container-high p-space-lg lg:border-r lg:border-b-0">
+            <div className="border-b border-surface-container-high p-space-md sm:p-space-lg lg:border-r lg:border-b-0">
               <dt className={factLabel}>My part</dt>
               <dd className={factValue}>
                 <Tip label={WORK_ROLE_HINTS[role]}>
@@ -211,7 +212,7 @@ export default async function ProjectPage({ params }: Props) {
                 </Tip>
               </dd>
             </div>
-            <div className="group relative border-b border-surface-container-high p-space-lg hover:bg-surface-container-low sm:border-r sm:border-b-0">
+            <div className="group relative col-span-2 border-b border-surface-container-high p-space-md hover:bg-surface-container-low sm:col-span-1 sm:border-r sm:border-b-0 sm:p-space-lg">
               <dt className={factLabel}>Core stack</dt>
               <dd
                 className={cn(factValue, "group-hover:text-primary-container")}
@@ -227,7 +228,7 @@ export default async function ProjectPage({ params }: Props) {
                   .join(", ")}
               </dd>
             </div>
-            <div className="min-w-0 p-space-lg">
+            <div className="col-span-2 min-w-0 p-space-md sm:col-span-1 sm:p-space-lg">
               <dt className={factLabel}>Website</dt>
               {url === null ? (
                 <>
@@ -247,7 +248,7 @@ export default async function ProjectPage({ params }: Props) {
                     <span className="truncate link-draw">
                       {bare(url).replace(/^www\./, "")}
                     </span>
-                    <ArrowSlide className="shrink-0 align-middle" />
+                    <ArrowSlide className="shrink-0 align-middle" external />
                   </a>
                 </dd>
               )}
@@ -256,7 +257,7 @@ export default async function ProjectPage({ params }: Props) {
         </section>
 
         {hasRole ? (
-          <section className="container pb-space-2xl">
+          <section className="container pb-space-xl sm:pb-space-2xl">
             <SectionHeader title="My role" />
             <div className="reveal max-w-4xl space-y-space-md">
               {project.roleNote === "" ? null : (
@@ -272,7 +273,7 @@ export default async function ProjectPage({ params }: Props) {
         ) : null}
 
         {project.features.length > 0 ? (
-          <section className="container pb-space-2xl">
+          <section className="container pb-space-xl sm:pb-space-2xl">
             <SectionHeader title="Capabilities" />
             <div className="grid gap-x-space-xl gap-y-space-lg lg:grid-cols-2">
               {featureGroups(project).map((group) => (
@@ -296,7 +297,7 @@ export default async function ProjectPage({ params }: Props) {
         ) : null}
 
         {project.caseStudy === null ? null : (
-          <div className="container pb-space-2xl">
+          <div className="container pb-space-xl sm:pb-space-2xl">
             <div className="max-w-4xl">
               <CaseStudy id={project.caseStudy} />
             </div>
@@ -304,7 +305,7 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         <section
-          className="container scroll-mt-space-lg pb-space-2xl"
+          className="container scroll-mt-space-lg pb-space-xl sm:pb-space-2xl"
           id="stack"
         >
           <SectionHeader title="Core stack" />
@@ -327,7 +328,7 @@ export default async function ProjectPage({ params }: Props) {
         </section>
 
         {project.media.length === 0 ? null : (
-          <section className="container pb-space-2xl">
+          <section className="container pb-space-xl sm:pb-space-2xl">
             <SectionHeader title="Screenshots" />
             <div className="space-y-space-lg">
               {project.media.map((src) => (
@@ -345,13 +346,16 @@ export default async function ProjectPage({ params }: Props) {
           </section>
         )}
 
-        <nav aria-label="Projects" className="container pb-space-3xl">
+        <nav
+          aria-label="Projects"
+          className="container pb-space-2xl sm:pb-space-3xl"
+        >
           <div className="reveal grid grid-cols-1 divide-y divide-surface-container-high border border-surface-container-high bg-surface-container-lowest md:grid-cols-2 md:divide-x md:divide-y-0">
             {previous === undefined ? (
               <EndCard back count={pages.length} />
             ) : (
               <Link
-                className="group row-accent p-space-xl hover:bg-surface-container-low"
+                className="group row-accent p-space-md hover:bg-surface-container-low sm:p-space-xl"
                 href={`/work/${previous.id}`}
                 transitionTypes={NAV_BACK}
               >
@@ -360,7 +364,7 @@ export default async function ProjectPage({ params }: Props) {
                   Previous
                 </div>
                 <ProjectName id={previous.id}>
-                  <div className="my-space-xs type-h2 text-on-surface uppercase">
+                  <div className="my-space-xs type-h3 text-on-surface uppercase sm:type-h2">
                     {previous.name}
                   </div>
                 </ProjectName>
@@ -374,7 +378,7 @@ export default async function ProjectPage({ params }: Props) {
               <EndCard count={pages.length} />
             ) : (
               <Link
-                className="group row-accent p-space-xl text-left hover:bg-surface-container-low md:text-right"
+                className="group row-accent p-space-md text-left hover:bg-surface-container-low sm:p-space-xl md:text-right"
                 href={`/work/${next.id}`}
                 transitionTypes={NAV_FORWARD}
               >
@@ -383,7 +387,7 @@ export default async function ProjectPage({ params }: Props) {
                   <ArrowSlide />
                 </div>
                 <ProjectName id={next.id}>
-                  <div className="my-space-xs type-h2 text-on-surface uppercase">
+                  <div className="my-space-xs type-h3 text-on-surface uppercase sm:type-h2">
                     {next.name}
                   </div>
                 </ProjectName>

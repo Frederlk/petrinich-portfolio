@@ -31,7 +31,7 @@ export default function WorkPage() {
       <PageTransition />
       <main className="min-h-screen w-full bg-surface">
         <JsonLd data={workJsonLd()} />
-        <div className="container flex flex-col pt-space-xl pb-space-3xl">
+        <div className="container flex flex-col pt-space-xl pb-space-2xl sm:pb-space-3xl">
           <WorkHeader />
           {/* The fallback is the full ledger, so the first HTML carries every row; the client explorer takes over and narrows it from the URL. The toolbar skeleton holds the height of the toolbar, so the rows do not jump when it arrives. */}
           <Suspense

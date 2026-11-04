@@ -5,7 +5,7 @@ import { experience } from "~/lib/content";
 
 export function Experience() {
   return (
-    <section className="container pb-space-3xl" id="experience">
+    <section className="container pb-space-2xl sm:pb-space-3xl" id="experience">
       <SectionHeader title="Recent experience" />
       <div className="flex flex-col border-b border-surface-container-high">
         {experience.map((job) => (
