@@ -6,6 +6,7 @@ import { BackToTop } from "~/components/layout/back-to-top";
 import { Footer } from "~/components/layout/footer";
 import { Header } from "~/components/layout/header";
 import { NavigationProgress } from "~/components/layout/navigation-progress";
+import { UmamiScript } from "~/components/layout/umami-script";
 import { MotionProvider } from "~/components/motion/motion-provider";
 import { RevealObserver } from "~/components/motion/reveal-observer";
 
@@ -91,6 +92,7 @@ export default async function RootLayout({
             </TooltipProvider>
           </MotionProvider>
         </NuqsAdapter>
+        <UmamiScript />
       </body>
     </html>
   );

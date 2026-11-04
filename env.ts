@@ -13,6 +13,8 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.enum(["PROD", "DEV", "LOCAL"])
         : z.enum(["PROD", "DEV", "LOCAL"]).default("LOCAL"),
+    // Umami Cloud website id (UmamiScript).
+    NEXT_PUBLIC_UMAMI_WEBSITE_ID: z.uuid().optional(),
   },
   /**
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
@@ -26,6 +28,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV,
+    NEXT_PUBLIC_UMAMI_WEBSITE_ID: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
     NODE_ENV: process.env.NODE_ENV,
     SITE_URL: process.env.SITE_URL,
   },

@@ -1,6 +1,11 @@
 import createMDX from "@next/mdx";
 
 import { linkHeader, PAGE_TWINS } from "./lib/site-routes";
+import {
+  UMAMI_COLLECT_ORIGIN,
+  UMAMI_PROXY_PREFIX,
+  UMAMI_SCRIPT_ORIGIN,
+} from "./lib/umami";
 
 import type { NextConfig } from "next";
 
@@ -13,7 +18,7 @@ import "./env";
 const isDev =
   process.env.NODE_ENV === "development" ||
   process.env.NEXT_PUBLIC_ENV === "LOCAL";
-// The site loads nothing from third parties at runtime: next/font self-hosts the fonts, images are local, there is no media or API. The only external origins are Vercel's preview toolbar (vercel.live, its Pusher socket) so preview comments keep working; production visitors never load them. 'unsafe-inline' stays because Next injects inline bootstrap scripts; the stricter options are SRI (`experimental.sri`) or a nonce via proxy.ts, which would make every page dynamic.
+// next/font self-hosts the fonts, images are local, there is no media or API. The one runtime third party is Umami, whose script and collect endpoint are proxied through this origin (`rewrites`), so it stays under 'self'. The only external origins are Vercel's preview toolbar (vercel.live, its Pusher socket) so preview comments keep working; production visitors never load them. 'unsafe-inline' stays because Next injects inline bootstrap scripts; the stricter options are SRI (`experimental.sri`) or a nonce via proxy.ts, which would make every page dynamic.
 const CSP_HEADER = `default-src 'self'; script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://*.vercel.com https://vercel.live; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://vercel.live; font-src 'self' data: https://vercel.live https://assets.vercel.com; img-src 'self' data: blob: https://vercel.live https://vercel.com${isDev ? " http://localhost:*" : ""}; media-src 'self'; frame-src 'self' https://vercel.live; connect-src 'self' https://vercel.live https://*.vercel.com wss://*.pusher.com${isDev ? " http://localhost:*" : ""};`;
 
 const nextConfig: NextConfig = {
@@ -93,6 +98,16 @@ const nextConfig: NextConfig = {
       ],
       source: "/([^/]+\\.)+(js|css|woff|woff2|png|jpg|jpeg|webp|avif|svg|ico)$",
     },
+    // The proxied Umami tracker, cached an hour instead of the blanket `max-age=0`.
+    {
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=3600, stale-while-revalidate=86400",
+        },
+      ],
+      source: `${UMAMI_PROXY_PREFIX}/script.js`,
+    },
     // Each page names its Markdown and JSON twins and the llms.txt, the same links as its head. No Vary: Accept, because Next.js replaces Vary on its pages with its own list. Vercel resolves the Accept rewrites before its cache lookup, so it caches the Markdown under the twin's address; a cache in front of Vercel would need Vary.
     ...Object.entries(PAGE_TWINS).map(([source, twins]) => ({
       headers: [{ key: "Link", value: linkHeader(twins) }],
@@ -111,7 +126,18 @@ const nextConfig: NextConfig = {
       { key: "accept", type: "header" as const, value: ".*text/markdown.*" },
     ];
     return {
-      afterFiles: [{ destination: "/work/:slug/md", source: "/work/:slug.md" }],
+      afterFiles: [
+        { destination: "/work/:slug/md", source: "/work/:slug.md" },
+        // Umami Cloud through this origin, so filter lists that block its hosts do not blind it (`data-host-url` in UmamiScript points the tracker here).
+        {
+          destination: `${UMAMI_SCRIPT_ORIGIN}/script.js`,
+          source: `${UMAMI_PROXY_PREFIX}/script.js`,
+        },
+        {
+          destination: `${UMAMI_COLLECT_ORIGIN}/api/send`,
+          source: `${UMAMI_PROXY_PREFIX}/api/send`,
+        },
+      ],
       beforeFiles: [
         ...Object.entries(PAGE_TWINS).map(([source, twins]) => ({
           destination: twins.markdown,
