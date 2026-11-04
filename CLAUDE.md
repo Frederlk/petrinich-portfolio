@@ -30,7 +30,7 @@ The rest are **path-scoped**: `.claude/rules/*.md` load when you touch the surfa
 - **Interior-mutability carve-out** — adopting TanStack Table/Virtual, react-hook-form, MobX, zustand, or @tanstack/react-query? Load the `react-compiler-carveout` skill. Lint guard: `check-no-memo-carveout` from `ux-mind-helpers`, run by `bun lint`.
 
 ## Never
-- Run `bun dev`/`bun run start`, or start a second dev server — the owner runs one on port 4224; verify against it in the browser. A check of the production build (after `bun run build`) runs on `next start -p 4400` as a background command, stopped when the check ends.
+- Run `bun dev`/`bun run start`, or start a second dev server — the owner runs one on port 4224; verify against it in the browser. The guard blocks every `next start`, so a check of the production build (after `bun run build`) reads its output: prerendered pages and route bodies in `.next/server/app/`, rewrites and headers in `.next/routes-manifest.json`.
 - Stage everything at once (`git add -A`, `git add .`). The tree can hold more than one session's work: name the paths.
 - Read a non-local env file — which ones are local is listed in `.claude/rules/env.md`. Channel commands through `bun dotenvx run --strict -f .env.local -- <command>`.
 - Write a throwaway (probe script, dump, sample, `.bak`) anywhere but `.scratch/tmp/`, and delete it once its question is answered.
