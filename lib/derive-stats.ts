@@ -60,18 +60,6 @@ export function deriveStats(content: StatsContent, today: string) {
         ).length,
       ])
     ),
-    // Pre-sale projects that stopped at the estimate, per job, by experience id.
-    estimatesAt: Object.fromEntries(
-      content.experience.map((job) => [
-        job.id,
-        content.projects.filter(
-          (p) =>
-            p.employer === job.id &&
-            CLIENT_KINDS.has(p.kind) &&
-            p.role === "estimate-only"
-        ).length,
-      ])
-    ),
     peakTeam: Math.max(0, ...teams.map((t) => t.peak ?? 0)),
     since: first === undefined ? 0 : Number.parseInt(first, 10),
     technologies: `${content.technologies.filter((t) => isOnStack(t)).length}+`,
@@ -86,7 +74,7 @@ const perJob = (prefix: string, values: Record<string, number>) =>
     Object.entries(values).map(([id, v]) => [`${prefix}.${id}`, v])
   );
 
-// The `{token}` names content prose may use, each bound to one derived number: the dotted ones (`{led.<jobId>}`, `{hired.<jobId>}`, `{peak.<jobId>}`, `{ledOrBuilt.<jobId>}`, `{estimates.<jobId>}`) take an experience id.
+// The `{token}` names content prose may use, each bound to one derived number: the dotted ones (`{led.<jobId>}`, `{hired.<jobId>}`, `{peak.<jobId>}`, `{ledOrBuilt.<jobId>}`) take an experience id.
 export function numberTokens(n: SiteNumbers): Record<string, number | string> {
   return {
     developersLed: n.developersLed,
@@ -97,7 +85,6 @@ export function numberTokens(n: SiteNumbers): Record<string, number | string> {
     since: n.since,
     technologies: n.technologies,
     years: n.years,
-    ...perJob("estimates", n.estimatesAt),
     ...perJob("hired", n.hiredAt),
     ...perJob("led", n.ledAt),
     ...perJob("ledOrBuilt", n.ledOrBuiltAt),

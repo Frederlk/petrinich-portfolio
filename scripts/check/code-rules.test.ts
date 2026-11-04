@@ -154,6 +154,18 @@ const CASES: {
       "permissions: {}\njobs:\n  a:\n    permissions:\n      contents: read\n    steps:\n      - uses: actions/checkout@abc # v7\n",
     ],
   },
+  {
+    id: "commit-count",
+    why: "the word commit without a count in front of it is ordinary prose",
+    caught: [
+      "content/experience.json",
+      '"Built the site with structured data for SEO (62 commits)."',
+    ],
+    passes: [
+      "content/case-studies/x.mdx",
+      "A migration drift gate runs on every commit.",
+    ],
+  },
 ];
 
 void describe("code-rules", () => {

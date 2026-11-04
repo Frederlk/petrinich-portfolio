@@ -62,20 +62,6 @@ void describe("deriveStats", () => {
     assert.deepEqual(stats.ledOrBuiltAt, { agency: 1, outstaff: 0, self: 0 });
   });
 
-  void it("counts the estimate-only client projects per job", () => {
-    const stats = deriveStats(
-      {
-        ...fixture,
-        projects: [
-          ...fixture.projects,
-          project("estimate-only", "agency", "internal"),
-        ],
-      },
-      "2026-10-26"
-    );
-    assert.deepEqual(stats.estimatesAt, { agency: 1, outstaff: 0, self: 0 });
-  });
-
   void it("counts a technology the owner lists even with no project", () => {
     const stats = deriveStats(
       {

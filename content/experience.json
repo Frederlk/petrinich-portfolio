@@ -35,10 +35,10 @@
     "description": "UX MIND is a digital design agency. It builds SaaS products, admin dashboards and marketing sites for clients in Europe and the US.",
     "bullets": [
       "Led {led.ux-mind} developers on client projects, up to {peak.ux-mind} at a time: estimates, task planning, code review and coaching; the clients' technical contact.",
-      "Led or built {ledOrBuilt.ux-mind} client projects: platforms (OhBirdie!, Swiftbeauty), a REST API and admin dashboard for an iOS travel guide (NoaSpot), an association platform (Euregio Academy) and content sites (Alan Walker official site, ABH).",
-      "Built client sites alone: Kova Sonoma and IHI Anesthesia from the estimate to support after release, and Noble Code, a static Next.js site on Cloudflare built with Claude Code.",
-      "Wrote estimates and risk reviews for {estimates.ux-mind} pre-sale projects; the Flow Healthcare estimate won the contract.",
-      "Run hiring because the agency has no HR: screening, test tasks, interviews and onboarding; hired {hired.ux-mind} developers.",
+      "Led or built {ledOrBuilt.ux-mind} client projects: platforms (OhBirdie!, Swiftbeauty), a REST API and admin dashboard for an iOS travel guide (NoaSpot) and content sites (Alan Walker official site, ABH).",
+      "Built the Euregio Academy association platform from the start: 76 server actions, 19 Prisma models, German and English, LinkedIn and Facebook sign-in, a SharePoint integration and daily database backups.",
+      "Ran the technical pre-sale: estimates, risk reviews and audits of clients' existing code. The Flow Healthcare estimate won the contract; on Hypus I wrote the development plan and led a team of 2 through release, and on Forstock a team of 3.",
+      "Ran hiring for the agency: screening, test tasks, interviews and onboarding; hired {hired.ux-mind} developers.",
       "Set the default stack and quality gates new projects start with: Next.js App Router, TypeScript, Prisma on PostgreSQL, Better Auth, oRPC, React Hook Form with Zod, Tailwind CSS; Biome, Husky, GitHub Actions, Vitest. Integrated Stripe, Shopify, Sanity, Twilio, Resend, Mux, Leaflet, Upstash, Arcjet, Sentry, PostHog and the Vercel AI SDK with Gemini.",
       "Wrote `ux-mind-helpers`, a zero-dependency toolbox of 8 codemods and lint guards (import aliases, Tailwind values, React Compiler checks, `.env` sync), and the team's Claude Code conventions after adopting it in August 2025."
     ],
@@ -71,12 +71,11 @@
       "Nginx",
       "Umami"
     ],
-    "description": "Self-employed client work next to UX MIND: marketing sites and a streaming platform built end to end, plus fixes and hosting for existing sites.",
+    "description": "Self-employed work next to UX MIND: a streaming platform and client sites built end to end, and a move to self-hosting for an existing site.",
     "bullets": [
-      "Built alba.swiss end to end, the site of a Swiss technology consultancy: the first version in April 2025 and the September 2026 rebuild, with 16 animated sections and a request-an-introduction form.",
-      "Built and deployed the Department of Human Dynamics site for an AI research group on Next.js and the React Compiler, with structured data for SEO (62 commits).",
       "Built a live-video streaming platform alone: adaptive HLS video, creator profiles with media feeds, English and Dutch with next-intl, a Sanity CMS, and Docker with Nginx on a VPS.",
-      "Took over gdd.education: UI polish and bug fixes, a move from Vercel to a VPS, Docker builds, DNS and self-hosted Umami analytics."
+      "Built alba.swiss end to end, the site of a Swiss technology consultancy: the first version in April 2025 and the September 2026 rebuild, with 16 animated sections and a request-an-introduction form.",
+      "Moved gdd.education from Vercel to a self-hosted VPS: Docker builds, DNS and Umami analytics; led a second developer on it."
     ],
     "links": []
   },

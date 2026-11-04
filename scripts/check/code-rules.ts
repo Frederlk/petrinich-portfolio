@@ -616,6 +616,20 @@ const RULES: readonly Rule[] = [
         .map((match) => ({ line: lineOf(yaml, jobs.index + match.index) }));
     },
   },
+  {
+    id: "commit-count",
+    message:
+      "Commit counts stay out of public content (owner, 2026-11-04): name what was built instead. The counts live in private/source-material/git-facts.md.",
+    test(file, _source, raw) {
+      // `content/` is the one source for the site, the CV, GitHub and LinkedIn.
+      if (!isUnder(file, "content") || !hasExt(file, ".json", ".md", ".mdx")) {
+        return [];
+      }
+      return [
+        ...raw.matchAll(/\b\d[\d,]*\+?\s+(?:of\s+[\d,]+\s+)?commits?\b/gi),
+      ].map((match) => ({ line: lineOf(raw, match.index) }));
+    },
+  },
 ];
 
 export function checkOne(file: string, raw: string): Finding[] {
