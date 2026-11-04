@@ -294,11 +294,8 @@
     break-after: avoid;
   }
 
+  /* A job too moves whole to the next page rather than splitting across two (Ceviant, 2026-11-04). */
   .cv-page li {
     break-inside: avoid;
-  }
-
-  .cv-page li.cv-job {
-    break-inside: auto;
   }
 }
