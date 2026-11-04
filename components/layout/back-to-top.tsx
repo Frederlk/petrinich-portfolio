@@ -24,7 +24,7 @@ export function BackToTop() {
 
   // The wrapper fades: the button's own `transition` belongs to its press and fill sweep.
   return shown ? (
-    <div className="fixed right-5 bottom-safe-5 z-40 transition-opacity duration-150 starting:opacity-0 print:hidden">
+    <div className="fixed right-5 bottom-safe-1 z-40 transition-opacity duration-150 starting:opacity-0 print:hidden">
       <Tip label="Back to top" side="left">
         <button
           aria-label="Back to top"

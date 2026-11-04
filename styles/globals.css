@@ -532,14 +532,14 @@
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(6));
 }
 
-/* The same offset for a fixed element: the back-to-top button. */
-@utility bottom-safe-5 {
-  bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(5));
+/* The same offset for a fixed element: the back-to-top button, as low as the dev frame meter. */
+@utility bottom-safe-1 {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(1));
 }
 
-/* The footer's bottom padding: at the end of the page the back-to-top button (`bottom-safe-5`, an icon button) sits below the last line instead of over it. */
-@utility pb-safe-16 {
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(16));
+/* The footer's bottom padding: at the end of the page the back-to-top button (`bottom-safe-1`, an icon button) sits below the last line instead of over it. */
+@utility pb-safe-12 {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + --spacing(12));
 }
 
 @utility hide-scrollbar {

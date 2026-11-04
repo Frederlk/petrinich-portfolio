@@ -6,7 +6,7 @@ import {
 
 import { cn } from "~/lib/cn";
 
-// An arrow that slides in its own direction while a `group` ancestor is hovered or focused. CSS only (see `.arrow-slide` in globals.css), so server components use it. `external` is the up-right arrow of a link that opens another site.
+// An arrow that slides in its own direction while a `group` ancestor is hovered or focused. CSS only (see `.arrow-slide` in globals.css), so server components use it. `external` is the up-right arrow of a link that leaves the page: another site, the mail app or a download.
 export function ArrowSlide({
   back = false,
   className,

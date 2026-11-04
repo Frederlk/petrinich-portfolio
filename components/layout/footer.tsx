@@ -1,5 +1,3 @@
-import { DownloadSimpleIcon } from "@phosphor-icons/react/dist/ssr";
-
 import { ArrowSlide } from "~/components/motion/arrow-slide";
 
 import { CtaLink } from "~/ui/cta-link";
@@ -49,7 +47,7 @@ export function Footer() {
 
   return (
     <footer
-      className="w-full border-t border-surface-container-high bg-surface-container-lowest pt-space-lg pb-safe-16 md:pt-space-xl"
+      className="w-full border-t border-surface-container-high bg-surface-container-lowest pt-space-lg pb-safe-12 md:pt-space-xl"
       data-chrome
     >
       {/* Below md the name block spans the width, Navigation and Contact share the row under it (so a contact link names only its channel there), the status line spans the next row, and the AI-agents line and copyright close the footer. The identity column is `display: contents` there, so its two blocks take their own `order`. */}
@@ -109,7 +107,7 @@ export function Footer() {
               <span>
                 Email<span className="max-md:hidden">: {email}</span>
               </span>
-              <ArrowSlide />
+              <ArrowSlide external />
             </CtaLink>
             {github === null ? null : (
               <CtaLink
@@ -166,7 +164,7 @@ export function Footer() {
               <span>
                 CV<span className="max-md:hidden">: Download PDF</span>
               </span>
-              <DownloadSimpleIcon aria-hidden className="ml-space-xs size-4" />
+              <ArrowSlide external />
             </CtaLink>
           </div>
           <Status className="mt-space-xs max-md:hidden" />

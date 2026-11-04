@@ -1,5 +1,3 @@
-import { DownloadSimpleIcon } from "@phosphor-icons/react/dist/ssr";
-
 import { ContactMenu } from "~/components/layout/contact-menu";
 import { ContactRowLink } from "~/components/layout/contact-row";
 import { Location } from "~/components/layout/location";
@@ -58,7 +56,7 @@ export function Engagement() {
                 <span className={rowLabel}>Email</span>
                 <CtaLink href={`mailto:${email}`} size="none" variant="channel">
                   {email}
-                  <ArrowSlide />
+                  <ArrowSlide external />
                 </CtaLink>
               </li>
               {channels.map((c) => (
@@ -85,10 +83,7 @@ export function Engagement() {
                   variant="download"
                 >
                   Download PDF
-                  <DownloadSimpleIcon
-                    aria-hidden
-                    className="ml-space-xs size-4"
-                  />
+                  <ArrowSlide external />
                 </CtaLink>
               </li>
             </ul>
