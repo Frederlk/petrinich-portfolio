@@ -62,5 +62,8 @@ auth.json
 # Internal CV material (client names, job-search notes, decision logs, photo originals). Lives only on this machine: `private/README.md` is its index.
 /private/
 
+# Personal documents (old CV, scans) that share the repo folder; never tracked, never read by tools.
+/_archive/
+
 # Agent tooling (rules, hooks, vendored skills, settings): kept on this machine only.
 /.claude/
