@@ -13,13 +13,11 @@ function CellRow({
   label: string;
 }) {
   return (
-    <ul
-      aria-label={label}
-      className="flex flex-wrap gap-px border border-surface-container-high bg-surface-container-high"
-    >
+    <ul aria-label={label} className="flex flex-wrap gap-px p-px">
       {items.map((item) => (
+        // Each cell draws its own hairline (an outline into the gap, shared with its neighbour's), so the line fades in with the cell; a container background showed as a grey band through cells still mid-reveal.
         <li
-          className="reveal grow basis-32 bg-surface sm:basis-36"
+          className="reveal grow basis-32 bg-surface outline outline-surface-container-high sm:basis-36"
           key={item.id}
         >
           <Link
