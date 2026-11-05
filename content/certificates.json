@@ -1,0 +1,158 @@
+{
+  "certificates": [
+    {
+      "name": "Claude 101",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "i6geh8twdiyq",
+      "url": "https://verify.skilljar.com/c/i6geh8twdiyq"
+    },
+    {
+      "name": "Claude Code 101",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "v5padma9ithn",
+      "url": "https://verify.skilljar.com/c/v5padma9ithn"
+    },
+    {
+      "name": "Claude Platform 101",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "fxkxyaxfo88b",
+      "url": "https://verify.skilljar.com/c/fxkxyaxfo88b"
+    },
+    {
+      "name": "Introduction to Claude Cowork",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "39rsftwwveou",
+      "url": "https://verify.skilljar.com/c/39rsftwwveou"
+    },
+    {
+      "name": "Claude Code in Action",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "c2hondt46dox",
+      "url": "https://verify.skilljar.com/c/c2hondt46dox"
+    },
+    {
+      "name": "AI Fluency: Framework & Foundations",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "dz5dvfcoqzau",
+      "url": "https://verify.skilljar.com/c/dz5dvfcoqzau"
+    },
+    {
+      "name": "AI Fluency for educators",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "ycqn4qjoi87q",
+      "url": "https://verify.skilljar.com/c/ycqn4qjoi87q"
+    },
+    {
+      "name": "AI Fluency for students",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "j9wawhb9fnog",
+      "url": "https://verify.skilljar.com/c/j9wawhb9fnog"
+    },
+    {
+      "name": "Teaching AI Fluency",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "8f2s6vmteofc",
+      "url": "https://verify.skilljar.com/c/8f2s6vmteofc"
+    },
+    {
+      "name": "AI Fluency for nonprofits",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "h7gkpbvh9znk",
+      "url": "https://verify.skilljar.com/c/h7gkpbvh9znk"
+    },
+    {
+      "name": "AI Fluency for Small Businesses",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "t2msq7aucnkg",
+      "url": "https://verify.skilljar.com/c/t2msq7aucnkg"
+    },
+    {
+      "name": "AI Fluency for Builders",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "8btyfwjajxft",
+      "url": "https://verify.skilljar.com/c/8btyfwjajxft"
+    },
+    {
+      "name": "AI Fluency for Creative Work",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "cqyxrmoxta9b",
+      "url": "https://verify.skilljar.com/c/cqyxrmoxta9b"
+    },
+    {
+      "name": "AI Fluency for pK–12 Educators",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "xkc55scsjt7p",
+      "url": "https://verify.skilljar.com/c/xkc55scsjt7p"
+    },
+    {
+      "name": "Building with the Claude API",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "q9bu4benj8d8",
+      "url": "https://verify.skilljar.com/c/q9bu4benj8d8"
+    },
+    {
+      "name": "Introduction to Model Context Protocol",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "pg8sq5nbnf76",
+      "url": "https://verify.skilljar.com/c/pg8sq5nbnf76"
+    },
+    {
+      "name": "Model Context Protocol: Advanced Topics",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "xgczoxfmhiqi",
+      "url": "https://verify.skilljar.com/c/xgczoxfmhiqi"
+    },
+    {
+      "name": "Introduction to agent skills",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "55znpvv37sn6",
+      "url": "https://verify.skilljar.com/c/55znpvv37sn6"
+    },
+    {
+      "name": "Introduction to subagents",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "iu7dezfykbq3",
+      "url": "https://verify.skilljar.com/c/iu7dezfykbq3"
+    },
+    {
+      "name": "Claude with Amazon Bedrock",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "yjeu3tt3yzhg",
+      "url": "https://verify.skilljar.com/c/yjeu3tt3yzhg"
+    },
+    {
+      "name": "Claude on Google Cloud",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "qe53xrxqztax",
+      "url": "https://verify.skilljar.com/c/qe53xrxqztax"
+    },
+    {
+      "name": "Deploying Claude Enterprise with Confidence: The five decisions that shape your rollout",
+      "issuer": "Anthropic",
+      "issued": "2026-11-05",
+      "credentialId": "xv5pbvtoietz",
+      "url": "https://verify.skilljar.com/c/xv5pbvtoietz"
+    }
+  ]
+}

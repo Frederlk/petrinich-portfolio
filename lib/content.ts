@@ -1,6 +1,7 @@
 import { buildDate } from "~/lib/build-date";
 import { deriveStats, fillNumbers, numberTokens } from "~/lib/derive-stats";
 
+import { certificatesSchema } from "~/schemas/certificates";
 import { cvSkillsSchema } from "~/schemas/cv-skills";
 import { earlyWorkSchema } from "~/schemas/early-work";
 import { educationSchema } from "~/schemas/education";
@@ -11,6 +12,7 @@ import { projectsSchema } from "~/schemas/projects";
 import type { Project } from "~/schemas/projects";
 import { technologiesSchema } from "~/schemas/technologies";
 
+import certificatesJson from "~/content/certificates.json";
 import cvSkillsJson from "~/content/cv-skills.json";
 import earlyWorkJson from "~/content/early-work.json";
 import educationJson from "~/content/education.json";
@@ -102,6 +104,10 @@ for (const p of projects) {
     );
   }
 }
+
+// Course certificates reach only LinkedIn and the files written for machines (llms.txt, JSON-LD, resume.json), never a page or the CV PDF (owner, 2026-11-05).
+export const certificates =
+  certificatesSchema.parse(certificatesJson).certificates;
 
 const cvSkills = cvSkillsSchema.parse(cvSkillsJson).groups;
 

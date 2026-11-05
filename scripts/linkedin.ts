@@ -19,6 +19,7 @@ import { createInterface } from "node:readline/promises";
 import { z } from "zod";
 
 import {
+  certificates,
   cvSkillGroups,
   education,
   experience,
@@ -50,6 +51,14 @@ const linkedinUrl = (() => {
   }
   return url.replace(/\/$/, "");
 })();
+
+// LinkedIn's issue date is a month and a year: "2026-11-05" reads "Nov 2026".
+const issueMonth = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleString("en-US", {
+    month: "short",
+    timeZone: "UTC",
+    year: "numeric",
+  });
 
 export function linkedinFields(): Field[] {
   const intro = `${linkedinUrl}/`;
@@ -94,6 +103,13 @@ export function linkedinFields(): Field[] {
       label: `Education: ${e.degree}`,
       text: e.school,
       url: `${linkedinUrl}/details/education/`,
+    })),
+    ...certificates.map((c) => ({
+      how: `Licenses & certifications → +. Issuing organization: ${c.issuer} (pick the company). Issue date ${issueMonth(c.issued)}. Credential ID ${c.credentialId}. Credential URL ${c.url}. Share with network off.`,
+      key: `certificate.${c.credentialId}`,
+      label: `Certificate: ${c.name}`,
+      text: c.name,
+      url: `${linkedinUrl}/details/certifications/`,
     })),
     {
       how: "Skills → add any of these that are missing, one at a time; pin the first three as top skills.",

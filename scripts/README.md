@@ -40,3 +40,5 @@ This repo is the one place the CV lives; every channel is rendered from `content
 2. Commit. `.husky/pre-commit` reprints `public/Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf` and stages it. It runs because `bun run prepare` (husky) sets the repo-local `core.hooksPath=.husky/_`; husky then sources `~/.config/husky/init.sh`, which chains the Shai-Hulud guard, so the guard still runs. On the owner's machine `bun install` runs no lifecycle scripts, so a fresh clone has no hooks until `bun run prepare`; `bun gates` fails its `hooks` gate until then. An edit made on GitHub directly runs no hook: pull, run `bun cv:pdf` and commit the PDF.
 3. Push. Vercel deploys the site, and the Profile sync workflow updates the GitHub profile (`bun sync:github` shows the same change locally).
 4. Run `bun linkedin` in your own terminal and paste what it copies.
+
+Course certificates live in `content/certificates.json` (the PDFs in `assets/certificates/`, which the site does not serve). They go only to LinkedIn and to the files written for machines (`llms.txt`, `llms-full.txt`, the JSON-LD and `resume.json`), never to a page or the CV PDF.

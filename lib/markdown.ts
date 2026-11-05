@@ -1,6 +1,7 @@
 import { stackBody, stackDigest, workBody } from "~/lib/catalogue";
 import { AVAILABILITY, CV_PDF_PATH, email } from "~/lib/contact";
 import {
+  certificates,
   cvSkillGroups,
   education,
   experience,
@@ -112,6 +113,12 @@ export function cvMarkdown() {
   return lines.join("\n");
 }
 
+const CERTIFICATES_INTRO =
+  "Course-completion certificates from Anthropic Academy, each with its verification page.";
+
+const certificateLines = () =>
+  certificates.map((c) => `- ${link(c.name, c.url)}: ${c.issuer}, ${c.issued}`);
+
 const webContactLines = () =>
   profile.contacts
     .filter((c) => c.url.startsWith("http"))
@@ -166,6 +173,12 @@ export function llmsTxt() {
         `- ${link(p.name, absolute(projectMarkdownPath(p.id)))}: ${p.summary}`
     ),
     "",
+    "## Certifications",
+    "",
+    CERTIFICATES_INTRO,
+    "",
+    ...certificateLines(),
+    "",
     "## Optional",
     "",
     "Every page is server-rendered HTML with all of its content in the first response, so no JavaScript is needed to read it. Each page names its Markdown and JSON twins in its head and in the Link response header, and answers a request that accepts text/markdown with the Markdown twin. Pages carry schema.org JSON-LD (Person, ProfilePage).",
@@ -179,7 +192,7 @@ export function llmsTxt() {
   ].join("\n");
 }
 
-// llms-full.txt: the CV, then every project and every technology.
+// llms-full.txt: the CV, then every project, every technology and the certificates.
 export function llmsFullTxt() {
   return [
     cvMarkdown().trimEnd(),
@@ -190,5 +203,11 @@ export function llmsFullTxt() {
     "# Stack",
     "",
     stackBody(),
+    "# Certifications",
+    "",
+    CERTIFICATES_INTRO,
+    "",
+    ...certificateLines(),
+    "",
   ].join("\n");
 }

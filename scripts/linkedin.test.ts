@@ -7,6 +7,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import { certificates } from "../lib/content.ts";
 import { changedFields, hashOf, linkedinFields, plain } from "./linkedin.ts";
 
 const fields = linkedinFields();
@@ -35,6 +36,26 @@ void describe("linkedinFields", () => {
     assert.equal(new Set(fields.map((f) => f.key)).size, fields.length);
     for (const f of fields) {
       assert.match(f.url, /^https:\/\/www\.linkedin\.com\/in\//);
+    }
+  });
+
+  void it("offers each certificate once, with its credential URL and issue month", () => {
+    assert.ok(certificates.length > 0);
+    assert.equal(
+      fields.filter((f) => f.key.startsWith("certificate.")).length,
+      certificates.length
+    );
+    for (const c of certificates) {
+      const field = fields.find(
+        (f) => f.key === `certificate.${c.credentialId}`
+      );
+      assert.ok(field !== undefined, c.credentialId);
+      assert.ok(field.how.includes(c.url), c.credentialId);
+      assert.match(
+        field.how,
+        /Issue date [A-Z][a-z]{2} \d{4}\./,
+        c.credentialId
+      );
     }
   });
 });

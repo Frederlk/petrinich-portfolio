@@ -1,6 +1,7 @@
 import { buildDate } from "~/lib/build-date";
 import { email, webContacts } from "~/lib/contact";
 import {
+  certificates,
   coreStackNames,
   cvSkillGroups,
   earlyWork,
@@ -74,6 +75,14 @@ export const person = {
   ],
   description: plain(profile.summary),
   email,
+  hasCredential: certificates.map((c) => ({
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "certificate",
+    dateCreated: c.issued,
+    name: c.name,
+    recognizedBy: { "@type": "Organization", name: c.issuer },
+    url: c.url,
+  })),
   hasOccupation: {
     "@type": "Occupation",
     description: profile.intro,
@@ -170,6 +179,12 @@ export function jsonResume() {
       summary: plain(profile.summary),
       url: siteUrl,
     },
+    certificates: certificates.map((c) => ({
+      date: c.issued,
+      issuer: c.issuer,
+      name: c.name,
+      url: c.url,
+    })),
     education: education.education.map((e) => {
       const range = parseDateRange(e.dates);
       const [, studyType, area] = /^(\w+) of (.+)$/.exec(e.degree) ?? [];
