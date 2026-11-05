@@ -71,7 +71,7 @@
       "Nginx",
       "Umami"
     ],
-    "description": "Self-employed work next to UX MIND: a streaming platform and client sites built end to end, and a move to self-hosting for an existing site.",
+    "description": "Direct contracts with my own clients. I handle communication, development, project management and payments myself.",
     "bullets": [
       "Built a live-video streaming platform alone: adaptive HLS video, creator profiles with media feeds, English and Dutch with next-intl, a Sanity CMS, and Docker with Nginx on a VPS.",
       "Built alba.swiss end to end, the site of a Swiss technology consultancy: the first version in April 2025 and the September 2026 rebuild, with 16 animated sections and a request-an-introduction form.",

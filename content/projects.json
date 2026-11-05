@@ -477,7 +477,7 @@
     "links": [
       {
         "type": "live",
-        "url": "https://swiftbeauty.com"
+        "url": "https://swiftbeauty-app-dev.vercel.app"
       }
     ],
     "media": ["/work/swiftbeauty.webp"],
@@ -2983,7 +2983,12 @@
       "google-maps-platform",
       "figma"
     ],
-    "links": [],
+    "links": [
+      {
+        "type": "live",
+        "url": "https://www.ceviant.co"
+      }
+    ],
     "media": ["/work/ceviant-marketing-portal.webp"],
     "featured": false,
     "caseStudy": "ceviant-marketing-portal"
