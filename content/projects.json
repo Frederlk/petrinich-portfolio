@@ -8,6 +8,8 @@
     "role": "lead",
     "roleNote": "Led 1 other developer and built about half of the application: the whole back end, the DevOps, the event lifecycle, player and public UI, most of the tests and documentation. Set the architecture, planned the tasks and reviewed the code. The API has 220+ type-safe oRPC procedures on 30+ Prisma models, covered by 450+ test files and 3,000+ test cases, and serves more than 24,000 API calls a month in production.",
     "year": 2026,
+    "started": "2026-04",
+    "ended": "2026-10",
     "status": "live",
     "summary": "SaaS for running American Mahjong events in the US and Canada, with public event pages, organizer and player areas, registration and waitlists, QR check-in, live tournaments, Stripe payments and messaging. The hard parts were two roles on one account, payments and live tournament rounds.",
     "features": [
@@ -131,6 +133,7 @@
     "role": "sole",
     "roleNote": "I built it alone with AI-assisted workflows: I made the product and architecture decisions, agents wrote much of the code.",
     "year": 2026,
+    "started": "2026-10",
     "status": "live",
     "summary": "Free deck builder and card database for The Elder Scrolls: Legends, with 22 page routes, 1,233 cards and an English and Russian interface. It ships as a PWA and signs players in with Discord, Google, Steam or an email code. The hard parts were reading card data out of the game client, Steam sign-in and a deck code compatible with the game.",
     "features": [
@@ -259,6 +262,8 @@
     "role": "sole",
     "roleNote": "I built the whole REST API alone and defined the contract the iOS app consumes.",
     "year": 2026,
+    "started": "2026-03",
+    "ended": "2026-10",
     "status": "live",
     "summary": "The REST API behind NoaSpot, a curated travel guide for iOS: it serves cities, places, routes, saved places and semantic search, and feeds the app and the admin dashboard from one OpenAPI contract. The hard parts were search without a slow model call and district borders that stay consistent.",
     "features": [
@@ -349,6 +354,8 @@
     "role": "sole",
     "roleNote": "I built the whole admin dashboard on my own, on top of the API I also built.",
     "year": 2026,
+    "started": "2026-04",
+    "ended": "2026-10",
     "status": "live",
     "summary": "Admin dashboard where the NoaSpot team manages places, cities, districts, categories, vibes, routes and picks. The hard part was editing district borders and the city grid on a map without breaking the iOS app.",
     "features": [
@@ -490,6 +497,8 @@
     "role": "lead",
     "roleNote": "I led 1 other developer and built about 80 percent of the new Next.js app meant to replace the old PHP back end: the UI, the server part and API, and the docs and tests. The other developer built a few pages and did fixes. The app has 50+ pages and routes and 80+ Prisma models, mostly legacy tables, covered by 140+ test files.",
     "year": 2025,
+    "started": "2025-07",
+    "ended": "2026-10",
     "status": "live",
     "summary": "Platform for the beauty industry with a directory of masters, a shop, a subscription video academy, live events and webinars, and reviews. I built most of the new Next.js app with Sanity, PostgreSQL and Stripe and the tooling to move the old PHP data. The hard parts were video access, linking Stripe to legacy members and planning the move of a live subscriber base.",
     "features": [
@@ -624,6 +633,8 @@
     "role": "sole",
     "roleNote": "Built the whole website on my own with Claude Code, from the Figma design: the pages, the content and image pipelines, the contact Worker and the Cloudflare deploy.",
     "year": 2026,
+    "started": "2026-10",
+    "ended": "2026-10",
     "status": "live",
     "summary": "Website for a Geneva jewelry maison that designs pieces as CAD files and licenses them to jewelers. The brief ruled out a CMS, so the hard parts were letting the client publish designs from the repo without breaking the live site, and running a static Next.js site on Cloudflare.",
     "features": [
@@ -907,6 +918,8 @@
     "role": "sole",
     "roleNote": "I did this project on my own, end to end: the estimate, the architecture, the full release and the support after release.",
     "year": 2026,
+    "started": "2026-07",
+    "ended": "2026-10",
     "status": "live",
     "summary": "Marketing and intake site for a luxury dog boarding, daycare and grooming retreat in Sonoma County, with a three-step new-client registration that emails the staff. The hard parts were a dog photo upload under a 1 MB server action limit and a page loader that runs before JavaScript.",
     "features": [
@@ -1401,6 +1414,7 @@
     "role": "project-lead",
     "roleNote": "I did the estimate, the architecture and the development plan and led 1 developer, who built the site. I wrote no code.",
     "year": 2026,
+    "started": "2026-07",
     "status": "in-progress",
     "summary": "B2B marketing and catalogue site for a custom-cut stainless-steel supplier, built on a headless CMS so editors add material, process and specification pages without a developer.",
     "features": [
@@ -1648,6 +1662,8 @@
     "role": "sole",
     "roleNote": "I built the whole site end to end, alone: the estimate, the architecture, all the code, the calls with the client, the release and the support after release.",
     "year": 2025,
+    "started": "2025-08",
+    "ended": "2025-10",
     "status": "live",
     "summary": "Official website of the artist Alan Walker: an animation-heavy story site with a 15-section home page, tour dates, community, partners, press kit and returns pages. It has no database and reads Shopify and Bandsintown. The hard parts were a market-aware shop API and cart, customs forms for three countries, and a Kubernetes delivery pipeline with a staging environment per pull request.",
     "features": [
@@ -1744,6 +1760,8 @@
     "role": "sole",
     "roleNote": "I built both versions end to end, on my own: the first one in April 2025 and the rebuild in September 2026.",
     "year": 2025,
+    "started": "2025-04",
+    "ended": "2026-10",
     "status": "live",
     "summary": "Marketing site for a Swiss technology consultancy that works by introduction: one cinematic landing of 16 sections with a 55 second intro film, and a request-an-introduction form as the only way to make contact. The hard parts were a page that is correct before JavaScript arrives and a film that plays on every browser engine.",
     "features": [
@@ -2397,6 +2415,7 @@
     "role": "lead",
     "roleNote": "I built the landing page alone. On the platform I did the estimate and the architecture and built about half of it: backend, frontend and half of the pages and features. I led 1 other developer, who built the rest.",
     "year": 2024,
+    "started": "2024-02",
     "status": "in-progress",
     "summary": "Cloud quality-control platform for the aggregates and asphalt industry. Labs enter test results for 9 standards, get calculated outputs with a pass, fail or N/A result against reusable material profiles, export PDF and CSV reports and share a run by link. Companies are isolated in the database and pay per seat through Stripe. A landing page sits in front of it.",
     "features": [
@@ -2499,6 +2518,7 @@
     "role": "sole",
     "roleNote": "I was the full-stack developer from the start, alone. The app has 25+ pages, 70+ server actions and 19 Prisma models.",
     "year": 2024,
+    "started": "2024-03",
     "status": "in-progress",
     "summary": "Website for a German association that supports people with impairments and their helpers. Members sign up, apply for membership and use partner discounts. Admins manage discounts, car dealers, partners and users. I built the whole app, moved the production database from MariaDB to Supabase PostgreSQL and connected it to Salesforce.",
     "features": [
@@ -2605,6 +2625,7 @@
     "role": "lead",
     "roleNote": "I led 1 other developer. I did the estimate and the architecture, ran the calls with the client, built the platform from the client's Figma design and supported it after release. The other developer built a few features.",
     "year": 2024,
+    "started": "2024-07",
     "status": "in-progress",
     "summary": "A platform where members of an organization record the client relationships of the organization and take a weighted questionnaire. It gives scores, a test history and an action plan that an admin reviews. The hard parts were weights that depend on who is asking, a questionnaire per organization and a permission table for rows.",
     "features": [
@@ -2687,6 +2708,7 @@
     "role": "team",
     "roleNote": "I worked with 4 other developers on this web front end (80+ pages, English and French).",
     "year": 2024,
+    "started": "2024-04",
     "status": "in-progress",
     "summary": "Web front end of an online payments platform for businesses in Canada and the US that collect pre-authorized debits and bank transfers from the customers of the business. A merchant dashboard for contacts, bank accounts, authorizations and payments, a multi-step merchant onboarding application, and public pages where a merchant's customers sign a debit agreement, verify microdeposits or unsubscribe. English and French.",
     "features": [
@@ -3423,6 +3445,8 @@
     "role": "lead",
     "roleNote": "I led 1 other developer and built the public pages, the content editor setup, the practitioner self-service area and the office tools. The other developer built a few public pages and the filters.",
     "year": 2026,
+    "started": "2026-09",
+    "ended": "2026-10",
     "status": "completed",
     "summary": "Rebuild of the website of a Seattle association of independent psychologists, psychiatrists and psychiatric nurse practitioners, built to replace a ten-year-old WordPress site. Visitors filter the practitioner directory and read profiles, the office edits all content in an embedded Sanity Studio, and invited practitioners can edit the practitioner's own profile page after an emailed-code sign-in.",
     "features": [
@@ -3508,6 +3532,8 @@
     "role": "lead",
     "roleNote": "I led 1 other developer. I did the UI polish and bug fixes, moved the hosting to a VPS, built the Docker setup, handled DNS and set up the analytics. The other developer built the rest.",
     "year": 2026,
+    "started": "2026-06",
+    "ended": "2026-10",
     "status": "live",
     "summary": "Marketing site of an online school for game designers, in Russian. Visitors read a course page, pick a course and send a booking request that arrives in a Telegram chat. The site has no database of its own and runs on a rented server in Russia.",
     "features": [
@@ -3588,6 +3614,7 @@
     "role": "sole",
     "roleNote": "I built the whole product alone and am still developing it, including a rewrite as a second chapter.",
     "year": 2024,
+    "started": "2024-07",
     "status": "in-progress",
     "summary": "A web companion for tabletop D&D 5e Dungeon Masters and players. It holds a reference library, create and edit tools for spells, feats and rules, campaign tools, interactive maps, a fantasy calendar, a challenge rating calculator and an AI import of book pages.",
     "features": [
@@ -3747,6 +3774,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-06",
+    "ended": "2026-08",
     "status": "completed",
     "stack": [
       "tauri",
@@ -3816,6 +3845,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-07",
+    "ended": "2026-10",
     "status": "completed",
     "stack": [
       "faster-whisper",
@@ -3877,6 +3908,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-09",
+    "ended": "2026-11",
     "status": "completed",
     "stack": [
       "typescript",
@@ -3938,6 +3971,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-08",
+    "ended": "2026-10",
     "status": "completed",
     "stack": [
       "python",
@@ -3993,6 +4028,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-06",
+    "ended": "2026-06",
     "status": "completed",
     "stack": ["python", "claude-code"],
     "caseStudy": "gp-refinger",
@@ -4034,6 +4071,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-08",
+    "ended": "2026-08",
     "status": "completed",
     "stack": ["python", "ffmpeg", "claude-code"],
     "caseStudy": "video-compress",
@@ -4088,6 +4127,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-06",
+    "ended": "2026-06",
     "status": "completed",
     "stack": [
       "python",
@@ -4152,6 +4193,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-05",
+    "ended": "2026-10",
     "status": "completed",
     "stack": [
       "git",
@@ -4216,6 +4259,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-07",
+    "ended": "2026-09",
     "status": "completed",
     "stack": [
       "python",
@@ -4284,6 +4329,8 @@
       }
     ],
     "year": 2026,
+    "started": "2026-10",
+    "ended": "2026-10",
     "status": "completed",
     "stack": ["python", "git", "claude-code"],
     "caseStudy": "vpn-proxy",
@@ -4351,6 +4398,7 @@
     "role": "sole",
     "roleNote": "I designed and wrote the whole toolbox alone, from the first codemod to the tests and the docs.",
     "year": 2026,
+    "started": "2026-03",
     "status": "in-progress",
     "summary": "Internal toolbox of codemods and lint guards for UX Mind projects. Eight commands run straight from a Git repository through pnpm dlx, with zero dependencies. They rewrite imports and Tailwind classes, collapse comments, keep env files in sync with their schema, and guard code against React Compiler and accessibility pitfalls.",
     "features": [
@@ -4405,6 +4453,8 @@
     "role": "sole",
     "roleNote": "I was the only developer and built the whole front end of the page.",
     "year": 2024,
+    "started": "2024-04",
+    "ended": "2024-04",
     "status": "completed",
     "summary": "Single-page teaser site for OmniDefenders, a crypto meme brand. A cursor-following spotlight reveals a second, inverted layer with tilted meme slogans, and two corner icons for X (Twitter) and Discord react to the pointer. The page fits one screen on any device and has no runtime dependencies.",
     "features": [
@@ -4459,6 +4509,8 @@
     "role": "lead",
     "roleNote": "I led 1 other developer. I analysed the existing code, did the estimate and the architecture, refactored the code, built the new landing page and supported it after release. The other developer built a few sections of the landing page.",
     "year": 2024,
+    "started": "2024-09",
+    "ended": "2025-02",
     "status": "completed",
     "summary": "Front end of a social live-streaming and creator platform, delivered in three versions of the same product. My part: analysis, estimate, architecture, refactoring and the new landing page. The product covers a scroll-driven landing page and waitlist, sign-up and log-in dialogs, a signed-in feed with a player and chat interface, broadcaster pages, account settings and a broadcast studio where streamers fill a grid layout with widgets.",
     "features": [
@@ -4536,6 +4588,8 @@
     "role": "sole",
     "roleNote": "I built the admin web app alone.",
     "year": 2025,
+    "started": "2025-01",
+    "ended": "2025-04",
     "status": "completed",
     "summary": "Admin web app for Fish City, a fishing trip-report product. Reporters create trip reports with a list of fish and photos, admins review them as accepted, pending or rejected, and team members are invited by email with a role. What a user sees depends on the role, and a reporter sees only their own reports.",
     "features": [
@@ -4606,6 +4660,8 @@
     "role": "lead",
     "roleNote": "I led 1 other developer. I did the estimate and the architecture and built about half of the project: the full-stack Next.js app. The other developer built the separate Node.js back end.",
     "year": 2025,
+    "started": "2025-01",
+    "ended": "2025-04",
     "status": "completed",
     "summary": "SaaS web application and REST API for monitoring open network ports on the IP addresses a company registers. It shows each address with its ports, port states and last scan time, a metrics panel and a feed of recent changes. Access is split between vendor and company roles, and a Stripe subscription with a free trial unlocks the product for a company.",
     "features": [
@@ -4770,6 +4826,8 @@
     "role": "sole",
     "roleNote": "I built the whole app alone, from the calculation rules to the installable offline sheet.",
     "year": 2026,
+    "started": "2026-04",
+    "ended": "2026-04",
     "status": "completed",
     "summary": "A mobile-friendly installable web app (PWA) that works as an interactive character sheet for the Russian tabletop RPG Arbor Echo. It calculates skill values, secondary parameters and a point budget by age, tracks play-time resources, and keeps the character on the device with no server.",
     "features": [
@@ -5313,6 +5371,8 @@
     "role": "team",
     "roleNote": "I built about half of the project, with 2 other developers.",
     "year": 2024,
+    "started": "2024-11",
+    "ended": "2024-11",
     "status": "completed",
     "summary": "Front end of a retrieval-style AI chat assistant. Users ask questions against a body of documents, narrow the search with five filter groups, watch the answer stream in and open the cited source documents with their original pages, all against a separate back-end API.",
     "features": [
@@ -5890,6 +5950,8 @@
     "role": "sole",
     "roleNote": "I built the whole app alone: the builder, the play sheet, the reader and the Dungeon Master screen.",
     "year": 2026,
+    "started": "2026-05",
+    "ended": "2026-10",
     "status": "completed",
     "summary": "An installable Russian-language web app for a tabletop role-playing game. A step-by-step builder creates a level 3 character and turns it into a live play sheet, a reader shows the group's campaign sheets from a private note vault as tabs and a battle view, and a Dungeon Master screen holds several players' sheets side by side.",
     "features": [
@@ -5970,6 +6032,7 @@
     "id": "petrinich-portfolio",
     "name": "Portfolio and CV site",
     "year": 2026,
+    "started": "2026-11",
     "status": "live",
     "roleNote": "I built it alone with AI-assisted workflows: I made the product and architecture decisions, agents wrote much of the code.",
     "summary": "My portfolio, where the home page is the CV, next to a filterable work table and a stack page. The same content files also produce the CV PDF, the GitHub profile README and the LinkedIn text.",

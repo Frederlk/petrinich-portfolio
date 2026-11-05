@@ -9,6 +9,8 @@ export const profileSchema = z.object({
   intro: z.string(),
   // LinkedIn caps the headline at 220 characters; scripts/linkedin.ts pastes it from here.
   linkedinHeadline: z.string().max(220),
+  // The description of the LinkedIn Services page, which caps it at 500 characters.
+  linkedinServices: z.string().max(500),
   location: z.string(),
   name: z.string(),
   photo: z.string().startsWith("/"),

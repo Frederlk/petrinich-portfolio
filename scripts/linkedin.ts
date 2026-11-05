@@ -24,7 +24,10 @@ import {
   education,
   experience,
   profile,
+  projects,
+  techById,
 } from "../lib/content.ts";
+import { DOMAIN_LABELS, ROLE_LABELS, SCOPE_LABELS } from "../lib/labels.ts";
 import { siteUrl } from "../lib/site-url.ts";
 
 export type Field = {
@@ -52,6 +55,14 @@ const linkedinUrl = (() => {
   return url.replace(/\/$/, "");
 })();
 
+const email = (() => {
+  const url = profile.contacts.find((c) => c.url.startsWith("mailto:"))?.url;
+  if (url === undefined) {
+    throw new Error("profile.json: contacts has no mailto: entry");
+  }
+  return url.slice("mailto:".length);
+})();
+
 // LinkedIn's issue date is a month and a year: "2026-11-05" reads "Nov 2026".
 const issueMonth = (iso: string) =>
   new Date(`${iso}T00:00:00Z`).toLocaleString("en-US", {
@@ -59,6 +70,61 @@ const issueMonth = (iso: string) =>
     timeZone: "UTC",
     year: "numeric",
   });
+
+const scopeNames: Record<string, string> = SCOPE_LABELS;
+const domainNames: Record<string, string> = DOMAIN_LABELS;
+
+// LinkedIn takes up to 5 skills per project.
+const PROJECT_SKILLS = 5;
+
+// Only built work with an article on the site: an estimate-only project shows a plan, not something the owner made.
+const linkedinProjects = projects.filter(
+  (p) => p.caseStudy !== null && p.role !== "estimate-only"
+);
+
+const projectDates = (p: (typeof projects)[number]) => {
+  if (p.started === undefined) {
+    return "no dates";
+  }
+  const start = issueMonth(`${p.started}-01`);
+  return p.ended === undefined
+    ? `${start}, tick "currently working"`
+    : `${start} to ${issueMonth(`${p.ended}-01`)}`;
+};
+
+const projectField = (p: (typeof projects)[number]): Field => {
+  const page = `${siteUrl}/work/${p.id}`;
+  // The page shows no tag for "estimate" and "advisor" scopes either: they only repeat the role.
+  const scopes = p.scope
+    .filter((s) => s !== "estimate" && s !== "advisor")
+    .map((s) => scopeNames[s] ?? s);
+  const company = experience.find((j) => j.id === p.employer)?.company;
+  // `stack` holds technology ids ("next-js"); LinkedIn shows the names.
+  const stack = p.stack.map((id) => techById.get(id)?.name ?? id);
+  return {
+    how: [
+      `Projects → +. Name "${p.name}". Dates: ${projectDates(p)}.`,
+      `Skills: ${stack.slice(0, PROJECT_SKILLS).join(", ")}.`,
+      `Media: link ${page}.`,
+      company === undefined
+        ? "Associated with: none."
+        : `Associated with: ${company}.`,
+      "Paste into Description.",
+    ].join(" "),
+    key: `project.${p.id}`,
+    label: `Project: ${p.name}`,
+    limit: 2000,
+    text: [
+      plain(p.summary),
+      "",
+      `Role: ${[ROLE_LABELS[p.role], ...scopes].join(" · ")}`,
+      `Domain: ${p.domain.map((d) => domainNames[d] ?? d).join(", ")}`,
+      `Technologies: ${stack.join(", ")}`,
+      `Case study: ${page}`,
+    ].join("\n"),
+    url: `${linkedinUrl}/details/projects/`,
+  };
+};
 
 export function linkedinFields(): Field[] {
   const intro = `${linkedinUrl}/`;
@@ -89,7 +155,17 @@ export function linkedinFields(): Field[] {
         "",
         "Skills",
         ...cvSkillGroups.map((g) => `• ${g.name}: ${g.items.join(", ")}`),
+        "",
+        `Open to freelance and contract projects. Message me here or at ${email}.`,
       ].join("\n"),
+      url: intro,
+    },
+    {
+      how: 'Profile → "Open to" → Providing services. Services: Web Development, Application Development, IT Consulting. Location: remote. Paste into About your services.',
+      key: "services",
+      label: "Services",
+      limit: 500,
+      text: profile.linkedinServices,
       url: intro,
     },
     ...experience.map((job) => ({
@@ -100,6 +176,8 @@ export function linkedinFields(): Field[] {
       text: [
         plain(job.description),
         ...job.bullets.map((b) => `• ${plain(b)}`),
+        "",
+        `Stack: ${job.stack.join(", ")}`,
       ].join("\n"),
       url: `${linkedinUrl}/details/experience/`,
     })),
@@ -117,6 +195,7 @@ export function linkedinFields(): Field[] {
       text: c.name,
       url: `${linkedinUrl}/details/certifications/`,
     })),
+    ...linkedinProjects.map(projectField),
     {
       how: "Skills → add any of these that are missing, one at a time; pin the first three as top skills.",
       key: "skills",
