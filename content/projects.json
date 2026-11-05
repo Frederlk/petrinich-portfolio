@@ -124,6 +124,133 @@
     "caseStudy": "ohbirdie"
   },
   {
+    "id": "tesl-decks",
+    "name": "TESL Decks",
+    "anonymous": false,
+    "kind": "personal",
+    "role": "sole",
+    "roleNote": "I built it alone with AI-assisted workflows: I made the product and architecture decisions, agents wrote much of the code.",
+    "year": 2026,
+    "status": "live",
+    "summary": "Free deck builder and card database for The Elder Scrolls: Legends, with 22 page routes, 1,233 cards and an English and Russian interface. It ships as a PWA and signs players in with Discord, Google, Steam or an email code. The hard parts were reading card data out of the game client, Steam sign-in and a deck code compatible with the game.",
+    "features": [
+      {
+        "title": "Card browser",
+        "items": [
+          "Virtualized grid and table with URL-as-state filters and word-start search that recovers from a wrong keyboard layout",
+          "Card pages with an alt-art picker, rules hints, related tokens and top decks using the card"
+        ]
+      },
+      {
+        "title": "Deck builder",
+        "items": [
+          "Undo and redo, cookie and URL drafts, and a clipboard import offer",
+          "Rules validation for copy limits, attributes and deck size",
+          "Deck code for the game's own SP format with alt arts and an optional name suffix"
+        ]
+      },
+      {
+        "title": "Sharing and public decks",
+        "items": [
+          "Private, unlisted and public saves with a catalog sorted by likes, views and quality",
+          "PNG export and a tall share image that lists every card"
+        ]
+      },
+      {
+        "title": "Accounts and admin",
+        "items": [
+          "Sign-in with Discord, Google, Steam and an email code, plus a Discord deck-claim flow",
+          "Admin inbox for deck and comment reports, a users table with bans and feedback routed to GitHub issues"
+        ]
+      },
+      {
+        "title": "Offline and PWA",
+        "items": [
+          "Opt-in offline mode with Service Workers and sprite-atlas art from Cloudflare R2"
+        ]
+      },
+      {
+        "title": "News and languages",
+        "items": [
+          "News with RSS and comments, and a Reborn leaderboard synced daily",
+          "English and Russian with hreflang, a sitemap and per-page share images"
+        ]
+      }
+    ],
+    "domain": ["gaming"],
+    "employer": null,
+    "scope": ["fullstack"],
+    "stack": [
+      "next-js",
+      "react",
+      "typescript",
+      "tailwind-css",
+      "orpc",
+      "drizzle",
+      "neon",
+      "better-auth",
+      "cloudflare-r2",
+      "pwa",
+      "service-workers",
+      "seo",
+      "canvas-api",
+      "indexeddb",
+      "cheerio",
+      "oauth",
+      "docker-compose",
+      "ffmpeg",
+      "sharp",
+      "bun",
+      "umami",
+      "github-actions",
+      "tanstack-query",
+      "zod",
+      "react-hook-form",
+      "next-intl",
+      "tanstack-table",
+      "tanstack-virtual",
+      "motion",
+      "recharts",
+      "t3-env",
+      "nuqs",
+      "react-compiler",
+      "oxlint",
+      "claude-code",
+      "playwright",
+      "google-stitch",
+      "docker",
+      "shadcn-ui",
+      "aws",
+      "aws-s3",
+      "base-ui",
+      "date-fns",
+      "postgresql",
+      "dotenvx",
+      "husky",
+      "knip",
+      "oxfmt",
+      "ultracite",
+      "vercel",
+      "python",
+      "cloudflare-workers",
+      "turbopack"
+    ],
+    "links": [
+      {
+        "type": "live",
+        "url": "https://tesl-decks.com"
+      }
+    ],
+    "media": ["/work/tesl-decks.webp"],
+    "featured": true,
+    "highlights": [
+      "Built it alone, directing AI agents: 80 oRPC handlers on 22 Drizzle tables, 2,600+ test cases with Stryker mutation testing.",
+      "Added a 1-hour edge cache purged by tag when a deck is saved, and sign-in with Discord, Google, Steam or an email code."
+    ],
+    "caseStudy": "tesl-decks",
+    "aiOrchestrated": true
+  },
+  {
     "id": "noaspot-api",
     "name": "NoaSpot API",
     "aliases": ["NoaSpot"],
@@ -3454,133 +3581,6 @@
     "caseStudy": "gdd-education"
   },
   {
-    "id": "tesl-decks",
-    "name": "TESL Decks",
-    "anonymous": false,
-    "kind": "personal",
-    "role": "sole",
-    "roleNote": "I built it alone with AI-assisted workflows: I made the product and architecture decisions, agents wrote much of the code.",
-    "year": 2026,
-    "status": "live",
-    "summary": "Free deck builder and card database for The Elder Scrolls: Legends, with 22 page routes, 1,233 cards and an English and Russian interface. It ships as a PWA and signs players in with Discord, Google, Steam or an email code. The hard parts were reading card data out of the game client, Steam sign-in and a deck code compatible with the game.",
-    "features": [
-      {
-        "title": "Card browser",
-        "items": [
-          "Virtualized grid and table with URL-as-state filters and word-start search that recovers from a wrong keyboard layout",
-          "Card pages with an alt-art picker, rules hints, related tokens and top decks using the card"
-        ]
-      },
-      {
-        "title": "Deck builder",
-        "items": [
-          "Undo and redo, cookie and URL drafts, and a clipboard import offer",
-          "Rules validation for copy limits, attributes and deck size",
-          "Deck code for the game's own SP format with alt arts and an optional name suffix"
-        ]
-      },
-      {
-        "title": "Sharing and public decks",
-        "items": [
-          "Private, unlisted and public saves with a catalog sorted by likes, views and quality",
-          "PNG export and a tall share image that lists every card"
-        ]
-      },
-      {
-        "title": "Accounts and admin",
-        "items": [
-          "Sign-in with Discord, Google, Steam and an email code, plus a Discord deck-claim flow",
-          "Admin inbox for deck and comment reports, a users table with bans and feedback routed to GitHub issues"
-        ]
-      },
-      {
-        "title": "Offline and PWA",
-        "items": [
-          "Opt-in offline mode with Service Workers and sprite-atlas art from Cloudflare R2"
-        ]
-      },
-      {
-        "title": "News and languages",
-        "items": [
-          "News with RSS and comments, and a Reborn leaderboard synced daily",
-          "English and Russian with hreflang, a sitemap and per-page share images"
-        ]
-      }
-    ],
-    "domain": ["gaming"],
-    "employer": null,
-    "scope": ["fullstack"],
-    "stack": [
-      "next-js",
-      "react",
-      "typescript",
-      "tailwind-css",
-      "orpc",
-      "drizzle",
-      "neon",
-      "better-auth",
-      "cloudflare-r2",
-      "pwa",
-      "service-workers",
-      "seo",
-      "canvas-api",
-      "indexeddb",
-      "cheerio",
-      "oauth",
-      "docker-compose",
-      "ffmpeg",
-      "sharp",
-      "bun",
-      "umami",
-      "github-actions",
-      "tanstack-query",
-      "zod",
-      "react-hook-form",
-      "next-intl",
-      "tanstack-table",
-      "tanstack-virtual",
-      "motion",
-      "recharts",
-      "t3-env",
-      "nuqs",
-      "react-compiler",
-      "oxlint",
-      "claude-code",
-      "playwright",
-      "google-stitch",
-      "docker",
-      "shadcn-ui",
-      "aws",
-      "aws-s3",
-      "base-ui",
-      "date-fns",
-      "postgresql",
-      "dotenvx",
-      "husky",
-      "knip",
-      "oxfmt",
-      "ultracite",
-      "vercel",
-      "python",
-      "cloudflare-workers",
-      "turbopack"
-    ],
-    "links": [
-      {
-        "type": "live",
-        "url": "https://tesl-decks.com"
-      }
-    ],
-    "media": ["/work/tesl-decks.webp"],
-    "featured": true,
-    "highlights": [
-      "Built it alone, directing AI agents: 80 oRPC handlers on 22 Drizzle tables, 2,600+ test cases with Stryker mutation testing.",
-      "Added a 1-hour edge cache purged by tag when a deck is saved, and sign-in with Discord, Google, Steam or an email code."
-    ],
-    "caseStudy": "tesl-decks",
-    "aiOrchestrated": true
-  },
-  {
     "id": "dnd-toolkit",
     "name": "D&D toolkit",
     "anonymous": false,
@@ -3695,7 +3695,12 @@
       "pencil",
       "pgvector"
     ],
-    "links": [{ "type": "live", "url": "https://tes-mundus.vercel.app" }],
+    "links": [
+      {
+        "type": "live",
+        "url": "https://tes-mundus.vercel.app"
+      }
+    ],
     "media": ["/work/dnd-toolkit.webp"],
     "featured": false,
     "caseStudy": "dnd-toolkit"
