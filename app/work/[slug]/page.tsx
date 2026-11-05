@@ -67,7 +67,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       types: { "text/markdown": projectMarkdownPath(project.id) },
     },
     description: project.summary,
-    openGraph: openGraphFor(project.name, project.summary),
+    openGraph: openGraphFor(
+      project.name,
+      project.summary,
+      `/work/${project.id}/opengraph-image`
+    ),
     title: project.name,
   };
 }

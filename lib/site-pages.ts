@@ -32,10 +32,14 @@ export const SITE_PAGES = [
 ] as const;
 
 // A page's openGraph block. Next.js replaces the layout's openGraph object instead of merging it, and drops the root opengraph-image with it, so a page that sets its own title repeats the shared fields and names the image, without the build hash and size tags the file convention adds on /; the twitter tags follow openGraph.
-export const openGraphFor = (title: string, description: string) =>
+export const openGraphFor = (
+  title: string,
+  description: string,
+  image = "/opengraph-image"
+) =>
   ({
     description,
-    images: "/opengraph-image",
+    images: image,
     locale: "en_US",
     siteName: profile.name,
     title: `${title} | ${profile.name}`,

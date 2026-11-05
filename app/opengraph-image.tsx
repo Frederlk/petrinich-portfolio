@@ -1,55 +1,26 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
 import { profile } from "~/lib/content";
+import { MARKER, OG, OG_SIZE, ogAssets, ogLabel as label } from "~/lib/og";
 import { siteUrl } from "~/lib/site-url";
 import { keyStats } from "~/lib/stats";
 import { bare } from "~/lib/url";
 
-// The social card every page shares (LinkedIn, Telegram, Slack previews): the site's own frame in the DESIGN.md palette, rendered once at build. Satori reads only inline `style` and no woff2, so the styles are inline and the two fonts are static WOFF copies of the site's families in assets/og.
+// The social card of every page without its own (LinkedIn, Telegram, Slack previews), rendered once at build; each /work page has its own in work/[slug].
 // oxlint-disable shadcn/no-inline-styles
 
 export const alt = `${profile.name}, ${profile.title}`;
-export const size = { height: 630, width: 1200 };
+export const size = OG_SIZE;
 export const contentType = "image/png";
 
-const SURFACE = "#131313";
-const HAIRLINE = "#2a2a2a";
-const ON_SURFACE = "#e5e2e1";
-const SECONDARY = "#c6c6c7";
-const VERMILION = "#ff5626";
-
-// The section marker of the site's labels.
-const MARKER = "//";
-
-// The two fonts and the logo as base64. Cached, because under Cache Components a plain file read is uncached data and would render the card on every request instead of once at build. Each path is a literal, so the build traces these three files and not the whole project.
-async function assets() {
-  "use cache";
-  const [display, mono, icon] = await Promise.all([
-    readFile(join(process.cwd(), "assets/og/archivo-narrow-700.woff")),
-    readFile(join(process.cwd(), "assets/og/jetbrains-mono-500.woff")),
-    readFile(join(process.cwd(), "app/icon.svg")),
-  ]);
-  return {
-    display: display.toString("base64"),
-    icon: icon.toString("base64"),
-    mono: mono.toString("base64"),
-  };
-}
+const SURFACE = OG.surface;
+const HAIRLINE = OG.hairline;
+const ON_SURFACE = OG.onSurface;
+const SECONDARY = OG.secondary;
+const VERMILION = OG.vermilion;
 
 export default async function OpengraphImage() {
-  const { display: displayB64, icon, mono: monoB64 } = await assets();
-  const display = Buffer.from(displayB64, "base64");
-  const mono = Buffer.from(monoB64, "base64");
-  const logo = `data:image/svg+xml;base64,${icon}`;
-  const label = {
-    color: SECONDARY,
-    fontFamily: "Mono",
-    fontSize: 20,
-    letterSpacing: "0.08em",
-    textTransform: "uppercase",
-  } as const;
+  const { fonts, logo } = await ogAssets();
 
   return new ImageResponse(
     <div
@@ -151,12 +122,6 @@ export default async function OpengraphImage() {
         </div>
       </div>
     </div>,
-    {
-      ...size,
-      fonts: [
-        { data: display, name: "Display", style: "normal", weight: 700 },
-        { data: mono, name: "Mono", style: "normal", weight: 500 },
-      ],
-    }
+    { ...size, fonts: [...fonts] }
   );
 }
