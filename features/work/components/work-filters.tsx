@@ -276,21 +276,26 @@ function TriggerBody({ count }: { count: number }): ReactNode {
   );
 }
 
+const CLEAR_ALL = {
+  build: null,
+  domain: null,
+  role: null,
+  tech: null,
+  year: null,
+} as const satisfies FilterPatch;
+
+const clearClass =
+  "cursor-pointer type-label text-secondary hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring disabled:invisible";
+
 // One Filters button. From md up it is labelled and opens a popover under the button; below md it is a square funnel beside the search field, with the count as a badge on its corner, and the same fields open in the bottom drawer. Both triggers are in the markup and CSS shows one.
 export function FiltersControl(props: Props) {
   const count = activeFilterCount(props.filters);
   const clear = (
     <button
-      className="cursor-pointer type-label text-secondary hover:text-on-surface focus-visible:outline-2 focus-visible:outline-ring disabled:invisible"
+      className={clearClass}
       disabled={count === 0}
       onClick={() => {
-        props.onChange({
-          build: null,
-          domain: null,
-          role: null,
-          tech: null,
-          year: null,
-        });
+        props.onChange(CLEAR_ALL);
       }}
       type="button"
     >
@@ -424,6 +429,19 @@ export function ActiveChips({
           </button>
         </li>
       ))}
+      {chips.length > 1 ? (
+        <li>
+          <button
+            className={cn(clearClass, "min-h-8 px-space-sm")}
+            onClick={() => {
+              onChange(CLEAR_ALL);
+            }}
+            type="button"
+          >
+            Clear all
+          </button>
+        </li>
+      ) : null}
     </ul>
   );
 }
