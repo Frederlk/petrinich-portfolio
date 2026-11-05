@@ -13,6 +13,8 @@ export const AVAILABILITY = "Open to full-time, contract and freelance work";
 // The CV file lives at one public path and is saved under the same name, so a copy on a recruiter's disk says whose CV it is. `/cv.pdf` redirects here (next.config.ts).
 export const CV_PDF_NAME = "Sergey-Petrinich-Lead-Full-Stack-Developer-CV.pdf";
 export const CV_PDF_PATH = `/${CV_PDF_NAME}`;
+// The Umami event on every CV download link; the tracker counts a click on any element carrying `data-umami-event`, and `data-umami-event-place` says which link it was.
+export const CV_DOWNLOAD_EVENT = "cv-download";
 export const webContacts = profile.contacts.filter((c) =>
   c.url.startsWith("http")
 );

@@ -8,7 +8,7 @@ import { ReadProgress } from "~/components/motion/read-progress";
 import { RichText, TechLinks } from "~/components/rich-text";
 
 import { cn } from "~/lib/cn";
-import { CV_PDF_NAME, CV_PDF_PATH } from "~/lib/contact";
+import { CV_DOWNLOAD_EVENT, CV_PDF_NAME, CV_PDF_PATH } from "~/lib/contact";
 import {
   cvSkillGroups,
   education,
@@ -162,6 +162,8 @@ export default function CvPage() {
             <p className="type-meta text-secondary">Also available as a PDF.</p>
             <a
               className="border border-primary-container px-space-md py-space-xs type-button text-primary-container"
+              data-umami-event={CV_DOWNLOAD_EVENT}
+              data-umami-event-place="cv-page"
               download={CV_PDF_NAME}
               href={CV_PDF_PATH}
             >

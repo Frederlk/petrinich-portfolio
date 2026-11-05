@@ -12,7 +12,7 @@ import { TextScramble } from "~/components/motion/text-scramble";
 import { ctaLinkVariants } from "~/ui/cta-link";
 
 import { cn } from "~/lib/cn";
-import { CV_PDF_NAME, CV_PDF_PATH } from "~/lib/contact";
+import { CV_DOWNLOAD_EVENT, CV_PDF_NAME, CV_PDF_PATH } from "~/lib/contact";
 import { profile } from "~/lib/content";
 
 import { ROUTES } from "~/constants/routes";
@@ -62,6 +62,8 @@ export function Header() {
                 ctaLinkVariants({ size: "md", variant: "outline" }),
                 "max-md:hidden"
               )}
+              data-umami-event={CV_DOWNLOAD_EVENT}
+              data-umami-event-place="header"
               download={CV_PDF_NAME}
               href={CV_PDF_PATH}
             >

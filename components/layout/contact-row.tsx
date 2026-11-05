@@ -10,7 +10,7 @@ import {
 import { ArrowSlide } from "~/components/motion/arrow-slide";
 
 import { cn } from "~/lib/cn";
-import type { ContactChannel } from "~/lib/contact";
+import { CV_DOWNLOAD_EVENT, type ContactChannel } from "~/lib/contact";
 
 import type { ComponentProps } from "react";
 
@@ -48,6 +48,8 @@ export function ContactRowLink({
     <a
       {...rest}
       className={cn(className, contactRowClass)}
+      data-umami-event={channel.id === "cv" ? CV_DOWNLOAD_EVENT : undefined}
+      data-umami-event-place={channel.id === "cv" ? "contacts" : undefined}
       download={channel.download}
       href={channel.href}
       rel={external ? "noopener noreferrer" : undefined}

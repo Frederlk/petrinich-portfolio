@@ -14,6 +14,7 @@ import { ToastProvider } from "~/ui/toast";
 import { TooltipProvider } from "~/ui/tooltip";
 
 import { cn } from "~/lib/cn";
+import { CV_PDF_PATH } from "~/lib/contact";
 import { profile } from "~/lib/content";
 import { SITE_PAGES } from "~/lib/site-pages";
 import { siteUrl } from "~/lib/site-url";
@@ -30,7 +31,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "./",
     // The home page's twins as <link rel="alternate">; /work and /stack announce their own (pageMetadata), each /work/<slug> page its Markdown twin (generateMetadata).
-    types: { "application/json": "/resume.json", "text/markdown": "/cv.md" },
+    types: {
+      "application/json": "/resume.json",
+      "application/pdf": CV_PDF_PATH,
+      "text/markdown": "/cv.md",
+    },
   },
   authors: [{ name: profile.name, url: siteUrl }],
   description: SITE_PAGES[0].description,

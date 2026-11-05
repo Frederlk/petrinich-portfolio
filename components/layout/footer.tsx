@@ -1,11 +1,19 @@
+import Link from "next/link";
+
 import { Logo } from "~/components/layout/logo";
 import { ArrowSlide } from "~/components/motion/arrow-slide";
+import { NAV_BACK } from "~/components/motion/page-transition";
 
 import { CtaLink } from "~/ui/cta-link";
 
 import { buildDate } from "~/lib/build-date";
 import { cn } from "~/lib/cn";
-import { CV_PDF_NAME, CV_PDF_PATH, email } from "~/lib/contact";
+import {
+  CV_DOWNLOAD_EVENT,
+  CV_PDF_NAME,
+  CV_PDF_PATH,
+  email,
+} from "~/lib/contact";
 import { profile } from "~/lib/content";
 import { LLMS_PATH, PAGE_TWINS } from "~/lib/site-routes";
 
@@ -55,14 +63,20 @@ export function Footer() {
       <div className="container grid grid-cols-2 gap-x-gutter gap-y-space-lg md:grid-cols-12">
         <div className="col-span-2 flex flex-col justify-between max-md:contents md:col-span-4">
           <div className="space-y-space-xs max-md:order-1 max-md:col-span-2">
-            {/* The logo is decorative beside the name. */}
-            <div className="flex items-center gap-space-sm type-h3 text-on-surface uppercase">
+            {/* The logo is decorative beside the name; together they are the home link, as in the header. */}
+            <Link
+              className="group flex w-fit items-center gap-space-sm type-h3 text-on-surface uppercase"
+              href={ROUTES.HOME}
+              transitionTypes={NAV_BACK}
+            >
               <Logo
                 aria-hidden
                 className="size-8 shrink-0 text-primary-container"
               />
-              {profile.name}
-            </div>
+              <span className="link-draw group-hover:text-primary">
+                {profile.name}
+              </span>
+            </Link>
             {/* Title, then each part of the location ("Remote, worldwide · Central European Time") on its own line, so no phrase breaks mid-way. */}
             <div className="flex flex-col gap-0.5 type-meta">
               <p className="text-secondary">{profile.title}</p>
@@ -162,6 +176,8 @@ export function Footer() {
               </CtaLink>
             )}
             <CtaLink
+              data-umami-event={CV_DOWNLOAD_EVENT}
+              data-umami-event-place="footer"
               download={CV_PDF_NAME}
               href={CV_PDF_PATH}
               size="none"
