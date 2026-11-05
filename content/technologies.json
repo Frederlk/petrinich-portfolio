@@ -945,6 +945,13 @@
     "aliases": []
   },
   {
+    "id": "jenkins",
+    "name": "Jenkins",
+    "group": "Infrastructure & observability",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
     "id": "google-analytics",
     "name": "Google Analytics",
     "group": "Infrastructure & observability",
@@ -1076,6 +1083,13 @@
     "aliases": []
   },
   {
+    "id": "github",
+    "name": "GitHub",
+    "group": "Quality & tooling",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
     "id": "husky",
     "name": "Husky",
     "group": "Quality & tooling",
@@ -1165,6 +1179,13 @@
     "name": "pnpm",
     "group": "Build tools",
     "aliases": []
+  },
+  {
+    "id": "npm",
+    "name": "npm",
+    "group": "Build tools",
+    "aliases": [],
+    "listedByOwner": true
   },
   {
     "id": "turborepo",
@@ -1281,6 +1302,13 @@
     "aliases": []
   },
   {
+    "id": "apollo-client",
+    "name": "Apollo Client",
+    "group": "State, forms & data fetching",
+    "aliases": ["Apollo"],
+    "listedByOwner": true
+  },
+  {
     "id": "redux-toolkit",
     "name": "Redux Toolkit",
     "group": "State, forms & data fetching",
@@ -1343,6 +1371,13 @@
   {
     "id": "mdx",
     "name": "MDX",
+    "group": "Languages & markup",
+    "aliases": [],
+    "listedByOwner": true
+  },
+  {
+    "id": "markdown",
+    "name": "Markdown",
     "group": "Languages & markup",
     "aliases": [],
     "listedByOwner": true
