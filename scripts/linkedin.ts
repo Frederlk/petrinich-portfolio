@@ -83,7 +83,13 @@ export function linkedinFields(): Field[] {
       key: "about",
       label: "About",
       limit: 2600,
-      text: plain(profile.summary),
+      // The summary, then every CV skill group, so a recruiter's search or a bot reading the profile finds the full stack and not only the first 50 skills the Skills section holds.
+      text: [
+        plain(profile.summary),
+        "",
+        "Skills",
+        ...cvSkillGroups.map((g) => `• ${g.name}: ${g.items.join(", ")}`),
+      ].join("\n"),
       url: intro,
     },
     ...experience.map((job) => ({
