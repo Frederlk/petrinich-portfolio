@@ -7,9 +7,22 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { certificates, profile, projects } from "../lib/content.ts";
+import {
+  certificates,
+  experience,
+  linkedinSkills,
+  profile,
+  projects,
+} from "../lib/content.ts";
 import { projectSchema } from "../schemas/projects.ts";
-import { changedFields, hashOf, linkedinFields, plain } from "./linkedin.ts";
+import {
+  changedFields,
+  hashOf,
+  linkedinFields,
+  plain,
+  skillLinks,
+  topProjects,
+} from "./linkedin.ts";
 
 const fields = linkedinFields();
 
@@ -41,6 +54,36 @@ void describe("linkedinFields", () => {
       about.text.trimEnd().endsWith(`${mail.url.slice("mailto:".length)}.`)
     );
     assert.doesNotMatch(about.text, /ux-mind\.pro/);
+  });
+
+  void it("shows every LinkedIn skill on at least one project or job", () => {
+    const links = skillLinks();
+    assert.equal(links.length, linkedinSkills.length);
+    const bare = links
+      .filter((s) => s.projects.length + s.jobs.length === 0)
+      .map((s) => s.name);
+    assert.deepEqual(bare, []);
+  });
+
+  void it("lists at most 3 key projects per job, all its own", () => {
+    for (const job of experience) {
+      const top = topProjects(job.id);
+      assert.ok(top.length <= 3, job.id);
+      for (const p of top) {
+        assert.equal(p.employer, job.id, p.id);
+      }
+      const field = fields.find((f) => f.key === `experience.${job.id}`);
+      assert.ok(field !== undefined);
+      if (top.length > 0) {
+        assert.ok(
+          field.text.endsWith(
+            `Key projects: ${top.map((p) => p.name).join(", ")}`
+          ),
+          job.id
+        );
+      }
+    }
+    assert.ok(experience.some((job) => topProjects(job.id).length === 3));
   });
 
   void it("stays within every LinkedIn limit", () => {

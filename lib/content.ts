@@ -6,6 +6,7 @@ import { cvSkillsSchema } from "~/schemas/cv-skills";
 import { earlyWorkSchema } from "~/schemas/early-work";
 import { educationSchema } from "~/schemas/education";
 import { experienceSchema } from "~/schemas/experience";
+import { linkedinSkillsSchema } from "~/schemas/linkedin-skills";
 import { openSourceSchema } from "~/schemas/open-source";
 import { profileSchema } from "~/schemas/profile";
 import { projectsSchema } from "~/schemas/projects";
@@ -17,6 +18,7 @@ import cvSkillsJson from "~/content/cv-skills.json";
 import earlyWorkJson from "~/content/early-work.json";
 import educationJson from "~/content/education.json";
 import experienceJson from "~/content/experience.json";
+import linkedinSkillsJson from "~/content/linkedin-skills.json";
 import openSourceJson from "~/content/open-source.json";
 import profileJson from "~/content/profile.json";
 import projectsJson from "~/content/projects.json";
@@ -134,6 +136,21 @@ assertKnownTechnologies(
   "cv-skills.json",
   cvSkills.flatMap((g) => g.items)
 );
+
+export const linkedinSkills =
+  linkedinSkillsSchema.parse(linkedinSkillsJson).skills;
+assertKnownTechnologies(
+  "linkedin-skills.json",
+  linkedinSkills.flatMap((s) => s.tech ?? [])
+);
+for (const s of linkedinSkills) {
+  const unknown = (s.jobs ?? []).filter((id) => !jobIds.has(id));
+  if (unknown.length > 0) {
+    throw new Error(
+      `linkedin-skills.json "${s.name}": unknown job ${unknown.join(", ")}, expected an experience.json id`
+    );
+  }
+}
 
 // The technologies of the "Core stack" group, in file order: what the person data names as the main stack.
 export const coreStackNames = technologies

@@ -23,10 +23,12 @@ import {
   cvSkillGroups,
   education,
   experience,
+  linkedinSkills,
   profile,
   projects,
   techById,
 } from "../lib/content.ts";
+import { orderFeatured } from "../lib/featured.ts";
 import { DOMAIN_LABELS, ROLE_LABELS, SCOPE_LABELS } from "../lib/labels.ts";
 import { siteUrl } from "../lib/site-url.ts";
 
@@ -43,9 +45,6 @@ export type Field = {
 // LinkedIn renders none of the site's Markdown: bold and inline code would show their markers.
 export const plain = (text: string) =>
   text.replaceAll(/\*\*(.+?)\*\*/g, "$1").replaceAll(/`([^`]+)`/g, "$1");
-
-// The skills step offers the first 50 CV skills in group order (core stack first): the full CV list is 86 and LinkedIn caps a profile's skills (owner's call, 2026-11-03).
-const LINKEDIN_SKILLS = 50;
 
 const linkedinUrl = (() => {
   const url = profile.contacts.find((c) => c.label === "LinkedIn")?.url;
@@ -74,13 +73,47 @@ const issueMonth = (iso: string) =>
 const scopeNames: Record<string, string> = SCOPE_LABELS;
 const domainNames: Record<string, string> = DOMAIN_LABELS;
 
-// LinkedIn takes up to 5 skills per project.
-const PROJECT_SKILLS = 5;
-
 // Only built work with an article on the site: an estimate-only project shows a plan, not something the owner made.
 const linkedinProjects = projects.filter(
   (p) => p.caseStudy !== null && p.role !== "estimate-only"
 );
+
+// The projects shown under a job: its featured ones in the home page's order, then the rest in file order (owner, 2026-11-06: up to 3).
+const TOP_PROJECTS = 3;
+export const topProjects = (jobId: string) => {
+  const own = linkedinProjects.filter((p) => p.employer === jobId);
+  return [
+    ...orderFeatured(own.filter((p) => p.featured)),
+    ...own.filter((p) => !p.featured),
+  ].slice(0, TOP_PROJECTS);
+};
+
+const jobLabel = (job: (typeof experience)[number]) =>
+  `${job.role} at ${job.company}`;
+
+// Where each LinkedIn skill was used, as LinkedIn's "Show us where you used this skill" lists it: every project whose stack holds the skill's technology, and every job whose stack names it, whose top projects use it, or that the skill names directly.
+export const skillLinks = () =>
+  linkedinSkills.map((s) => {
+    const using = linkedinProjects.filter(
+      (p) => s.tech !== undefined && p.stack.includes(s.tech)
+    );
+    const techName =
+      s.tech === undefined ? undefined : techById.get(s.tech)?.name;
+    const names = new Set(
+      [s.name, techName ?? s.name].map((n) => n.toLowerCase())
+    );
+    const jobs = experience.filter(
+      (j) =>
+        s.jobs?.includes(j.id) === true ||
+        j.stack.some((n) => names.has(n.toLowerCase())) ||
+        topProjects(j.id).some((p) => using.includes(p))
+    );
+    return {
+      jobs: jobs.map(jobLabel),
+      name: s.name,
+      projects: using.map((p) => p.name),
+    };
+  });
 
 const projectDates = (p: (typeof projects)[number]) => {
   if (p.started === undefined) {
@@ -104,7 +137,10 @@ const projectField = (p: (typeof projects)[number]): Field => {
   return {
     how: [
       `Projects → +. Name "${p.name}". Dates: ${projectDates(p)}.`,
-      `Skills: ${stack.slice(0, PROJECT_SKILLS).join(", ")}.`,
+      `Skills (LinkedIn's names, ticked from each skill's edit form): ${linkedinSkills
+        .filter((s) => s.tech !== undefined && p.stack.includes(s.tech))
+        .map((s) => s.name)
+        .join(", ")}.`,
       `Media: link ${page}.`,
       company === undefined
         ? "Associated with: none."
@@ -168,19 +204,32 @@ export function linkedinFields(): Field[] {
       text: profile.linkedinServices,
       url: intro,
     },
-    ...experience.map((job) => ({
-      how: `Experience → ${job.company} → pencil. Title "${job.role}", dates ${job.dates}. Paste into Description.`,
-      key: `experience.${job.id}`,
-      label: `Experience: ${job.role}, ${job.company}`,
-      limit: 2000,
-      text: [
-        plain(job.description),
-        ...job.bullets.map((b) => `• ${plain(b)}`),
-        "",
-        `Stack: ${job.stack.join(", ")}`,
-      ].join("\n"),
-      url: `${linkedinUrl}/details/experience/`,
-    })),
+    ...experience.map((job) => {
+      const top = topProjects(job.id);
+      return {
+        how: [
+          `Experience → ${job.company} → pencil. Title "${job.role}", dates ${job.dates}. Paste into Description.`,
+          ...(top.length > 0
+            ? [
+                `Media: add a link for each of ${top.map((p) => `${siteUrl}/work/${p.id}`).join(", ")}.`,
+              ]
+            : []),
+        ].join(" "),
+        key: `experience.${job.id}`,
+        label: `Experience: ${job.role}, ${job.company}`,
+        limit: 2000,
+        text: [
+          plain(job.description),
+          ...job.bullets.map((b) => `• ${plain(b)}`),
+          "",
+          `Stack: ${job.stack.join(", ")}`,
+          ...(top.length > 0
+            ? [`Key projects: ${top.map((p) => p.name).join(", ")}`]
+            : []),
+        ].join("\n"),
+        url: `${linkedinUrl}/details/experience/`,
+      };
+    }),
     ...education.education.map((e, index) => ({
       how: `Education → pencil. Degree "${e.degree}", ${e.dates}, ${e.location}. Paste is the school.`,
       key: `education.${index}`,
@@ -197,13 +246,10 @@ export function linkedinFields(): Field[] {
     })),
     ...linkedinProjects.map(projectField),
     {
-      how: "Skills → add any of these that are missing, one at a time; pin the first three as top skills.",
+      how: "Skills → delete any skill not listed, add the missing ones and tick, in each skill's edit form, every project whose field lists it under Skills and every job that uses it; then … → Reorder to this order. About → Top skills: the first five.",
       key: "skills",
       label: "Skills",
-      text: cvSkillGroups
-        .flatMap((g) => g.items)
-        .slice(0, LINKEDIN_SKILLS)
-        .join(", "),
+      text: linkedinSkills.map((s) => s.name).join(", "),
       url: `${linkedinUrl}/details/skills/`,
     },
   ];

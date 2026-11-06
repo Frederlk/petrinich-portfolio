@@ -1,0 +1,404 @@
+{
+  "skills": [
+    {
+      "name": "React",
+      "tech": "react"
+    },
+    {
+      "name": "Next.js",
+      "tech": "next-js"
+    },
+    {
+      "name": "Team Management",
+      "jobs": ["ux-mind"]
+    },
+    {
+      "name": "TypeScript",
+      "tech": "typescript"
+    },
+    {
+      "name": "Node.js",
+      "tech": "node-js"
+    },
+    {
+      "name": "Technical Leadership",
+      "jobs": ["ux-mind"]
+    },
+    {
+      "name": "PostgreSQL",
+      "tech": "postgresql"
+    },
+    {
+      "name": "Tailwind CSS",
+      "tech": "tailwind-css"
+    },
+    {
+      "name": "Prisma ORM",
+      "tech": "prisma"
+    },
+    {
+      "name": "Claude Code",
+      "tech": "claude-code"
+    },
+    {
+      "name": "Code Review",
+      "jobs": ["ux-mind"]
+    },
+    {
+      "name": "Technical Recruiting",
+      "jobs": ["ux-mind"]
+    },
+    {
+      "name": "Software Estimation",
+      "jobs": ["ux-mind"]
+    },
+    {
+      "name": "Docker",
+      "tech": "docker"
+    },
+    {
+      "name": "JavaScript",
+      "tech": "javascript"
+    },
+    {
+      "name": "Zod",
+      "tech": "zod"
+    },
+    {
+      "name": "shadcn/ui",
+      "tech": "shadcn-ui"
+    },
+    {
+      "name": "TanStack Query",
+      "tech": "tanstack-query"
+    },
+    {
+      "name": "React Hook Form",
+      "tech": "react-hook-form"
+    },
+    {
+      "name": "pnpm",
+      "tech": "pnpm"
+    },
+    {
+      "name": "GitHub",
+      "tech": "github-actions"
+    },
+    {
+      "name": "Figma",
+      "tech": "figma"
+    },
+    {
+      "name": "nuqs",
+      "tech": "nuqs"
+    },
+    {
+      "name": "React Compiler",
+      "tech": "react-compiler"
+    },
+    {
+      "name": "Radix UI",
+      "tech": "radix-ui"
+    },
+    {
+      "name": "Prettier",
+      "tech": "prettier"
+    },
+    {
+      "name": "ESLint",
+      "tech": "eslint"
+    },
+    {
+      "name": "Python (Programming Language)",
+      "tech": "python"
+    },
+    {
+      "name": "Base UI",
+      "tech": "base-ui"
+    },
+    {
+      "name": "TanStack Table",
+      "tech": "tanstack-table"
+    },
+    {
+      "name": "Husky",
+      "tech": "husky"
+    },
+    {
+      "name": "Motion",
+      "tech": "motion"
+    },
+    {
+      "name": "Zustand",
+      "tech": "zustand"
+    },
+    {
+      "name": "Search Engine Optimization (SEO)",
+      "tech": "seo"
+    },
+    {
+      "name": "Recharts",
+      "tech": "recharts"
+    },
+    {
+      "name": "Resend",
+      "tech": "resend"
+    },
+    {
+      "name": "Stripe (Software)",
+      "tech": "stripe"
+    },
+    {
+      "name": "Cron jobs",
+      "tech": "cron-jobs"
+    },
+    {
+      "name": "Supabase",
+      "tech": "supabase"
+    },
+    {
+      "name": "Amazon Web Services (AWS)",
+      "tech": "aws"
+    },
+    {
+      "name": "next-intl",
+      "tech": "next-intl"
+    },
+    {
+      "name": "Supabase Auth",
+      "tech": "supabase-auth"
+    },
+    {
+      "name": "Vitest",
+      "tech": "vitest"
+    },
+    {
+      "name": "Webhooks",
+      "tech": "webhooks"
+    },
+    {
+      "name": "Webpack",
+      "tech": "webpack"
+    },
+    {
+      "name": "Better Auth",
+      "tech": "better-auth"
+    },
+    {
+      "name": "Clerk",
+      "tech": "clerk"
+    },
+    {
+      "name": "Jest",
+      "tech": "jest"
+    },
+    {
+      "name": "OpenAPI",
+      "tech": "openapi"
+    },
+    {
+      "name": "sanity.io",
+      "tech": "sanity"
+    },
+    {
+      "name": "SASS",
+      "tech": "sass"
+    },
+    {
+      "name": "Canvas API",
+      "tech": "canvas-api"
+    },
+    {
+      "name": "Ffmpeg",
+      "tech": "ffmpeg"
+    },
+    {
+      "name": "JSON Web Token (JWT)",
+      "tech": "jwt"
+    },
+    {
+      "name": "OAuth",
+      "tech": "oauth"
+    },
+    {
+      "name": "oRPC",
+      "tech": "orpc"
+    },
+    {
+      "name": "PostHog",
+      "tech": "posthog"
+    },
+    {
+      "name": "Twilio",
+      "tech": "twilio"
+    },
+    {
+      "name": "MySQL",
+      "tech": "mysql"
+    },
+    {
+      "name": "Drizzle ORM",
+      "tech": "drizzle"
+    },
+    {
+      "name": "FastAPI",
+      "tech": "fastapi"
+    },
+    {
+      "name": "GSAP",
+      "tech": "gsap"
+    },
+    {
+      "name": "styled-components",
+      "tech": "styled-components"
+    },
+    {
+      "name": "Swiper",
+      "tech": "swiper"
+    },
+    {
+      "name": "Express.js",
+      "tech": "express"
+    },
+    {
+      "name": "Formik",
+      "tech": "formik"
+    },
+    {
+      "name": "Git",
+      "tech": "git"
+    },
+    {
+      "name": "GraphQL",
+      "tech": "graphql"
+    },
+    {
+      "name": "Gulp.js",
+      "tech": "gulp"
+    },
+    {
+      "name": "HTML",
+      "tech": "html"
+    },
+    {
+      "name": "Neon",
+      "tech": "neon"
+    },
+    {
+      "name": "NextAuth.js",
+      "tech": "nextauth"
+    },
+    {
+      "name": "PyTorch",
+      "tech": "pytorch"
+    },
+    {
+      "name": "REST APIs",
+      "tech": "rest-apis"
+    },
+    {
+      "name": "Shopify",
+      "tech": "shopify"
+    },
+    {
+      "name": "Turborepo",
+      "tech": "turborepo"
+    },
+    {
+      "name": "Web Scraping",
+      "tech": "web-scraping"
+    },
+    {
+      "name": "Yup",
+      "tech": "yup"
+    },
+    {
+      "name": "CSS",
+      "tech": "css"
+    },
+    {
+      "name": "Hono",
+      "tech": "hono"
+    },
+    {
+      "name": "NestJS",
+      "tech": "nestjs"
+    },
+    {
+      "name": "Redis",
+      "tech": "redis"
+    },
+    {
+      "name": "Server-Sent Events",
+      "tech": "server-sent-events"
+    },
+    {
+      "name": "TypeORM",
+      "tech": "typeorm"
+    },
+    {
+      "name": "builder.io",
+      "tech": "builder-io"
+    },
+    {
+      "name": "Convex",
+      "tech": "convex"
+    },
+    {
+      "name": "faster-whisper",
+      "tech": "faster-whisper"
+    },
+    {
+      "name": "Firebase",
+      "tech": "firebase"
+    },
+    {
+      "name": "Koa.js",
+      "tech": "koa"
+    },
+    {
+      "name": "Lemon Squeezy",
+      "tech": "lemon-squeezy"
+    },
+    {
+      "name": "Polar",
+      "tech": "polar"
+    },
+    {
+      "name": "RabbitMQ",
+      "tech": "rabbitmq"
+    },
+    {
+      "name": "Redux",
+      "tech": "redux"
+    },
+    {
+      "name": "Redux Toolkit",
+      "tech": "redux-toolkit"
+    },
+    {
+      "name": "Redux.js",
+      "tech": "redux"
+    },
+    {
+      "name": "Storyblok",
+      "tech": "storyblok"
+    },
+    {
+      "name": "TanStack Start",
+      "tech": "tanstack-start"
+    },
+    {
+      "name": "Tauri",
+      "tech": "tauri"
+    },
+    {
+      "name": "tRPC",
+      "tech": "trpc"
+    },
+    {
+      "name": "English",
+      "jobs": ["ux-mind", "freelance"]
+    }
+  ]
+}
