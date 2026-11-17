@@ -336,8 +336,31 @@ void describe("repoRelative", () => {
     );
   });
 
-  void it("keeps the repository root for another repository and for a path in no checkout", () => {
+  // A junction on Windows, a directory symlink elsewhere.
+  void it("scopes a path that reaches the repository through a link against the repository", () => {
     const outside = fs.mkdtempSync(path.join(os.tmpdir(), "code-rules-"));
+    const link = path.join(outside, "link");
+    try {
+      fs.symlinkSync(REPO_ROOT, link, "junction");
+      assert.deepEqual(
+        [
+          repoRelative(inside(link, "components/ui/button.tsx")),
+          repoRelative(inside(link, "lib/not-yet-written.ts")),
+        ],
+        ["components/ui/button.tsx", "lib/not-yet-written.ts"]
+      );
+    } finally {
+      // The link goes first: a recursive remove must never walk into the repository it points at.
+      fs.rmSync(link, { force: true });
+      fs.rmSync(outside, { recursive: true, force: true });
+    }
+  });
+
+  void it("keeps the repository root for another repository and for a path in no checkout", () => {
+    // Resolved, because the temp directory is itself an alias on some systems (macOS `/var` is `/private/var`).
+    const outside = fs.realpathSync.native(
+      fs.mkdtempSync(path.join(os.tmpdir(), "code-rules-"))
+    );
     const otherRepo = path.join(outside, "other");
     fs.mkdirSync(path.join(otherRepo, ".git"), { recursive: true });
     try {

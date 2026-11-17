@@ -20,8 +20,21 @@ import path from "node:path";
 
 import { tryCatchSync } from "../../utils/try-catch.ts";
 
+/** `file` with its nearest existing ancestor resolved through the filesystem, so a symlink, junction, `subst` drive or `\\?\` prefix names the same checkout as the plain path. A Write targets a file that may not exist yet, so the walk stops at the first ancestor that does. */
+function realPath(file: string): string {
+  const resolved = path.resolve(file);
+  const { data: real } = tryCatchSync(() => fs.realpathSync.native(resolved));
+  if (real !== null) {
+    return real;
+  }
+  const parent = path.dirname(resolved);
+  return parent === resolved
+    ? resolved
+    : path.join(realPath(parent), path.basename(resolved));
+}
+
 // Paths resolve relative to this file, never to the caller's cwd — pre-commit does not guarantee a working directory (scripts/README.md).
-const REPO_ROOT = path.resolve(import.meta.dirname, "../..");
+const REPO_ROOT = realPath(path.resolve(import.meta.dirname, "../.."));
 
 /** The gitdir a linked worktree's `.git` file names, resolved; undefined when `gitFile` is not such a file. The hook fails open on a throw (a non-zero exit is a non-blocking error), so an unreadable file reads as "none" instead. */
 function gitdirOf(gitFile: string): string | undefined {
@@ -50,7 +63,7 @@ export function commonGitDir(root: string): string {
   return common === null ? gitdir : path.resolve(gitdir, common.trim());
 }
 
-const COMMON_GIT_DIR = commonGitDir(REPO_ROOT);
+const COMMON_GIT_DIR = realPath(commonGitDir(REPO_ROOT));
 
 const LINKED_WORKTREES = path.join(COMMON_GIT_DIR, "worktrees");
 
@@ -68,7 +81,7 @@ function isOwnCheckout(dir: string): boolean {
   if (gitdir === undefined) {
     return false;
   }
-  const inside = path.relative(LINKED_WORKTREES, gitdir);
+  const inside = path.relative(LINKED_WORKTREES, realPath(gitdir));
   return (
     inside !== "" &&
     inside.split(path.sep)[0] !== ".." &&
@@ -110,8 +123,10 @@ function checkoutRoot(file: string): string {
   return root;
 }
 
-const rel = (file: string): string =>
-  path.relative(checkoutRoot(file), file).replaceAll("\\", "/");
+function rel(file: string): string {
+  const real = realPath(file);
+  return path.relative(checkoutRoot(real), real).replaceAll("\\", "/");
+}
 
 export { rel as repoRelative };
 
