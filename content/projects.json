@@ -498,8 +498,7 @@
     "roleNote": "I led 1 other developer and built about 80 percent of the new Next.js app meant to replace the old PHP back end: the UI, the server part and API, and the docs and tests. The other developer built a few pages and did fixes. The app has 50+ pages and routes and 80+ Prisma models, mostly legacy tables, covered by 140+ test files.",
     "year": 2025,
     "started": "2025-07",
-    "ended": "2026-10",
-    "status": "live",
+    "status": "in-progress",
     "summary": "Platform for the beauty industry with a directory of masters, a shop, a subscription video academy, live events and webinars, and reviews. I built most of the new Next.js app with Sanity, PostgreSQL and Stripe and the tooling to move the old PHP data. The hard parts were video access, linking Stripe to legacy members and planning the move of a live subscriber base.",
     "features": [
       {
