@@ -26,7 +26,7 @@ export function generateStaticParams() {
 
 // The page title steps down the same way (`titleFit` on the page): a one-word name fills the card, a long one wraps onto two lines.
 const nameSize = (name: string) => {
-  if (name.length <= 10) {
+  if (name.length <= 10 && !name.includes(" ")) {
     return 132;
   }
   return name.length <= 18 ? 104 : 76;

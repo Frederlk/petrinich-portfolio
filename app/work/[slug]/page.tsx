@@ -90,7 +90,7 @@ async function CaseStudy({ id }: { id: string }) {
 
 // The Stitch title is 152px at lg for a one-word name; a long name steps down so it wraps into two or three lines, not five. `type-display` carries the three sizes.
 function titleFit(name: string) {
-  if (name.length <= 10) {
+  if (name.length <= 10 && !name.includes(" ")) {
     return "short";
   }
   return name.length <= 18 ? "medium" : "long";
